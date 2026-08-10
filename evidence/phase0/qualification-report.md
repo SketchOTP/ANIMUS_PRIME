@@ -55,7 +55,7 @@ Using an unavailable provider configuration:
 - `python3 -m pytest tests/phase0 -q` — PASSED, 9 tests.
 - `python3 scripts/validate_governance.py --mode ADOPTED` — PASSED.
 - `python3 authority-template/v1/scripts/validate_governance.py --mode TEMPLATE` — PASSED.
-- `python3 scripts/phase0_qualify.py` — pending final governed qualification commit.
+- `python3 scripts/phase0_qualify.py` — PASSED on qualified commit `8ce35b857c428a8139ca4b988a2db2f11680f09c`.
 
 ## Security and recovery
 
