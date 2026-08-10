@@ -12,7 +12,7 @@ requirements:
   - {id: R-008, section: "§9", summary: "Notion project record and managed/user ownership", owner: 7, validate: [9,11,13,15], status: PLANNED}
   - {id: R-009, section: "§10", summary: "Hindsight-backed isolated PRIME Memory", owner: 5, validate: [6,9,11,15], status: PLANNED}
   - {id: R-010, section: "§11", summary: "Project-bound PRIME Memory MCP", owner: 6, validate: [9,12,15], status: PLANNED}
-  - {id: R-011, section: "§12", summary: "Repository index, retrieval, source references and provenance", owner: 4, validate: [8,9,10,11,15], status: PLANNED}
+  - {id: R-011, section: "§12", summary: "Repository index, retrieval, source references and provenance", owner: 4, validate: [8,9,10,11,15], status: IMPLEMENTED, phase_status: {4: VERIFIED}}
   - {id: R-012, section: "§13", summary: "Events, durable jobs and workflow semantics", owner: 1, validate: [4,5,6,7,8,9,12,13,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-013, section: "§14-§15", summary: "Canonical data model and versioned Core API boundaries", owner: 1, validate: [2,4,5,6,7,8,9,10,11,12,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-014, section: "§16-§16A", summary: "Complete operator product experience and supporting feature contracts", owner: 7, validate: [8,9,10,11,12,13,14,15], status: PLANNED}

@@ -89,3 +89,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Phases 4–15 remain unimplemented and unqualified.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE4-001
+- Supersedes outcome: OUT-PRIME-PHASE3-001
+- Closed: 2026-08-10T17:35:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 4 deterministic repository index and source freshness foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/indexer.py, migrations/prime/0004_indexing.sql, tests/phase4, apps/core, docs
+- Validation:
+  - pytest tests/phase4 - PASSED
+  - phase4 migration qualification - PASSED
+  - Phase 0–3 prior qualification records retained - PASSED
+- Remaining risks: Hindsight memory and later feature phases remain unimplemented.
+- Blockers: none
+- Follow-up directive: none

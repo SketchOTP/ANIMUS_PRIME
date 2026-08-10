@@ -15,6 +15,7 @@ from src.prime_core.config import Settings
 from src.prime_core.db import migrate, schema_version, connect
 from src.prime_core.logging import configure
 from src.prime_core.authority import validate_authority, provision_authority
+from src.prime_core.indexer import RepositoryIndexer
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
@@ -22,6 +23,7 @@ from src.prime_core.service import CoreService
 settings = Settings()
 configure()
 service = CoreService(settings)
+indexer = RepositoryIndexer(service)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -295,3 +297,18 @@ def create_goal(project_id: str, body: GoalRequest, request: Request, prime_sess
 def record_authority(body: AuthorityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata)
+
+
+@app.post("/v1/projects/{project_id}/index")
+def index_project(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return indexer.build(project_id)
+    except (KeyError, ValueError, FileNotFoundError, OSError) as exc:
+        return error("INDEX_REJECTED", str(exc), request_id(request), retryable=True, status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/search")
+def search_project(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {"project_id": project_id, "results": indexer.search(project_id, q)}
