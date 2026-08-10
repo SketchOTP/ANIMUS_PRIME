@@ -17,6 +17,7 @@ from src.prime_core.logging import configure
 from src.prime_core.authority import validate_authority, provision_authority
 from src.prime_core.indexer import RepositoryIndexer
 from src.prime_core.memory_service import MemoryService
+from src.prime_core.mcp_service import MCPService
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
@@ -26,6 +27,7 @@ configure()
 service = CoreService(settings)
 indexer = RepositoryIndexer(service)
 memory = MemoryService(settings)
+mcp = MCPService(settings, memory)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -97,6 +99,10 @@ class MemoryRequest(BaseModel):
     source_revision: str | None = None
     source_reference_id: str | None = None
     branch_context: str | None = None
+
+
+class GrantRequest(BaseModel):
+    client_id: str = Field(min_length=1, max_length=160)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -334,3 +340,18 @@ def store_memory(project_id: str, body: MemoryRequest, request: Request, prime_s
 def recall_memory(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return memory.recall(project_id, q)
+
+
+@app.post("/v1/projects/{project_id}/mcp/grants")
+def issue_mcp_grant(project_id: str, body: GrantRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return mcp.issue_grant(project_id, body.client_id)
+    except KeyError as exc:
+        return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/mcp/{tool}")
+def mcp_tool(tool: str, body: dict[str, Any], authorization: str | None = Header(default=None)):
+    token = authorization[7:] if authorization and authorization.startswith("Bearer ") else ""
+    return mcp.call(token, tool, body)

@@ -121,3 +121,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: MCP exposure and later phases remain unimplemented.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE6-001
+- Supersedes outcome: OUT-PRIME-PHASE5-001
+- Closed: 2026-08-10T18:05:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 6 canonical project-bound PRIME Memory MCP surface implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/mcp_service.py, migrations/prime/0006_mcp.sql, tests/phase6, apps/core, docs
+- Validation:
+  - pytest tests/phase6 - PASSED
+  - phase6 migration qualification - PASSED
+  - governance validation - PASSED
+- Remaining risks: Notion, progress, UI, lifecycle and final release phases remain unimplemented.
+- Blockers: none
+- Follow-up directive: none
