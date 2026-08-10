@@ -391,3 +391,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: native Linux service/reboot, Windows service, live Notion, live Tailscale, backup/restore, historical fidelity, complete UX, AI, and full E2E evidence remain unqualified.
 - Blockers: native Windows and configured external qualification environments are unavailable in this coding environment.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - FAILED
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-008
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-007
+- Closed: 2026-08-10T22:48:00Z
+- Acceptance: NOT MET
+- Summary: Full disposable Phase-15 qualification passed mechanically on `0db5766d99fb8a2bbfb714b1dd64a298f3eaf131` with 38 tests and all Phase 1–14 gates, governance, baseline, and requirement-ledger checks passing. The V1 release gate correctly failed because R-031 through R-056 remain open.
+- Changed areas: evidence/phase15/remediation-qualification-003.md, .agent/CURRENT.md, .agent/OUTCOMES.md
+- Validation:
+  - fresh Docker PostgreSQL/Core/Node qualification - PASSED
+  - full test suite - PASSED (38 tests)
+  - Phase 1–14 qualification sequence - PASSED
+  - V1 requirement gate - FAILED as required while 26 rows remain OPEN
+  - deployment - NOT PERFORMED
+- Remaining risks: native Linux/Windows lifecycle, live Notion/Tailscale, backup/restore/capacity, historical, complete UX, AI, security, and full E2E evidence remain unqualified.
+- Blockers: required native Windows and external-provider/device environments are not available in this coding environment.
+- Follow-up directive: none
