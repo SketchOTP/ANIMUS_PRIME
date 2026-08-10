@@ -228,3 +228,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: backup/reliability, UX and final release phases remain.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE13-001
+- Supersedes outcome: OUT-PRIME-PHASE12-001
+- Closed: 2026-08-10T19:50:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 13 backup metadata, diagnostics and queue-health foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/reliability_service.py, migrations/prime/0013_reliability.sql, tests/phase13, docs
+- Validation:
+  - pytest tests/phase13 - PASSED
+  - phase13 migration qualification - PASSED
+- Remaining risks: packaging, final UX and full release suite remain.
+- Blockers: none
+- Follow-up directive: none
