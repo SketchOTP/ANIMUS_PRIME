@@ -41,3 +41,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Feature phases 1–15 are not implemented or qualified.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE1-001
+- Supersedes outcome: OUT-PRIME-PHASE0-001
+- Closed: 2026-08-10T16:55:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 1 Core substrate implemented and qualified; overall Phase 0–15 directive remains active.
+- Changed areas: apps/core, src/prime_core, migrations/prime, tests/phase1, Dockerfile.core, docker-compose.phase1.yml, requirements-phase1.txt, docs
+- Validation:
+  - pytest tests/phase0 tests/phase1 -q - PASSED (12 tests)
+  - scripts/phase1_qualify.py - PASSED
+  - pinned Docker Core build and live/readiness health - PASSED
+  - PostgreSQL schema backup/restore smoke - PASSED
+- Remaining risks: Phases 2–15 are not implemented or qualified.
+- Blockers: none
+- Follow-up directive: none

@@ -31,6 +31,14 @@ runtime:
     release: "20.19.0"
     image: "node:20.19.0-bookworm-slim"
     image_digest_amd64: "sha256:8898f8ed3c0126667837b678979b4ed83306c856a1227c8bf5f5f77740c25cd6"
+python_dependencies_phase1:
+  fastapi: "0.136.1"
+  starlette: "1.0.0"
+  uvicorn: "0.46.0"
+  pydantic: "2.13.4"
+  psycopg: "3.3.4"
+  httpx: "0.28.1"
+  pytest: "9.0.3"
 source_evidence:
   hindsight_release: "https://github.com/vectorize-io/hindsight/releases/tag/v0.6.1"
   hindsight_source: "https://github.com/vectorize-io/hindsight/tree/v0.6.1"

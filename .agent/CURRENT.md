@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T15:41:00Z`
+- Last updated: `2026-08-10T16:55:00Z`
 
 ## Active state after adoption
 
 - Local directive ID: `D-PRIME-PHASE0-001`
 - External directive ID: `NONE`
-- Objective: `Qualify Phase 0 source lock, contracts, dependencies, threat model, and harness against PRIME-SPEC-V1.0.0.`
+- Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 PASS with exact qualified Git commit; then advance sequentially.`
-- Current phase: `0`
-- Expected or actual touched areas: `baseline, authority-template/v1, contracts, dependencies, threat-model, docs, tests/phase0, .agent`
-- Immediate next action: `Complete runtime smoke and Phase 0 qualification.`
+- Acceptance: `Phase 0 and Phase 1 PASS; proceed sequentially with exact qualified Git commits.`
+- Current phase: `1`
+- Expected or actual touched areas: `apps/core, src/prime_core, migrations/prime, tests/phase1, Dockerfile.core, docker-compose.phase1.yml, docs, .agent`
+- Immediate next action: `Begin Phase 2 Node/repository identity and read-only control-plane implementation.`
 
 ## Temporary task-relevant facts
 
@@ -22,12 +22,12 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `authority-template/v1/scripts/validate_governance.py --mode TEMPLATE`
+- Command or check: `pytest tests/phase0 tests/phase1 -q; scripts/phase1_qualify.py; Docker Core health; pg_dump/restore`
 - Result: `PASSED`
 
 ## Risks
 
-- Runtime dependency smoke and Phase 0 qualification remain open.
+- Phases 2–15 remain unimplemented and unqualified.
 
 ## Blockers
 

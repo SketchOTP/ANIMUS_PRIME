@@ -1,0 +1,36 @@
+name: animus-prime-phase1
+
+services:
+  postgres:
+    image: pgvector/pgvector@sha256:e04af45eb526378554a24ed05b37d9ea56fd623feca9adf264d4f47d875c9a93
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: prime
+      POSTGRES_PASSWORD: phase1-local-only
+      POSTGRES_DB: prime
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prime -d prime"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  core:
+    build:
+      context: .
+      dockerfile: Dockerfile.core
+    environment:
+      PRIME_DATABASE_URL: postgresql://prime:phase1-local-only@postgres:5432/prime
+      PRIME_COOKIE_SECURE: "0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["uvicorn", "apps.core.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "127.0.0.1:18000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10

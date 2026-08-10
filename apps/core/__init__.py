@@ -1,0 +1,2 @@
+"""PRIME Core application."""
+
