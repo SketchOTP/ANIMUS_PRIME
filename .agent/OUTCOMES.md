@@ -409,3 +409,38 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: native Linux/Windows lifecycle, live Notion/Tailscale, backup/restore/capacity, historical, complete UX, AI, security, and full E2E evidence remain unqualified.
 - Blockers: required native Windows and external-provider/device environments are not available in this coding environment.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-004 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-009
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-008
+- Closed: 2026-08-10T23:10:32Z
+- Acceptance: PARTIAL
+- Summary: Reconciled the Continuation 004 governance requirements. Added the continuation as a distinct directive, updated the mutable current-state record, corrected the R-031–R-056 ledger to the required per-record schema, added durable remediation learnings, and rebuilt the repository map from the current tracked repository. No requirement was marked VERIFIED and no V1 release or deployment claim was made.
+- Changed areas: .agent/DIRECTIVES.md, .agent/CURRENT.md, .agent/LEARNINGS.md, .agent/OUTCOMES.md, .agent/REPO_MAP.md, docs/phase15-remediation-qualification-ledger.yaml, scripts/phase15_qualify.py
+- Validation:
+  - codebase-memory MCP index attempt; transport closed and documented local discovery fallback used - BLOCKED
+  - python3 scripts/validate_governance.py --mode ADOPTED; final map validation was pending at record time - NOT RUN
+  - R-031 through R-056 verification; no evidence was manufactured - NOT RUN
+  - V1 release/deployment; release gate remains open and deployment was not authorized - NOT APPLICABLE
+- Remaining risks: R-031 through R-056 remain IMPLEMENTING/OPEN pending their individual implementation and native/live qualification evidence.
+- Blockers: native Windows, live Notion, live Tailscale, approved AI provider and other external qualification prerequisites remain unavailable or unqualified in this environment.
+- Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-004 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-010
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-009
+- Closed: 2026-08-10T23:12:00Z
+- Acceptance: PARTIAL
+- Summary: Corrected and validated the append-only governance reconciliation for Continuation 004. The repository now records the continuation directive, current state, durable learnings, actual repository map, and the required 26-record R-031–R-056 ledger schema. The project remains below V1 acceptance because no open requirement was promoted to VERIFIED.
+- Changed areas: .agent/PROJECT_PROFILE.md, .agent/REPO_MAP.md, .agent/OUTCOMES.md
+- Validation:
+  - python3 scripts/validate_governance.py --mode ADOPTED - PASSED
+  - ledger schema self-check for 26 records R-031 through R-056 - PASSED
+  - python3 -m pytest tests -q - PASSED (23 passed, 15 skipped because host PostgreSQL qualification dependencies were unavailable)
+  - git diff --check - PASSED
+  - V1 release gate - NOT APPLICABLE (R-031 through R-056 remain OPEN/IMPLEMENTING)
+- Remaining risks: native Linux/Windows lifecycle, live Notion/Tailscale, backup/restore/capacity, Evidence and historical fidelity, complete UX, AI, and fresh-install end-to-end evidence remain unqualified.
+- Blockers: external qualification environments and credentials are still not available in this coding environment; no evidence was fabricated.
+- Follow-up directive: none

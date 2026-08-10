@@ -33,18 +33,20 @@ def main() -> int:
     ledger_rows = [line for line in ledger.splitlines() if line.lstrip().startswith("- {requirement_id:")]
     required_fields = (
         "spec_section",
-        "owning_phase",
+        "original_owning_phase",
         "current_status",
         "implementation_complete",
-        "live_execution_required",
+        "native_or_live_execution_required",
         "environment_required",
         "positive_test",
         "negative_test",
         "degraded_test",
         "recovery_test",
         "security_test",
-        "evidence_path",
-        "qualified_commit",
+        "evidence_paths",
+        "implementation_commit",
+        "evidence_commit",
+        "remaining_gap",
         "final_status",
     )
     ledger_ids = {re.search(r"requirement_id: (R-\d+)", line).group(1) for line in ledger_rows if re.search(r"requirement_id: (R-\d+)", line)}

@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T22:48:00Z`
+- Last updated: `2026-08-10T23:12:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE0-001`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-004`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
 - Expected or actual touched areas: `R1-R6 remediation foundations, Core↔Node client, apps/core, apps/web, docs/phase15-remediation-matrix.yaml, evidence/phase15`
-- Immediate next action: `Qualify each open remediation requirement from the detailed ledger; R-031 has local TLS/mTLS process evidence but remains open pending native Linux/Windows service evidence.`
+- Immediate next action: `Drive R-031 through R-056 individually to VERIFIED using the corrected qualification ledger; finish implementation/preflight locally, then run only available native/live qualifications and record exact external prerequisites as BLOCKED without manufacturing evidence.`
 
 ## Temporary task-relevant facts
 
@@ -22,8 +22,8 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `PRIME_PHASE1_DB_URL=... /tmp/animus-prime-venv/bin/python scripts/phase15_qualify.py`
-- Result: `FAILED`
+- Command or check: `python3 scripts/validate_governance.py --mode ADOPTED`
+- Result: `PASSED`
 
 ## Risks
 
@@ -35,6 +35,8 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Local real-process HTTPS/mTLS evidence recorded at `evidence/phase15/R-031-local-tls-mtls-process.md`.
 - R-031 remains `IMPLEMENTING` / `OPEN`; native Linux service, Windows service, restart/reboot, offline recovery, and upgrade evidence are not present.
 - Full disposable Phase-15 run recorded at `evidence/phase15/remediation-qualification-003.md`: 38 tests and Phases 1–14 passed; V1 gate correctly failed on open remediation rows.
+- Continuation 004 requires the ledger fields `original_owning_phase`, `native_or_live_execution_required`, `evidence_paths`, `implementation_commit`, `evidence_commit`, and `remaining_gap`; the ledger now conforms.
+- Codebase-memory MCP indexing was attempted before local discovery but returned `Transport closed`; repository mapping used targeted tracked-file inspection as the documented fallback.
 
 ## Blockers
 
