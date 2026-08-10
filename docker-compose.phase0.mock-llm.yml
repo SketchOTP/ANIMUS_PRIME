@@ -1,0 +1,9 @@
+services:
+  hindsight:
+    environment:
+      HINDSIGHT_API_LLM_PROVIDER: lmstudio
+      HINDSIGHT_API_LLM_API_KEY: phase0-mock
+      HINDSIGHT_API_LLM_MODEL: phase0-mock
+      HINDSIGHT_API_LLM_BASE_URL: http://host.docker.internal:18080/v1
+    extra_hosts:
+      - host.docker.internal:host-gateway

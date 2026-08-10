@@ -25,12 +25,13 @@
 - Type-check: `NOT CONFIGURED — Phase 0 contract-only repository`
 - Packaging: `Docker Compose pinned baseline; qualification in Phase 0`
 - Preferred navigation/indexing: `codebase-memory-mcp, then targeted rg for non-code assets`
+- Project-specific commands: `python3 -m pytest tests/phase0 -q; python3 scripts/phase0_qualify.py`
 
 ## Verified commands
 
-- Governance template validation: `python3 authority-template/v1/scripts/validate_governance.py --mode TEMPLATE`
-- Adopted-project validation: `python3 scripts/validate_governance.py --mode ADOPTED`
-- Phase 0 qualification: `python3 scripts/phase0_qualify.py`
+Reference authority package validator: `python3 authority-template/v1/scripts/validate_governance.py` with its clean-package mode.
+- `python3 scripts/validate_governance.py --mode ADOPTED`
+- `python3 scripts/phase0_qualify.py`
 
 ## Constraints
 
@@ -38,7 +39,3 @@
 - Security: `One trusted operator; project isolation; private Tailscale-only remote access; no public Funnel.`
 - Data handling: `Local-first, deny-by-default egress, redacted logs, no secrets/raw logs in governance memory.`
 - Deployment: `PostgreSQL canonical persistence and separately owned Hindsight service in a supported PostgreSQL cluster.`
-
-## Adoption guidance
-
-The active implementation baseline is recorded in `baseline/implementation-baseline.yaml`. Normative changes require a `SpecChangeRecord` and new baseline.

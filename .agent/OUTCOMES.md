@@ -23,3 +23,21 @@ Use live outcome headings only after adoption. The following schema is instructi
 ```
 
 Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILED`, `CANCELLED`, `SUPERSEDED`. Do not rewrite earlier entries; append corrections referencing the original.
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE0-001
+- Supersedes outcome: none
+- Closed: 2026-08-10T16:40:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 0 source lock, authority package, contracts, dependency pins, threat model, Hindsight adapter probe, recovery smoke, and qualification evidence passed. The overall directive remains active for Phases 1–15.
+- Changed areas: baseline, authority-template/v1, contracts, dependencies, threat-model, docs, tests/phase0, src/prime_memory_adapter.py, .agent
+- Validation:
+  - python3 -m pytest tests/phase0 -q - PASSED
+  - python3 scripts/validate_governance.py --mode ADOPTED - PASSED
+  - python3 authority-template/v1/scripts/validate_governance.py --mode TEMPLATE - PASSED
+  - docker/PostgreSQL/pgvector/Hindsight qualification - PASSED
+  - Phase 0 qualification record - PASSED
+- Remaining risks: Feature phases 1–15 are not implemented or qualified.
+- Blockers: none
+- Follow-up directive: none

@@ -19,3 +19,13 @@ Each live entry should include:
 Allowed status values are `PROPOSED`, `ACTIVE`, `SUPERSEDED`, `REVERSED`, and `CLOSED`.
 
 Do not add live decisions or milestones to this template. Examples must remain outside the shipped template state.
+
+## DEC-PRIME-PHASE0-001
+
+- Date: 2026-08-10
+- Record or decision ID: DEC-PRIME-PHASE0-001
+- Status: ACTIVE
+- Decision or event: Phase 0 source lock and dependency qualification established.
+- Rationale: PRIME-SPEC-V1.0.0 requires immutable inputs, explicit contracts, pinned dependencies, Hindsight adapter boundaries, and a governed Git baseline before feature implementation.
+- Affected areas: baseline, authority-template/v1, contracts, dependencies, threat-model, qualification harness.
+- Supersedes record: none

@@ -1,30 +1,41 @@
-# ANIMUS PRIME Repository Map
+# Repository Map
 
-This map covers the Phase 0 governance/source-lock surface. Feature modules are added only in their owning phases.
+## Entry points
 
-## Recommended sections after adoption
+- `README.md` — project boundary and phase gate.
+- `scripts/phase0_qualify.py` — Phase 0 source-lock qualification entry point.
 
-- `baseline/` — frozen specification, handoff, and implementation-baseline identity.
-- `authority-template/v1/` — approved materialized authority package and manifest.
-- `contracts/` — shared domain, authority, isolation, storage, and privacy contracts.
-- `dependencies/` — pinned release/image identities, licenses, and SBOM inputs.
-- `threat-model/` — V1 trust boundaries and controls.
-- `docs/requirements-traceability.yaml` — normative requirement ownership and verification ledger.
-- `tests/phase0/` — source-lock and contract tests.
-- `.agent/phase-records/` — qualification records.
-- `src/` — reserved for Phase 1+ implementation.
+## Core modules
 
-## Inclusion rules
+- `src/` — implementation modules added by owning phases.
+- `authority-template/v1/` — approved authority bootstrap package.
 
-- Explain why every mapped path matters.
-- Prefer important entry points and boundaries over exhaustive listings.
-- Exclude vendored dependencies, caches, temporary task notes, and generated files unless their role matters.
-- Update the map when a touched or newly understood area changes.
+## Interfaces and contracts
 
-## Entry format after adoption
+- `contracts/` — versioned shared domain, authority, isolation, storage, and privacy contracts.
+- `baseline/implementation-baseline.yaml` — active immutable-baseline identity.
 
-Use entries like this only in an adopted repository:
+## Tests and validation
 
-```text
-<path/to/important-area> — why the path matters
-```
+- `tests/phase0/` — source-lock, contract, and adapter qualification tests.
+- `.github/workflows/phase0.yml` — CI qualification entry point.
+
+## Configuration
+
+- `docker-compose.phase0.yml` — pinned PostgreSQL/pgvector/Hindsight qualification stack.
+- `dependencies/pins.yaml` — exact dependency and image pins.
+
+## Generated areas
+
+- `evidence/phase0/` — redacted qualification evidence.
+- `authority-template/v1/MANIFEST.sha256` — generated content manifest for the approved template.
+
+## External integration points
+
+- `baseline/*.notion.md` — frozen Notion source and handoff exports.
+- `dependencies/` — upstream release and license evidence.
+
+## Areas that must not be edited manually
+
+- `baseline/` — immutable after source lock; changes require a new baseline.
+- `authority-template/v1/` — changes require a new template version and manifest.

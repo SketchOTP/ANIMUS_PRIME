@@ -1,0 +1,33 @@
+name: animus-prime-phase0
+
+services:
+  postgres:
+    image: pgvector/pgvector@sha256:e04af45eb526378554a24ed05b37d9ea56fd623feca9adf264d4f47d875c9a93
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: prime
+      POSTGRES_PASSWORD: phase0-local-only
+      POSTGRES_DB: prime
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prime -d prime"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight@sha256:2b92c62863a0841e2a153907462987f6d6f1d7bf9ae07a8ad3d07430eb175217
+    platform: linux/amd64
+    environment:
+      HINDSIGHT_API_DATABASE_URL: postgresql://prime:phase0-local-only@postgres:5432/prime
+      HINDSIGHT_API_MIGRATION_DATABASE_URL: postgresql://prime:phase0-local-only@postgres:5432/prime
+      HINDSIGHT_API_LLM_PROVIDER: openai
+      HINDSIGHT_API_LLM_API_KEY: phase0-provider-not-configured
+      HINDSIGHT_API_FAIL_ON_EXTRACTION_ERRORS: "true"
+      HINDSIGHT_API_RETAIN_WALL_TIMEOUT: "30"
+      HINDSIGHT_API_HOST: 0.0.0.0
+      HINDSIGHT_API_PORT: "8888"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "18888:8888"
