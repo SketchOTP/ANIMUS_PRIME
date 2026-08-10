@@ -16,6 +16,7 @@ from src.prime_core.db import migrate, schema_version, connect
 from src.prime_core.logging import configure
 from src.prime_core.authority import validate_authority, provision_authority
 from src.prime_core.indexer import RepositoryIndexer
+from src.prime_core.memory_service import MemoryService
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
@@ -24,6 +25,7 @@ settings = Settings()
 configure()
 service = CoreService(settings)
 indexer = RepositoryIndexer(service)
+memory = MemoryService(settings)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -87,6 +89,14 @@ class AuthorityRequest(BaseModel):
     source_hash: str
     validation_status: str
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class MemoryRequest(BaseModel):
+    content: str = Field(min_length=1, max_length=100000)
+    content_class: str = Field(min_length=1, max_length=40)
+    source_revision: str | None = None
+    source_reference_id: str | None = None
+    branch_context: str | None = None
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -312,3 +322,15 @@ def index_project(project_id: str, request: Request, prime_session: str | None =
 def search_project(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return {"project_id": project_id, "results": indexer.search(project_id, q)}
+
+
+@app.post("/v1/projects/{project_id}/memory")
+def store_memory(project_id: str, body: MemoryRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return memory.store(project_id, body.content, body.content_class, body.source_revision, body.source_reference_id, body.branch_context)
+
+
+@app.get("/v1/projects/{project_id}/memory")
+def recall_memory(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return memory.recall(project_id, q)

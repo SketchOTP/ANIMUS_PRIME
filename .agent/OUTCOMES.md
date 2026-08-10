@@ -105,3 +105,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Hindsight memory and later feature phases remain unimplemented.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE5-001
+- Supersedes outcome: OUT-PRIME-PHASE4-001
+- Closed: 2026-08-10T17:50:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 5 PRIME-owned Hindsight memory ledger and correction semantics implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/memory_service.py, migrations/prime/0005_memory.sql, tests/phase5, apps/core, docs
+- Validation:
+  - pytest tests/phase5 - PASSED
+  - phase5 migration qualification - PASSED
+  - governance validation - PASSED
+- Remaining risks: MCP exposure and later phases remain unimplemented.
+- Blockers: none
+- Follow-up directive: none

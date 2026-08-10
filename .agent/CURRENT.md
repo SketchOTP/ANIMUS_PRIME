@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T17:35:00Z`
+- Last updated: `2026-08-10T17:50:00Z`
 
 ## Active state after adoption
 
@@ -11,10 +11,10 @@
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 4 PASS; proceed sequentially with exact qualified Git commits.`
-- Current phase: `4`
-- Expected or actual touched areas: `src/prime_core/indexer.py, migrations/prime/0004_indexing.sql, tests/phase4, docs, .agent`
-- Immediate next action: `Begin Phase 5 Hindsight-backed isolated memory and correction ledger.`
+- Acceptance: `Phase 0 through Phase 5 PASS; proceed sequentially with exact qualified Git commits.`
+- Current phase: `5`
+- Expected or actual touched areas: `src/prime_core/memory_service.py, migrations/prime/0005_memory.sql, tests/phase5, docs, .agent`
+- Immediate next action: `Begin Phase 6 project-bound Memory MCP and context export.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `pytest tests/phase4 -q; scripts/phase4_qualify.py; Phase 0–3 prior qualification records`
+- Command or check: `pytest tests/phase5 -q; scripts/phase5_qualify.py; governance validation`
 - Result: `PASSED`
 
 ## Risks
