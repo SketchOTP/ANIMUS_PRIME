@@ -308,3 +308,36 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: live Notion provider, real Linux/Windows Node, actual Tailscale tailnet, backup/restore drills, complete historical reconstruction, complete UX, and AI/end-to-end evidence remain unverified.
 - Blockers: local qualification environment lacks psycopg/PostgreSQL; no configured live Notion/Tailscale/Linux+Windows evidence environments were asserted.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-003
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-002
+- Closed: 2026-08-10T21:05:00Z
+- Acceptance: PARTIAL
+- Summary: Expanded the operator UX shell and added authenticated Core remote-access status/configuration plus encrypted backup/preflight routes. These surfaces report explicit degraded/authentication states and do not claim V1 completion.
+- Changed areas: apps/web/index.html, apps/core/main.py, tests/phase14/test_web_shell.py
+- Validation:
+  - python3 -m pytest tests -q - PASSED (20 passed, 15 skipped)
+  - python3 -m compileall -q apps src scripts tests - PASSED
+  - python3 scripts/validate_governance.py --mode ADOPTED - PASSED
+- Remaining risks: complete UX behavior, live Tailscale/Notion/backup operation, cross-platform Node, historical, AI and end-to-end evidence remain open.
+- Blockers: PostgreSQL-backed qualification and configured external/cross-platform environments remain unavailable in this run.
+- Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - FAILED
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-004
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-003
+- Closed: 2026-08-10T21:15:00Z
+- Acceptance: NOT MET
+- Summary: Clean PostgreSQL-backed Phase-15 mechanical qualification passed with 35 tests, all Phase 1–14 migration gates, governance, baseline identity, pinned Core/Node builds and healthy containers. The granular V1 release matrix remains open, so the release gate correctly remains failed.
+- Changed areas: evidence/phase15/remediation-qualification-001.md, .agent/OUTCOMES.md
+- Validation:
+  - clean PostgreSQL full test tree - PASSED (35 tests)
+  - Phase 1–14 qualification sequence - PASSED
+  - Core/Node image build and health - PASSED
+  - phase15 release remediation matrix - FAILED (R-031 through R-056 open)
+- Remaining risks: all unresolved requirements listed in evidence/phase15/remediation-qualification-001.md; no deployment or V1 release claim.
+- Blockers: real cross-platform, live-provider, remote-access, recovery, historical, UX and AI/end-to-end evidence is not yet qualified.
+- Follow-up directive: none

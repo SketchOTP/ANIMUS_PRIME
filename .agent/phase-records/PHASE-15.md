@@ -15,5 +15,5 @@ tests_passed: local suite 20 passed; 15 PostgreSQL integration tests skipped; V1
 security_tests_run: PENDING_GATE
 recovery_tests_run: PENDING_GATE
 known_limitations: Full V1 Definition of Done must be reconciled against all normative deliverables; a passing scaffold/regression suite is not sufficient. See docs/phase15-remediation-matrix.yaml.
-remediation_progress: R1-R5 implementation foundations added; R1-R5 live/cross-platform/recovery evidence still open
+remediation_progress: R1-R6 implementation foundations added; R1-R6 live/cross-platform/recovery/provider/UX evidence still open
 result: FAIL
