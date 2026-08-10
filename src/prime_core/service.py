@@ -126,6 +126,22 @@ class CoreService:
         with connect(self.settings) as db:
             return [dict(row) for row in db.execute("SELECT * FROM prime_core.projects ORDER BY created_at").fetchall()]
 
+    def register_node(self, node_id: str, name: str, platform: str, identity_fingerprint: str, allowed_roots: list[str], capabilities: dict[str, Any]) -> dict[str, Any]:
+        timestamp = now()
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "INSERT INTO prime_core.nodes(node_id,name,platform,status,identity_fingerprint,allowed_roots,capabilities,enrolled_at,last_seen_at) "
+                "VALUES (%s,%s,%s,'ENROLLED',%s,%s,%s,%s,%s) "
+                "ON CONFLICT (node_id) DO UPDATE SET name=EXCLUDED.name, platform=EXCLUDED.platform, status='ONLINE', allowed_roots=EXCLUDED.allowed_roots, capabilities=EXCLUDED.capabilities, last_seen_at=EXCLUDED.last_seen_at RETURNING *",
+                (node_id, name, platform, identity_fingerprint, json.dumps(allowed_roots), json.dumps(capabilities), timestamp, timestamp),
+            ).fetchone()
+            self._audit(db, "operator", "operator", "node.registered", target_id=node_id)
+            return dict(row)
+
+    def list_nodes(self) -> list[dict[str, Any]]:
+        with connect(self.settings) as db:
+            return [dict(row) for row in db.execute("SELECT * FROM prime_core.nodes ORDER BY enrolled_at").fetchall()]
+
     def create_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None = None) -> dict[str, Any]:
         timestamp = now()
         with transaction(self.settings) as db:

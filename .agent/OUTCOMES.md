@@ -58,3 +58,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Phases 2–15 are not implemented or qualified.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE2-001
+- Supersedes outcome: OUT-PRIME-PHASE1-001
+- Closed: 2026-08-10T17:05:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 2 Node/repository read-only control plane implemented and qualified; overall directive remains active.
+- Changed areas: apps/node, src/prime_node, migrations/prime/0002_nodes.sql, Dockerfile.node, tests/phase2, docs
+- Validation:
+  - pytest tests/phase0 tests/phase1 tests/phase2 - PASSED (13 tests in the qualification run)
+  - phase1/phase2 migration qualification - PASSED
+  - Core and Node pinned container build and health - PASSED
+- Remaining risks: Windows native packaging and full repository compatibility matrix continue through later phases.
+- Blockers: none
+- Follow-up directive: none

@@ -55,6 +55,15 @@ class WorkflowRequest(BaseModel):
     project_id: str | None = None
 
 
+class NodeRequest(BaseModel):
+    node_id: str = Field(min_length=1, max_length=160)
+    name: str = Field(min_length=1, max_length=200)
+    platform: str = Field(min_length=1, max_length=80)
+    identity_fingerprint: str = Field(min_length=32, max_length=128)
+    allowed_roots: list[str] = Field(default_factory=list)
+    capabilities: dict[str, Any] = Field(default_factory=dict)
+
+
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
     response = JSONResponse(status_code=status_code, content={
         "error_code": code, "message": message, "request_id": request_id, "retryable": retryable,
@@ -227,3 +236,15 @@ def create_workflow(body: WorkflowRequest, request: Request, prime_session: str 
         return service.create_workflow(body.workflow_type, body.idempotency_key, body.project_id)
     except KeyError as exc:
         return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/nodes")
+def register_node(body: NodeRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return service.register_node(body.node_id, body.name, body.platform, body.identity_fingerprint, body.allowed_roots, body.capabilities)
+
+
+@app.get("/v1/nodes")
+def list_nodes(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {"nodes": service.list_nodes()}
