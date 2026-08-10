@@ -341,3 +341,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: all unresolved requirements listed in evidence/phase15/remediation-qualification-001.md; no deployment or V1 release claim.
 - Blockers: real cross-platform, live-provider, remote-access, recovery, historical, UX and AI/end-to-end evidence is not yet qualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-005
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-004
+- Closed: 2026-08-10T21:25:00Z
+- Acceptance: PARTIAL
+- Summary: Added the Core-side bounded Node control-plane client with protocol identity headers, TLS CA validation and optional client certificate support, completing the local R1 client/server contract foundation.
+- Changed areas: src/prime_core/node_client.py, tests/phase2/test_node_client.py, src/prime_core/remote_access_service.py
+- Validation:
+  - focused Node client/server and remote-access tests - PASSED (4 tests)
+  - git diff --check - PASSED
+- Remaining risks: real TLS/mTLS, Linux/Windows native service, restart/reconnect, version upgrade and cross-platform evidence remain open; V1 release remains failed.
+- Blockers: no supported Windows environment or live private control-plane qualification environment was asserted.
+- Follow-up directive: none

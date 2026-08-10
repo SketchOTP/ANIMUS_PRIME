@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T21:05:00Z`
+- Last updated: `2026-08-10T21:25:00Z`
 
 ## Active state after adoption
 
@@ -13,8 +13,8 @@
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R1-R6 remediation foundations, apps/core, apps/web, docs/phase15-remediation-matrix.yaml, evidence/phase15`
-- Immediate next action: `Run available DB/container qualification for R1-R6, then continue R7 AI and end-to-end evidence.`
+- Expected or actual touched areas: `R1-R6 remediation foundations, Core↔Node client, apps/core, apps/web, docs/phase15-remediation-matrix.yaml, evidence/phase15`
+- Immediate next action: `Run the clean DB/container qualification again after the Core↔Node client increment, then continue R7 AI and end-to-end evidence.`
 
 ## Temporary task-relevant facts
 

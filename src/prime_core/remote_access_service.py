@@ -45,7 +45,7 @@ class TailscaleService:
         return {
             "status": "ONLINE" if tailnet else "DEGRADED",
             "tailnet_dns_name": dns_name,
-            "serve": "F funnel-exposed" if funnel_active else ("CONFIGURED" if serve else "DISABLED"),
+            "serve": "FUNNEL_EXPOSED" if funnel_active else ("CONFIGURED" if serve else "DISABLED"),
             "funnel": "REFUSED" if funnel_active else "NOT_DETECTED",
             "private_only": not funnel_active,
         }
