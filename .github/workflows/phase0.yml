@@ -1,0 +1,17 @@
+name: Phase 0 qualification
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  phase0:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python3 authority-template/v1/scripts/validate_governance.py --mode TEMPLATE
+      - run: python3 -m pytest tests/phase0
+      - run: python3 scripts/phase0_qualify.py

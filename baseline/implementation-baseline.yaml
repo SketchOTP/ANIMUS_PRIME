@@ -1,0 +1,27 @@
+spec_revision: PRIME-SPEC-V1.0.0
+spec_export_artifact: baseline/PRIME-SPEC-V1.0.0.notion.md
+spec_content_sha256: 557dcd7e96325f59910d8cdd74dc5c933b680389bbe5ef35f0d9b83920ee6c5c
+freeze_timestamp_local: 2026-08-10T11:41:00-04:00
+freeze_timestamp_utc: 2026-08-10T15:41:00Z
+operator_approval: APPROVED
+implementation_authorization: PHASE_0_THROUGH_PHASE_15
+handoff_record_artifact: baseline/Implementation-Handoff-Record-PRIME-SPEC-V1.0.0.notion.md
+handoff_record_sha256: f47fffa6a7e3ca00299d6840e06648bd7756b7a3d67bf4ce6c8fa7464be716dd
+handoff_manifest_sha256: 48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9
+authority_template_version: authority-template/v1
+authority_template_manifest: authority-template/v1/MANIFEST.sha256
+authority_template_sha256: 42b977f29a830988cd5531e7ffcae381e55d210c0b34b583763d1c4984075362
+implementation_repo: /home/sketch/Projects/ANIMUS_PRIME
+phase0_start_commit: TO_BE_CREATED_BEFORE_PHASE_0_QUALIFICATION
+dependency_pins: dependencies/pins.yaml
+baseline_inputs:
+  - baseline/PRIME-SPEC-V1.0.0.notion.md
+  - baseline/Implementation-Handoff-Record-PRIME-SPEC-V1.0.0.notion.md
+  - authority-template/v1/MANIFEST.sha256
+  - contracts/authority-file-contract-v1.md
+  - contracts/shared-domain-contracts-v1.yaml
+  - contracts/project-isolation-v1.md
+  - contracts/storage-architecture-v1.md
+  - contracts/privacy-egress-v1.md
+  - threat-model/PRIME-V1.md
+change_control: SpecChangeRecord plus new approved baseline revision

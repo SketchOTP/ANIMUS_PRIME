@@ -1,0 +1,34 @@
+baseline: PRIME-SPEC-V1.0.0
+status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
+unassigned_allowed: false
+requirements:
+  - {id: R-001, section: "§1", summary: "Product definition and explicit PRIME boundary", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-002, section: "§2", summary: "Architecture rules, isolation, authority map, evidence before inference, source lock", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-003, section: "§3-§4", summary: "Core, UI, Node, bootstrapper, progress, documentation, memory, MCP component boundaries", owner: 1, validate: [2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-004, section: "§5", summary: "Project lifecycle and explicit lifecycle state semantics", owner: 1, validate: [3,12,13,15], status: PLANNED}
+  - {id: R-005, section: "§6", summary: "Repository and Node identity/read-only/path model", owner: 2, validate: [4,11,12,15], status: PLANNED}
+  - {id: R-006, section: "§7", summary: ".agent authority and PROJECT_GOAL contract", owner: 0, validate: [3,7,9,15], status: PLANNED}
+  - {id: R-007, section: "§8", summary: "Evidence-backed progress assessment", owner: 8, validate: [9,11,15], status: PLANNED}
+  - {id: R-008, section: "§9", summary: "Notion project record and managed/user ownership", owner: 7, validate: [9,11,13,15], status: PLANNED}
+  - {id: R-009, section: "§10", summary: "Hindsight-backed isolated PRIME Memory", owner: 5, validate: [6,9,11,15], status: PLANNED}
+  - {id: R-010, section: "§11", summary: "Project-bound PRIME Memory MCP", owner: 6, validate: [9,12,15], status: PLANNED}
+  - {id: R-011, section: "§12", summary: "Repository index, retrieval, source references and provenance", owner: 4, validate: [8,9,10,11,15], status: PLANNED}
+  - {id: R-012, section: "§13", summary: "Events, durable jobs and workflow semantics", owner: 1, validate: [4,5,6,7,8,9,12,13,15], status: PLANNED}
+  - {id: R-013, section: "§14-§15", summary: "Canonical data model and versioned Core API boundaries", owner: 1, validate: [2,4,5,6,7,8,9,10,11,12,15], status: PLANNED}
+  - {id: R-014, section: "§16-§16A", summary: "Complete operator product experience and supporting feature contracts", owner: 7, validate: [8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-015, section: "§17", summary: "Lifecycle management, archive/remove/delete/rebind protections", owner: 12, validate: [13,15], status: PLANNED}
+  - {id: R-016, section: "§18", summary: "Security and trust model including privacy, auth, SSRF, untrusted input and isolation", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-017, section: "§19", summary: "Reliability, backup, recovery, capacity and retention", owner: 13, validate: [15], status: PLANNED}
+  - {id: R-018, section: "§20", summary: "Health, diagnostics, observability, audit and cost visibility", owner: 1, validate: [13,14,15], status: PLANNED}
+  - {id: R-019, section: "§21", summary: "Implementation architecture and deployment posture", owner: 0, validate: [1,13,14,15], status: PLANNED}
+  - {id: R-020, section: "§22", summary: "AI/LLM profiles, privacy/egress, evaluation and model-output boundaries", owner: 0, validate: [5,7,8,9,13,15], status: PLANNED}
+  - {id: R-021, section: "§23", summary: "V1 non-goals and future capability boundaries", owner: 0, validate: [1,6,7,10,15], status: PLANNED}
+  - {id: R-022, section: "§24-§24A", summary: "Mandatory sequential execution and phase qualification governance", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-023, section: "§25", summary: "Unit, contract, integration, security, recovery, UX, AI and compatibility testing", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-024, section: "§26", summary: "V1 Definition of Done", owner: 15, validate: [15], status: PLANNED}
+  - {id: R-025, section: "§27", summary: "AI coding agent operating rules", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
+  - {id: R-026, section: "§28", summary: "Future-only capability boundaries", owner: 0, validate: [15], status: PLANNED}
+  - {id: R-027, section: "§29", summary: "Planning freeze and implementation handoff", owner: 0, validate: [15], status: PLANNED}
+  - {id: R-028, section: "Appendix A", summary: "Project Brain normative visual/provenance/isolation contract", owner: 10, validate: [11,15], status: PLANNED}
+  - {id: R-029, section: "§24A.3", summary: "Phase 0 source lock, contracts, threat model, dependencies, adapter smoke and harness", owner: 0, validate: [15], status: PLANNED}
+  - {id: R-030, section: "§23/§28", summary: "Dreaming Loop execution and Oracle execution are explicitly future-only by spec", owner: 0, validate: [15], status: FUTURE_ONLY_BY_SPEC}

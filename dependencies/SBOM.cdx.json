@@ -1,0 +1,22 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "name": "ANIMUS PRIME",
+      "version": "phase-0",
+      "properties": [
+        {"name": "baseline", "value": "PRIME-SPEC-V1.0.0"}
+      ]
+    }
+  },
+  "components": [
+    {"type":"container","name":"hindsight","version":"0.6.1","purl":"pkg:docker/vectorize-io/hindsight@0.6.1?repository_url=ghcr.io","licenses":[{"license":{"id":"MIT"}}]},
+    {"type":"container","name":"postgres","version":"17.10","purl":"pkg:docker/postgres@17.10","licenses":[{"license":{"id":"PostgreSQL"}}]},
+    {"type":"container","name":"pgvector","version":"0.8.2-pg17","purl":"pkg:docker/pgvector/pgvector@0.8.2-pg17","licenses":[{"license":{"id":"PostgreSQL"}}]},
+    {"type":"container","name":"python","version":"3.13.7-slim","purl":"pkg:docker/library/python@3.13.7-slim"},
+    {"type":"container","name":"node","version":"20.19.0-bookworm-slim","purl":"pkg:docker/library/node@20.19.0-bookworm-slim"}
+  ]
+}

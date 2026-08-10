@@ -1,0 +1,37 @@
+contract: prime.shared-domain
+version: "1.0.0"
+baseline: PRIME-SPEC-V1.0.0
+time:
+  storage: UTC
+  serialization: RFC3339 with explicit Z or numeric offset
+  ordering: source_revision_then_observed_at_then_stable_id
+identity:
+  project_id: opaque UUID; required on every project-scoped operation
+  node_id: opaque UUID; stable for one enrolled node
+  actor_id: opaque UUID; exactly one operator in V1
+  source_id: opaque UUID; stable provenance identity
+  event_id: opaque UUID; idempotency identity
+  job_id: opaque UUID; durable workflow identity
+enums:
+  freshness: [CURRENT, STALE, DEGRADED, OFFLINE, UNKNOWN, PARTIAL, UNAVAILABLE, BLOCKED]
+  lifecycle: [PROVISIONING, READY, DEGRADED, ARCHIVED, REMOVED, DELETING, DELETED]
+  connectivity: [ONLINE, OFFLINE, DEGRADED, UNKNOWN]
+  epistemic_class: [SOURCE_OBSERVATION, USER_FACT, DERIVED_INTERPRETATION, MEMORY, PROGRESS_ASSESSMENT]
+  source_class: [REPOSITORY, GIT, AUTHORITY, NOTION, MEMORY, EVIDENCE, MODEL_OUTPUT, SYSTEM]
+  event_state: [OBSERVED, ACCEPTED, PROCESSED, REJECTED, RETRACTED]
+  job_state: [QUEUED, RUNNING, RETRYING, SUCCEEDED, FAILED, CANCELLED, DEAD_LETTER, ACTION_REQUIRED]
+  reconstruction: [CURRENT, EXACT, PARTIAL, UNAVAILABLE, UNKNOWN]
+  memory_status: [ACTIVE, SUPERSEDED, RETRACTED, TOMBSTONED, UNAVAILABLE]
+  error_semantics: [INVALID_INPUT, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, CONFLICT, STALE_SOURCE, UNAVAILABLE, DEGRADED, INTERNAL]
+source_reference:
+  required: [source_id, project_id, source_class, source_revision, content_hash, observed_at, freshness]
+  no_cross_project: true
+project_event:
+  required: [event_id, project_id, event_type, source_reference, occurred_at, observed_at, idempotency_key]
+  untrusted_payload: true
+workflow:
+  durable: true
+  idempotency_required: true
+  stale_result_rejection: true
+  retries_bounded: true
+  compensation_state_required: true
