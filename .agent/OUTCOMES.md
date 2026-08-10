@@ -168,3 +168,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Ask/UI and final phases remain unimplemented.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE9-001
+- Supersedes outcome: OUT-PRIME-PHASE8-001
+- Closed: 2026-08-10T18:50:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 9 project-scoped Ask/Search/activity foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/intelligence_service.py, migrations/prime/0009_activity.sql, tests/phase9, docs
+- Validation:
+  - pytest tests/phase9 - PASSED
+  - phase9 migration qualification - PASSED
+- Remaining risks: Project Brain, lifecycle, UX and release qualification remain.
+- Blockers: none
+- Follow-up directive: none
