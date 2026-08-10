@@ -36,6 +36,20 @@ Use one live entry for each accepted project task. Keep examples outside this fi
 - Related directive: D-PRIME-PHASE0-001
 - Status at issuance: ISSUED
 
+## D-PRIME-PHASE15-REMEDIATION-005
+
+- Issued: 2026-08-10T23:47:32Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 004 / Continuation 005
+- Objective: Execute the R-031 through R-056 qualification ledger as the sole Phase-15 remediation queue, preserve skipped tests as unproven, and converge individual requirements with real implementation and native/live/recovery evidence.
+- Scope: skipped-test inventory, A/B/C work-queue classification, deterministic native/live qualification procedures, requirement implementation and evidence updates, per-requirement status/count reporting, and required append-only governance updates.
+- Exclusions: rebuilding governance without a defect, test-count optimization, fabricated evidence, simulated Windows/Tailscale/Notion/AI/recovery qualification, release-candidate creation before 26/26 VERIFIED, deployment, and normative changes to PRIME-SPEC-V1.0.0.
+- Acceptance: R-031 through R-056 are individually driven toward VERIFIED; every skipped test has a requirement, environment, release-blocking, and qualification classification; external items have deterministic procedures; each closed requirement has evidence, ledger/traceability/current/outcome updates and qualified commits; V1 remains FAIL until 26/26 VERIFIED and full Phase-15 PASS.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-004
+- Status at issuance: ISSUED
+
 ```markdown
 ## <local-directive-id>
 

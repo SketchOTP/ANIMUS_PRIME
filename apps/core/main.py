@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import base64
 import time
 import uuid
 from collections import defaultdict
@@ -23,6 +24,7 @@ from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
 from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
 from src.prime_core.backup_service import BackupCoordinator, BackupError
+from src.prime_core.history_service import HistoryService
 
 settings = Settings()
 configure()
@@ -32,6 +34,7 @@ memory = MemoryService(settings)
 mcp = MCPService(settings, memory)
 remote_access = TailscaleService(RemoteAccessSettings(web_port=int(__import__("os").getenv("PRIME_WEB_PORT", "8000"))))
 backups = BackupCoordinator()
+history = HistoryService(settings)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -113,6 +116,19 @@ class BackupRequest(BaseModel):
     destination: str = Field(min_length=1, max_length=4096)
     passphrase: str = Field(min_length=12, max_length=512)
     components: dict[str, Any] = Field(default_factory=dict)
+
+
+class EvidenceUploadRequest(BaseModel):
+    filename: str = Field(min_length=1, max_length=128)
+    content_base64: str = Field(min_length=1, max_length=70_000_000)
+    mime_type: str = Field(min_length=1, max_length=120)
+    privacy_class: str = Field(default="PROJECT_PRIVATE", min_length=1, max_length=40)
+
+
+class EvidenceReferenceRequest(BaseModel):
+    source_type: str = Field(min_length=1, max_length=40)
+    locator: str = Field(min_length=1, max_length=4096)
+    privacy_class: str = Field(default="PROJECT_PRIVATE", min_length=1, max_length=40)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -350,6 +366,40 @@ def store_memory(project_id: str, body: MemoryRequest, request: Request, prime_s
 def recall_memory(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return memory.recall(project_id, q)
+
+
+@app.get("/v1/projects/{project_id}/evidence")
+def list_project_evidence(project_id: str, request: Request, include_retracted: bool = False, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {"project_id": project_id, "evidence": history.list_evidence(project_id, include_retracted)}
+
+
+@app.post("/v1/projects/{project_id}/evidence")
+def upload_project_evidence(project_id: str, body: EvidenceUploadRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        content = base64.b64decode(body.content_base64, validate=True)
+        return history.store_uploaded_evidence(project_id, body.filename, content, body.mime_type, body.privacy_class)
+    except (ValueError, OSError) as exc:
+        return error("EVIDENCE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/evidence/reference")
+def reference_project_evidence(project_id: str, body: EvidenceReferenceRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return history.record_evidence(project_id, body.source_type, body.locator, privacy_class=body.privacy_class)
+    except ValueError as exc:
+        return error("EVIDENCE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.delete("/v1/projects/{project_id}/evidence/{evidence_id}")
+def retract_project_evidence(project_id: str, evidence_id: str, reason: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return history.retract_evidence(project_id, evidence_id, reason)
+    except (KeyError, ValueError) as exc:
+        return error("EVIDENCE_RETRACTION_REJECTED", str(exc), request_id(request), status_code=404 if isinstance(exc, KeyError) else 400)
 
 
 @app.post("/v1/projects/{project_id}/mcp/grants")

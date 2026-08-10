@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 
 
@@ -52,11 +53,23 @@ def main() -> int:
     ledger_ids = {re.search(r"requirement_id: (R-\d+)", line).group(1) for line in ledger_rows if re.search(r"requirement_id: (R-\d+)", line)}
     expected_ids = {f"R-{number:03d}" for number in range(31, 57)}
     checks.append(("requirement-level qualification ledger is complete", ledger_ids == expected_ids and all(all(f"{field}:" in line for field in required_fields) for line in ledger_rows)))
+    current_counts = Counter()
+    final_counts = Counter()
+    for line in ledger_rows:
+        current = re.search(r"current_status: ([A-Z_]+)", line)
+        final = re.search(r"final_status: ([A-Z_]+)", line)
+        if current:
+            current_counts[current.group(1)] += 1
+        if final:
+            final_counts[final.group(1)] += 1
     for requirement_id, current_status, final_status in matrix_rows:
         checks.append((f"V1 requirement {requirement_id} VERIFIED", current_status == "VERIFIED" and final_status == "VERIFIED"))
     for name, result in checks:
         print(("PASS" if result else "FAIL") + ": " + name)
         passed = passed and result
+    print("R-031–R-056 current status counts: " + ", ".join(f"{name}={current_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
+    print("R-031–R-056 final status counts: " + ", ".join(f"{name}={final_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
+    print(f"VERIFIED / 26: {current_counts.get('VERIFIED', 0)}/26")
     print("PHASE 15 QUALIFICATION: " + ("PASS" if passed else "FAIL"))
     if not passed:
         print("V1 release result: FAIL — inspect the failing gate evidence before claiming completion.")
