@@ -29,6 +29,6 @@ requirements:
   - {id: R-025, section: "§27", summary: "AI coding agent operating rules", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
   - {id: R-026, section: "§28", summary: "Future-only capability boundaries", owner: 0, validate: [15], status: PLANNED}
   - {id: R-027, section: "§29", summary: "Planning freeze and implementation handoff", owner: 0, validate: [15], status: PLANNED}
-  - {id: R-028, section: "Appendix A", summary: "Project Brain normative visual/provenance/isolation contract", owner: 10, validate: [11,15], status: PLANNED}
+  - {id: R-028, section: "Appendix A", summary: "Project Brain normative visual/provenance/isolation contract", owner: 10, validate: [11,15], status: IMPLEMENTED, phase_status: {10: VERIFIED}}
   - {id: R-029, section: "§24A.3", summary: "Phase 0 source lock, contracts, threat model, dependencies, adapter smoke and harness", owner: 0, validate: [15], status: PLANNED}
   - {id: R-030, section: "§23/§28", summary: "Dreaming Loop execution and Oracle execution are explicitly future-only by spec", owner: 0, validate: [15], status: FUTURE_ONLY_BY_SPEC}
