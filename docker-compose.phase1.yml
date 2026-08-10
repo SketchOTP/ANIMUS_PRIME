@@ -42,11 +42,14 @@ services:
     environment:
       PRIME_NODE_ALLOWED_ROOTS: /workspace
       PRIME_NODE_STATE_FILE: /tmp/prime-node-state.json
+      PRIME_NODE_ALLOW_INSECURE_HTTP: "1"
+      PRIME_NODE_BIND_HOST: 0.0.0.0
+      PRIME_NODE_PORT: "8001"
     ports:
       - "127.0.0.1:18001:8001"
     volumes:
       - .:/workspace:ro
-    command: ["uvicorn", "apps.node.main:app", "--host", "0.0.0.0", "--port", "8001"]
+    command: ["python", "-m", "apps.node.main"]
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health/live')"]
       interval: 5s

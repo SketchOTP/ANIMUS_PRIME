@@ -42,3 +42,34 @@ def test_node_enrollment_path_boundary_and_git_identity(tmp_path: Path, monkeypa
         reenrolled = client.post("/v1/re-enroll", json={"credential": replacement.json()["re_enrollment_credential"]})
         assert reenrolled.status_code == 200
         assert reenrolled.json()["node_id"] != node_id
+
+
+def test_node_runtime_requires_complete_tls_mtls_configuration(monkeypatch):
+    from src.prime_node.config import NodeSettings
+
+    monkeypatch.delenv("PRIME_NODE_TLS_CERT_FILE", raising=False)
+    monkeypatch.delenv("PRIME_NODE_TLS_KEY_FILE", raising=False)
+    monkeypatch.delenv("PRIME_NODE_TLS_CA_FILE", raising=False)
+    monkeypatch.delenv("PRIME_NODE_ALLOW_INSECURE_HTTP", raising=False)
+    settings = NodeSettings()
+    try:
+        settings.uvicorn_kwargs()
+    except ValueError as exc:
+        assert "requires TLS/mTLS" in str(exc)
+    else:
+        raise AssertionError("service mode must not silently start without TLS/mTLS")
+
+
+def test_node_runtime_emits_mtls_uvicorn_configuration(monkeypatch, tmp_path: Path):
+    from src.prime_node.config import NodeSettings
+
+    cert, key, ca = (tmp_path / name for name in ("node.crt", "node.key", "ca.crt"))
+    for path in (cert, key, ca):
+        path.write_text("placeholder", encoding="utf-8")
+    monkeypatch.setenv("PRIME_NODE_TLS_CERT_FILE", str(cert))
+    monkeypatch.setenv("PRIME_NODE_TLS_KEY_FILE", str(key))
+    monkeypatch.setenv("PRIME_NODE_TLS_CA_FILE", str(ca))
+    settings = NodeSettings()
+    kwargs = settings.uvicorn_kwargs()
+    assert kwargs["ssl_cert_reqs"] == 2
+    assert kwargs["ssl_ca_certs"] == str(ca.resolve())

@@ -373,3 +373,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031 through R-056 remain open; no V1 release/deployment claim.
 - Blockers: real cross-platform, live-provider, remote-access, recovery, historical, complete UX and AI/end-to-end evidence remains unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-007
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-006
+- Closed: 2026-08-10T22:42:18Z
+- Acceptance: PARTIAL
+- Summary: Added requirement-level qualification records for R-031 through R-056 and tightened the packaged Node entrypoint to fail closed without TLS/mTLS. A real local HTTPS/mTLS process qualified enrollment and authenticated heartbeat; the V1 gate remains failed because native Linux/Windows lifecycle and the other live evidence domains remain open.
+- Changed areas: src/prime_node/config.py, apps/node/main.py, packaging/node, docker-compose.phase1.yml, tests/phase2/test_node.py, docs/phase15-remediation-matrix.yaml, docs/phase15-remediation-qualification-ledger.yaml, evidence/phase15/R-031-local-tls-mtls-process.md, .agent/CURRENT.md
+- Validation:
+  - focused Node tests - PASSED (4 tests)
+  - compileall - PASSED
+  - git diff --check - PASSED
+  - real local HTTPS/mTLS process: PASSED for startup, client-cert enforcement, enrollment, and heartbeat
+  - requirement-level release matrix: FAILED/OPEN by design; R-031 through R-056 are not verified
+- Remaining risks: native Linux service/reboot, Windows service, live Notion, live Tailscale, backup/restore, historical fidelity, complete UX, AI, and full E2E evidence remain unqualified.
+- Blockers: native Windows and configured external qualification environments are unavailable in this coding environment.
+- Follow-up directive: none

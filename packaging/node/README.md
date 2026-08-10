@@ -10,7 +10,11 @@ repository/read and health routes in `apps/node/main.py`.
 1. Install the pinned Python runtime and `requirements-phase1.txt` in a dedicated
    virtual environment.
 2. Set `PRIME_NODE_ALLOWED_ROOTS`, `PRIME_NODE_BOOTSTRAP_CREDENTIAL`,
-   `PRIME_NODE_STATE_FILE`, and `PRIME_NODE_NAME` in the service environment.
+   `PRIME_NODE_STATE_FILE`, `PRIME_NODE_NAME`, `PRIME_NODE_TLS_CERT_FILE`,
+   `PRIME_NODE_TLS_KEY_FILE`, and `PRIME_NODE_TLS_CA_FILE` in the service
+   environment. The packaged entrypoint refuses to start without the TLS/mTLS
+   files; `PRIME_NODE_ALLOW_INSECURE_HTTP` is reserved for disposable local
+   qualification only.
 3. Install `packaging/node/prime-node.service` for the dedicated service account.
 4. Bind the listener only to an explicitly configured private interface and put
    TLS/mTLS termination in the approved private Core↔Node plane.

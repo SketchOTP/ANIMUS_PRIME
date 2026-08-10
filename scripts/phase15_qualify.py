@@ -29,6 +29,27 @@ def main() -> int:
     matrix = (ROOT / "docs" / "phase15-remediation-matrix.yaml").read_text(encoding="utf-8")
     matrix_rows = re.findall(r"- \{requirement_id: (R-\d+),.*?current_status: ([A-Z_]+),.*?final_status: ([A-Z_]+)\}", matrix)
     checks.append(("release remediation matrix is populated", bool(matrix_rows)))
+    ledger = (ROOT / "docs" / "phase15-remediation-qualification-ledger.yaml").read_text(encoding="utf-8")
+    ledger_rows = [line for line in ledger.splitlines() if line.lstrip().startswith("- {requirement_id:")]
+    required_fields = (
+        "spec_section",
+        "owning_phase",
+        "current_status",
+        "implementation_complete",
+        "live_execution_required",
+        "environment_required",
+        "positive_test",
+        "negative_test",
+        "degraded_test",
+        "recovery_test",
+        "security_test",
+        "evidence_path",
+        "qualified_commit",
+        "final_status",
+    )
+    ledger_ids = {re.search(r"requirement_id: (R-\d+)", line).group(1) for line in ledger_rows if re.search(r"requirement_id: (R-\d+)", line)}
+    expected_ids = {f"R-{number:03d}" for number in range(31, 57)}
+    checks.append(("requirement-level qualification ledger is complete", ledger_ids == expected_ids and all(all(f"{field}:" in line for field in required_fields) for line in ledger_rows)))
     for requirement_id, current_status, final_status in matrix_rows:
         checks.append((f"V1 requirement {requirement_id} VERIFIED", current_status == "VERIFIED" and final_status == "VERIFIED"))
     for name, result in checks:

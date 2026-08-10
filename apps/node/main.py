@@ -95,3 +95,14 @@ def read_file(body: PathRequest, authorization: str | None = Header(default=None
 def revoke(authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
     require_node(authorization, x_prime_node_id, x_prime_protocol)
     return {"status": "REVOKED", "re_enrollment_credential": service.revoke()}
+
+
+def run() -> None:
+    """Run the packaged Node with mandatory TLS/mTLS service configuration."""
+    import uvicorn
+
+    uvicorn.run(app, **settings.uvicorn_kwargs())
+
+
+if __name__ == "__main__":
+    run()
