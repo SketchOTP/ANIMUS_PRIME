@@ -8,7 +8,7 @@ requirements:
   - {id: R-004, section: "§5", summary: "Project lifecycle and explicit lifecycle state semantics", owner: 1, validate: [3,12,13,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-005, section: "§6", summary: "Repository and Node identity/read-only/path model", owner: 2, validate: [4,11,12,15], status: IMPLEMENTED, phase_status: {2: VERIFIED}}
   - {id: R-006, section: "§7", summary: ".agent authority and PROJECT_GOAL contract", owner: 0, validate: [3,7,9,15], status: IMPLEMENTED, phase_status: {3: VERIFIED}}
-  - {id: R-007, section: "§8", summary: "Evidence-backed progress assessment", owner: 8, validate: [9,11,15], status: PLANNED}
+  - {id: R-007, section: "§8", summary: "Evidence-backed progress assessment", owner: 8, validate: [9,11,15], status: IMPLEMENTED, phase_status: {8: VERIFIED}}
   - {id: R-008, section: "§9", summary: "Notion project record and managed/user ownership", owner: 7, validate: [9,11,13,15], status: IMPLEMENTED, phase_status: {7: VERIFIED}}
   - {id: R-009, section: "§10", summary: "Hindsight-backed isolated PRIME Memory", owner: 5, validate: [6,9,11,15], status: IMPLEMENTED, phase_status: {5: VERIFIED}}
   - {id: R-010, section: "§11", summary: "Project-bound PRIME Memory MCP", owner: 6, validate: [9,12,15], status: IMPLEMENTED, phase_status: {6: VERIFIED}}

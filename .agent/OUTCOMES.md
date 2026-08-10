@@ -153,3 +153,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: live Notion dispatch and later operator product phases remain.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE8-001
+- Supersedes outcome: OUT-PRIME-PHASE7-001
+- Closed: 2026-08-10T18:35:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 8 deterministic GoalModel baseline and evidence-backed progress foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/progress_service.py, migrations/prime/0008_progress.sql, tests/phase8, docs
+- Validation:
+  - pytest tests/phase8 - PASSED
+  - phase8 migration qualification - PASSED
+- Remaining risks: Ask/UI and final phases remain unimplemented.
+- Blockers: none
+- Follow-up directive: none
