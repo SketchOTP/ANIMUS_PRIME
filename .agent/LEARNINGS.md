@@ -45,3 +45,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Repository navigation and governance maintenance.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-003
+
+- Date: 2026-08-10
+- Learning ID: L-PRIME-PHASE15-003
+- Fact or lesson: A skipped PostgreSQL integration test is not release evidence; it must retain its affected requirement mapping, exact missing environment, release-blocking effect, and deterministic qualification method until exercised.
+- Evidence location: docs/phase15-skipped-test-inventory.md; Continuation 005 qualification directive.
+- Confidence: VERIFIED
+- Scope: Phase-15 skipped-test handling and all requirement-level release decisions.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-004
+
+- Date: 2026-08-10
+- Learning ID: L-PRIME-PHASE15-004
+- Fact or lesson: Evidence metadata and retraction can be implemented locally without proving R-046/R-047; PostgreSQL migration, parser/index, citation, backup/restore, and live project-isolation evidence remain separate qualification obligations.
+- Evidence location: evidence/phase15/R-046-R-047-implementation-preflight.md; src/prime_core/history_service.py; migrations/prime/0015_evidence_lifecycle.sql.
+- Confidence: VERIFIED
+- Scope: R-046/R-047 implementation and Phase-15 evidence qualification.
+- Supersedes learning: none

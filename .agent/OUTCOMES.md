@@ -444,3 +444,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: native Linux/Windows lifecycle, live Notion/Tailscale, backup/restore/capacity, Evidence and historical fidelity, complete UX, AI, and fresh-install end-to-end evidence remain unqualified.
 - Blockers: external qualification environments and credentials are still not available in this coding environment; no evidence was fabricated.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-005 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-011
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-010
+- Closed: 2026-08-10T23:55:00Z
+- Acceptance: PARTIAL
+- Summary: Executed Continuation 005 as a ledger-driven work cycle. Recorded all 15 skipped tests with requirement/environment/release-blocking mappings, added deterministic qualification procedures and the A/B/C queue, added Phase-15 status-count reporting, and advanced the R-046/R-047 Evidence implementation boundary in commit `22a85f8`. No requirement was promoted to VERIFIED; V1 remains FAIL and deployment was not performed.
+- Changed areas: .agent/DIRECTIVES.md, .agent/CURRENT.md, .agent/LEARNINGS.md, .agent/REPO_MAP.md, .agent/OUTCOMES.md, apps/core/main.py, src/prime_core/evidence_validation.py, src/prime_core/history_service.py, migrations/prime/0015_evidence_lifecycle.sql, tests/phase11/test_evidence_validation.py, docs/phase15-remediation-queue.md, docs/phase15-skipped-test-inventory.md, docs/phase15-qualification-procedures.md, docs/requirements-traceability.yaml, evidence/phase15/R-046-R-047-implementation-preflight.md, scripts/phase15_qualify.py
+- Validation:
+  - codebase-memory MCP index attempt; transport closed and targeted local fallback used - BLOCKED
+  - python3 scripts/validate_governance.py --mode ADOPTED - PASSED
+  - python3 -m pytest tests -q -rs - PASSED (24 passed, 15 skipped; skipped PostgreSQL integration remains unproven)
+  - python3 -m compileall -q apps src tests - PASSED
+  - git diff --check - PASSED
+  - phase15_qualify.py status reporting - PASSED for count emission; full qualification - FAILED because host psycopg/PRIME_PHASE1_DB_URL and R-031–R-056 evidence are unavailable
+  - R-031–R-056 qualification - NOT RUN; counts IMPLEMENTING=26, OPEN=26, BLOCKED=0, VERIFIED=0; VERIFIED / 26 = 0/26
+  - deployment - NOT PERFORMED
+- Remaining risks: native Linux/Windows lifecycle, live Tailscale/Notion, backup/restore/capacity, PostgreSQL-backed Evidence/Time Lens, browser UX, approved AI, and full end-to-end evidence remain open.
+- Blockers: host `psycopg` and `PRIME_PHASE1_DB_URL` are unavailable; required native/live provider/device/recovery environments remain unqualified.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-005

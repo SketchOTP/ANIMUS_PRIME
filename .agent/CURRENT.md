@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T23:47:32Z`
+- Last updated: `2026-08-10T23:55:58Z`
 
 ## Active state after adoption
 
