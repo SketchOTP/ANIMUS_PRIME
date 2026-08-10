@@ -356,3 +356,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: real TLS/mTLS, Linux/Windows native service, restart/reconnect, version upgrade and cross-platform evidence remain open; V1 release remains failed.
 - Blockers: no supported Windows environment or live private control-plane qualification environment was asserted.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - FAILED
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-006
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-005
+- Closed: 2026-08-10T21:35:00Z
+- Acceptance: NOT MET
+- Summary: Reran the complete Phase-15 mechanical gate from clean commit b03d993 on a fresh PostgreSQL state. 36 tests and all Phase 1–14 qualification checks passed; every open release-matrix requirement correctly kept the V1 release gate failed.
+- Changed areas: evidence/phase15/remediation-qualification-002.md, .agent/OUTCOMES.md
+- Validation:
+  - clean PostgreSQL phase15_qualify run - FAILED only at V1 matrix gate; mechanical checks PASSED
+  - full regression suite - PASSED (36 tests)
+  - Phase 1–14 qualification sequence - PASSED
+  - disposable qualification stack teardown - PASSED
+- Remaining risks: R-031 through R-056 remain open; no V1 release/deployment claim.
+- Blockers: real cross-platform, live-provider, remote-access, recovery, historical, complete UX and AI/end-to-end evidence remains unqualified.
+- Follow-up directive: none
