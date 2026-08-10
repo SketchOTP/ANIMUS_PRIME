@@ -243,3 +243,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: packaging, final UX and full release suite remain.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE14-001
+- Supersedes outcome: OUT-PRIME-PHASE13-001
+- Closed: 2026-08-10T20:05:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 14 accessible responsive operator web shell foundation implemented and qualified; overall directive remains active pending Phase 15.
+- Changed areas: apps/web, tests/phase14, docs
+- Validation:
+  - pytest tests/phase14 - PASSED
+  - phase14 shell qualification - PASSED
+- Remaining risks: Phase 15 full-system qualification remains.
+- Blockers: none
+- Follow-up directive: none

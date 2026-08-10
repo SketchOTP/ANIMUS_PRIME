@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T19:50:00Z`
+- Last updated: `2026-08-10T20:05:00Z`
 
 ## Active state after adoption
 
@@ -11,10 +11,10 @@
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 13 PASS; proceed sequentially with exact qualified Git commits.`
-- Current phase: `13`
-- Expected or actual touched areas: `src/prime_core/reliability_service.py, migrations/prime/0013_reliability.sql, tests/phase13, docs, .agent`
-- Immediate next action: `Begin Phase 14 complete operator web shell and packaging polish.`
+- Acceptance: `Phase 0 through Phase 14 PASS; proceed sequentially with exact qualified Git commits.`
+- Current phase: `14`
+- Expected or actual touched areas: `apps/web, tests/phase14, docs, .agent`
+- Immediate next action: `Run Phase 15 full-system regression and release qualification.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `pytest tests/phase13 -q; scripts/phase13_qualify.py; prior phase records`
+- Command or check: `pytest tests/phase14 -q; scripts/phase14_qualify.py; prior phase records`
 - Result: `PASSED`
 
 ## Risks
