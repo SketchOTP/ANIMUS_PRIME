@@ -198,3 +198,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: historical evidence, lifecycle, UX and final release phases remain.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE11-001
+- Supersedes outcome: OUT-PRIME-PHASE10-001
+- Closed: 2026-08-10T19:20:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 11 evidence, Time Lens and isolated Fork foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/history_service.py, migrations/prime/0011_evidence_time_lens.sql, tests/phase11, docs
+- Validation:
+  - pytest tests/phase11 - PASSED
+  - phase11 migration qualification - PASSED
+- Remaining risks: lifecycle, reliability, UX and final release phases remain.
+- Blockers: none
+- Follow-up directive: none
