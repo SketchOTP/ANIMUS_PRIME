@@ -213,3 +213,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: lifecycle, reliability, UX and final release phases remain.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE12-001
+- Supersedes outcome: OUT-PRIME-PHASE11-001
+- Closed: 2026-08-10T19:35:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 12 lifecycle and destructive safety foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/lifecycle_service.py, migrations/prime/0012_lifecycle.sql, tests/phase12, docs
+- Validation:
+  - pytest tests/phase12 - PASSED
+  - phase12 migration qualification - PASSED
+- Remaining risks: backup/reliability, UX and final release phases remain.
+- Blockers: none
+- Follow-up directive: none

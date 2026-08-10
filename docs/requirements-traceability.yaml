@@ -16,7 +16,7 @@ requirements:
   - {id: R-012, section: "§13", summary: "Events, durable jobs and workflow semantics", owner: 1, validate: [4,5,6,7,8,9,12,13,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-013, section: "§14-§15", summary: "Canonical data model and versioned Core API boundaries", owner: 1, validate: [2,4,5,6,7,8,9,10,11,12,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-014, section: "§16-§16A", summary: "Complete operator product experience and supporting feature contracts", owner: 7, validate: [8,9,10,11,12,13,14,15], status: IMPLEMENTED, phase_status: {9: VERIFIED}}
-  - {id: R-015, section: "§17", summary: "Lifecycle management, archive/remove/delete/rebind protections", owner: 12, validate: [13,15], status: PLANNED}
+  - {id: R-015, section: "§17", summary: "Lifecycle management, archive/remove/delete/rebind protections", owner: 12, validate: [13,15], status: IMPLEMENTED, phase_status: {12: VERIFIED}}
   - {id: R-016, section: "§18", summary: "Security and trust model including privacy, auth, SSRF, untrusted input and isolation", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
   - {id: R-017, section: "§19", summary: "Reliability, backup, recovery, capacity and retention", owner: 13, validate: [15], status: IMPLEMENTED, phase_status: {5: VERIFIED}}
   - {id: R-018, section: "§20", summary: "Health, diagnostics, observability, audit and cost visibility", owner: 1, validate: [13,14,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
