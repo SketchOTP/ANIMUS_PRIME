@@ -258,3 +258,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Phase 15 full-system qualification remains.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - FAILED
+
+- Outcome ID: OUT-PRIME-PHASE15-001
+- Supersedes outcome: OUT-PRIME-PHASE14-001
+- Closed: 2026-08-10T20:20:00Z
+- Acceptance: NOT MET
+- Summary: Phase 15 mechanical regression gate passed, but the approved V1 Definition-of-Done gate failed because the explicit normative gaps remain.
+- Changed areas: scripts/phase15_qualify.py, evidence/phase15/qualification-report.md, .agent/phase-records/PHASE-15.md
+- Validation:
+  - clean full regression suite - PASSED (26 tests)
+  - Phase 0–13 migration qualifications - PASSED
+  - governance and baseline identity - PASSED
+  - V1 Definition-of-Done reconciliation - FAILED
+- Remaining risks: see evidence/phase15/qualification-report.md; no release/deployment occurred.
+- Blockers: live Notion lifecycle, native Node/control plane packaging, complete UX, Tailscale, automated backup/capacity, historical Evidence, AI/end-to-end release evidence.
+- Follow-up directive: none
