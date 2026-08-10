@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import os
+import re
+from pathlib import Path
 from typing import Any
 
 from .db import connect, transaction
+from .evidence_validation import validate_evidence
 from .service import _id, now
 
 
@@ -13,8 +17,29 @@ class HistoryService:
 
     def record_evidence(self, project_id: str, source_type: str, locator: str, content: bytes | None = None) -> dict[str, Any]:
         digest = hashlib.sha256(content).hexdigest() if content is not None else None
+        size = len(content) if content is not None else None
+        parser_status = "READY" if content is None or validate_evidence(content, source_type) else "REJECTED"
         with transaction(self.settings) as db:
-            row = db.execute("INSERT INTO prime_core.evidence_records(evidence_id,project_id,source_type,locator,content_hash,captured_at,parser_status) VALUES (%s,%s,%s,%s,%s,%s,'READY') RETURNING *", (_id("evidence"), project_id, source_type, locator, digest, now())).fetchone()
+            row = db.execute("INSERT INTO prime_core.evidence_records(evidence_id,project_id,source_type,locator,content_hash,captured_at,parser_status,size_bytes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *", (_id("evidence"), project_id, source_type, locator, digest, now(), parser_status, size)).fetchone()
+            return dict(row)
+
+    def store_uploaded_evidence(self, project_id: str, filename: str, content: bytes, mime_type: str) -> dict[str, Any]:
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", filename):
+            raise ValueError("Evidence filename must be a simple leaf name")
+        if mime_type in {"text/html", "application/javascript", "application/x-sh", "application/x-executable"}:
+            raise ValueError("active Evidence MIME types are not supported")
+        if not validate_evidence(content, "UPLOAD"):
+            raise ValueError("Evidence content failed safe validation")
+        root = Path(os.getenv("PRIME_EVIDENCE_ROOT", ".prime-evidence")).resolve()
+        target_dir = (root / project_id).resolve()
+        if root not in target_dir.parents:
+            raise ValueError("invalid Evidence storage root")
+        target_dir.mkdir(parents=True, exist_ok=True)
+        digest = hashlib.sha256(content).hexdigest()
+        target = target_dir / f"{digest}-{filename}"
+        target.write_bytes(content)
+        with transaction(self.settings) as db:
+            row = db.execute("INSERT INTO prime_core.evidence_records(evidence_id,project_id,source_type,locator,content_hash,captured_at,parser_status,storage_path,mime_type,size_bytes) VALUES (%s,%s,'UPLOAD',%s,%s,%s,'READY',%s,%s,%s) RETURNING *", (_id("evidence"), project_id, filename, digest, now(), str(target), mime_type, len(content))).fetchone()
             return dict(row)
 
     def time_lens(self, project_id: str, as_of: str) -> dict[str, Any]:

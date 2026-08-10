@@ -19,11 +19,11 @@ class NodeService:
 
     def _load(self) -> dict[str, Any]:
         if not self.settings.state_file.exists():
-            return {"node_id": None, "token_hash": None, "revoked": False}
+            return {"node_id": None, "token_hash": None, "revoked": False, "enrollment_hash": None, "bootstrap_consumed": False}
         try:
             return json.loads(self.settings.state_file.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
-            return {"node_id": None, "token_hash": None, "revoked": True}
+            return {"node_id": None, "token_hash": None, "revoked": True, "enrollment_hash": None, "bootstrap_consumed": True}
 
     def _save(self) -> None:
         self.settings.state_file.parent.mkdir(parents=True, exist_ok=True)
@@ -33,22 +33,56 @@ class NodeService:
         temp.replace(self.settings.state_file)
 
     def enroll(self, credential: str) -> tuple[str, str]:
-        if not secrets.compare_digest(credential, self.settings.bootstrap_credential):
+        accepted = not self.state.get("bootstrap_consumed") and secrets.compare_digest(credential, self.settings.bootstrap_credential)
+        if self.state.get("revoked") and self.state.get("enrollment_hash"):
+            accepted = accepted or secrets.compare_digest(self.digest(credential), self.state["enrollment_hash"])
+        if not accepted:
             raise PermissionError("invalid node bootstrap credential")
         if self.state.get("node_id") and not self.state.get("revoked"):
             raise ValueError("node is already enrolled")
         node_id = f"node_{uuid.uuid4().hex}"
         token = secrets.token_urlsafe(32)
-        self.state = {"node_id": node_id, "token_hash": self.digest(token), "revoked": False}
+        self.state = {
+            "node_id": node_id,
+            "token_hash": self.digest(token),
+            "enrollment_hash": None,
+            "bootstrap_consumed": True,
+            "revoked": False,
+            "name": self.settings.node_name,
+            "protocol_version": self.settings.protocol_version,
+            "capabilities": list(self.settings.capabilities),
+        }
         self._save()
         return node_id, token
 
     def authenticate(self, token: str) -> bool:
         return bool(self.state.get("node_id") and not self.state.get("revoked") and secrets.compare_digest(self.digest(token), self.state.get("token_hash", "")))
 
-    def revoke(self) -> None:
+    def revoke(self) -> str:
         self.state["revoked"] = True
+        replacement = secrets.token_urlsafe(32)
+        self.state["enrollment_hash"] = self.digest(replacement)
         self._save()
+        return replacement
+
+    def rotate(self, token: str) -> str:
+        if not self.authenticate(token):
+            raise PermissionError("node authentication required")
+        replacement = secrets.token_urlsafe(32)
+        self.state["token_hash"] = self.digest(replacement)
+        self._save()
+        return replacement
+
+    def status(self) -> dict[str, Any]:
+        return {
+            "node_id": self.state.get("node_id"),
+            "name": self.state.get("name", self.settings.node_name),
+            "protocol_version": self.state.get("protocol_version", self.settings.protocol_version),
+            "capabilities": self.state.get("capabilities", list(self.settings.capabilities)),
+            "allowed_roots": [str(root) for root in self.settings.allowed_roots],
+            "revoked": bool(self.state.get("revoked")),
+            "service": "prime-node",
+        }
 
     def safe_path(self, requested: str) -> Path:
         candidate = Path(requested).expanduser().resolve(strict=True)

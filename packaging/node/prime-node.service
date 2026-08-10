@@ -1,0 +1,22 @@
+[Unit]
+Description=ANIMUS PRIME repository node
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=prime-node
+Group=prime-node
+WorkingDirectory=/opt/animus-prime
+EnvironmentFile=/etc/animus-prime/node.env
+ExecStart=/opt/animus-prime/.venv/bin/uvicorn apps.node.main:app --host ${PRIME_NODE_BIND_HOST} --port ${PRIME_NODE_PORT}
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/animus-prime-node
+
+[Install]
+WantedBy=multi-user.target

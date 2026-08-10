@@ -275,3 +275,36 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: see evidence/phase15/qualification-report.md; no release/deployment occurred.
 - Blockers: live Notion lifecycle, native Node/control plane packaging, complete UX, Tailscale, automated backup/capacity, historical Evidence, AI/end-to-end release evidence.
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-001
+- Supersedes outcome: OUT-PRIME-PHASE15-001
+- Closed: 2026-08-10T20:35:00Z
+- Acceptance: PARTIAL
+- Summary: Reconciled the Phase-15 release failure to exact PRIME-SPEC requirements, reopened affected broad traceability rows, and created a granular R1-R7 remediation matrix. No V1 release claim was made.
+- Changed areas: docs/requirements-traceability.yaml, docs/phase15-remediation-matrix.yaml, .agent/CURRENT.md, .agent/phase-records/PHASE-15.md
+- Validation:
+  - Notion source and Implementation Handoff re-read - PASSED
+  - traceability reconciliation - PASSED
+  - historical Phase-15 FAIL preserved - PASSED
+- Remaining risks: all matrix rows R-031 through R-056 remain OPEN/IMPLEMENTING until implementation and evidence are qualified.
+- Blockers: no external blocker asserted; live-provider and real cross-platform evidence require configured environments/credentials.
+- Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-002
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-001
+- Closed: 2026-08-10T20:55:00Z
+- Acceptance: PARTIAL
+- Summary: Implemented R1-R5 remediation foundations: Node lifecycle/protocol state, fixed-argv private Tailscale Serve control, server-side Notion API retry adapter, encrypted continuity bundle/preflight, Evidence validation/storage primitives, and historical checkpoint schema foundations. V1 remains failed pending real qualification evidence.
+- Changed areas: apps/node, src/prime_node, src/prime_core, migrations/prime/0014_remediation_foundations.sql, packaging/node, tests, docs/phase15-remediation.md, scripts/phase15_qualify.py
+- Validation:
+  - python3 -m pytest tests -q - PASSED (20 passed, 15 skipped due missing psycopg/qualification database)
+  - focused remediation tests - PASSED (10 tests)
+  - python3 scripts/validate_governance.py --mode ADOPTED - PASSED
+  - python3 scripts/phase15_qualify.py - FAILED (DB qualifications unavailable; matrix rows R-031 through R-056 still open)
+- Remaining risks: live Notion provider, real Linux/Windows Node, actual Tailscale tailnet, backup/restore drills, complete historical reconstruction, complete UX, and AI/end-to-end evidence remain unverified.
+- Blockers: local qualification environment lacks psycopg/PostgreSQL; no configured live Notion/Tailscale/Linux+Windows evidence environments were asserted.
+- Follow-up directive: none

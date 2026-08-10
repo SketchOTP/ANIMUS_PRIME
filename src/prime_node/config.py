@@ -15,4 +15,13 @@ class NodeSettings:
         if item
     )
     max_read_bytes: int = int(os.getenv("PRIME_NODE_MAX_READ_BYTES", str(5 * 1024 * 1024)))
-
+    node_name: str = os.getenv("PRIME_NODE_NAME", "prime-node")
+    protocol_version: str = os.getenv("PRIME_NODE_PROTOCOL_VERSION", "node-control-v1")
+    capabilities: tuple[str, ...] = tuple(
+        value.strip()
+        for value in os.getenv(
+            "PRIME_NODE_CAPABILITIES",
+            "repository.inspect,files.read,git.read,health,heartbeat",
+        ).split(",")
+        if value.strip()
+    )
