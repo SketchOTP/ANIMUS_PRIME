@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T18:05:00Z`
+- Last updated: `2026-08-10T18:20:00Z`
 
 ## Active state after adoption
 
@@ -11,10 +11,10 @@
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 6 PASS; proceed sequentially with exact qualified Git commits.`
-- Current phase: `6`
-- Expected or actual touched areas: `src/prime_core/mcp_service.py, migrations/prime/0006_mcp.sql, tests/phase6, docs, .agent`
-- Immediate next action: `Begin Phase 7 Notion project record and documentation projection.`
+- Acceptance: `Phase 0 through Phase 7 PASS; proceed sequentially with exact qualified Git commits.`
+- Current phase: `7`
+- Expected or actual touched areas: `src/prime_core/notion_service.py, migrations/prime/0007_notion.sql, tests/phase7, docs, .agent`
+- Immediate next action: `Begin Phase 8 evidence-backed GoalModel and progress assessment.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `pytest tests/phase6 -q; scripts/phase6_qualify.py; governance validation`
+- Command or check: `pytest tests/phase7 -q; scripts/phase7_qualify.py; governance validation`
 - Result: `PASSED`
 
 ## Risks

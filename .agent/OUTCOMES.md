@@ -137,3 +137,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Notion, progress, UI, lifecycle and final release phases remain unimplemented.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE7-001
+- Supersedes outcome: OUT-PRIME-PHASE6-001
+- Closed: 2026-08-10T18:20:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 7 managed Notion projection foundation implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/notion_service.py, migrations/prime/0007_notion.sql, tests/phase7, docs
+- Validation:
+  - pytest tests/phase7 - PASSED
+  - phase7 migration qualification - PASSED
+  - governance validation - PASSED
+- Remaining risks: live Notion dispatch and later operator product phases remain.
+- Blockers: none
+- Follow-up directive: none
