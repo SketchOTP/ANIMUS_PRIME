@@ -74,3 +74,18 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Windows native packaging and full repository compatibility matrix continue through later phases.
 - Blockers: none
 - Follow-up directive: none
+
+## D-PRIME-PHASE0-001 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE3-001
+- Supersedes outcome: OUT-PRIME-PHASE2-001
+- Closed: 2026-08-10T17:20:00Z
+- Acceptance: PARTIAL
+- Summary: Phase 3 onboarding, authority provisioning and approved goal revisions implemented and qualified; overall directive remains active.
+- Changed areas: src/prime_core/authority.py, migrations/prime/0003_onboarding.sql, tests/phase3, apps/core, docs
+- Validation:
+  - pytest tests/phase0 tests/phase1 tests/phase2 tests/phase3 - PASSED (15 tests)
+  - Phase 1/2/3 migration qualification - PASSED
+- Remaining risks: Phases 4–15 remain unimplemented and unqualified.
+- Blockers: none
+- Follow-up directive: none

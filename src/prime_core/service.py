@@ -4,6 +4,7 @@ import json
 import logging
 import time
 import uuid
+import hashlib
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -141,6 +142,52 @@ class CoreService:
     def list_nodes(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:
             return [dict(row) for row in db.execute("SELECT * FROM prime_core.nodes ORDER BY enrolled_at").fetchall()]
+
+    def bind_repository(self, project_id: str, node_id: str, identity_fingerprint: str, canonical_path: str, is_bare: bool = False) -> dict[str, Any]:
+        timestamp = now()
+        with transaction(self.settings) as db:
+            if is_bare:
+                raise ValueError("bare repositories are not supported")
+            if not db.execute("SELECT 1 FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone():
+                raise KeyError("project not found")
+            if not db.execute("SELECT 1 FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone():
+                raise KeyError("node not found")
+            row = db.execute(
+                "INSERT INTO prime_core.repositories(repository_id,node_id,project_id,identity_fingerprint,canonical_path,is_bare,created_at,last_observed_at) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *",
+                (_id("repo"), node_id, project_id, identity_fingerprint, canonical_path, is_bare, timestamp, timestamp),
+            ).fetchone()
+            db.execute(
+                "INSERT INTO prime_core.project_bindings(project_id,node_id,repository_id,binding_status,bound_at,updated_at) VALUES (%s,%s,%s,'BOUND',%s,%s)",
+                (project_id, node_id, row["repository_id"], timestamp, timestamp),
+            )
+            db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING', connectivity_state='ONLINE', freshness_state='CURRENT', work_condition='NORMAL', updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+            self._audit(db, "operator", "operator", "repository.bound", project_id=project_id, target_id=row["repository_id"])
+            return dict(row)
+
+    def create_goal_revision(self, project_id: str, content: str, approve: bool = False) -> dict[str, Any]:
+        timestamp = now()
+        with transaction(self.settings) as db:
+            last = db.execute("SELECT COALESCE(MAX(revision_number),0) AS number FROM prime_core.goal_revisions WHERE project_id=%s", (project_id,)).fetchone()["number"]
+            status = "APPROVED" if approve else "DRAFT"
+            row = db.execute(
+                "INSERT INTO prime_core.goal_revisions(goal_revision_id,project_id,revision_number,content,content_hash,status,approved_by,created_at,approved_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *",
+                (_id("goal"), project_id, last + 1, content, hashlib.sha256(content.encode()).hexdigest(), status, "operator" if approve else None, timestamp, timestamp if approve else None),
+            ).fetchone()
+            if approve:
+                db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND goal_revision_id<>%s AND status='APPROVED'", (project_id, row["goal_revision_id"]))
+                db.execute("UPDATE prime_core.projects SET work_condition='NORMAL', updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+            self._audit(db, "operator", "operator", "goal.revision_created", project_id=project_id, target_id=row["goal_revision_id"])
+            return dict(row)
+
+    def record_authority_revision(self, project_id: str, source_path: str, source_hash: str, validation_status: str, metadata: dict[str, Any] | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "INSERT INTO prime_core.authority_revisions(authority_revision_id,project_id,source_path,source_hash,contract_version,validation_status,observed_at,metadata) VALUES (%s,%s,%s,%s,'authority-file-contract-v1',%s,now(),%s) RETURNING *",
+                (_id("authority"), project_id, source_path, source_hash, validation_status, json.dumps(metadata or {})),
+            ).fetchone()
+            self._audit(db, "system", "authority-observer", "authority.observed", project_id=project_id, target_id=row["authority_revision_id"])
+            return dict(row)
 
     def create_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None = None) -> dict[str, Any]:
         timestamp = now()

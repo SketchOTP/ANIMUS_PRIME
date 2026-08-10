@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T17:05:00Z`
+- Last updated: `2026-08-10T17:20:00Z`
 
 ## Active state after adoption
 
@@ -11,10 +11,10 @@
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 2 PASS; proceed sequentially with exact qualified Git commits.`
-- Current phase: `2`
-- Expected or actual touched areas: `apps/node, src/prime_node, migrations/prime/0002_nodes.sql, tests/phase2, Dockerfile.node, docs, .agent`
-- Immediate next action: `Begin Phase 3 project onboarding, .agent authority, and goal approval.`
+- Acceptance: `Phase 0 through Phase 3 PASS; proceed sequentially with exact qualified Git commits.`
+- Current phase: `3`
+- Expected or actual touched areas: `src/prime_core/authority.py, migrations/prime/0003_onboarding.sql, tests/phase3, docs, .agent`
+- Immediate next action: `Begin Phase 4 repository indexing, source references, and freshness infrastructure.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `pytest tests/phase0 tests/phase1 tests/phase2 -q; scripts/phase1_qualify.py; scripts/phase2_qualify.py; Core/Node health`
+- Command or check: `pytest tests/phase0 tests/phase1 tests/phase2 tests/phase3 -q; phase1/2/3 qualification`
 - Result: `PASSED`
 
 ## Risks

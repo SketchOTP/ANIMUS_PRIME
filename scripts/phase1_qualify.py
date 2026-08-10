@@ -29,7 +29,7 @@ def main() -> int:
     checks = [
         ("migration applies", "0001_core.sql" in first or not first),
         ("migration idempotence", second == []),
-        ("schema version", schema_version(settings) in {"0001_core.sql", "0002_nodes.sql"}),
+        ("schema version", schema_version(settings) != "NONE"),
         ("canonical tables", required <= tables),
     ]
     failed = [name for name, passed in checks if not passed]

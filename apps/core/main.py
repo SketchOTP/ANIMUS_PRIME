@@ -14,6 +14,8 @@ from pydantic import BaseModel, Field
 from src.prime_core.config import Settings
 from src.prime_core.db import migrate, schema_version, connect
 from src.prime_core.logging import configure
+from src.prime_core.authority import validate_authority, provision_authority
+from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
 
@@ -62,6 +64,27 @@ class NodeRequest(BaseModel):
     identity_fingerprint: str = Field(min_length=32, max_length=128)
     allowed_roots: list[str] = Field(default_factory=list)
     capabilities: dict[str, Any] = Field(default_factory=dict)
+
+
+class RepositoryBindingRequest(BaseModel):
+    project_id: str
+    node_id: str
+    identity_fingerprint: str
+    canonical_path: str
+    is_bare: bool = False
+
+
+class GoalRequest(BaseModel):
+    content: str = Field(min_length=1, max_length=200000)
+    approve: bool = False
+
+
+class AuthorityRequest(BaseModel):
+    project_id: str
+    source_path: str
+    source_hash: str
+    validation_status: str
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -248,3 +271,27 @@ def register_node(body: NodeRequest, request: Request, prime_session: str | None
 def list_nodes(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return {"nodes": service.list_nodes()}
+
+
+@app.post("/v1/repositories/bind")
+def bind_repository(body: RepositoryBindingRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.bind_repository(body.project_id, body.node_id, body.identity_fingerprint, body.canonical_path, body.is_bare)
+    except (KeyError, ValueError) as exc:
+        return error("BINDING_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/goal")
+def create_goal(project_id: str, body: GoalRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.create_goal_revision(project_id, body.content, body.approve)
+    except Exception as exc:
+        return error("GOAL_REJECTED", type(exc).__name__, request_id(request), status_code=400)
+
+
+@app.post("/v1/authority/revisions")
+def record_authority(body: AuthorityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata)
