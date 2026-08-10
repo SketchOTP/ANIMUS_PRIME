@@ -21,6 +21,8 @@ from src.prime_core.mcp_service import MCPService
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
+from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
+from src.prime_core.backup_service import BackupCoordinator, BackupError
 
 settings = Settings()
 configure()
@@ -28,6 +30,8 @@ service = CoreService(settings)
 indexer = RepositoryIndexer(service)
 memory = MemoryService(settings)
 mcp = MCPService(settings, memory)
+remote_access = TailscaleService(RemoteAccessSettings(web_port=int(__import__("os").getenv("PRIME_WEB_PORT", "8000"))))
+backups = BackupCoordinator()
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -103,6 +107,12 @@ class MemoryRequest(BaseModel):
 
 class GrantRequest(BaseModel):
     client_id: str = Field(min_length=1, max_length=160)
+
+
+class BackupRequest(BaseModel):
+    destination: str = Field(min_length=1, max_length=4096)
+    passphrase: str = Field(min_length=12, max_length=512)
+    components: dict[str, Any] = Field(default_factory=dict)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -355,3 +365,42 @@ def issue_mcp_grant(project_id: str, body: GrantRequest, request: Request, prime
 def mcp_tool(tool: str, body: dict[str, Any], authorization: str | None = Header(default=None)):
     token = authorization[7:] if authorization and authorization.startswith("Bearer ") else ""
     return mcp.call(token, tool, body)
+
+
+@app.get("/v1/system/remote-access")
+def remote_access_status(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return remote_access.status()
+
+
+@app.post("/v1/system/remote-access/tailscale/configure")
+def configure_remote_access(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return remote_access.configure_serve()
+    except PermissionError as exc:
+        return error("REMOTE_ACCESS_REFUSED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/system/remote-access/tailscale/disable")
+def disable_remote_access(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return remote_access.disable()
+
+
+@app.post("/v1/backups")
+def create_backup(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return backups.build_bundle(Path(body.destination), body.components, body.passphrase)
+    except (BackupError, OSError, ValueError) as exc:
+        return error("BACKUP_REJECTED", str(exc), request_id(request), retryable=True, status_code=400)
+
+
+@app.post("/v1/backups/preflight")
+def backup_preflight(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return backups.preflight_restore(Path(body.destination), body.passphrase)
+    except (BackupError, OSError, ValueError) as exc:
+        return error("RESTORE_PREFLIGHT_REJECTED", str(exc), request_id(request), status_code=400)
