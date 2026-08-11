@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T11:38:59Z`
+- Last updated: `2026-08-11T13:05:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-011`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-012`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
-- Current status: `IN_PROGRESS`
+- Current status: `VALIDATING`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-037–R-041 Notion lifecycle/provider boundary, Documentation Agent projection ordering, Knowledge Sources, migrations/prime/0022_notion_lifecycle.sql, tests/phase7, docs/phase15 ledger/matrix, evidence/phase15`
-- Immediate next action: `Advance to R-051–R-053 operator UX while preserving R-031–R-036 IMPLEMENTED / blocked_by_environment, R-037–R-041 IMPLEMENTED / blocked_by_environment, and R-042–R-050 IMPLEMENTED / partial states; execute live Notion qualification when a controlled workspace is available.`
+- Expected or actual touched areas: `Notion credential-reference/import/capability boundary, migrations/prime/0023_notion_credential_reference.sql, Core operator-state and Ask routes, apps/web/index.html, tests/phase7, tests/phase14, docs/phase15 ledger/matrix, evidence/phase15, .agent governance records`
+- Immediate next action: `Complete full validation and governed closure for R-051–R-053; retain live Notion qualification blocked_by_environment because NOTION_READONLY_KEY is absent from this runtime and retain browser qualification NOT RUN.`
 
 ## Temporary task-relevant facts
 
@@ -51,11 +51,14 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 010 closes the local R-035–R-036 Tailscale adapter boundary with actual-state vocabulary, fixed command allowlist, Serve-only ownership/refusal, loopback validation, persisted desired state, reconciliation, and focused local tests. Live tailnet/second-device qualification remains blocked_by_environment; implementation convergence is now 15/26.
 - Continuation 011 closes the local R-037–R-041 Notion lifecycle boundary with Core-owned credential references, Project Record idempotency, stable managed regions, source provenance/retraction, reconciliation, provider-double fault tests, and idempotent managed-history rollover. Live Notion qualification remains blocked_by_environment; implementation convergence is now 20/26.
 - Continuation 011 persistence correction adds atomic non-secret lifecycle state snapshot/load and restart coverage at `659fc3ce9659611e34dedf3d6e2b4b892088d355`; live Notion qualification remains blocked_by_environment.
+- Continuation 012 adds secret-safe MyAssistant credential-reference import/capability-test boundaries, migration 0023, operator-state/Ask routes, and the complete local R-051–R-053 shell; implementation convergence is now 23/26 while live Notion and supported-browser qualification remain unverified.
 
 ## Blockers
 
 - System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
+- Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
+- `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
 
 ## Pending decisions
 

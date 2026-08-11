@@ -28,6 +28,7 @@ from src.prime_core.reliability_service import ReliabilityService
 from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
+from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 
 settings = Settings()
 configure()
@@ -44,6 +45,7 @@ backups = BackupCoordinator()
 history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
 brain = BrainService(settings)
+notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -157,6 +159,12 @@ class EvidenceLinkRequest(BaseModel):
 
 class EvidenceAnnotationRequest(BaseModel):
     annotation: str = Field(min_length=1, max_length=4000)
+
+
+class NotionCapabilityRequest(BaseModel):
+    page_id: str = Field(default=KNOWN_GRANTED_PAGE, min_length=1, max_length=80)
+    write_probe: bool = False
+    probe_parent_id: str | None = Field(default=None, max_length=80)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -300,6 +308,83 @@ def core_status(request: Request, prime_session: str | None = Cookie(default=Non
     return {"service": "prime-core", "actor_id": session["operator_id"], "schema_version": startup_state.get("migrations"), "health": startup_state}
 
 
+@app.get("/v1/operator/state")
+def operator_state(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        projects = service.list_projects()
+    except Exception:
+        projects = []
+    try:
+        nodes = service.list_nodes()
+    except Exception:
+        nodes = []
+    try:
+        remote = remote_access.reconcile()
+    except Exception as exc:
+        remote = {"status": "DEGRADED", "error_code": type(exc).__name__}
+    try:
+        reliability = ReliabilityService(settings).diagnostics()
+    except Exception as exc:
+        reliability = {"status": "DEGRADED", "error_code": type(exc).__name__}
+    return {
+        "service": "prime-core",
+        "startup": dict(startup_state),
+        "projects": projects,
+        "nodes": nodes,
+        "notion": notion_credentials.public_status(),
+        "remote_access": remote,
+        "reliability": reliability,
+        "operator_surfaces": {"state_vocabulary": ["LOADING", "EMPTY", "HEALTHY", "STALE", "DEGRADED", "OFFLINE", "ERROR", "NEEDS_ATTENTION"]},
+    }
+
+
+@app.post("/v1/system/notion/credential-import")
+def notion_credential_import(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    result = notion_credentials.import_myassistant()
+    capability: dict[str, Any] | None = None
+    if result.source_present and result.status in {"IMPORTED", "NOOP"}:
+        try:
+            capability = notion_credentials.client().capability_test(settings.notion_granted_page_id)
+            notion_credentials.record_capabilities(capability)
+        except Exception as exc:
+            # The migration remains recorded even when the provider is down;
+            # capability truth is surfaced separately and never inferred.
+            capability = {"status": "DEGRADED", "error_code": type(exc).__name__}
+    return {"migration": result.public(), "capability": capability, "notion": notion_credentials.public_status()}
+
+
+@app.get("/v1/system/notion/status")
+def notion_status(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return notion_credentials.public_status()
+
+
+@app.post("/v1/system/notion/capability-test")
+def notion_capability_test(body: NotionCapabilityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        result = notion_credentials.client().capability_test(body.page_id, body.write_probe, body.probe_parent_id)
+        return {"capability": notion_credentials.record_capabilities(result)}
+    except LookupError as exc:
+        return error("NOTION_CREDENTIAL_UNAVAILABLE", str(exc), request_id(request), retryable=True, status_code=503)
+    except Exception as exc:
+        from src.prime_core.notion_api import NotionApiError
+        if isinstance(exc, NotionApiError):
+            status_code = 401 if exc.status == 401 else 403 if exc.status == 403 else 503
+            notion_credentials.record_capabilities({
+                "status": "REAUTH_REQUIRED" if exc.status == 401 else "ACCESS_LOST" if exc.status == 403 else "DEGRADED",
+                "page_id": body.page_id,
+                "page_read": False,
+                "block_read": False,
+                "page_write": "NOT_TESTED",
+                "managed_write": "NOT_TESTED",
+            })
+            return error("NOTION_CAPABILITY_FAILED", "Notion capability test failed", request_id(request), retryable=exc.retryable, status_code=status_code)
+        return error("NOTION_CAPABILITY_FAILED", type(exc).__name__, request_id(request), retryable=True, status_code=503)
+
+
 @app.post("/v1/jobs")
 def create_job(body: JobRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     session = require_session(request, prime_session)
@@ -382,6 +467,15 @@ def index_project(project_id: str, request: Request, prime_session: str | None =
 def search_project(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return {"project_id": project_id, "results": indexer.search(project_id, q)}
+
+
+@app.post("/v1/projects/{project_id}/ask")
+def ask_project(project_id: str, question: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return intelligence.ask(project_id, question)
+    except (KeyError, ValueError) as exc:
+        return error("ASK_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/projects/{project_id}/memory")

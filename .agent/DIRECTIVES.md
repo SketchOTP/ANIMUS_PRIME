@@ -151,3 +151,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-010
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-012
+
+- Issued: 2026-08-11T12:52:00Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 011 / Continuation 012
+- Objective: Reuse the existing MyAssistant `NOTION_READONLY_KEY` authorization through a secret-safe idempotent Core credential-reference import and capability-test boundary, then complete the locally implementable R-051 through R-053 operator shell, truthful degraded/recovery states, responsive/accessibility behavior, and setup flows.
+- Scope: Runtime-only credential discovery without secret disclosure, Core-owned non-secret credential metadata, no-overwrite migration semantics, PRIME production Notion capability tests, existing-page capability reporting, global/project operator navigation, first-run setup, real subsystem state display, normal/degraded/recovery/error/attention states, responsive/keyboard/reduced-motion/accessibility behavior, focused tests, traceability, qualification evidence, and append-only governance records.
+- Exclusions: Creating a second Notion integration unnecessarily, copying or persisting raw secrets, printing or recording token material, treating connected Notion chat access as PRIME adapter evidence, fabricating live capability or browser qualification, normative changes, deployment, and V1 release claims before 26/26 VERIFIED.
+- Acceptance: R-051 through R-053 are marked IMPLEMENTED only for the complete local implementation boundary with focused positive/negative/degraded/recovery/security tests; credential discovery/import and live Notion capability are recorded truthfully; R-031–R-041 retain their separate live qualification states; all governance/evidence records and exact commits are reconciled; V1 remains FAIL unless every remediation requirement is VERIFIED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-011
+- Status at issuance: ISSUED

@@ -38,14 +38,45 @@ class NotionApiClient:
         return self._request("GET", f"/pages/{page_id}")
 
     def test_connection(self) -> dict[str, Any]:
-        """Return provider identity/capabilities without exposing the token."""
+        """Return provider identity without guessing page or write capabilities."""
         payload = self._request("GET", "/users/me")
         return {
             "status": "CONNECTED",
             "workspace_id": payload.get("bot", {}).get("workspace_name") or payload.get("workspace_id"),
             "actor_id": payload.get("id"),
-            "capabilities": ["page_read", "page_write", "block_read", "block_write"],
         }
+
+    def capability_test(self, page_id: str, write_probe: bool = False, probe_parent_id: str | None = None) -> dict[str, Any]:
+        """Capability-test a granted page without logging or returning credentials.
+
+        Read checks are always safe.  A write probe is explicit because Notion
+        has no rollback for a created page; callers must point it at a controlled
+        qualification parent rather than operator content.
+        """
+        identity = self.test_connection()
+        result: dict[str, Any] = {
+            "status": "CONNECTED",
+            "workspace_id": identity.get("workspace_id"),
+            "integration_actor_id": identity.get("actor_id"),
+            "page_id": page_id,
+            "page_read": False,
+            "block_read": False,
+            "page_write": "NOT_TESTED",
+            "managed_write": "NOT_TESTED",
+        }
+        self.retrieve_page(page_id)
+        result["page_read"] = True
+        self.retrieve_children(page_id)
+        result["block_read"] = True
+        if write_probe:
+            parent_id = probe_parent_id or page_id
+            properties = {"title": {"title": [{"type": "text", "text": {"content": "PRIME capability probe"}}]}}
+            created = self.create_page({"type": "page_id", "page_id": parent_id}, properties)
+            result["page_write"] = True
+            result["managed_write"] = "CAPABILITY_PRESENT"
+            result["probe_page_id"] = created.get("id")
+        result["capabilities"] = [name for name, available in (("page_read", result["page_read"]), ("block_read", result["block_read"]), ("page_write", result["page_write"] is True), ("managed_write", result["managed_write"] == "CAPABILITY_PRESENT")) if available]
+        return result
 
     def provider_health(self) -> dict[str, Any]:
         try:

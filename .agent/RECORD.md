@@ -78,3 +78,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Notion remains a human-readable projection and optional read-only knowledge surface, never project authority. Managed regions, user content, source provenance, failure states, and history identity require separate bounded lifecycle records before live qualification.
 - Affected areas: Notion lifecycle/provider boundary, Documentation Agent ordering, Knowledge Sources, reconciliation, managed history, migration 0022, tests, qualification ledger/matrix, and Phase-15 governance records.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-012
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-012
+- Status: CLOSED
+- Decision or event: Continuation 012 closed the local implementation milestone for R-051 through R-053 and established the MyAssistant Notion authorization reuse boundary while retaining live/browser qualification blocks.
+- Rationale: PRIME must reuse the existing authorization without exposing its secret, capability-test actual Notion permissions, and expose the complete operator product shell with truthful state handling before live qualification can be attempted.
+- Affected areas: Notion credential registry and capability API, migration 0023, operator state/Ask routes, responsive web shell, setup/auth/project workflow, accessibility and status semantics, R-051–R-053 ledger/matrix/evidence, and governance records.
+- Supersedes record: none

@@ -21,4 +21,5 @@ class Settings:
         if value.strip()
     )
     schema: str = "prime_core"
-
+    notion_credential_state_path: str = os.getenv("PRIME_NOTION_CREDENTIAL_STATE_PATH", "var/notion-credential-reference.json")
+    notion_granted_page_id: str = os.getenv("PRIME_NOTION_GRANTED_PAGE_ID", "3b3833cb-27ff-8039-bf9e-f4f731df0633")

@@ -145,3 +145,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-037–R-041 Notion lifecycle, project isolation, privacy/egress, documentation ordering, source provenance, and historical reconciliation.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-013
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-013
+- Fact or lesson: A credential variable name is not a capability declaration. Safe integration reuse needs a durable non-secret reference to the existing runtime source, idempotent no-overwrite import semantics, actual granted-page read checks, and an explicit controlled write probe. Identity discovery alone must not mark Project Record managed writes available.
+- Evidence location: `src/prime_core/notion_credentials.py`; `src/prime_core/notion_api.py`; `migrations/prime/0023_notion_credential_reference.sql`; `tests/phase7/test_notion_credentials.py`; `evidence/phase15/R-051-R-053-implementation-closure-012.md`
+- Confidence: VERIFIED for local implementation; live capability remains unqualified.
+- Scope: R-037–R-041 Notion authorization reuse, secret handling, capability reporting, backup metadata, and operator settings UX.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-014
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-014
+- Fact or lesson: Operator UX state must be explicit and textual at every boundary. A responsive shell can remain truthful during authentication, empty, stale, degraded, offline, error, and needs-attention conditions only when it loads protected Core state with no-store semantics, keeps project selection below the UI, preserves project-scoped routes, and renders untrusted names through text nodes rather than HTML interpolation.
+- Evidence location: `apps/web/index.html`; `apps/core/main.py`; `tests/phase14/test_web_shell.py`; `evidence/phase15/R-051-R-053-implementation-closure-012.md`
+- Confidence: VERIFIED for local implementation; browser/device/assistive-technology qualification remains unqualified.
+- Scope: R-051–R-053 operator shell, accessibility, responsive behavior, degraded/recovery UX, project isolation, and destructive-action safety.
+- Supersedes learning: none

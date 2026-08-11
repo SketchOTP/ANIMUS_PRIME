@@ -58,3 +58,27 @@ def test_notion_client_does_not_retry_permission_failures():
     with pytest.raises(NotionApiError) as error:
         NotionApiClient(NotionApiSettings("token"), opener=opener).retrieve_page("page")
     assert error.value.status == 403 and not error.value.retryable
+
+
+def test_capability_test_distinguishes_read_and_explicit_write_probe():
+    paths = []
+
+    def opener(request, timeout):
+        paths.append(request.full_url)
+        if request.full_url.endswith("/users/me"):
+            return Response({"id": "actor-1", "workspace_id": "workspace-1"})
+        if "/pages/approved" in request.full_url:
+            return Response({"id": "approved"})
+        if "/blocks/approved/children" in request.full_url:
+            return Response({"results": []})
+        if request.full_url.endswith("/pages"):
+            return Response({"id": "probe-page"})
+        raise AssertionError(request.full_url)
+
+    client = NotionApiClient(NotionApiSettings("token"), opener=opener)
+    read = client.capability_test("approved")
+    assert read["page_read"] is True and read["block_read"] is True
+    assert read["page_write"] == "NOT_TESTED"
+    write = client.capability_test("approved", write_probe=True, probe_parent_id="approved")
+    assert write["page_write"] is True and write["managed_write"] == "CAPABILITY_PRESENT"
+    assert all("token" not in path for path in paths)
