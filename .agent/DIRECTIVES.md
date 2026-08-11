@@ -64,6 +64,20 @@ Use one live entry for each accepted project task. Keep examples outside this fi
 - Related directive: D-PRIME-PHASE15-REMEDIATION-005
 - Status at issuance: ISSUED
 
+## D-PRIME-PHASE15-REMEDIATION-007
+
+- Issued: 2026-08-11T01:05:49Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 006 / Continuation 007
+- Objective: Finish the local implementation closure of the R-046 through R-050 Evidence, durable citation, historical reconstruction, Git checkpoint, Time Lens, Historical Ask, and historical Brain cluster while preserving separate implementation and qualification states.
+- Scope: EvidenceArtifact lifecycle and parser boundary, durable SourceReference and mutation semantics, historical revision persistence and reconstruction completeness, qualified PostgreSQL R-049 service-path qualification, deterministic State A/B/C/D historical fixtures, historical Ask/Brain cutoff behavior, return-to-current semantics, focused security/isolation/recovery tests, and required append-only project records.
+- Exclusions: Normative changes, fabricated native/live/recovery evidence, collapsing implementation with qualification, unnecessary broad feature work before the cluster stabilizes, Phase 16, deployment, and V1 release claims before R-031 through R-056 are VERIFIED.
+- Acceptance: R-046, R-047, R-048, and R-050 are marked implementation-complete only when all specified positive, negative, degraded, recovery, and security behavior is implemented and tested; R-049 is exercised through the actual PostgreSQL service path; qualification remains truthful; governance, ledger, repo map, learning, outcome, and exact governed commits are recorded; V1 remains FAIL unless 26/26 requirements are VERIFIED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-006
+- Status at issuance: ISSUED
+
 ```markdown
 ## <local-directive-id>
 

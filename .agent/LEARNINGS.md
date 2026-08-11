@@ -85,3 +85,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-046–R-050 Evidence provenance, Time Lens cutoff fidelity, and historical Ask.
 - Supersedes learning: L-PRIME-PHASE15-004
+
+## L-PRIME-PHASE15-007
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-007
+- Fact or lesson: Historical lifecycle evidence must be append-only at the event-observation boundary. A unique key containing only artifact identity and source revision would overwrite the original fact when a later retraction/correction occurs; lifecycle snapshots must include the observation timestamp and use conflict-safe insertion.
+- Evidence location: migrations/prime/0018_historical_snapshot_immutability.sql; src/prime_core/history_primitives.py; tests/phase11/test_history.py
+- Confidence: VERIFIED
+- Scope: R-047/R-048 citation mutation, Evidence retraction, memory correction, Notion projection, and Time Lens reconstruction.
+- Supersedes learning: none

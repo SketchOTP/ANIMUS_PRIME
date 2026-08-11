@@ -107,6 +107,9 @@
 - `migrations/prime/` — ordered PostgreSQL migrations from Core through remediation foundations.
 - `migrations/prime/0015_evidence_lifecycle.sql` — Evidence retraction and explicit parser/index lifecycle fields.
 - `migrations/prime/0016_historical_evidence.sql` — Evidence source identity/annotations/links, observed metadata, and retained Git checkpoint metadata.
+- `migrations/prime/0017_historical_revisions.sql` — explicit Evidence storage modes, authority/Notion snapshots, historical revision ledger, and Git source linkage.
+- `migrations/prime/0018_historical_snapshot_immutability.sql` — append-only lifecycle snapshot identity correction.
+- `migrations/prime/0019_evidence_parser_states.sql` — explicit parser lifecycle states including retraction.
 - `packaging/node/prime-node.service` — Linux service definition.
 - `packaging/node/install-node.ps1` — Windows installation guidance.
 - `packaging/node/README.md` — Node packaging and TLS/mTLS configuration contract.
@@ -121,6 +124,7 @@
 - `evidence/phase15/R-031-local-tls-mtls-process.md` — real local HTTPS/mTLS process evidence.
 - `evidence/phase15/R-046-R-047-implementation-preflight.md` — implementation-only Evidence preflight; not release qualification.
 - `evidence/phase15/R-049-git-checkpoint-implementation.md` — implementation-only Git checkpoint preservation record; not release qualification.
+- `evidence/phase15/R-046-R-050-implementation-closure-007.md` — Continuation 007 local implementation closure evidence; not release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 
