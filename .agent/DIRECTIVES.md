@@ -50,6 +50,20 @@ Use one live entry for each accepted project task. Keep examples outside this fi
 - Related directive: D-PRIME-PHASE15-REMEDIATION-004
 - Status at issuance: ISSUED
 
+## D-PRIME-PHASE15-REMEDIATION-006
+
+- Issued: 2026-08-11T00:12:01Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 005 / Continuation 006
+- Objective: Finish implementation closure for R-031 through R-056 while tracking implementation completeness separately from qualification and preserving the strict V1 evidence gate.
+- Scope: First close the R-046 through R-050 Evidence, durable citation, historical reconstruction, Git checkpoint preservation, and Time Lens implementation cluster; add focused local positive/negative/degraded/recovery/security/isolation tests; advance implementation-complete states only where the implementation is actually complete; run available native/live qualification immediately when prerequisites are present.
+- Exclusions: Another planning/governance cycle without a real defect, fabricated native/live/recovery evidence, collapsed implementation and qualification status, R-056 qualification before R-031 through R-055, normative changes, deployment, Phase 16, and V1 release claims before 26/26 VERIFIED.
+- Acceptance: Every changed R-item has separate implementation and qualification fields; implementation-complete rows are backed by code and focused tests; unavailable environments remain explicitly unverified; governance/current/map/learning/outcome records are updated; complete Phase-15 gate is rerun; V1 remains FAIL unless every R-031 through R-056 is VERIFIED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-005
+- Status at issuance: ISSUED
+
 ```markdown
 ## <local-directive-id>
 

@@ -5,6 +5,7 @@ from typing import Any
 from .db import connect, transaction
 from .indexer import RepositoryIndexer
 from .memory_service import MemoryService
+from .history_service import HistoryService
 from .service import _id, now
 
 
@@ -13,6 +14,7 @@ class IntelligenceService:
         self.settings = settings
         self.memory = memory or MemoryService(settings)
         self.indexer = RepositoryIndexer(type("IndexerService", (), {"settings": settings})())
+        self.history = HistoryService(settings)
 
     def search(self, project_id: str, query: str, limit: int = 20) -> dict[str, Any]:
         repository = self.indexer.search(project_id, query, min(limit, 50))
@@ -30,6 +32,27 @@ class IntelligenceService:
             citations.append({"source_class": "Memory", "memory_id": row["memory_id"], "source_revision": row.get("source_revision")})
         return {"project_id": project_id, "answer": "Evidence is available in the cited project sources." if citations else "UNKNOWN: no grounded source matched the question.", "citations": citations[:16], "epistemic": "GROUNDED" if citations else "UNKNOWN"}
 
+    def ask_at(self, project_id: str, question: str, as_of: str) -> dict[str, Any]:
+        """Build a read-only historical answer context; current search is never reused."""
+        context = self.history.historical_context(project_id, as_of)
+        citations = []
+        for row in context["evidence"]:
+            if row.get("retracted_at") is None:
+                citations.append({"source_class": "Evidence", "source_reference_id": row.get("source_reference_id"), "content_hash": row.get("content_hash")})
+        for row in context["progress"]:
+            citations.append({"source_class": "ProgressAssessment", "assessment_id": row.get("assessment_id"), "repository_revision": row.get("repository_revision")})
+        return {
+            "project_id": project_id,
+            "as_of": as_of,
+            "reconstruction_status": context["reconstruction_status"],
+            "answer": "Historical evidence is available in the cited sources." if citations else "UNKNOWN: no evidence available at the selected historical boundary.",
+            "citations": citations[:16],
+            "historical": True,
+            "later_current_state_used": False,
+            "question": question,
+            "source_statuses": context["source_statuses"],
+        }
+
     def since_last_seen(self, project_id: str, advance: bool = False) -> dict[str, Any]:
         with transaction(self.settings) as db:
             checkpoint = db.execute("SELECT last_seen_event_sequence FROM prime_core.activity_checkpoints WHERE project_id=%s", (project_id,)).fetchone()
@@ -39,4 +62,3 @@ class IntelligenceService:
             if advance:
                 db.execute("INSERT INTO prime_core.activity_checkpoints(project_id,last_seen_event_sequence,updated_at) VALUES (%s,%s,%s) ON CONFLICT (project_id) DO UPDATE SET last_seen_event_sequence=EXCLUDED.last_seen_event_sequence,updated_at=EXCLUDED.updated_at", (project_id, new_last, now()))
             return {"project_id": project_id, "events": events, "advanced_to": new_last, "advanced": advance}
-

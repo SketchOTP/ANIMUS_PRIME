@@ -1,8 +1,8 @@
-# Phase 15 remediation queue — Continuation 005
+# Phase 15 remediation queue — Continuation 006
 
 Baseline: `PRIME-SPEC-V1.0.0`  
 Governed checkpoint: `9b1b2a8f257356f2d96a7bfb169fca9b73192794`  
-Observed qualification: `24 passed, 15 skipped`  
+Observed qualification: `27 passed, 15 skipped`
 Deployment: `NOT PERFORMED`  
 V1: `FAIL`
 
@@ -14,7 +14,7 @@ None. No R-031–R-056 row currently has both complete implementation and all re
 
 ## B — implementation incomplete
 
-All 26 rows remain in implementation work:
+Twenty-five rows remain in implementation work; R-049 is implementation-complete but still awaits qualification:
 
 - R-031–R-034 — native Node/control-plane lifecycle and packaging.
 - R-035–R-036 — remote-access safety and Serve lifecycle.
@@ -25,7 +25,7 @@ All 26 rows remain in implementation work:
 - R-054–R-055 — approved provider/profile AI behavior, privacy, citations, injection, and isolation.
 - R-056 — aggregate fresh-install end-to-end qualification.
 
-Continuation 005 implementation started with the R-046/R-047 Evidence boundary: safe metadata validation, project-scoped storage/listing/reference/retraction routes, and persisted parser/index status. This is implementation progress, not a VERIFIED result.
+Continuation 006 advanced R-046–R-050 with durable Evidence source references, safe locators, bounded inert-text extraction, quota/annotation/link boundaries, historical cutoff context, historical Ask context, and PRIME-owned Git checkpoint bundles. R-049 is implementation-complete but only partially qualified; this is not a VERIFIED result.
 
 ## C — external qualification required
 
@@ -45,4 +45,4 @@ Deterministic procedures for each C item are recorded in [`phase15-qualification
 
 ## Current counts
 
-The ledger currently reports `IMPLEMENTING=26`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; therefore `VERIFIED / 26 = 0/26`. `BLOCKED=0` is intentional: the rows still have independent implementation work, while exact external prerequisites are recorded as qualification blockers rather than used to halt local progress.
+The ledger currently reports `implementation_complete=1/26`, `IMPLEMENTING=25`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; therefore `VERIFIED / 26 = 0/26`. `BLOCKED=0` is intentional: exact external prerequisites are recorded as qualification blockers rather than used to halt local progress.

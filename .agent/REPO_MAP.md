@@ -40,6 +40,8 @@
 - `src/prime_core/intelligence_service.py` — project-scoped Ask/Search/activity foundation.
 - `src/prime_core/brain_service.py` — derived Project Brain topology.
 - `src/prime_core/history_service.py` — Evidence, Time Lens, Fork, and historical checkpoint foundation.
+- `src/prime_core/git_history.py` — isolated canonical-commit object packing, PRIME-owned bundle creation, hash verification, and truthful checkpoint status.
+- `src/prime_core/history_primitives.py` — pure EXACT/PARTIAL/UNAVAILABLE historical coverage aggregation.
 - `src/prime_core/evidence_validation.py` — Evidence filename, MIME, privacy, size, content, and locator validation.
 - `src/prime_core/lifecycle_service.py` — lifecycle and destructive-action safety.
 - `src/prime_core/backup_service.py` — encrypted backup and restore preflight foundation.
@@ -104,6 +106,7 @@
 - `dependencies/QUALIFICATION.md` — dependency/license qualification evidence.
 - `migrations/prime/` — ordered PostgreSQL migrations from Core through remediation foundations.
 - `migrations/prime/0015_evidence_lifecycle.sql` — Evidence retraction and explicit parser/index lifecycle fields.
+- `migrations/prime/0016_historical_evidence.sql` — Evidence source identity/annotations/links, observed metadata, and retained Git checkpoint metadata.
 - `packaging/node/prime-node.service` — Linux service definition.
 - `packaging/node/install-node.ps1` — Windows installation guidance.
 - `packaging/node/README.md` — Node packaging and TLS/mTLS configuration contract.
@@ -117,6 +120,7 @@
 - `evidence/phase15/remediation-qualification-003.md` — latest 38-test remediation qualification record.
 - `evidence/phase15/R-031-local-tls-mtls-process.md` — real local HTTPS/mTLS process evidence.
 - `evidence/phase15/R-046-R-047-implementation-preflight.md` — implementation-only Evidence preflight; not release qualification.
+- `evidence/phase15/R-049-git-checkpoint-implementation.md` — implementation-only Git checkpoint preservation record; not release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

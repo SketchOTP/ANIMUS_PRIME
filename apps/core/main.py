@@ -25,6 +25,7 @@ from src.prime_core.service import CoreService
 from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
 from src.prime_core.backup_service import BackupCoordinator, BackupError
 from src.prime_core.history_service import HistoryService
+from src.prime_core.intelligence_service import IntelligenceService
 
 settings = Settings()
 configure()
@@ -35,6 +36,7 @@ mcp = MCPService(settings, memory)
 remote_access = TailscaleService(RemoteAccessSettings(web_port=int(__import__("os").getenv("PRIME_WEB_PORT", "8000"))))
 backups = BackupCoordinator()
 history = HistoryService(settings)
+intelligence = IntelligenceService(settings, memory)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -123,12 +125,24 @@ class EvidenceUploadRequest(BaseModel):
     content_base64: str = Field(min_length=1, max_length=70_000_000)
     mime_type: str = Field(min_length=1, max_length=120)
     privacy_class: str = Field(default="PROJECT_PRIVATE", min_length=1, max_length=40)
+    source_revision: str | None = None
 
 
 class EvidenceReferenceRequest(BaseModel):
     source_type: str = Field(min_length=1, max_length=40)
     locator: str = Field(min_length=1, max_length=4096)
     privacy_class: str = Field(default="PROJECT_PRIVATE", min_length=1, max_length=40)
+    source_revision: str | None = None
+
+
+class EvidenceLinkRequest(BaseModel):
+    evidence_id: str = Field(min_length=1, max_length=160)
+    relation_type: str = Field(min_length=1, max_length=40)
+    target_id: str = Field(min_length=1, max_length=240)
+
+
+class EvidenceAnnotationRequest(BaseModel):
+    annotation: str = Field(min_length=1, max_length=4000)
 
 
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
@@ -379,7 +393,7 @@ def upload_project_evidence(project_id: str, body: EvidenceUploadRequest, reques
     require_session(request, prime_session)
     try:
         content = base64.b64decode(body.content_base64, validate=True)
-        return history.store_uploaded_evidence(project_id, body.filename, content, body.mime_type, body.privacy_class)
+        return history.store_uploaded_evidence(project_id, body.filename, content, body.mime_type, body.privacy_class, body.source_revision)
     except (ValueError, OSError) as exc:
         return error("EVIDENCE_REJECTED", str(exc), request_id(request), status_code=400)
 
@@ -388,7 +402,7 @@ def upload_project_evidence(project_id: str, body: EvidenceUploadRequest, reques
 def reference_project_evidence(project_id: str, body: EvidenceReferenceRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        return history.record_evidence(project_id, body.source_type, body.locator, privacy_class=body.privacy_class)
+        return history.record_evidence(project_id, body.source_type, body.locator, privacy_class=body.privacy_class, source_revision=body.source_revision)
     except ValueError as exc:
         return error("EVIDENCE_REJECTED", str(exc), request_id(request), status_code=400)
 
@@ -400,6 +414,44 @@ def retract_project_evidence(project_id: str, evidence_id: str, reason: str, req
         return history.retract_evidence(project_id, evidence_id, reason)
     except (KeyError, ValueError) as exc:
         return error("EVIDENCE_RETRACTION_REJECTED", str(exc), request_id(request), status_code=404 if isinstance(exc, KeyError) else 400)
+
+
+@app.post("/v1/projects/{project_id}/evidence/{evidence_id}/links")
+def link_project_evidence(project_id: str, evidence_id: str, body: EvidenceLinkRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        if body.evidence_id != evidence_id:
+            raise ValueError("Evidence path and body IDs must match")
+        return history.link_evidence(project_id, evidence_id, body.relation_type, body.target_id)
+    except (KeyError, ValueError) as exc:
+        return error("EVIDENCE_LINK_REJECTED", str(exc), request_id(request), status_code=404 if isinstance(exc, KeyError) else 400)
+
+
+@app.post("/v1/projects/{project_id}/evidence/{evidence_id}/annotations")
+def annotate_project_evidence(project_id: str, evidence_id: str, body: EvidenceAnnotationRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return history.annotate_evidence(project_id, evidence_id, body.annotation)
+    except (KeyError, ValueError) as exc:
+        return error("EVIDENCE_ANNOTATION_REJECTED", str(exc), request_id(request), status_code=404 if isinstance(exc, KeyError) else 400)
+
+
+@app.get("/v1/projects/{project_id}/time-lens/state")
+def time_lens_state(project_id: str, as_of: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return history.time_lens(project_id, as_of)
+    except ValueError as exc:
+        return error("TIME_LENS_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/time-lens/ask")
+def time_lens_ask(project_id: str, as_of: str, question: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return intelligence.ask_at(project_id, question, as_of)
+    except ValueError as exc:
+        return error("TIME_LENS_ASK_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/projects/{project_id}/mcp/grants")

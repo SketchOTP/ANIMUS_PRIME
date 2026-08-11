@@ -2,7 +2,9 @@
 
 Status: implementation slice only; not qualification evidence and not a VERIFIED claim.  
 Baseline: `PRIME-SPEC-V1.0.0`  
-Directive: `D-PRIME-PHASE15-REMEDIATION-005`
+Directive: `D-PRIME-PHASE15-REMEDIATION-006`
+
+Continuation 006 extended this boundary with durable `SourceReference` linkage, bounded inert-text extraction for approved text MIME types, project quota enforcement, explicit Evidence links/annotations, safe HTTPS/approved-Node locators, historical cutoff context, and a read-only historical Ask context that records reconstruction status and never reuses current search results.
 
 Implemented locally:
 

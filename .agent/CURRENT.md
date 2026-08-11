@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-10T23:55:58Z`
+- Last updated: `2026-08-11T00:20:53Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-005`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-006`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-046/R-047 Evidence boundary, apps/core, src/prime_core/history_service.py, migrations/prime/0015_evidence_lifecycle.sql, tests/phase11, docs/phase15 qualification queue/procedures, evidence/phase15`
-- Immediate next action: `Continue the corrected R-031 through R-056 ledger queue from implementation-incomplete rows; run available native/live qualifications, preserve skips as unproven, and record exact external prerequisites without manufacturing evidence.`
+- Expected or actual touched areas: `R-046/R-050 Evidence/history cluster, apps/core, src/prime_core/history_service.py, src/prime_core/git_history.py, src/prime_core/history_primitives.py, migrations/prime/0016_historical_evidence.sql, tests/phase11, docs/phase15 ledger/matrix, evidence/phase15`
+- Immediate next action: `Continue implementation closure from R-046/R-050, then run qualified PostgreSQL integration and historical cutoff fixtures when PRIME_PHASE1_DB_URL/psycopg are available; preserve all native/live skips as unproven.`
 
 ## Temporary task-relevant facts
 
@@ -40,11 +40,15 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 005 skip inventory records all 15 skipped tests, their PostgreSQL prerequisite, affected requirements, and release-blocking status.
 - Continuation 005 deterministic qualification procedures cover native Node, Tailscale, live Notion, backup/restore/capacity, Evidence/Time Lens, browser UX, approved AI, and full V1 walkthroughs.
 - R-046/R-047 implementation preflight added project-scoped Evidence upload/reference/list/retraction routes and explicit parser/index status; no requirement was promoted to VERIFIED.
-- Remediation counts — `IMPLEMENTING=26`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; `VERIFIED / 26 = 0/26`.
+- Continuation 006 added durable Evidence source references, safe HTTPS/Node locators, bounded inert-text extraction, Evidence quota/annotation/link boundaries, historical cutoff context, historical Ask context, and PRIME-owned Git checkpoint bundle preservation.
+- R-049 is now `IMPLEMENTED` with `qualification_status=partial`; its local bundle fixture survives normal-ref removal, reflog expiry, and GC. PostgreSQL registration and release qualification remain open.
+- Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
+- Remediation counts — `implementation_complete=1/26`, `IMPLEMENTING=25`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; `VERIFIED / 26 = 0/26`.
 
 ## Blockers
 
 - `PRIME_PHASE1_DB_URL` is unset, so the 15 PostgreSQL-backed integration tests remain skipped and cannot serve as release evidence.
+- Host `psycopg` is unavailable, so phase qualification scripts and DB-backed R-046–R-050 tests cannot run in this environment.
 
 ## Pending decisions
 

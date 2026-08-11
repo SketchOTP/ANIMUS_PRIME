@@ -30,7 +30,13 @@ def test_evidence_timelens_and_isolated_fork(tmp_path: Path, monkeypatch):
     core.bind_repository(project["project_id"], node, os.urandom(32).hex(), str(repo))
     revision = RepositoryIndexer(core).build(project["project_id"])["source_revision"]
     service = HistoryService(settings)
-    assert service.record_evidence(project["project_id"], "UPLOAD", "local://evidence", b"evidence")["parser_status"] == "READY"
-    assert service.time_lens(project["project_id"], revision)["reconstruction_status"] == "EXACT"
+    assert service.record_evidence(project["project_id"], "UPLOAD", "local://evidence", b"evidence", source_revision=revision)["parser_status"] == "READY"
+    service.record_evidence(project["project_id"], "UPLOAD", "local://later-evidence", b"later")
+    lens = service.time_lens(project["project_id"], revision)
+    assert lens["reconstruction_status"] == "PARTIAL"
+    assert lens["source_statuses"]["repository"] == "EXACT"
+    assert lens["source_statuses"]["evidence"] == "EXACT"
+    assert len(lens["evidence"]) == 1
+    assert lens["source_statuses"]["authority"] == "UNAVAILABLE"
     fork = service.fork(project["project_id"], revision, "Fork")
     assert fork["new_project_id"] != project["project_id"] and fork["memory_copy_status"] == "NONE"

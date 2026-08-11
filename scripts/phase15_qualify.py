@@ -53,8 +53,11 @@ def main() -> int:
     ledger_ids = {re.search(r"requirement_id: (R-\d+)", line).group(1) for line in ledger_rows if re.search(r"requirement_id: (R-\d+)", line)}
     expected_ids = {f"R-{number:03d}" for number in range(31, 57)}
     checks.append(("requirement-level qualification ledger is complete", ledger_ids == expected_ids and all(all(f"{field}:" in line for field in required_fields) for line in ledger_rows)))
+    qualification_statuses = dict(re.findall(r"^  (R-\d+): (not_run|partial|blocked_by_environment|verified|failed)$", ledger, re.MULTILINE))
+    checks.append(("separate qualification status is recorded for every remediation requirement", set(qualification_statuses) == expected_ids))
     current_counts = Counter()
     final_counts = Counter()
+    implementation_complete = 0
     for line in ledger_rows:
         current = re.search(r"current_status: ([A-Z_]+)", line)
         final = re.search(r"final_status: ([A-Z_]+)", line)
@@ -62,13 +65,17 @@ def main() -> int:
             current_counts[current.group(1)] += 1
         if final:
             final_counts[final.group(1)] += 1
+        if "implementation_complete: yes" in line:
+            implementation_complete += 1
     for requirement_id, current_status, final_status in matrix_rows:
         checks.append((f"V1 requirement {requirement_id} VERIFIED", current_status == "VERIFIED" and final_status == "VERIFIED"))
     for name, result in checks:
         print(("PASS" if result else "FAIL") + ": " + name)
         passed = passed and result
     print("R-031–R-056 current status counts: " + ", ".join(f"{name}={current_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
+    print(f"implementation complete / 26: {implementation_complete}/26")
     print("R-031–R-056 final status counts: " + ", ".join(f"{name}={final_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
+    print("qualification status counts: " + ", ".join(f"{name}={list(qualification_statuses.values()).count(name)}" for name in ("not_run", "partial", "blocked_by_environment", "verified", "failed")))
     print(f"VERIFIED / 26: {current_counts.get('VERIFIED', 0)}/26")
     print("PHASE 15 QUALIFICATION: " + ("PASS" if passed else "FAIL"))
     if not passed:
