@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T02:01:00Z`
+- Last updated: `2026-08-11T11:38:59Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-010`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-011`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-035/R-036 private Tailscale Serve lifecycle, src/prime_core/remote_access_service.py, apps/core/main.py, tests/phase12, docs/phase15 ledger/matrix, evidence/phase15`
-- Immediate next action: `Advance to R-037–R-041 live Notion implementation while preserving R-031–R-034 IMPLEMENTED / blocked_by_environment, R-035–R-036 IMPLEMENTED / blocked_by_environment, and R-042–R-050 IMPLEMENTED / partial states; execute live Tailscale qualification when a signed-in tailnet and approved second device become available.`
+- Expected or actual touched areas: `R-037–R-041 Notion lifecycle/provider boundary, Documentation Agent projection ordering, Knowledge Sources, migrations/prime/0022_notion_lifecycle.sql, tests/phase7, docs/phase15 ledger/matrix, evidence/phase15`
+- Immediate next action: `Advance to R-051–R-053 operator UX while preserving R-031–R-036 IMPLEMENTED / blocked_by_environment, R-037–R-041 IMPLEMENTED / blocked_by_environment, and R-042–R-050 IMPLEMENTED / partial states; execute live Notion qualification when a controlled workspace is available.`
 
 ## Temporary task-relevant facts
 
@@ -49,11 +49,12 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
 - Remediation counts — `implementation_complete=15/26`, `IMPLEMENTING=11`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
 - Continuation 010 closes the local R-035–R-036 Tailscale adapter boundary with actual-state vocabulary, fixed command allowlist, Serve-only ownership/refusal, loopback validation, persisted desired state, reconciliation, and focused local tests. Live tailnet/second-device qualification remains blocked_by_environment; implementation convergence is now 15/26.
+- Continuation 011 closes the local R-037–R-041 Notion lifecycle boundary with Core-owned credential references, Project Record idempotency, stable managed regions, source provenance/retraction, reconciliation, provider-double fault tests, and idempotent managed-history rollover. Live Notion qualification remains blocked_by_environment; implementation convergence is now 20/26.
 
 ## Blockers
 
 - System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
-- Codebase-memory MCP indexing was attempted for Continuation 010 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
+- Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 
 ## Pending decisions
 

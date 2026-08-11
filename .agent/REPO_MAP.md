@@ -112,6 +112,7 @@
 - `migrations/prime/0019_evidence_parser_states.sql` — explicit parser lifecycle states including retraction.
 - `migrations/prime/0020_continuity_capacity.sql` — continuity backup manifest fields, durable restore workflow, schedule state, and capacity policies.
 - `migrations/prime/0021_node_lifecycle.sql` — durable Node protocol/version, approval, heartbeat, compatibility, and diagnostics fields.
+- `migrations/prime/0022_notion_lifecycle.sql` — Notion provider binding, managed-region, documentation-job, read-only source provenance, and history-page lifecycle records.
 - `packaging/node/prime-node.service` — Linux service definition.
 - `packaging/node/install-node.sh` — Linux idempotent install/uninstall path.
 - `packaging/node/install-node.ps1` — Windows service registration/repair/uninstall path.
@@ -131,6 +132,7 @@
 - `evidence/phase15/R-042-R-045-implementation-closure-008.md` — Continuation 008 local backup/restore/capacity implementation closure; not release qualification.
 - `evidence/phase15/R-031-R-034-implementation-closure-009.md` — Continuation 009 local Node/control-plane implementation closure; not native release qualification.
 - `evidence/phase15/R-035-R-036-implementation-closure-010.md` — Continuation 010 local Tailscale Serve implementation closure; not live tailnet release qualification.
+- `evidence/phase15/R-037-R-041-implementation-closure-011.md` — Continuation 011 local Notion lifecycle/provider-double implementation closure; not live Notion release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

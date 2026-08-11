@@ -539,6 +539,29 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
 
+## D-PRIME-PHASE15-REMEDIATION-011 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-022
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T11:38:59Z
+- Acceptance: PARTIAL
+- Summary: Continuation 011 closes the local implementation boundary for R-037 through R-041 at implementation commit `a4d22635f7036ca4f86029c8e681c08923aaf157`. Core-owned Notion credential references, Project Record creation/binding, targeted managed regions, user-content preservation, documentation source ordering, privacy/self-write controls, project-scoped read-only Knowledge Sources, source retraction/reconciliation, provider fault states, and idempotent managed history rollover are implemented and locally tested. Live Notion qualification remains blocked_by_environment; implementation convergence is 20/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: `src/prime_core/notion_service.py`, `src/prime_core/notion_api.py`, `migrations/prime/0022_notion_lifecycle.sql`, `tests/phase7/test_notion_lifecycle.py`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `evidence/phase15/R-037-R-041-implementation-closure-011.md`, `.agent/`
+- Validation:
+  - PRIME source and Implementation Handoff reread - PASSED
+  - Checkpoint 010 workspace search found the recorded page; direct fetch returned `object_not_found` - NOT RUN as a live page read
+  - codebase-memory MCP index - BLOCKED (`Transport closed`); targeted local fallback used
+  - focused Notion lifecycle/API tests - PASSED (`10 passed`)
+  - full local test suite - PASSED (`42 passed`, `17 skipped`)
+  - compileall - PASSED
+  - live Notion provider/workspace/page lifecycle - NOT RUN
+  - adopted governance validation - NOT RUN until final evidence commit
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: live provider auth/access, actual Notion block revisions, outage/reconnect, page move/deletion, long-running rollover, backup restore of durable Notion rows, and full Phase-15 evidence remain unqualified.
+- Blockers: live controlled Notion workspace, production adapter credentials/configuration, codebase-memory transport, PostgreSQL-dependent host environment, and aggregate release qualification environment.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-011
+
 ## D-PRIME-PHASE15-REMEDIATION-010 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-021

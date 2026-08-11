@@ -68,3 +68,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Private remote access must remain a Serve-only operator Web plane with fixed argv, loopback validation, explicit ownership, truthful actual-state reporting, and unchanged PRIME authentication.
 - Affected areas: Tailscale adapter, Core remote-access routes, remote-access tests, qualification ledger/matrix, and Phase-15 governance records.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-011
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-011
+- Status: CLOSED
+- Decision or event: Continuation 011 closed the local implementation milestone for R-037 through R-041 while retaining blocked live Notion qualification and the V1 release block.
+- Rationale: Notion remains a human-readable projection and optional read-only knowledge surface, never project authority. Managed regions, user content, source provenance, failure states, and history identity require separate bounded lifecycle records before live qualification.
+- Affected areas: Notion lifecycle/provider boundary, Documentation Agent ordering, Knowledge Sources, reconciliation, managed history, migration 0022, tests, qualification ledger/matrix, and Phase-15 governance records.
+- Supersedes record: none

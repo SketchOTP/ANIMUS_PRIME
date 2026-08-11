@@ -135,3 +135,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-035/R-036 private remote access and operator-plane isolation.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-012
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-012
+- Fact or lesson: Notion synchronization requires two separate provenance boundaries: managed Project Record projections are PRIME-owned and self-write-suppressed, while attached Knowledge Sources are explicit project-scoped read-only observations. Detach, access loss, or deletion must retract current retrieval and mark admitted memory for review without deleting historical provenance silently.
+- Evidence location: `src/prime_core/notion_service.py`; `migrations/prime/0022_notion_lifecycle.sql`; `tests/phase7/test_notion_lifecycle.py`; `evidence/phase15/R-037-R-041-implementation-closure-011.md`
+- Confidence: VERIFIED
+- Scope: R-037–R-041 Notion lifecycle, project isolation, privacy/egress, documentation ordering, source provenance, and historical reconciliation.
+- Supersedes learning: none

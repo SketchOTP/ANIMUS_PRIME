@@ -137,3 +137,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-009
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-011
+
+- Issued: 2026-08-11T11:38:59Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 010 / Continuation 011
+- Objective: Complete the locally implementable Notion Project Record, Documentation Agent, attached Knowledge Source, reconciliation, and managed-history lifecycle for R-037 through R-041 while preserving the implementation/qualification split.
+- Scope: Core-owned Notion credential references, provider health and bounded retry states, idempotent Project Record creation/binding, stable managed regions, user-content preservation, conflict/self-write/privacy controls, project-scoped read-only sources and provenance/retraction, reconciliation, provider fault recovery, linked history rollover, local provider-double tests, and append-only governance/evidence records.
+- Exclusions: Treating Notion chat/workspace access as PRIME release evidence, raw credential exposure, page-wide replacement, cross-project source sharing, automatic source-to-memory admission, fabricated live provider evidence, normative changes, deployment, and V1 release claims before 26/26 VERIFIED.
+- Acceptance: R-037–R-041 are marked IMPLEMENTED only for the complete local boundary with deterministic positive/negative/degraded/recovery/security/isolation tests; live qualification remains blocked_by_environment; R-031–R-036 and R-042–R-050 remain unchanged; governance, ledger, repo map, learning, outcome, regression, and V1 gate records are reconciled.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-010
+- Status at issuance: ISSUED
