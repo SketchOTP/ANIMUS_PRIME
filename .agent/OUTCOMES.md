@@ -585,8 +585,8 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
 - Closed: 2026-08-11T02:10:00Z
 - Acceptance: PARTIAL
-- Summary: Final append-only correction for Continuation 008. Governed implementation commit `7b5ef0a` and evidence/governance commit `342fc58` are recorded; R-042–R-045 are IMPLEMENTED with qualification partial, R-046–R-050 remain IMPLEMENTED with qualification partial, implementation convergence is 9/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
-- Changed areas: .agent/OUTCOMES.md
+- Summary: Final append-only correction for Continuation 008. Governed implementation commit `7b5ef0a`, evidence/governance commit `342fc58`, and milestone record commit `3135df8` are recorded; R-042–R-045 are IMPLEMENTED with qualification partial, R-046–R-050 remain IMPLEMENTED with qualification partial, implementation convergence is 9/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: .agent/OUTCOMES.md, .agent/RECORD.md
 - Validation:
   - adopted governance validation after correction - PASSED
   - compileall - PASSED
