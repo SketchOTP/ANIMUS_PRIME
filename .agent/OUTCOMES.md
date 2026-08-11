@@ -550,7 +550,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Validation:
   - focused lifecycle tests - PASSED (`8 passed`)
   - focused lifecycle/API tests - PASSED (`11 passed`)
-  - full local test suite - PASSED (`42 passed`, `17 skipped`)
+  - full local test suite - PASSED (`43 passed`, `17 skipped`)
   - compileall - PASSED
   - adopted governance validation - NOT RUN until final correction commit
   - live Notion provider lifecycle - NOT RUN
@@ -594,7 +594,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - Checkpoint 010 workspace search found the recorded page; direct fetch returned `object_not_found` - NOT RUN as a live page read
   - codebase-memory MCP index - BLOCKED (`Transport closed`); targeted local fallback used
   - focused Notion lifecycle/API tests - PASSED (`10 passed`)
-  - full local test suite - PASSED (`42 passed`, `17 skipped`)
+  - full local test suite - PASSED (`43 passed`, `17 skipped`)
   - compileall - PASSED
   - live Notion provider/workspace/page lifecycle - NOT RUN
   - adopted governance validation - NOT RUN until final evidence commit

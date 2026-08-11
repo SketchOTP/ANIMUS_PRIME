@@ -23,7 +23,7 @@
 ## Deterministic local qualification
 
 - Focused lifecycle/provider-double tests: `8 passed`; lifecycle plus API focused tests: `11 passed`.
-- Full test tree: `42 passed, 17 skipped`.
+- Full test tree: `43 passed, 17 skipped`.
 - Compile check: `PASSED`.
 - Covered positive, negative, degraded, recovery, privacy, conflict, source-isolation, stale-ordering, self-write, and idempotency paths using `InMemoryNotionProvider`.
 - Atomic non-secret state snapshot/load was exercised across a simulated Core restart; raw provider credentials are never written to the snapshot.
