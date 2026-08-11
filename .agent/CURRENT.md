@@ -61,7 +61,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
 - Continuation 013 re-inspected candidate config paths, service names, process command lines, and matching runtime environment variable names without printing values; no usable existing MyAssistant Notion secret source was found. Live PRIME Notion capability qualification remains blocked_by_environment.
-- Continuation 013 validation so far: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; final Phase-15 gate and evidence/governance commit remain pending; deployment NOT PERFORMED.
+- Continuation 013 validation so far: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; evidence/governance commit `e81010f27ef74b34e6bdc7d2618a219ac61ba2bb`; final Phase-15 gate remains pending; deployment NOT PERFORMED.
 
 ## Pending decisions
 

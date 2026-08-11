@@ -774,3 +774,30 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: live Notion provider capability and lifecycle evidence, supported browser/device accessibility evidence, native/live Node/Tailscale/Hindsight/recovery/capacity/AI environments, and aggregate end-to-end qualification remain open.
 - Blockers: absent `NOTION_READONLY_KEY` in this runtime, missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL` for database-backed phase gates, codebase-memory MCP transport, supported browser/device qualification environment, and prior native/live release environments.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-012
+
+## D-PRIME-PHASE15-REMEDIATION-013 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-026
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-025
+- Closed: 2026-08-11T18:00:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 013 closes the local implementation boundary for R-054 and R-055 at implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`. Core now provides function-specific AI profiles, durable run/source/profile/usage provenance, privacy and no-fallback enforcement, grounded Ask integration, structured output/citation checks, prompt-injection and project-isolation defenses, and versioned golden fixtures. Implementation convergence is 25/26; R-056 remains OPEN; no requirement is VERIFIED; V1 remains FAIL; deployment was not performed.
+- Changed areas: `src/prime_core/ai_service.py`, `src/prime_core/intelligence_service.py`, `apps/core/main.py`, `migrations/prime/0024_ai_execution.sql`, `tests/phase15/fixtures/ai_golden.json`, `tests/phase15/test_ai_execution.py`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-queue.md`, `evidence/phase15/R-054-R-055-implementation-closure-013.md`, and `.agent` governance files.
+- Validation:
+  - PRIME source and Implementation Handoff reread - PASSED
+  - Checkpoint 012 direct fetch - BLOCKED (`object_not_found` in connected Notion workspace); attached directive used as supplied
+  - codebase-memory MCP index/search - BLOCKED (`Transport closed`); targeted local fallback used
+  - MyAssistant secret-source trace - NOT FOUND IN INSPECTED SOURCES; no secret value printed or persisted
+  - focused AI fixture tests - PASSED (6 passed)
+  - full local test suite - PASSED (54 passed, 17 skipped)
+  - compileall - PASSED
+  - adopted governance validation before final correction - PASSED
+  - diff check before final correction - PASSED
+  - approved live provider qualification - BLOCKED (no approved provider/model configured)
+  - LOCAL_ONLY qualification - NOT RUN (no approved local inference stack configured)
+  - browser qualification - NOT RUN
+  - Phase-15 qualification gate - NOT RUN at outcome append; expected to remain FAIL with external/database prerequisites unavailable
+  - deployment - NOT PERFORMED
+- Remaining risks: approved provider/local-model qualification, full cross-surface AI evaluation, isolated Project A/B live fixtures, database-backed phase gates, native/live integrations, browser, recovery/capacity, and aggregate R-056 clean-install evidence remain open.
+- Blockers: missing approved AI provider/local inference environment, missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL` for database-backed gates, codebase-memory transport, supported browser/device qualification, and prior native/live release environments.
+- Follow-up directive: none

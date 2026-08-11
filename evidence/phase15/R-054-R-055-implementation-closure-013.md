@@ -3,7 +3,7 @@
 - Baseline: `PRIME-SPEC-V1.0.0`
 - Directive: `D-PRIME-PHASE15-REMEDIATION-013`
 - Implementation commit: `10e0650a6fd14df3837baa7b45ff60d9ec33693b`
-- Evidence/governance commit: `PENDING`
+- Evidence/governance commit: `e81010f27ef74b34e6bdc7d2618a219ac61ba2bb`
 - Implementation result: `R-054 IMPLEMENTED`, `R-055 IMPLEMENTED`
 - Implementation convergence: `25/26`
 - R-056: remains `OPEN` and is not marked implementation-complete
