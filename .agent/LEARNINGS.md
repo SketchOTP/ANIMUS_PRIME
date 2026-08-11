@@ -65,3 +65,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-046/R-047 implementation and Phase-15 evidence qualification.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-005
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-005
+- Fact or lesson: A Git bundle created directly from a live repository can be empty when the selected checkpoint is still reachable from a normal ref. PRIME checkpoint preservation must pack the selected commit graph into an isolated temporary object store before creating the retained bundle, and must verify the retained hash/status independently after ref removal and GC.
+- Evidence location: src/prime_core/git_history.py; tests/phase11/test_history_primitives.py; evidence/phase15/R-049-git-checkpoint-implementation.md
+- Confidence: VERIFIED
+- Scope: R-049 Git checkpoint preservation and Time Lens historical storage.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-006
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-006
+- Fact or lesson: A historical Git selector cannot safely include Evidence merely because it exists today. Evidence must carry an explicit source revision association; otherwise Time Lens must exclude it at that commit and report missing source truth rather than infer historical availability.
+- Evidence location: migrations/prime/0016_historical_evidence.sql; src/prime_core/history_service.py; tests/phase11/test_history.py
+- Confidence: VERIFIED
+- Scope: R-046–R-050 Evidence provenance, Time Lens cutoff fidelity, and historical Ask.
+- Supersedes learning: L-PRIME-PHASE15-004
