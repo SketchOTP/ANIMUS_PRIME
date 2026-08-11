@@ -520,6 +520,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 
 ## D-PRIME-PHASE15-REMEDIATION-008 - PARTIAL
 
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-016
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-013
+- Closed: 2026-08-11T02:08:00Z
+- Acceptance: PARTIAL
+- Summary: Finalized Continuation 008 after governed commits `7b5ef0a` (implementation) and `342fc58` (evidence/governance). R-042 through R-045 are IMPLEMENTED with qualification partial; R-046 through R-050 remain IMPLEMENTED with qualification partial; implementation convergence is 9/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: docs/phase15-remediation-qualification-ledger.yaml, docs/phase15-remediation-qualification-queue.md, .agent/CURRENT.md, .agent/OUTCOMES.md
+- Validation:
+  - final adopted governance validation - PASSED
+  - final compileall - PASSED
+  - final diff check - PASSED
+  - clean Phase-15 runner - PASSED mechanically through Phases 1–14 and 47 tests; VERIFIED requirement gate FAILED as required
+  - implementation/qualification separation - PASSED
+  - final worktree check - PASSED
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: separate off-machine target, fresh-install destructive safety and interrupted restore, live Hindsight loss/rebuild, sustained capacity/disk-pressure, native/live integrations, browser, AI, and aggregate end-to-end evidence remain unqualified.
+- Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
+
+## D-PRIME-PHASE15-REMEDIATION-008 - PARTIAL
+
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-015
 - Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-013
 - Closed: 2026-08-11T02:01:00Z
@@ -557,3 +578,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: unchanged from OUT-PRIME-PHASE15-REMEDIATION-013; R-042 through R-045 and R-051 through R-056 remain implementation/qualification work, and R-046 through R-050 remain qualification `partial`.
 - Blockers: unchanged from OUT-PRIME-PHASE15-REMEDIATION-013; required native/live/recovery environments remain unavailable or unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
+
+## D-PRIME-PHASE15-REMEDIATION-008 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-017
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T02:10:00Z
+- Acceptance: PARTIAL
+- Summary: Final append-only correction for Continuation 008. Governed implementation commit `7b5ef0a` and evidence/governance commit `342fc58` are recorded; R-042–R-045 are IMPLEMENTED with qualification partial, R-046–R-050 remain IMPLEMENTED with qualification partial, implementation convergence is 9/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: .agent/OUTCOMES.md
+- Validation:
+  - adopted governance validation after correction - PASSED
+  - compileall - PASSED
+  - git diff check - PASSED
+  - clean Phase-15 mechanical run - PASSED through Phases 1–14 and 47 tests; VERIFIED gate FAILED as required
+  - final worktree check - PASSED
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: separate off-machine target, fresh-install destructive safety and interrupted restore, live Hindsight loss/rebuild, sustained capacity/disk-pressure, native/live integrations, browser, AI, and aggregate end-to-end evidence remain unqualified.
+- Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
