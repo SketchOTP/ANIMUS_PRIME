@@ -235,3 +235,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-016
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-018
+
+- Issued: 2026-08-12T00:15:00Z
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 018 / Checkpoint 017
+- Objective: Use the explicitly supplied Paragon local-model endpoint and PRIME Notion authorization to qualify the highest-yield remaining AI and live-Notion requirements without weakening the frozen baseline or persisting credentials.
+- Scope: Ephemeral Paragon OpenAI-compatible endpoint/model/API-key qualification; ephemeral PRIME Notion token capability checks; R-042/R-043/R-045/R-048/R-050/R-051/R-052/R-053 qualification where available; R-054/R-055 provider/privacy/usage/citation qualification; truthful environment and security evidence; Chromium remains the supported-browser harness; GitHub/Notion publication and append-only `.agent` records.
+- Exclusions: credential persistence or disclosure, ambient credential reuse, secret inclusion in logs/evidence/Notion/Git, unsafe Tailscale changes, new architecture unrelated to a demonstrated provider integration defect, R-056 closure before its complete gate, deployment, normative changes, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Supplied credentials are used only as ephemeral process inputs; provider and Notion results are independently verified; exact successful/failed/degraded paths are recorded without secrets; only complete requirement evidence promotes rows; R-046/R-047/R-049 remain VERIFIED; R-056 remains OPEN; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-017
+- Status at issuance: ISSUED

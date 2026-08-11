@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import json
+import urllib.request
 from pathlib import Path
 
-from src.prime_core.ai_service import AIExecutionService, ProviderResult, fixture_fingerprint
+from src.prime_core.ai_service import AIExecutionService, OpenAICompatibleProvider, ProviderResult, fixture_fingerprint
 
 
 class FakeLocalProvider:
@@ -94,3 +95,41 @@ def test_reasoning_fields_are_not_persisted(monkeypatch):
     result = service.execute("project-a", "ASK_PRIME", {"question": "q"}, [])
     assert result["status"] == "REJECTED"
     assert "chain_of_thought" not in json.dumps(records[0]["result"])
+
+
+def test_openai_compatible_provider_returns_structured_json_without_persisting_key(monkeypatch):
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def read(self):
+            return json.dumps({
+                "object": "chat.completion",
+                "choices": [{"message": {"content": '{"category":"UNKNOWN","answer":"UNKNOWN","citations":[]}'}, "finish_reason": "stop"}],
+                "usage": {"prompt_tokens": 3, "completion_tokens": 4},
+            }).encode()
+
+    captured = {}
+
+    def opener(request, timeout):
+        captured["request"] = request
+        captured["timeout"] = timeout
+        return Response()
+
+    monkeypatch.setattr(urllib.request, "urlopen", opener)
+    provider = OpenAICompatibleProvider("https://paragon.invalid/v1", "routerbot")
+    result = provider.generate({
+        "function": "ASK_PRIME",
+        "profile": {"model": "paragon"},
+        "input": {"question": "q"},
+        "sources": [],
+    })
+    assert result.output["category"] == "UNKNOWN"
+    assert result.input_tokens == 3
+    assert result.output_tokens == 4
+    assert captured["request"].full_url == "https://paragon.invalid/v1/chat/completions"
+    assert captured["request"].get_header("Authorization") == "Bearer routerbot"
+    assert "routerbot" not in captured["request"].data.decode()
