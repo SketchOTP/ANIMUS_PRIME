@@ -944,3 +944,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031–R-045, R-048, and R-050–R-053 remain partial or environment constrained; live Notion, native Windows/root lifecycle, private second-device Tailscale, approved Hindsight/AI, complete browser accessibility/history, and aggregate R-056 remain open.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-017 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-033
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-032
+- Closed: 2026-08-11T18:55:00-04:00
+- Acceptance: PARTIAL
+- Summary: Publication and validation correction for Continuation 017. The first Compose attempt was non-authoritative because it used an absent filename; the subsequent explicit pinned PostgreSQL/pgvector run passed 79 tests, Phases 1–14, and governance. Evidence/checkpoint commit `ccc3f2b30d60d09629b31c82d65289e68d2e671f`; final HEAD and `origin/main` are `e60728b5ec5b367625ca7a82edb37a93401c3c29`; Notion execution record was appended and re-fetched.
+- Changed areas: `.agent/CURRENT.md`, `.agent/OUTCOMES.md`, Notion Implementation Execution Record, and GitHub publication state.
+- Validation:
+  - explicit pinned PostgreSQL/pgvector Phase-15 runner - PASSED
+  - full regression - PASSED (`79 passed`)
+  - Phases 1–14 - PASSED
+  - adopted governance - PASSED
+  - GitHub local/origin parity - PASSED
+  - Notion append and re-fetch - PASSED
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`3/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-031–R-045, R-048, and R-050–R-053 remain partial or environment constrained; live Notion, native Windows/root lifecycle, private second-device Tailscale, approved Hindsight/AI, complete browser accessibility/history, and aggregate R-056 remain open.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none

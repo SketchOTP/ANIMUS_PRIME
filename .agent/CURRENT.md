@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T18:35:00-04:00`
+- Last updated: `2026-08-11T18:55:00-04:00`
 
 ## Active state after adoption
 
@@ -14,7 +14,7 @@
 - Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, and R-049 are VERIFIED from exact local evidence; Phase 15/V1 remains FAIL at 3/26 because R-056 and other rows remain open or environment constrained.`
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, Evidence file/parser/root matrix, product Evidence citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Publish Continuation 017 evidence and continue exact requirement-level qualification without adding architecture; preserve R-046/R-047/R-049 VERIFIED and R-056 OPEN.`
+- Immediate next action: `Continue only with exact open requirement qualification; Continuation 017 is published, R-046/R-047/R-049 remain VERIFIED, R-056 remains OPEN, and V1 remains FAIL.`
 
 ## Temporary task-relevant facts
 
@@ -23,7 +23,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 ## Last validation after adoption
 
 - Command or check: `fresh docker-compose.phase1 PostgreSQL/pgvector recreation; explicit vector enablement; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted> ./.venv/bin/python scripts/phase15_qualify.py`
-- Result: `FAILED`
+- Result: `PASSED`
 
 ## Risks
 
