@@ -965,3 +965,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031–R-045, R-048, and R-050–R-053 remain partial or environment constrained; live Notion, native Windows/root lifecycle, private second-device Tailscale, approved Hindsight/AI, complete browser accessibility/history, and aggregate R-056 remain open.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-017 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-034
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-033
+- Closed: 2026-08-11T19:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Final Continuation 017 state correction. The governed documentation closure was published successfully; final local `HEAD` and GitHub `origin/main` both resolve to `4819d2c3a4c63301d4a0c7136ab1b41d0bf08527`. The qualification evidence checkpoint remains `ccc3f2b30d60d09629b31c82d65289e68d2e671f`.
+- Changed areas: `.agent/CURRENT.md`, `.agent/OUTCOMES.md`, and final GitHub publication state.
+- Validation:
+  - governance validation - PASSED
+  - GitHub local/origin parity - PASSED
+  - Notion Continuation 017 record - PASSED before final hash closure; final hash closure is recorded in the next Notion append
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`3/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: all previously recorded open and environment-constrained requirements remain unchanged; V1 is not qualified.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none
