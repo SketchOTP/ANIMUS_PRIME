@@ -21,9 +21,12 @@ The connected assistant Notion workspace was re-read for source/handoff context,
 
 ## Validation and qualification truth
 
+- Implementation commit: `3fd09a10aad5b2fff4856b6e75fac5e893e08b3b`.
 - Focused credential/Notion/API/web tests: PASSED (`17 passed, 1 skipped`).
-- Full local suite: to be recorded after final integration validation.
-- Governance validator, compile, diff, and worktree checks: to be recorded after final integration validation.
+- Full local suite: PASSED (`48 passed, 17 skipped`).
+- Governance validator: pending final governance-record commit.
+- Compileall: PASSED.
+- Diff check: PASSED.
 - Supported-browser desktop/mobile, keyboard-only, assistive-technology, and fresh setup walkthrough: NOT RUN.
 - Live PRIME Notion credential discovery/import and capability test: BLOCKED (`NOTION_READONLY_KEY` absent from this runtime).
 - R-051–R-053 qualification: `blocked_by_environment`; implementation is `IMPLEMENTED`.
