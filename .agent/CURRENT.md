@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-012`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-013`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `Notion credential-reference/import/capability boundary, migrations/prime/0023_notion_credential_reference.sql, Core operator-state and Ask routes, apps/web/index.html, tests/phase7, tests/phase14, docs/phase15 ledger/matrix, evidence/phase15, .agent governance records`
-- Immediate next action: `Record final Continuation 012 correction commit, then proceed to R-054–R-055 AI production behavior and regression qualification; retain browser and live Notion qualification blocks.`
+- Expected or actual touched areas: `Core AI profile/execution/provenance boundary, migrations/prime/0024_ai_execution.sql, project-scoped Ask integration, authenticated AI profile/execute routes, golden fixtures, R-054/R-055 ledgers/evidence, MyAssistant runtime-source trace, and .agent governance records`
+- Immediate next action: `Run final Phase-15 mechanical qualification, reconcile the exact evidence commit, and retain live provider/local-model, browser, native/live integration, and R-056 qualification blocks.`
 
 ## Temporary task-relevant facts
 
@@ -52,6 +52,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 011 closes the local R-037–R-041 Notion lifecycle boundary with Core-owned credential references, Project Record idempotency, stable managed regions, source provenance/retraction, reconciliation, provider-double fault tests, and idempotent managed-history rollover. Live Notion qualification remains blocked_by_environment; implementation convergence is now 20/26.
 - Continuation 011 persistence correction adds atomic non-secret lifecycle state snapshot/load and restart coverage at `659fc3ce9659611e34dedf3d6e2b4b892088d355`; live Notion qualification remains blocked_by_environment.
 - Continuation 012 adds secret-safe MyAssistant credential-reference import/capability-test boundaries, migration 0023, operator-state/Ask routes, and the complete local R-051–R-053 shell; implementation convergence is now 23/26 while live Notion and supported-browser qualification remain unverified.
+- Continuation 013 adds the Core-owned AI execution/profile boundary, durable run/source/profile/usage provenance, privacy and no-fallback enforcement, grounded Ask integration, structured-output/citation checks, prompt-injection and project-isolation defenses, and versioned golden fixtures; implementation convergence is now 25/26. R-056 remains open.
 
 ## Blockers
 
@@ -59,7 +60,8 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
-- Continuation 012 validation: focused tests PASSED (17 passed, 1 skipped); full suite PASSED (48 passed, 17 skipped); compileall PASSED; diff check PASSED; adopted governance PASSED; Phase-15 gate FAIL with database-backed phases blocked and 0/26 VERIFIED; deployment NOT PERFORMED.
+- Continuation 013 re-inspected candidate config paths, service names, process command lines, and matching runtime environment variable names without printing values; no usable existing MyAssistant Notion secret source was found. Live PRIME Notion capability qualification remains blocked_by_environment.
+- Continuation 013 validation so far: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; final Phase-15 gate and evidence/governance commit remain pending; deployment NOT PERFORMED.
 
 ## Pending decisions
 

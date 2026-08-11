@@ -45,4 +45,4 @@ Deterministic procedures for each C item are recorded in [`phase15-qualification
 
 ## Current counts
 
-The ledger currently reports `implementation_complete=9/26`, `IMPLEMENTING=17`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; therefore `VERIFIED / 26 = 0/26`. `BLOCKED=0` is intentional: exact external prerequisites are recorded as qualification blockers rather than used to halt local progress.
+The ledger currently reports `implementation_complete=25/26`, `IMPLEMENTING=1`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; therefore `VERIFIED / 26 = 0/26`. `BLOCKED=0` is intentional: exact external prerequisites are recorded as qualification blockers rather than used to halt local progress. R-056 remains the aggregate clean-install E2E requirement and is intentionally not implementation-complete.

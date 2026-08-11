@@ -88,3 +88,12 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: PRIME must reuse the existing authorization without exposing its secret, capability-test actual Notion permissions, and expose the complete operator product shell with truthful state handling before live qualification can be attempted.
 - Affected areas: Notion credential registry and capability API, migration 0023, operator state/Ask routes, responsive web shell, setup/auth/project workflow, accessibility and status semantics, R-051–R-053 ledger/matrix/evidence, and governance records.
 - Supersedes record: none
+## DEC-PRIME-PHASE15-013
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-013
+- Status: CLOSED
+- Decision or event: Close the local R-054/R-055 implementation boundary with a Core-owned, profile-specific AI execution service. The service treats all source text as untrusted data, enforces privacy before provider dispatch, validates structured outputs/citations, records durable non-secret provenance/usage, and refuses hidden fallback. R-056 remains the aggregate clean-install E2E requirement.
+- Rationale: AI provider qualification is not reproducible or safe when profile identity, source revisions, privacy mode, usage, and output validation are implicit. The Core boundary makes those conditions durable while keeping live qualification separate.
+- Affected areas: `src/prime_core/ai_service.py`; `src/prime_core/intelligence_service.py`; `apps/core/main.py`; `migrations/prime/0024_ai_execution.sql`; AI golden fixtures; R-054/R-055 qualification ledger and evidence.
+- Supersedes record: none

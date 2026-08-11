@@ -39,6 +39,7 @@
 - `src/prime_core/notion_credentials.py` — secret-free MyAssistant credential-reference import, runtime resolver, and capability metadata.
 - `src/prime_core/progress_service.py` — deterministic GoalModel and evidence-backed progress.
 - `src/prime_core/intelligence_service.py` — project-scoped Ask/Search/activity foundation.
+- `src/prime_core/ai_service.py` — Core-owned AI profiles, privacy/egress gate, bounded source admission, structured-output validation, durable provenance, and usage attribution.
 - `src/prime_core/brain_service.py` — derived Project Brain topology.
 - `src/prime_core/history_service.py` — Evidence, Time Lens, Fork, and historical checkpoint foundation.
 - `src/prime_core/git_history.py` — isolated canonical-commit object packing, PRIME-owned bundle creation, hash verification, and truthful checkpoint status.
@@ -115,6 +116,7 @@
 - `migrations/prime/0021_node_lifecycle.sql` — durable Node protocol/version, approval, heartbeat, compatibility, and diagnostics fields.
 - `migrations/prime/0022_notion_lifecycle.sql` — Notion provider binding, managed-region, documentation-job, read-only source provenance, and history-page lifecycle records.
 - `migrations/prime/0023_notion_credential_reference.sql` — non-secret MyAssistant credential-reference and capability metadata.
+- `migrations/prime/0024_ai_execution.sql` — durable model-run provenance, source revision sets, safe result metadata, and usage-linked AI execution records.
 - `packaging/node/prime-node.service` — Linux service definition.
 - `packaging/node/install-node.sh` — Linux idempotent install/uninstall path.
 - `packaging/node/install-node.ps1` — Windows service registration/repair/uninstall path.
@@ -136,6 +138,9 @@
 - `evidence/phase15/R-035-R-036-implementation-closure-010.md` — Continuation 010 local Tailscale Serve implementation closure; not live tailnet release qualification.
 - `evidence/phase15/R-037-R-041-implementation-closure-011.md` — Continuation 011 local Notion lifecycle/provider-double implementation closure; not live Notion release qualification.
 - `evidence/phase15/R-051-R-053-implementation-closure-012.md` — Continuation 012 credential-reuse boundary and local operator UX implementation closure; not live Notion or browser release qualification.
+- `evidence/phase15/R-054-R-055-implementation-closure-013.md` — Continuation 013 local AI profile, provenance, privacy, citation, injection, isolation, and fixture implementation closure; not approved provider/local-model release qualification.
+- `tests/phase15/fixtures/ai_golden.json` — versioned machine-readable AI behavior fixture expectations.
+- `tests/phase15/test_ai_execution.py` — local AI profile, provenance, privacy, injection, citation, and isolation regression tests.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

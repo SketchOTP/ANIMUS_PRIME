@@ -165,3 +165,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-051–R-053 operator shell, accessibility, responsive behavior, degraded/recovery UX, project isolation, and destructive-action safety.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-015
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-015
+- Fact or lesson: AI grounding requires both a durable source identity/revision set and bounded source content admitted as untrusted data. Provider identity, prompt instructions, or generic context labels are not evidence; Ask must validate citations against the exact admitted source set and return UNKNOWN when the provider or policy cannot safely execute.
+- Evidence location: `src/prime_core/ai_service.py`; `src/prime_core/intelligence_service.py`; `migrations/prime/0024_ai_execution.sql`; `tests/phase15/test_ai_execution.py`; `evidence/phase15/R-054-R-055-implementation-closure-013.md`
+- Confidence: VERIFIED
+- Scope: R-054/R-055 AI profiles, source grounding, privacy/egress, citations, prompt injection, project isolation, and usage/provenance.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-016
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-016
+- Fact or lesson: A local deterministic provider double proves Core boundary behavior but cannot establish approved provider or LOCAL_ONLY inference qualification. Live model evidence must retain provider/model/profile/prompt/schema/source/privacy revisions and remain a separate qualification result.
+- Evidence location: `tests/phase15/test_ai_execution.py`; `docs/phase15-remediation-qualification-ledger.yaml`; `evidence/phase15/R-054-R-055-implementation-closure-013.md`
+- Confidence: VERIFIED
+- Scope: R-054/R-055 implementation-versus-qualification separation.
+- Supersedes learning: none
