@@ -165,3 +165,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-011
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-013
+
+- Issued: 2026-08-11T17:29:46Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 012 / Continuation 013
+- Objective: Complete the locally implementable PRIME AI production behavior and cross-cutting safety boundary for R-054 and R-055 while preserving the aggregate R-056 end-to-end requirement as open.
+- Scope: approved function-profile execution, durable run provenance and source sets, grounded Ask/Progress behavior, durable citations, privacy modes and bounded cloud egress, prompt-injection resistance, project isolation, model failure handling, structured-output validation, usage/cost metadata, versioned golden fixtures/evaluation harness, MyAssistant secret-source tracing, browser qualification preparation where the integrated environment is available, focused tests, regression qualification, and append-only governance/evidence records.
+- Exclusions: normative changes, hidden provider/model fallback, raw credential exposure, chain-of-thought persistence, cross-project reasoning, fabricated provider/local/browser/live evidence, premature R-056 implementation completion, deployment, and V1 release claims before 26/26 VERIFIED.
+- Acceptance: R-054 and R-055 are marked IMPLEMENTED only when the local production boundary and deterministic positive/negative/degraded/recovery/security/evaluation tests are complete; qualification remains separate and truthful; MyAssistant secret-source discovery is FOUND, NOT FOUND, or NOT YET RESOLVED without printing the secret; R-056 remains OPEN; all governance, ledgers, repo map, learning, outcome, evidence, regression, and exact governed commits are reconciled.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-012
+- Status at issuance: ISSUED

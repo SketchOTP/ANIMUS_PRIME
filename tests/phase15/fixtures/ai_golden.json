@@ -1,0 +1,12 @@
+{
+  "fixture_revision": "prime-ai-fixtures-v1",
+  "cases": [
+    {"id": "ask-unknown", "function": "ASK_PRIME", "expected": {"category": "UNKNOWN", "must_not_invent": true}},
+    {"id": "ask-citation", "function": "ASK_PRIME", "expected": {"citation_must_be_in_admitted_source_set": true}},
+    {"id": "prompt-injection", "function": "ASK_PRIME", "expected": {"source_is_untrusted_data": true, "no_tool_authority": true}},
+    {"id": "project-isolation", "function": "ASK_PRIME", "expected": {"cross_project_source_rejected": true}},
+    {"id": "local-only", "function": "ASK_PRIME", "expected": {"cloud_provider_blocked": true, "no_fallback": true}},
+    {"id": "invalid-output", "function": "ASK_PRIME", "expected": {"malformed_or_reasoning_output_rejected": true}},
+    {"id": "usage-provenance", "function": "ASK_PRIME", "expected": {"run_and_source_revisions_persisted": true}}
+  ]
+}

@@ -29,6 +29,7 @@ from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
+from src.prime_core.ai_service import AIExecutionService
 
 settings = Settings()
 configure()
@@ -44,6 +45,7 @@ remote_access = TailscaleService(RemoteAccessSettings(
 backups = BackupCoordinator()
 history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
+ai = AIExecutionService(settings)
 brain = BrainService(settings)
 notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
@@ -119,6 +121,13 @@ class MemoryRequest(BaseModel):
     source_revision: str | None = None
     source_reference_id: str | None = None
     branch_context: str | None = None
+
+
+class AIExecutionRequest(BaseModel):
+    function: str = Field(min_length=1, max_length=80)
+    prompt_input: dict[str, Any] = Field(default_factory=dict)
+    sources: list[dict[str, Any]] = Field(default_factory=list, max_length=32)
+    privacy_mode: str | None = Field(default=None, max_length=40)
 
 
 class GrantRequest(BaseModel):
@@ -308,6 +317,27 @@ def core_status(request: Request, prime_session: str | None = Cookie(default=Non
     return {"service": "prime-core", "actor_id": session["operator_id"], "schema_version": startup_state.get("migrations"), "health": startup_state}
 
 
+@app.get("/v1/system/ai/profiles")
+def ai_profiles(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {
+        "status": "HEALTHY" if ai.default_provider != "unconfigured" else "DEGRADED",
+        "provider_configured": ai.default_provider != "unconfigured",
+        "profiles": ai.public_profiles(),
+        "fallback_policy": "NONE_UNLESS_EXPLICIT_PROFILE",
+        "credential_policy": "CORE_ONLY",
+    }
+
+
+@app.post("/v1/projects/{project_id}/ai/execute")
+def execute_ai(project_id: str, body: AIExecutionRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return ai.execute(project_id, body.function, body.prompt_input, body.sources, project_privacy_mode=body.privacy_mode)
+    except (KeyError, ValueError) as exc:
+        return error("AI_EXECUTION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
 @app.get("/v1/operator/state")
 def operator_state(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -333,6 +363,12 @@ def operator_state(request: Request, prime_session: str | None = Cookie(default=
         "projects": projects,
         "nodes": nodes,
         "notion": notion_credentials.public_status(),
+        "ai": {
+            "status": "HEALTHY" if ai.default_provider != "unconfigured" else "DEGRADED",
+            "provider_configured": ai.default_provider != "unconfigured",
+            "profiles": ai.public_profiles(),
+            "fallback_policy": "NONE_UNLESS_EXPLICIT_PROFILE",
+        },
         "remote_access": remote,
         "reliability": reliability,
         "operator_surfaces": {"state_vocabulary": ["LOADING", "EMPTY", "HEALTHY", "STALE", "DEGRADED", "OFFLINE", "ERROR", "NEEDS_ATTENTION"]},
