@@ -179,3 +179,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-012
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-014
+
+- Issued: 2026-08-11T19:07:27Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 013 / GitHub Publication + Continuation 014
+- Objective: Publish the complete governed ANIMUS PRIME repository to the canonical GitHub repository `SketchOTP/ANIMUS_PRIME`, verify exact local/remote main synchronization, preserve secret safety, record immutable publication evidence, and then continue only with the remaining Phase-15 qualification matrix toward R-056.
+- Scope: local/remote history inspection, canonical remote setup, Git identity configuration, tracked-file and secret-safety inspection, disposable placeholder-history reconciliation only after verification, governed main publication, legitimate governed tag inspection/publication, exact remote SHA/content verification, GitHub publication evidence, `.agent`/Notion execution-record updates, and subsequent available R-056 qualification work without new architecture.
+- Exclusions: publishing secrets, creating another repository, publishing partial source, blind unrestricted force-push, blind scratch-branch publication, product deployment, V1 PASS claims before 26/26 VERIFIED, marking R-056 complete because a script exists, and normative changes.
+- Acceptance: `SketchOTP/ANIMUS_PRIME` exists as the canonical remote; remote `main` exactly equals the intended governed local HEAD; representative source/governance/tests/migration/evidence paths are remotely present; tracked-file secret safety is PASS; publication reconciliation and exact SHAs are recorded; Notion execution state is updated without credentials; R-056 remains OPEN and V1 remains FAIL until the full qualification gate passes.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-013
+- Status at issuance: ISSUED

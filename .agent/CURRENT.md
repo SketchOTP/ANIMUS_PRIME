@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-013`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-014`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `Core AI profile/execution/provenance boundary, migrations/prime/0024_ai_execution.sql, project-scoped Ask integration, authenticated AI profile/execute routes, golden fixtures, R-054/R-055 ledgers/evidence, MyAssistant runtime-source trace, and .agent governance records`
-- Immediate next action: `Run final Phase-15 mechanical qualification, reconcile the exact evidence commit, and retain live provider/local-model, browser, native/live integration, and R-056 qualification blocks.`
+- Expected or actual touched areas: `canonical GitHub publication, remote SHA/content verification, secret-safety evidence, GitHub/Notion publication records, and subsequent Phase-15 qualification matrix`
+- Immediate next action: `Publish the complete governed main to SketchOTP/ANIMUS_PRIME with force-with-lease against the verified placeholder SHA, verify exact remote parity, and record publication evidence.`
 
 ## Temporary task-relevant facts
 
