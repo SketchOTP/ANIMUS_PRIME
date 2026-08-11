@@ -44,8 +44,8 @@
 - `src/prime_core/history_primitives.py` — pure EXACT/PARTIAL/UNAVAILABLE historical coverage aggregation.
 - `src/prime_core/evidence_validation.py` — Evidence filename, MIME, privacy, size, content, and locator validation.
 - `src/prime_core/lifecycle_service.py` — lifecycle and destructive-action safety.
-- `src/prime_core/backup_service.py` — encrypted backup and restore preflight foundation.
-- `src/prime_core/reliability_service.py` — backup metadata, diagnostics, and queue health.
+- `src/prime_core/backup_service.py` — authenticated Continuity v2 backup snapshots, manifest/content verification, clean restore, managed Evidence/Git payload recovery, and fidelity labels.
+- `src/prime_core/reliability_service.py` — durable backup records/schedules, capacity health, retention, queue pressure, and reference-aware cleanup controls.
 - `src/prime_core/remote_access_service.py` — private Tailscale Serve control and status boundary.
 - `src/prime_core/node_client.py` — Core-to-Node protocol client with identity and TLS support.
 - `src/prime_node/service.py` — Node lifecycle, repository boundary, heartbeat, and enrollment behavior.
@@ -110,6 +110,7 @@
 - `migrations/prime/0017_historical_revisions.sql` — explicit Evidence storage modes, authority/Notion snapshots, historical revision ledger, and Git source linkage.
 - `migrations/prime/0018_historical_snapshot_immutability.sql` — append-only lifecycle snapshot identity correction.
 - `migrations/prime/0019_evidence_parser_states.sql` — explicit parser lifecycle states including retraction.
+- `migrations/prime/0020_continuity_capacity.sql` — continuity backup manifest fields, durable restore workflow, schedule state, and capacity policies.
 - `packaging/node/prime-node.service` — Linux service definition.
 - `packaging/node/install-node.ps1` — Windows installation guidance.
 - `packaging/node/README.md` — Node packaging and TLS/mTLS configuration contract.
@@ -125,6 +126,7 @@
 - `evidence/phase15/R-046-R-047-implementation-preflight.md` — implementation-only Evidence preflight; not release qualification.
 - `evidence/phase15/R-049-git-checkpoint-implementation.md` — implementation-only Git checkpoint preservation record; not release qualification.
 - `evidence/phase15/R-046-R-050-implementation-closure-007.md` — Continuation 007 local implementation closure evidence; not release qualification.
+- `evidence/phase15/R-042-R-045-implementation-closure-008.md` — Continuation 008 local backup/restore/capacity implementation closure; not release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

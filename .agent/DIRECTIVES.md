@@ -78,6 +78,20 @@ Use one live entry for each accepted project task. Keep examples outside this fi
 - Related directive: D-PRIME-PHASE15-REMEDIATION-006
 - Status at issuance: ISSUED
 
+## D-PRIME-PHASE15-REMEDIATION-008
+
+- Issued: 2026-08-11T01:44:50Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 007 / Continuation 008
+- Objective: Complete the local implementation boundary for R-042 through R-045: coherent encrypted PRIME continuity backup, clean restore, component rebuild/fidelity semantics, capacity/retention/backpressure, and regression protection for R-046 through R-050.
+- Scope: backup and reliability services, Core routes and persistence, applicable migrations, focused recovery/capacity tests, qualification evidence, and required governance/traceability records.
+- Exclusions: Preserve R-046 through R-050 as IMPLEMENTED / qualification partial unless recovery testing exposes a real defect; no fabricated evidence, normative change, deployment, V1 PASS claim, or new phase.
+- Acceptance: R-042 through R-045 are marked IMPLEMENTED only when their local implementation boundaries are complete and tested; implementation and qualification remain separate; all applicable checks are reported explicitly; final worktree and append-only governance records are reconciled.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-007
+- Status at issuance: ISSUED
+
 ```markdown
 ## <local-directive-id>
 

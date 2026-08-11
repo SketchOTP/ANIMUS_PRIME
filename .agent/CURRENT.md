@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T01:24:00Z`
+- Last updated: `2026-08-11T02:01:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-007`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-008`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-046/R-050 Evidence/history cluster, apps/core, src/prime_core/history_service.py, src/prime_core/brain_service.py, src/prime_core/intelligence_service.py, src/prime_core/history_primitives.py, migrations/prime/0017-0019, tests/phase11, docs/phase15 ledger/matrix, evidence/phase15`
-- Immediate next action: `Advance to R-042–R-045 backup/restore/capacity implementation while preserving the R-046–R-050 partial qualification state; then continue remaining local implementation rows and native/live qualification.`
+- Expected or actual touched areas: `R-042/R-045 backup/restore/capacity cluster, apps/core, src/prime_core/backup_service.py, src/prime_core/reliability_service.py, src/prime_core/service.py, migrations/prime/0020, tests/phase13, docs/phase15 ledger/matrix, evidence/phase15`
+- Immediate next action: `Advance to R-031–R-034 Node/native control-plane implementation while preserving R-042–R-050 implementation-complete and partial qualification states; then continue remaining local implementation rows and native/live qualification.`
 
 ## Temporary task-relevant facts
 
@@ -44,12 +44,14 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 007 closes local implementation for R-046–R-050: explicit Evidence storage/lifecycle/parser states, durable citation mutation semantics, append-only historical snapshots, actual PostgreSQL Git checkpoint registration, retained bundle reconstruction, historical Ask/Brain, and Return to Now. Latest governed implementation commit is `723809e`; Continuation 007 evidence/governance commit is `a617ae5`; final outcome correction is recorded in `OUTCOMES.md`.
 - Clean disposable Phase-15 mechanical run passed 43 tests and Phases 1–14; the V1 requirement gate correctly remained `FAIL`.
 - R-046–R-050 remain `qualification_status=partial`; R-049 is still `IMPLEMENTED`, not `VERIFIED`, until the complete release qualification succeeds.
+- Continuation 008 closes local R-042–R-045 implementation: authenticated continuity v2 backup/manifest, clean restore workflow, component fidelity/rebuild semantics, schedule persistence, quotas, retention, queue/disk backpressure, coalescing helpers, and recovery regression protection. R-042–R-045 remain `qualification_status=partial` because separate off-machine, fresh-install/destructive, live Hindsight, interrupted-restore, and sustained capacity evidence is not complete.
+- Latest governed implementation commit: `7b5ef0a`; Continuation 008 evidence/governance commit is pending until the append-only records are finalized.
 - Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
-- Remediation counts — `implementation_complete=5/26`, `IMPLEMENTING=21`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=5`, `blocked_by_environment=21`; `VERIFIED / 26 = 0/26`.
+- Remediation counts — `implementation_complete=9/26`, `IMPLEMENTING=17`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
 
 ## Blockers
 
-- System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. Native Windows/Linux service, live Notion/Tailscale, backup/restore target, approved AI, browser, and full end-to-end environments remain unqualified.
+- System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
 
 ## Pending decisions
 

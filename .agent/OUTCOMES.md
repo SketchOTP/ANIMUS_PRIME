@@ -518,6 +518,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: native Windows/Linux service environments, live Notion/Tailscale, off-machine backup/restore target, approved AI provider, browser acceptance context, and complete end-to-end environment are unavailable or unqualified; no evidence was fabricated.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
 
+## D-PRIME-PHASE15-REMEDIATION-008 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-015
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-013
+- Closed: 2026-08-11T02:01:00Z
+- Acceptance: PARTIAL
+- Summary: Executed Continuation 008 against the unchanged PRIME-SPEC-V1.0.0 baseline. Closed the local implementation boundary for R-042 through R-045 with authenticated Continuity v2 backup/manifest creation, clean restore workflow and component fidelity, managed Evidence/Git bundle recovery, durable schedule state, active capacity/retention/backpressure controls, and R-046–R-050 recovery regression protection. R-042–R-045 are IMPLEMENTED but qualification partial; no requirement is VERIFIED, V1 remains FAIL, and deployment was not performed.
+- Changed areas: src/prime_core/backup_service.py, src/prime_core/reliability_service.py, src/prime_core/service.py, apps/core/main.py, migrations/prime/0020_continuity_capacity.sql, requirements-phase1.txt, dependencies/pins.yaml, dependencies/SBOM.cdx.json, dependencies/QUALIFICATION.md, tests/phase13, docs/phase15-remediation-qualification-ledger.yaml, docs/phase15-remediation-matrix.yaml, docs/requirements-traceability.yaml, docs/phase15-remediation-queue.md, evidence/phase15/R-042-R-045-implementation-closure-008.md, .agent/CURRENT.md, .agent/DIRECTIVES.md, .agent/LEARNINGS.md, .agent/REPO_MAP.md
+- Validation:
+  - PRIME source page, Implementation Handoff Record, and Checkpoint 007 reread - PASSED
+  - codebase-memory MCP index/search - BLOCKED (`Transport closed`); targeted local fallback used
+  - focused backup tests - PASSED (4 tests)
+  - clean disposable PostgreSQL regression - PASSED (47 tests)
+  - clean-install separate-database continuity fixture - PASSED (project, Evidence hash/file, historical rows, Git checkpoint bundle, wrong-key failure)
+  - implementation/qualification separation - PASSED; R-042–R-045 qualification remains partial
+  - V1 release gate - FAILED as required; VERIFIED / 26 remains 0/26
+  - deployment - NOT PERFORMED
+- Remaining risks: genuinely separate off-machine target, fresh-install destructive safety and interrupted restore, live Hindsight loss/rebuild, sustained capacity/disk-pressure, native/live integrations, browser, AI, and aggregate end-to-end evidence remain unqualified.
+- Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
+
 ## D-PRIME-PHASE15-REMEDIATION-007 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-014

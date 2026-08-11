@@ -95,3 +95,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-047/R-048 citation mutation, Evidence retraction, memory correction, Notion projection, and Time Lens reconstruction.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-008
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-008
+- Fact or lesson: A PRIME continuity backup is a multi-component logical checkpoint, not a database dump. The recoverable artifact must preserve canonical PostgreSQL rows, managed Evidence bytes, retained PRIME-owned Git bundles, source-ledger rebuild inputs, configuration references, component hashes, and explicit fidelity/limitation labels while excluding secrets and repository-source claims.
+- Evidence location: src/prime_core/backup_service.py; migrations/prime/0020_continuity_capacity.sql; evidence/phase15/R-042-R-045-implementation-closure-008.md
+- Confidence: VERIFIED
+- Scope: R-042–R-044 backup, restore, Hindsight continuity, Evidence, historical state, Git checkpoints, and recovery reporting.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-009
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-009
+- Fact or lesson: Restoring managed Evidence or PRIME-owned Git bundles into a clean environment requires rewriting their restored storage locators; retaining the original source-host path makes metadata appear restored while content remains unavailable.
+- Evidence location: src/prime_core/backup_service.py; the Continuation 008 clean-install fixture recorded in evidence/phase15/R-042-R-045-implementation-closure-008.md
+- Confidence: VERIFIED
+- Scope: R-043/R-044 restore semantics and R-046–R-050 backup regression protection.
+- Supersedes learning: none
