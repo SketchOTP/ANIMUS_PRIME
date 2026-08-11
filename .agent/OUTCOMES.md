@@ -541,6 +541,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 
 ## D-PRIME-PHASE15-REMEDIATION-010 - PARTIAL
 
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-021
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T11:25:00Z
+- Acceptance: PARTIAL
+- Summary: Final append-only correction for Continuation 010. R-035 and R-036 now record implementation commit `f72315271fbb3e60166784e9cb433711a2aeb900` and evidence/governance commit `b2bbf47aab0477518fdf57a7718457fd0b5cd1ed`; live Tailscale qualification remains blocked_by_environment, implementation convergence is 15/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: docs/phase15-remediation-qualification-ledger.yaml, .agent/OUTCOMES.md
+- Validation:
+  - adopted governance validation after correction - NOT RUN until final commit
+  - focused remote-access tests - PASSED (`5 passed`)
+  - full local test suite - PASSED (`35 passed`, `17 skipped`)
+  - compileall - PASSED
+  - git diff check - PASSED
+  - live signed-in Tailscale/approved second-device qualification - NOT RUN
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: live Serve HTTPS, second-device/private-path, daemon restart/recovery, Funnel/public exposure, and all previously recorded native/live/recovery/browser/AI/end-to-end evidence remain unqualified.
+- Blockers: signed-in tailnet and approved second device, codebase-memory transport, system Python PostgreSQL dependency, native/live integrations, browser, AI, and aggregate release environment.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-010
+
+## D-PRIME-PHASE15-REMEDIATION-010 - PARTIAL
+
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-020
 - Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
 - Closed: 2026-08-11T11:20:14Z
