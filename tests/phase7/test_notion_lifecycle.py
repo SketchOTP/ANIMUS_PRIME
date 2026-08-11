@@ -92,6 +92,19 @@ def test_provider_failure_reconciliation_page_deletion_and_access_loss():
     assert missing["status"] == "PAGE_MISSING"
 
 
+def test_binding_projection_and_source_metadata_survive_restart(tmp_path):
+    provider = InMemoryNotionProvider()
+    state_path = tmp_path / "notion-state.json"
+    service = NotionLifecycleService(provider, state_path=state_path)
+    service.configure("project-a", "notion-credential-ref")
+    page_id = service.create_project_record("project-a", "parent", "A")["page_id"]
+    service.document("project-a", {"CURRENT_STATUS": "persisted"}, "commit-a", source_rank=1)
+    restarted = NotionLifecycleService(provider, state_path=state_path)
+    assert restarted.health("project-a")["status"] == "BOUND"
+    assert restarted.projects["project-a"].page_id == page_id
+    assert restarted.projects["project-a"].latest_source_revision == "commit-a"
+
+
 def test_history_rollover_is_idempotent_and_backup_excludes_raw_secret():
     _, service = configured()
     bind(service)

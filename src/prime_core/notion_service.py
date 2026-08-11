@@ -9,10 +9,12 @@ and it never exposes the credential used by the Core-side adapter.
 
 import hashlib
 import json
+import os
 import re
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Protocol
 
 
@@ -151,10 +153,33 @@ class _ProjectState:
 class NotionLifecycleService:
     """Project-scoped lifecycle, Documentation Agent and Knowledge Source boundary."""
 
-    def __init__(self, provider: NotionProvider | None = None, history_limit: int = 20):
+    def __init__(self, provider: NotionProvider | None = None, history_limit: int = 20, state_path: Path | None = None):
         self.provider = provider or InMemoryNotionProvider()
         self.history_limit = max(1, history_limit)
+        self.state_path = state_path
         self.projects: dict[str, _ProjectState] = {}
+        self._load()
+
+    def _persist(self) -> None:
+        if not self.state_path:
+            return
+        self.state_path.parent.mkdir(parents=True, exist_ok=True)
+        payload = {project_id: vars(state) for project_id, state in self.projects.items()}
+        temporary = self.state_path.with_name(self.state_path.name + ".tmp")
+        temporary.write_text(json.dumps(payload, sort_keys=True), encoding="utf-8")
+        os.replace(temporary, self.state_path)
+
+    def _load(self) -> None:
+        if not self.state_path or not self.state_path.is_file():
+            return
+        try:
+            payload = json.loads(self.state_path.read_text(encoding="utf-8"))
+            for project_id, values in payload.items():
+                self.projects[project_id] = _ProjectState(project_id=project_id, **{key: value for key, value in values.items() if key != "project_id"})
+        except (OSError, ValueError, TypeError):
+            # A corrupt projection snapshot must degrade the Notion projection,
+            # not prevent the repository and .agent authority from starting.
+            self.projects = {}
 
     def _state(self, project_id: str) -> _ProjectState:
         return self.projects.setdefault(project_id, _ProjectState(project_id))
@@ -189,6 +214,7 @@ class NotionLifecycleService:
         state.credential_ref = credential_ref
         health = self.provider.health()
         state.status = health.get("status", "DEGRADED")
+        self._persist()
         return self.health(project_id)
 
     def health(self, project_id: str) -> dict[str, Any]:
@@ -222,6 +248,7 @@ class NotionLifecycleService:
                 return {"status": state.status, "retryable": exc.retryable, "error_code": exc.code}
         state.page_id, state.parent_id, state.status = page.page_id, parent_id, "BOUND"
         state.projection_revisions.append({"source_revision": "initial", "provider_revision": page.revision, "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "self_write": True})
+        self._persist()
         return {"status": "BOUND", "page_id": page.page_id, "page_revision": page.revision, "idempotent": False}
 
     def bind_existing(self, project_id: str, page_id: str, expected_parent_id: str | None = None) -> dict[str, Any]:
@@ -240,6 +267,7 @@ class NotionLifecycleService:
             state.status = "CONFLICT"
             return {"status": "CONFLICT", "reason": "existing content has no safe PRIME-managed regions"}
         state.page_id, state.parent_id, state.status = page.page_id, page.parent_id, "BOUND"
+        self._persist()
         return {"status": "BOUND", "page_id": page.page_id, "page_revision": page.revision}
 
     @staticmethod
@@ -272,6 +300,7 @@ class NotionLifecycleService:
         except NotionProviderError as exc:
             state.status = "CONFLICT" if exc.code == "CONFLICT" else ("ACCESS_LOST" if exc.code == "ACCESS_DENIED" else "DEGRADED")
             state.jobs[run_id] = {"status": "RETRYABLE" if exc.retryable else "ACTION_REQUIRED", "source_revision": source_revision, "error_code": exc.code}
+            self._persist()
             return {"status": state.status, "retryable": exc.retryable, "documentation_run_id": run_id, "error_code": exc.code}
         state.latest_source_rank = source_rank
         state.latest_source_revision = source_revision
@@ -279,6 +308,7 @@ class NotionLifecycleService:
         state.projection_revisions.append(projection)
         state.status = "BOUND"
         state.jobs[run_id] = {"status": "SUCCEEDED", "source_revision": source_revision}
+        self._persist()
         return {"status": "SYNCED", "page_id": page.page_id, "page_revision": page.revision, "projection": projection}
 
     def attach_source(self, project_id: str, source_binding_id: str, page_id: str) -> dict[str, Any]:
@@ -292,6 +322,7 @@ class NotionLifecycleService:
             return state.sources[source_binding_id]
         binding = {"binding_id": source_binding_id, "project_id": project_id, "page_id": page_id, "status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()}
         state.sources[source_binding_id] = binding
+        self._persist()
         return binding
 
     def refresh_source(self, project_id: str, source_binding_id: str) -> dict[str, Any]:
@@ -306,6 +337,7 @@ class NotionLifecycleService:
             return {**binding, "retrieval": "RETRACTED"}
         content = page.content
         binding.update({"status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()})
+        self._persist()
         return {**binding, "retrieval": "CURRENT", "content": content, "provenance": {"project_id": project_id, "source_binding_id": source_binding_id, "page_id": page.page_id, "block_identity": page.page_id, "observed_revision": str(page.revision), "content_hash": binding["content_hash"], "observed_at": binding["observed_at"]}}
 
     def detach_source(self, project_id: str, source_binding_id: str, purge_history: bool = False) -> dict[str, Any]:
@@ -317,6 +349,7 @@ class NotionLifecycleService:
         for memory in state.admitted_memory.values():
             if memory.get("source_binding_id") == source_binding_id:
                 memory["reconciliation_status"] = "REVIEW_REQUIRED"
+        self._persist()
         return dict(binding)
 
     def admit_memory_reference(self, project_id: str, memory_id: str, source_binding_id: str) -> dict[str, Any]:
@@ -324,6 +357,7 @@ class NotionLifecycleService:
             raise KeyError(source_binding_id)
         item = {"memory_id": memory_id, "source_binding_id": source_binding_id, "reconciliation_status": "CURRENT"}
         self._state(project_id).admitted_memory[memory_id] = item
+        self._persist()
         return item
 
     def reconcile(self, project_id: str) -> dict[str, Any]:
@@ -340,6 +374,7 @@ class NotionLifecycleService:
         for binding_id in list(state.sources):
             refreshed = self.refresh_source(project_id, binding_id)
             results.append({"kind": "knowledge_source", "binding_id": binding_id, "status": refreshed["status"], "retrieval": refreshed.get("retrieval")})
+        self._persist()
         return {"project_id": project_id, "status": state.status, "results": results, "queued_jobs": [dict(job, job_id=job_id) for job_id, job in state.jobs.items() if job.get("status") != "SUCCEEDED"]}
 
     def rollover_history(self, project_id: str, period: str, managed_content: str, source_revision_start: str, source_revision_end: str) -> dict[str, Any]:
@@ -351,6 +386,7 @@ class NotionLifecycleService:
         page = self.provider.create_history_page(state.page_id, f"PRIME History — {period}", self._redact(managed_content), f"history/{project_id}/{period}")
         result = {"project_id": project_id, "history_page_id": page.page_id, "period": period, "source_revision_start": source_revision_start, "source_revision_end": source_revision_end, "managed_content_hash": hashlib.sha256(managed_content.encode()).hexdigest(), "created_at": _utcnow().isoformat(), "notion_target_id": page.page_id}
         state.history_pages[period] = result
+        self._persist()
         return result
 
     def backup_metadata(self, project_id: str) -> dict[str, Any]:
