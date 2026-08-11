@@ -539,6 +539,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
 
+## D-PRIME-PHASE15-REMEDIATION-010 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-020
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T11:20:14Z
+- Acceptance: PARTIAL
+- Summary: Continuation 010 closes the local implementation boundary for R-035 and R-036 at implementation commit `f72315271fbb3e60166784e9cb433711a2aeb900`. The bounded Tailscale Serve adapter now has fixed allowlisted argv, actual-state vocabulary, loopback/public-bind safety, Funnel refusal, explicit PRIME ownership, persisted desired state, reconciliation, truthful private URL semantics, and authenticated Core routes. Live tailnet qualification remains blocked_by_environment; implementation convergence is 15/26; VERIFIED is 0/26; V1 remains FAIL; deployment was not performed.
+- Changed areas: src/prime_core/remote_access_service.py, apps/core/main.py, tests/phase12/test_remote_access.py, docs/requirements-traceability.yaml, docs/phase15-remediation-matrix.yaml, docs/phase15-remediation-qualification-ledger.yaml, evidence/phase15/R-035-R-036-implementation-closure-010.md, .agent/CURRENT.md, .agent/DIRECTIVES.md, .agent/LEARNINGS.md, .agent/RECORD.md
+- Validation:
+  - PRIME source, Implementation Handoff Record, and Checkpoint 009 reread - PASSED
+  - codebase-memory MCP index - BLOCKED (`Transport closed`); targeted local fallback used
+  - focused remote-access tests - PASSED (`5 passed`)
+  - full local test suite - PASSED (`35 passed`, `17 skipped`)
+  - live signed-in Tailscale/approved second-device qualification - NOT RUN
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: live Serve HTTPS, second-device/private-path, daemon restart/recovery, Funnel/public exposure, native/live integrations, PostgreSQL-dependent checks, browser, AI, and aggregate end-to-end evidence remain unqualified.
+- Blockers: codebase-memory transport, signed-in tailnet and approved second device, system Python PostgreSQL dependency, native/live integrations, browser, AI, and aggregate release environment.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-010
+
 ## D-PRIME-PHASE15-REMEDIATION-009 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-019

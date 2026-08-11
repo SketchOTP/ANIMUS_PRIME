@@ -123,3 +123,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-008
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-010
+
+- Issued: 2026-08-11T11:20:14Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 009 / Continuation 010
+- Objective: Complete the locally implementable private Tailscale Serve remote-access lifecycle for R-035 and R-036 while preserving separate implementation and qualification states.
+- Scope: bounded Tailscale discovery, fixed allowlisted argv, Serve-only configuration, Funnel/public-bind refusal, PRIME-owned disable/reset, desired-versus-actual reconciliation, remote URL/status semantics, operator-authenticated routes, focused tests, and append-only governance/evidence records.
+- Exclusions: public listeners, Funnel, arbitrary CLI execution, destructive reset of unrelated Tailscale services, weakened remote authentication, fabricated tailnet/second-device evidence, normative changes, deployment, and V1 release claims before 26/26 VERIFIED.
+- Acceptance: R-035 and R-036 are marked IMPLEMENTED only where local code and focused tests cover their implementation boundary; live qualification remains blocked_by_environment; R-031–R-034 and R-042–R-050 remain unchanged; governance, ledger, map, learning, outcome, regression, and V1 gate records are reconciled.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-009
+- Status at issuance: ISSUED

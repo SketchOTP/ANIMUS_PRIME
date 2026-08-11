@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-009`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-010`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-031/R-034 Node/control-plane lifecycle, src/prime_node/config.py, src/prime_node/service.py, apps/node/main.py, src/prime_core/node_client.py, packaging/node, migrations/prime/0021, tests/phase2, docs/phase15 ledger/matrix, evidence/phase15`
-- Immediate next action: `Advance to R-035–R-036 private Tailscale access while preserving R-031–R-034 IMPLEMENTED / blocked_by_environment and R-042–R-050 IMPLEMENTED / partial states; execute native qualification when hosts become available.`
+- Expected or actual touched areas: `R-035/R-036 private Tailscale Serve lifecycle, src/prime_core/remote_access_service.py, apps/core/main.py, tests/phase12, docs/phase15 ledger/matrix, evidence/phase15`
+- Immediate next action: `Advance to R-037–R-041 live Notion implementation while preserving R-031–R-034 IMPLEMENTED / blocked_by_environment, R-035–R-036 IMPLEMENTED / blocked_by_environment, and R-042–R-050 IMPLEMENTED / partial states; execute live Tailscale qualification when a signed-in tailnet and approved second device become available.`
 
 ## Temporary task-relevant facts
 
@@ -47,11 +47,13 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - R-046–R-050 remain `qualification_status=partial`; R-049 is still `IMPLEMENTED`, not `VERIFIED`, until the complete release qualification succeeds.
 - Continuation 008 closes local R-042–R-045 implementation: authenticated continuity v2 backup/manifest, clean restore workflow, component fidelity/rebuild semantics, schedule persistence, quotas, retention, queue/disk backpressure, coalescing helpers, and recovery regression protection. R-042–R-045 remain `qualification_status=partial` because separate off-machine, fresh-install/destructive, live Hindsight, interrupted-restore, and sustained capacity evidence is not complete. Governed implementation commit: `7b5ef0a`; evidence/governance commit: `342fc58`.
 - Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
-- Remediation counts — `implementation_complete=13/26`, `IMPLEMENTING=13`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
+- Remediation counts — `implementation_complete=15/26`, `IMPLEMENTING=11`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
+- Continuation 010 closes the local R-035–R-036 Tailscale adapter boundary with actual-state vocabulary, fixed command allowlist, Serve-only ownership/refusal, loopback validation, persisted desired state, reconciliation, and focused local tests. Live tailnet/second-device qualification remains blocked_by_environment; implementation convergence is now 15/26.
 
 ## Blockers
 
 - System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
+- Codebase-memory MCP indexing was attempted for Continuation 010 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 
 ## Pending decisions
 

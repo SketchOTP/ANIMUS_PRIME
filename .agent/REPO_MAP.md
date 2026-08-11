@@ -130,6 +130,7 @@
 - `evidence/phase15/R-046-R-050-implementation-closure-007.md` — Continuation 007 local implementation closure evidence; not release qualification.
 - `evidence/phase15/R-042-R-045-implementation-closure-008.md` — Continuation 008 local backup/restore/capacity implementation closure; not release qualification.
 - `evidence/phase15/R-031-R-034-implementation-closure-009.md` — Continuation 009 local Node/control-plane implementation closure; not native release qualification.
+- `evidence/phase15/R-035-R-036-implementation-closure-010.md` — Continuation 010 local Tailscale Serve implementation closure; not live tailnet release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

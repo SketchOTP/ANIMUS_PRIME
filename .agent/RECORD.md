@@ -58,3 +58,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The existing Node architecture now has the complete local lifecycle and private-boundary implementation; native host and qualified private deployment evidence must remain separate.
 - Affected areas: Node lifecycle, Core↔Node client, systemd/Windows packaging, node migration, qualification ledger, and Phase-15 governance records.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-010
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-010
+- Status: CLOSED
+- Decision or event: Continuation 010 closed the local implementation milestone for R-035 and R-036 while retaining blocked live Tailscale qualification and the V1 release block.
+- Rationale: Private remote access must remain a Serve-only operator Web plane with fixed argv, loopback validation, explicit ownership, truthful actual-state reporting, and unchanged PRIME authentication.
+- Affected areas: Tailscale adapter, Core remote-access routes, remote-access tests, qualification ledger/matrix, and Phase-15 governance records.
+- Supersedes record: none

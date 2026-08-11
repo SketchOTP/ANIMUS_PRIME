@@ -125,3 +125,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-043/R-044 restore semantics and R-046–R-050 backup regression protection.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-011
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-011
+- Fact or lesson: Tailscale Serve lifecycle safety requires separate desired and actual state plus explicit PRIME ownership. A successful CLI invocation is not proof of active private access, and an unowned Serve reset can disrupt unrelated services; local implementation must fail closed while live tailnet evidence remains separate.
+- Evidence location: src/prime_core/remote_access_service.py; tests/phase12/test_remote_access.py; evidence/phase15/R-035-R-036-implementation-closure-010.md
+- Confidence: VERIFIED
+- Scope: R-035/R-036 private remote access and operator-plane isolation.
+- Supersedes learning: none
