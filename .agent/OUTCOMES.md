@@ -517,3 +517,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-042 through R-045 backup/restore/capacity must consume the finalized Evidence/history object model; R-031 through R-045 and R-051 through R-056 still require local implementation and/or native/live/recovery qualification; R-046 through R-050 still require complete release evidence.
 - Blockers: native Windows/Linux service environments, live Notion/Tailscale, off-machine backup/restore target, approved AI provider, browser acceptance context, and complete end-to-end environment are unavailable or unqualified; no evidence was fabricated.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
+
+## D-PRIME-PHASE15-REMEDIATION-007 - CORRECTION
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-014
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-013
+- Closed: 2026-08-11T01:29:00Z
+- Acceptance: PARTIAL
+- Summary: Corrected the Continuation 007 validation record after its outcome append. The final adopted governance check, compile check, diff check, and clean-worktree check all passed; the clean Phase-15 run independently passed 43 tests and Phases 1–14 while correctly retaining V1 `FAIL` at 0/26 VERIFIED.
+- Changed areas: .agent/OUTCOMES.md, .agent/CURRENT.md
+- Validation:
+  - final `python3 scripts/validate_governance.py --mode ADOPTED` - PASSED
+  - final compileall - PASSED
+  - final git diff check - PASSED
+  - final worktree status - PASSED (clean)
+  - final disposable qualification teardown - PASSED
+  - V1 release/deployment - FAIL / NOT PERFORMED by design; no requirement was falsely promoted
+- Remaining risks: unchanged from OUT-PRIME-PHASE15-REMEDIATION-013; R-042 through R-045 and R-051 through R-056 remain implementation/qualification work, and R-046 through R-050 remain qualification `partial`.
+- Blockers: unchanged from OUT-PRIME-PHASE15-REMEDIATION-013; required native/live/recovery environments remain unavailable or unqualified.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
