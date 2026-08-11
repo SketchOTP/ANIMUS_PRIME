@@ -490,3 +490,30 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-046–R-048 and R-050 still need full implementation and qualification; R-031–R-045, R-051–R-056 remain implementation-incomplete and/or native/live/recovery dependent; no V1 release claim is authorized.
 - Blockers: native Windows/Linux lifecycle, live Tailscale/Notion, backup/restore/capacity, approved AI, browser acceptance, full historical PostgreSQL qualification, and aggregate E2E environments remain unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-006
+
+## D-PRIME-PHASE15-REMEDIATION-007 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-013
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-012
+- Closed: 2026-08-11T01:26:00Z
+- Acceptance: PARTIAL
+- Summary: Executed Continuation 007 against the unchanged PRIME-SPEC-V1.0.0 baseline. Closed local implementation for R-046 through R-050 in governed implementation commit `723809e`, with evidence/governance commit `a617ae5`, and preserved the separate implementation/qualification distinction. R-046/R-047/R-048/R-049/R-050 are now IMPLEMENTED; all five remain qualification `partial`, no row is VERIFIED, V1 remains FAIL, and deployment was not performed.
+- Changed areas: apps/core/main.py, migrations/prime/0017_historical_revisions.sql, migrations/prime/0018_historical_snapshot_immutability.sql, migrations/prime/0019_evidence_parser_states.sql, src/prime_core/brain_service.py, src/prime_core/evidence_validation.py, src/prime_core/history_primitives.py, src/prime_core/history_service.py, src/prime_core/intelligence_service.py, src/prime_core/memory_service.py, src/prime_core/notion_service.py, src/prime_core/progress_service.py, src/prime_core/service.py, tests/phase11, docs/phase15-remediation-qualification-ledger.yaml, docs/phase15-remediation-matrix.yaml, docs/requirements-traceability.yaml, docs/phase15-remediation-queue.md, evidence/phase15/R-046-R-050-implementation-closure-007.md, .agent/CURRENT.md, .agent/DIRECTIVES.md, .agent/LEARNINGS.md, .agent/REPO_MAP.md
+- Validation:
+  - PRIME source page, Implementation Handoff Record, and Checkpoint 006 reread - PASSED
+  - codebase-memory MCP index attempt - BLOCKED (`Transport closed`); targeted local fallback used
+  - focused Evidence/security primitives - PASSED (7 tests without PostgreSQL)
+  - Phase-11 PostgreSQL integration - PASSED (8 tests, including actual checkpoint registration/restart/ref removal/reflog expiry/GC, citation/retraction, Time Lens, and historical Brain)
+  - clean disposable PostgreSQL full regression - PASSED (43 tests)
+  - Python compileall - PASSED
+  - git diff --check - PASSED
+  - governance validation - PASSED before final outcome append; final post-append validation required
+  - Phase 1 through Phase 14 mechanical qualification - PASSED in the clean Phase-15 run
+  - R-046 through R-050 release qualification - PARTIAL; native/live parser-index, product citation, complete historical walkthrough, backup/restore, capacity, and isolation evidence remain open
+  - implementation convergence - PASSED for this directive at `5/26` complete; `21/26` remain incomplete
+  - qualification status - `5 partial`, `21 blocked_by_environment`, `0 verified`, `0 failed`
+  - V1 release gate - FAILED as required; `VERIFIED / 26 = 0/26`
+  - deployment - NOT PERFORMED
+- Remaining risks: R-042 through R-045 backup/restore/capacity must consume the finalized Evidence/history object model; R-031 through R-045 and R-051 through R-056 still require local implementation and/or native/live/recovery qualification; R-046 through R-050 still require complete release evidence.
+- Blockers: native Windows/Linux service environments, live Notion/Tailscale, off-machine backup/restore target, approved AI provider, browser acceptance context, and complete end-to-end environment are unavailable or unqualified; no evidence was fabricated.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
