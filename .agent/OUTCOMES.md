@@ -518,7 +518,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: native Windows/Linux service environments, live Notion/Tailscale, off-machine backup/restore target, approved AI provider, browser acceptance context, and complete end-to-end environment are unavailable or unqualified; no evidence was fabricated.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-007
 
-## D-PRIME-PHASE15-REMEDIATION-007 - CORRECTION
+## D-PRIME-PHASE15-REMEDIATION-007 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-014
 - Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-013
