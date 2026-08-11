@@ -127,3 +127,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Qualification is per requirement. A retained PRIME-owned Git checkpoint is independently releasable evidence when ordinary refs/history are pruned and the retained artifact survives restart, degraded loss, and recovery. Citation status must follow retained source identity and lifecycle state rather than current hash equality alone.
 - Affected areas: `src/prime_core/history_service.py`, `tests/phase15/test_requirement_qualification.py`, R-049 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
 - Supersedes record: DEC-PRIME-PHASE15-015
+
+## DEC-PRIME-PHASE15-017
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-017
+- Status: CLOSED
+- Decision or event: Promote R-046 and R-047 independently to VERIFIED after real PostgreSQL-backed Evidence file, parser, root/isolation, backup/restore, Search, Ask, Progress, Documentation, retraction, and recovery qualification; preserve R-049 VERIFIED and keep R-042/R-043/R-045/R-048/R-050 partial where exact remaining normative branches are incomplete.
+- Rationale: Requirement release status follows complete evidence per row, not aggregate test count. The minimum production repair was to admit Evidence into Intelligence Search/Ask, retain Progress evidence references, make separate-mount classification device-aware, persist interrupted restore state after rollback, and report historical Evidence availability truthfully.
+- Affected areas: `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `src/prime_core/intelligence_service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `tests/phase15/test_requirement_qualification.py`, R-046/R-047 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
+- Supersedes record: DEC-PRIME-PHASE15-016

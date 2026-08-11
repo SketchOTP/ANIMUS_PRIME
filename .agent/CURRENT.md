@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T17:54:50-04:00`
+- Last updated: `2026-08-11T18:35:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-016`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-017`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-049 is VERIFIED from exact local evidence; Phase 15/V1 remains FAIL at 1/26 because R-056 and other rows remain open or environment constrained.`
+- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, and R-049 are VERIFIED from exact local evidence; Phase 15/V1 remains FAIL at 3/26 because R-056 and other rows remain open or environment constrained.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, retained Git checkpoint/Time Lens citation path, Evidence citation lifecycle, requirement-centric Phase-15 evidence, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Publish Continuation 016 evidence and continue exact requirement-level qualification without adding architecture; R-049 is independently verified and R-056 remains open.`
+- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, Evidence file/parser/root matrix, product Evidence citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
+- Immediate next action: `Publish Continuation 017 evidence and continue exact requirement-level qualification without adding architecture; preserve R-046/R-047/R-049 VERIFIED and R-056 OPEN.`
 
 ## Temporary task-relevant facts
 
@@ -53,6 +53,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 011 persistence correction adds atomic non-secret lifecycle state snapshot/load and restart coverage at `659fc3ce9659611e34dedf3d6e2b4b892088d355`; live Notion qualification remains blocked_by_environment.
 - Continuation 012 adds secret-safe MyAssistant credential-reference import/capability-test boundaries, migration 0023, operator-state/Ask routes, and the complete local R-051–R-053 shell; implementation convergence is now 23/26 while live Notion and supported-browser qualification remain unverified.
 - Continuation 013 adds the Core-owned AI execution/profile boundary, durable run/source/profile/usage provenance, privacy and no-fallback enforcement, grounded Ask integration, structured-output/citation checks, prompt-injection and project-isolation defenses, and versioned golden fixtures; implementation convergence is now 25/26. R-056 remains open.
+- Continuation 017 adds product Evidence admission to Intelligence Search/Ask, Progress citation retention, device-aware off-machine backup classification, durable interrupted-restore failure state, historical Evidence availability truth, and real R-046/R-047 qualification fixtures. Implementation remains 25/26; R-046/R-047/R-049 are VERIFIED; R-056 remains open.
 
 ## Blockers
 
@@ -68,6 +69,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 015 recreated the approved disposable PostgreSQL/pgvector qualification database from zero, verified PostgreSQL `17.10` and pgvector `0.8.2`, applied all 24 migrations, and converted the Phase 1–13 database gates from BLOCKED to PASS. The first complete run exposed and the minimum repair fixed an `ai_runs` placeholder-count defect; the fresh rerun passed `71` tests and Phases 1–14. The V1 gate remains FAIL at `0/26 VERIFIED`; R-056 remains OPEN; evidence is `evidence/phase15/qualification-continuation-015.md`.
 - Continuation 016 added a production-path qualification harness for real Git rewrite/reflog expiry/GC, PostgreSQL checkpoint registration, retained PRIME-owned bundle recovery, citation resolution, Time Lens source selection, non-retained degradation, and Evidence retraction/purge/parser recovery. The exact R-049 row is now `VERIFIED`; evidence is `evidence/phase15/qualification-continuation-016.md`.
 - Continuation 016 reconciled stale environment claims: Linux/systemd, Chromium, Tailscale, and Hindsight are present, but exact release criteria remain partial because root/native lifecycle, interactive browser walkthrough, second-device/private Serve, and approved Hindsight model/provider evidence are incomplete. Notion secret discovery remains `NOT FOUND`; no secrets were printed or persisted.
+- Continuation 017: codebase-memory MCP again returned `Transport closed`; targeted fallback was used. Chromium CDP qualified setup/auth/project/navigation/degraded paths but `agent-browser` was not installed and full assistive-technology/historical-browser evidence remains partial. Independent `/dev/sdb1` backup target passed but R-042 remains partial for complete scheduled recovery. Notion remains `NOT FOUND`; no secret was printed or persisted.
 
 ## Pending decisions
 

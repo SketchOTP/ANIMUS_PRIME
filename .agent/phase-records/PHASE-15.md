@@ -51,3 +51,21 @@ result: FAIL
 - security_tests_run: `PASS` for R-049 and exercised Evidence/citation cases; remaining live/native security environments remain incomplete.
 - recovery_tests_run: `PASS` for R-049 retained bundle loss/recovery; destructive/interrupted/off-machine recovery remains unverified.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
+
+## Continuation 017 — Evidence and product citation verification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-017`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_implementation_commit: `dbf94f7eab521c4a0973681654a83fddec8470db`
+- database_environment: `PASS` — fresh PostgreSQL `17.10`, pgvector `0.8.2`, all 24 migrations from zero.
+- full_regression: `PASS` — `79 passed`; Phases 1 through 14 `PASS`.
+- newly_verified: `R-046`, `R-047`; preserved `R-049` `VERIFIED`.
+- R-046: real active-content/MIME/size/parser/Node-root/isolation matrix plus managed Evidence backup/clean-restore/reindex identity passed.
+- R-047: real product Search/Ask/Progress/Documentation E1/S1 citation, retraction, restore/reindex, and project-isolation matrix passed.
+- exercised_partial: `R-042`, `R-043`, `R-045`, `R-048`, `R-050`; exact remaining gaps are recorded in the evidence package.
+- requirement_state: `3/26 VERIFIED`; `15 partial`; `8 blocked_by_environment`; `0 failed`; R-056 remains `OPEN`.
+- environment_reconciliation: Chromium CDP shell/setup/auth/navigation/degraded/responsive/security paths exercised; agent-browser absent and full assistive-technology/historical browser path remains partial. Native root, Windows, private second-device Tailscale, approved Hindsight model/provider, live Notion, approved AI remain incomplete. Independent `/dev/sdb1` target passed backup classification.
+- qualification_evidence: `evidence/phase15/qualification-continuation-017.md`
+- security_tests_run: `PASS` for R-046/R-047 exercised boundaries; remaining live/native/provider security environments incomplete.
+- recovery_tests_run: `PASS` for Evidence parser/reindex, managed restore identity, off-mount encrypted backup, and durable interrupted restore state; complete R-042/R-043 recovery matrix remains open.
+- result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.

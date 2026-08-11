@@ -215,3 +215,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-046/R-047 Evidence lifecycle, citation durability, retraction, privacy purge, and project isolation.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-020
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-020
+- Fact or lesson: Product-level Evidence qualification must admit the durable Evidence identity and SourceReference below the AI boundary. Search, Ask, Progress, and Documentation can each expose the same E1/S1 identity while retraction removes current retrieval and restore/reindex returns only when the exact bytes are present.
+- Evidence location: `src/prime_core/intelligence_service.py`; `src/prime_core/progress_service.py`; `apps/core/main.py`; `tests/phase15/test_requirement_qualification.py`; `evidence/phase15/qualification-continuation-017.md`
+- Confidence: VERIFIED
+- Scope: R-046/R-047 product citations, Evidence provenance, retraction, restore, and project isolation.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-021
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-021
+- Fact or lesson: Backup destination classification must compare filesystem device identity, not path anchors. Separate mounts share `/` as an anchor; device IDs are required to truthfully label an off-machine qualification target. Interrupted restore state must be committed outside the failed transaction so `REPAIR_REQUIRED` survives rollback.
+- Evidence location: `src/prime_core/backup_service.py`; `tests/phase15/test_requirement_qualification.py`; `evidence/phase15/qualification-continuation-017.md`
+- Confidence: VERIFIED
+- Scope: R-042/R-043 Continuity-v2 destination, clean restore, interruption, and recovery semantics.
+- Supersedes learning: none

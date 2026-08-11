@@ -221,3 +221,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-015
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-017
+
+- Issued: 2026-08-11T22:20:00Z
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 017 / Checkpoint 016
+- Objective: Convert the closest remaining Phase-15 requirements to VERIFIED using exact product-level evidence, prioritizing R-046/R-047, R-043/R-045, R-048/R-050, and full Chromium R-051–R-053 qualification while preserving R-049 VERIFIED and R-056 OPEN.
+- Scope: Real Evidence-file matrix and Continuity-v2 identity restore; product-level Ask/Search/Progress/Documentation citations; clean and interrupted restore with negative safety cases; sustained capacity/backpressure; historical A/B/C/D reconstruction and historical Ask/Brain; full interactive Chromium setup/navigation/accessibility qualification; truthful native Linux, Tailscale, Hindsight, off-machine, Notion, and AI checks only where safe and actually available; exact requirement promotion; fresh regression; GitHub parity; Notion execution record; and append-only governance updates.
+- Exclusions: New features merely to create activity, redesign of working subsystems, reopening R-049 without a real regression, unsafe alteration of unrelated Tailscale configuration, fabricated provider/off-machine/native evidence, repeated search for the absent MyAssistant secret, ambient credential reuse, R-056 closure before its complete gate, deployment, normative changes, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Each locally feasible requirement is promoted only after positive, negative, degraded, recovery, citation, and security evidence is recorded; remaining gaps identify exact criteria; R-049 remains VERIFIED; R-056 remains OPEN; governance, ledgers, `.agent` records, evidence, Notion, and GitHub `main` are synchronized; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-016
+- Status at issuance: ISSUED

@@ -919,3 +919,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031–R-036, R-042–R-048, and R-050–R-053 remain partial; R-037–R-041 and R-054–R-056 remain environment constrained; off-machine/interrupted restore, complete A/B/C/D history, full product citation flow, capacity, native Windows, live Notion, approved Hindsight/AI, and full browser interaction remain open.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-016.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-017 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-032
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-031
+- Closed: 2026-08-11T18:35:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 017 repaired the minimum production defects needed for product Evidence citations, separate-mount backup classification, historical Evidence availability, and durable interrupted-restore state. Real PostgreSQL-backed qualification promoted R-046 and R-047 to VERIFIED while preserving R-049 VERIFIED. R-042, R-043, R-045, R-048, and R-050 were exercised but remain partial where exact scheduled, fresh-install, sustained, correction-overlay, and browser criteria remain open. Full regression passed 79 tests and V1 remains FAIL.
+- Changed areas: `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `src/prime_core/intelligence_service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `tests/phase15/test_requirement_qualification.py`, `.agent/`, `docs/`, and `evidence/phase15/qualification-continuation-017.md`.
+- Validation:
+  - codebase-memory MCP discovery - BLOCKED (`Transport closed`); targeted fallback used and recorded
+  - focused qualification - PASSED (`9 passed`)
+  - fresh complete regression - PASSED (`79 passed`)
+  - Phases 1–14 - PASSED
+  - real `/dev/sdb1` off-machine backup manifest - PASSED
+  - Chromium CDP operator paths - PASSED/partial; full assistive-technology and historical browser path remains partial
+  - Hindsight probe - PARTIAL (`CURRENT/DEGRADED/CURRENT/UNAVAILABLE`)
+  - native Linux root lifecycle - NOT RUN
+  - Notion secret source - PASSED as `NOT FOUND`; no secret exposed
+  - approved AI - NOT CONFIGURED
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`3/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-031–R-045, R-048, and R-050–R-053 remain partial or environment constrained; live Notion, native Windows/root lifecycle, private second-device Tailscale, approved Hindsight/AI, complete browser accessibility/history, and aggregate R-056 remain open.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none
