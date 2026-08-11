@@ -845,3 +845,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: all external/native/provider/browser/recovery/capacity qualification gaps and aggregate R-056 clean-install evidence remain open.
 - Blockers: missing database qualification URL, approved AI/local inference environment, codebase-memory transport, supported browser/device, and prior native/live release environments.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-014 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-029
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-028
+- Closed: 2026-08-11T19:16:18Z
+- Acceptance: PARTIAL
+- Summary: Completed the post-publication qualification continuation. The canonical GitHub publication remains exact and secret-safe; the available Phase-15 runner correctly returned FAIL because database-backed gates are blocked by the missing database URL and all 26 remediation requirements remain unverified. R-056 remains OPEN and deployment was not performed.
+- Changed areas: `.agent/CURRENT.md`, `.agent/OUTCOMES.md`, and `evidence/phase15/github-publication-014.md`; qualification evidence only, with no normative or product architecture change.
+- Validation:
+  - adopted governance validation - PASSED
+  - full regression suite - PASSED (54 passed, 17 skipped)
+  - Phase 1–13 database-backed migration qualification - BLOCKED (database URL unavailable)
+  - Phase 14 qualification - PASSED
+  - approved baseline identity and remediation ledger structure - PASSED
+  - Phase-15 available qualification runner - FAILED truthfully (25/26 implementation-complete; 0/26 VERIFIED)
+  - deployment - NOT PERFORMED
+- Remaining risks: approved provider/local-model, live Notion/Tailscale/Hindsight, native Linux/Windows, browser/accessibility, recovery/capacity, historical, and aggregate clean-install/end-to-end qualification remain open.
+- Blockers: missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL`, approved AI/local inference environment, live/native/browser/recovery environments, and codebase-memory transport.
+- Follow-up directive: none

@@ -18,3 +18,15 @@
 - Deployment: `NOT PERFORMED`
 
 This record documents source publication only. GitHub does not replace local Git authority, `.agent` authority, or PRIME's Notion Project Record, and publication does not imply V1 qualification or product deployment.
+
+## Post-publication qualification continuation
+
+- Available Phase-15 qualification runner: `FAILED` truthfully on governed commit `f8f3f17b793cb69421e175db86ca52de678c76c0`.
+- Governance: `PASS`.
+- Full regression suite: `54 passed, 17 skipped`.
+- Phase 1–13 database-backed gates: `BLOCKED` because `PRIME_PHASE1_DB_URL` / `PRIME_DATABASE_URL` is unavailable.
+- Phase 14 qualification: `PASS`.
+- Implementation convergence: `25/26`; R-056 remains `OPEN`.
+- Requirement qualification: `0/26 VERIFIED`; 9 `partial`, 17 `blocked_by_environment`.
+- V1 release result: `FAIL`.
+- Deployment: `NOT PERFORMED`.
