@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -40,3 +41,40 @@ def test_funnel_is_a_hard_refusal(monkeypatch):
     service = TailscaleService(runner=fake_runner(outputs))
     with pytest.raises(PermissionError):
         service.configure_serve()
+
+
+def test_status_distinguishes_signed_out_and_serve_disabled(monkeypatch):
+    outputs = {
+        ("status", "--json"): (0, json.dumps({"BackendState": "NeedsLogin", "Self": {}}), ""),
+        ("serve", "status", "--json"): (0, "{}", ""),
+        ("funnel", "status", "--json"): (0, "{}", ""),
+    }
+    monkeypatch.setattr("shutil.which", lambda _: "/usr/bin/tailscale")
+    service = TailscaleService(runner=fake_runner(outputs))
+    assert service.status()["actual_state"] == "SIGNED_OUT"
+
+
+def test_public_bind_and_ambiguous_serve_fail_closed(monkeypatch):
+    outputs = {
+        ("status", "--json"): (0, json.dumps({"Self": {"DNSName": "prime.tail"}}), ""),
+        ("serve", "status", "--json"): (0, json.dumps({"Web": {"https://prime.tail": {"handler": "http://127.0.0.1:9999"}}}), ""),
+        ("funnel", "status", "--json"): (0, "{}", ""),
+    }
+    monkeypatch.setattr("shutil.which", lambda _: "/usr/bin/tailscale")
+    unsafe = TailscaleService(RemoteAccessSettings(web_host="0.0.0.0"), fake_runner(outputs))
+    with pytest.raises(PermissionError):
+        unsafe.configure_serve()
+    ambiguous = TailscaleService(RemoteAccessSettings(web_port=18000), fake_runner(outputs))
+    with pytest.raises(PermissionError):
+        ambiguous.configure_serve()
+
+
+def test_disable_refuses_unowned_serve_and_reconcile_reports_degraded(tmp_path: Path, monkeypatch):
+    outputs = {
+        ("status", "--json"): (0, json.dumps({"Self": {"DNSName": "prime.tail"}}), ""),
+        ("serve", "status", "--json"): (0, json.dumps({"Web": {"handler": "http://127.0.0.1:18000"}}), ""),
+        ("funnel", "status", "--json"): (0, "{}", ""),
+    }
+    monkeypatch.setattr("shutil.which", lambda _: "/usr/bin/tailscale")
+    service = TailscaleService(RemoteAccessSettings(web_port=18000, state_path=tmp_path / "remote.json"), fake_runner(outputs))
+    assert service.disable()["status"] == "DEGRADED"

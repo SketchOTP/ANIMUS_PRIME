@@ -35,7 +35,11 @@ service = CoreService(settings)
 indexer = RepositoryIndexer(service)
 memory = MemoryService(settings)
 mcp = MCPService(settings, memory)
-remote_access = TailscaleService(RemoteAccessSettings(web_port=int(__import__("os").getenv("PRIME_WEB_PORT", "8000"))))
+remote_access = TailscaleService(RemoteAccessSettings(
+    web_port=int(__import__("os").getenv("PRIME_WEB_PORT", "8000")),
+    web_host=__import__("os").getenv("PRIME_WEB_HOST", "127.0.0.1"),
+    state_path=Path(__import__("os").getenv("PRIME_REMOTE_ACCESS_STATE_PATH", "var/remote-access.json")),
+))
 backups = BackupCoordinator()
 history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
@@ -514,7 +518,7 @@ def mcp_tool(tool: str, body: dict[str, Any], authorization: str | None = Header
 @app.get("/v1/system/remote-access")
 def remote_access_status(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
-    return remote_access.status()
+    return remote_access.reconcile()
 
 
 @app.post("/v1/system/remote-access/tailscale/configure")
