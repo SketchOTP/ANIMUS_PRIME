@@ -3,26 +3,26 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T18:55:00-04:00`
+- Last updated: `2026-08-11T20:45:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-017`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-018`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, and R-049 are VERIFIED from exact local evidence; Phase 15/V1 remains FAIL at 3/26 because R-056 and other rows remain open or environment constrained.`
+- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, R-049, and R-054 are VERIFIED from exact local evidence; R-037–R-041 and R-055 are partial; Phase 15/V1 remains FAIL at 4/26; R-056 remains OPEN.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, Evidence file/parser/root matrix, product Evidence citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Continue only with exact open requirement qualification; Continuation 017 is published, R-046/R-047/R-049 remain VERIFIED, R-056 remains OPEN, and V1 remains FAIL.`
+- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, PRIME Notion read capability, Evidence/product citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
+- Immediate next action: `Continue exact open requirement qualification; preserve R-046/R-047/R-049/R-054 VERIFIED, keep R-037–R-041/R-055 partial until their missing write/cross-surface criteria pass, keep R-056 OPEN, and do not claim V1.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; approved local provider profile: `paragon/paragon`, `LOCAL_ONLY`; supplied credentials remain ephemeral and unrecorded.
 
 ## Last validation after adoption
 
-- Command or check: `fresh docker-compose.phase1 PostgreSQL/pgvector recreation; explicit vector enablement; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted> ./.venv/bin/python scripts/phase15_qualify.py`
+- Command or check: `fresh docker-compose.phase0 PostgreSQL/pgvector recreation; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted>; ephemeral Paragon profile; ./.venv/bin/python scripts/phase15_qualify.py`
 - Result: `PASSED`
 
 ## Risks
@@ -54,13 +54,14 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 012 adds secret-safe MyAssistant credential-reference import/capability-test boundaries, migration 0023, operator-state/Ask routes, and the complete local R-051–R-053 shell; implementation convergence is now 23/26 while live Notion and supported-browser qualification remain unverified.
 - Continuation 013 adds the Core-owned AI execution/profile boundary, durable run/source/profile/usage provenance, privacy and no-fallback enforcement, grounded Ask integration, structured-output/citation checks, prompt-injection and project-isolation defenses, and versioned golden fixtures; implementation convergence is now 25/26. R-056 remains open.
 - Continuation 017 adds product Evidence admission to Intelligence Search/Ask, Progress citation retention, device-aware off-machine backup classification, durable interrupted-restore failure state, historical Evidence availability truth, and real R-046/R-047 qualification fixtures. Implementation remains 25/26; R-046/R-047/R-049 are VERIFIED; R-056 remains open.
+- Continuation 018 adds the minimum environment-backed OpenAI-compatible local provider adapter, real Paragon Ask/Progress/Documentation/memory-admission execution, provider outage/recovery and secret-redaction evidence, and PRIME Notion credential/read capability evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 are VERIFIED; R-037–R-041/R-055 are partial; R-056 remains open.
 
 ## Blockers
 
 - System Python lacks `psycopg`, and the default host database variables remain unset; the approved `.venv` plus freshly recreated disposable PostgreSQL/pgvector path was exercised successfully. R-049 is verified. The separate off-machine target, fresh-install/destructive/interrupted restore drill, native service lifecycle, private second-device Tailscale path, live Notion, approved Hindsight model/provider, approved AI, full interactive browser, sustained capacity, and full end-to-end environments remain unqualified.
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
-- `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
+- The supplied Notion authorization was used only ephemerally; PRIME API health and frozen source/handoff page plus child-block reads passed. No token material was printed or persisted. Live write/lifecycle qualification remains partial because no disposable write target was authorized.
 - Continuation 013 re-inspected candidate config paths, service names, process command lines, and matching runtime environment variable names without printing values; no usable existing MyAssistant Notion secret source was found. Live PRIME Notion capability qualification remains blocked_by_environment.
 - Continuation 013 final validation: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; adopted governance PASSED; diff check PASSED; Phase-15 qualification FAILED truthfully at 25/26 implementation-complete and 0/26 VERIFIED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; evidence/governance commit `e81010f27ef74b34e6bdc7d2618a219ac61ba2bb`; final governance state is recorded in the current HEAD; deployment NOT PERFORMED.
 - Continuation 014 publication preflight: canonical remote configured and authenticated; verified remote placeholder `4bd3e232f7d90655b5857a3b382a372366122931` replaced by local governed `a8300cf0b649940f0036b53a29a717a4c94ee798` using explicit `--force-with-lease`; exact parity and representative remote paths PASSED; no governed tags exist; publication evidence is `evidence/phase15/github-publication-014.md`.

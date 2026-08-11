@@ -52,6 +52,24 @@ result: FAIL
 - recovery_tests_run: `PASS` for R-049 retained bundle loss/recovery; destructive/interrupted/off-machine recovery remains unverified.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
 
+## Continuation 018 — approved local AI and PRIME Notion capability
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-018`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_implementation_commit: `e7705dc0a1ece7e12dbfc3d35e914a0a2833d7da`
+- database_environment: `PASS` — fresh PostgreSQL `17.10`, pgvector `0.8.2`, all 24 migrations from zero.
+- full_regression: `PASS` — `80 passed`; Phases 1 through 14 `PASS`.
+- newly_verified: `R-054`; preserved `R-046`, `R-047`, `R-049` `VERIFIED`.
+- R-054: real Paragon OpenAI-compatible `/chat/completions` execution for Ask, Progress, Documentation, and memory admission under `LOCAL_ONLY`; structured output, usage/provenance, injection, isolation, outage, recovery, and secret-redaction evidence passed.
+- R-037–R-041: supplied PRIME Notion authorization, health, frozen source/handoff page, and child-block reads passed; live write/lifecycle criteria remain partial and no write probe was run.
+- R-055: Paragon cross-function execution and safety paths passed, but full Goal/Alignment/correction and isolated Project A/B evaluation remains partial.
+- requirement_state: `4/26 VERIFIED`; `21 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`; R-056 remains `OPEN`.
+- environment_reconciliation: Paragon endpoint reachable and approved for this qualification; Notion connected for read capability; no credentials persisted; Chromium remains the supported browser harness; native Windows/root, private second-device Tailscale, live Notion writes, full Hindsight/provider-dependent paths, and R-056 remain open.
+- qualification_evidence: `evidence/phase15/qualification-continuation-018.md`
+- security_tests_run: `PASS` for provider local-only, prompt-injection-as-data, cross-project rejection, structured-output, and secret-redaction paths; Notion write probe intentionally `NOT RUN`.
+- recovery_tests_run: `PASS` for provider outage/recovery; Notion read re-import/capability passed; live write/reconciliation recovery remains open.
+- result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
+
 ## Continuation 017 — Evidence and product citation verification
 
 - directive: `D-PRIME-PHASE15-REMEDIATION-017`

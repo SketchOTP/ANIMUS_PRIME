@@ -983,3 +983,29 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: all previously recorded open and environment-constrained requirements remain unchanged; V1 is not qualified.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-017.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-018 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-035
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-034
+- Closed: 2026-08-11T20:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 018 used the operator-approved Paragon local model and PRIME Notion authorization ephemerally. The minimum OpenAI-compatible adapter was added and real Paragon Ask/Progress/Documentation/memory-admission, privacy, injection, isolation, outage/recovery, usage, and secret-safety paths passed. PRIME Notion health and frozen-page read capability passed; live Notion writes were intentionally not run without a disposable target. R-054 is VERIFIED; R-037–R-041 and R-055 are partial; R-056 remains OPEN.
+- Changed areas: `src/prime_core/ai_service.py`, `tests/phase15/test_ai_execution.py`, `.agent/`, `docs/`, and `evidence/phase15/qualification-continuation-018.md`.
+- Validation:
+  - codebase-memory MCP discovery - BLOCKED (`Transport closed`); targeted fallback used and recorded
+  - provider endpoint/model probe - PASSED (`HTTP 200`)
+  - PRIME Paragon execution - PASSED (Ask, Progress, Documentation, memory admission)
+  - provider outage/recovery - PASSED
+  - durable secret-redaction review - PASSED
+  - PRIME Notion health/page/block read - PASSED
+  - PRIME Notion write probe - NOT RUN (no disposable target authorized)
+  - focused AI tests - PASSED (`7 passed`)
+  - fresh complete regression - PASSED (`80 passed`)
+  - Phases 1–14 - PASSED
+  - adopted governance - PASSED
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`4/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-031–R-045, R-048, R-050–R-053, R-055, and R-056 remain partial or environment constrained; live Notion writes/lifecycle, native Windows/root lifecycle, private second-device Tailscale, full Hindsight/provider-dependent paths, complete browser accessibility/history, and aggregate R-056 remain open.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-018.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none

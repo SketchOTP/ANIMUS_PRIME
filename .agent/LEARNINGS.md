@@ -235,3 +235,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-042/R-043 Continuity-v2 destination, clean restore, interruption, and recovery semantics.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-022
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-022
+- Fact or lesson: A local OpenAI-compatible model can satisfy PRIME's existing AI boundary without new architecture when the adapter is environment-backed, marks the provider local for LOCAL_ONLY policy, sends bounded untrusted-source context, parses only structured JSON, records usage/provenance, and never persists endpoint or key material. Provider outage and recovery must be qualified separately from model success.
+- Evidence location: `src/prime_core/ai_service.py`; `tests/phase15/test_ai_execution.py`; `evidence/phase15/qualification-continuation-018.md`
+- Confidence: VERIFIED
+- Scope: R-054/R-055 local provider/profile, privacy, structured output, usage, outage/recovery, prompt-injection, project isolation, and secret-safety qualification.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-023
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-023
+- Fact or lesson: A valid Notion credential removes the credential-environment blocker but does not prove PRIME's live documentation lifecycle. Read capability can be qualified safely against frozen pages; project-record writes, managed-region conflict/replay, Knowledge Source lifecycle, outage reconciliation, and history rollover require an explicitly controlled disposable target.
+- Evidence location: `src/prime_core/notion_credentials.py`; `src/prime_core/notion_api.py`; `evidence/phase15/qualification-continuation-018.md`
+- Confidence: VERIFIED
+- Scope: R-037–R-041 Notion authentication, read capability, write safety, and remaining lifecycle qualification.
+- Supersedes learning: none

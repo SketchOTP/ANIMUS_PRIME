@@ -93,6 +93,9 @@
 - `.github/workflows/phase0.yml` — repository qualification workflow.
 - `evidence/phase0/` — Phase 0 qualification evidence.
 - `evidence/phase15/` — Phase 15 release, remediation, and R-031 evidence.
+- `evidence/phase15/qualification-continuation-018.md` — Paragon local-provider and PRIME Notion read-capability qualification; credentials are never included.
+- `src/prime_core/ai_service.py` — environment-backed OpenAI-compatible provider boundary used for Paragon; bounded structured output, privacy, provenance, and redaction.
+- `tests/phase15/test_ai_execution.py` — provider-adapter contract and existing AI privacy/injection/isolation regression tests.
 - `.agent/phase-records/` — append-only phase records for Phases 0–15.
 
 ## Configuration

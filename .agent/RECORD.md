@@ -137,3 +137,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Requirement release status follows complete evidence per row, not aggregate test count. The minimum production repair was to admit Evidence into Intelligence Search/Ask, retain Progress evidence references, make separate-mount classification device-aware, persist interrupted restore state after rollback, and report historical Evidence availability truthfully.
 - Affected areas: `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `src/prime_core/intelligence_service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `tests/phase15/test_requirement_qualification.py`, R-046/R-047 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
 - Supersedes record: DEC-PRIME-PHASE15-016
+
+## DEC-PRIME-PHASE15-018
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-018
+- Status: CLOSED
+- Decision or event: Use the operator-approved Paragon endpoint as an environment-backed LOCAL_ONLY provider through the existing AI execution boundary; promote R-054 to VERIFIED after real provider execution and preserve R-055 partial. Treat the supplied Notion authorization as ephemeral and qualify only read capability without an explicitly controlled write target; move R-037–R-041 to partial rather than environment-blocked.
+- Rationale: The endpoint and credential were intentionally supplied for qualification. The minimum adapter preserves the frozen provider/privacy/provenance contract without introducing a second architecture or persisting secrets. Notion reads are independently proven, while uncontrolled live writes would not establish safe lifecycle evidence.
+- Affected areas: `src/prime_core/ai_service.py`, `tests/phase15/test_ai_execution.py`, Notion credential/API boundary, R-037–R-041/R-054/R-055 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
+- Supersedes record: DEC-PRIME-PHASE15-017
