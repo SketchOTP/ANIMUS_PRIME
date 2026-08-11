@@ -207,3 +207,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-014
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-016
+
+- Issued: 2026-08-11T19:30:00-04:00
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 016 / Checkpoint 015
+- Objective: Convert individually qualified ANIMUS PRIME requirements to VERIFIED using exact normative evidence, beginning with R-049 and the locally executable R-042–R-050 paths.
+- Scope: Evidence-based reconciliation of R-031–R-056; fresh disposable Git/PostgreSQL fixtures; HistoryService checkpoint registration and Time Lens reconstruction; historical A/B/C/D state reconstruction; real Evidence-file lifecycle and security qualification; citation mutation/retraction; clean restore; bounded-capacity/backpressure; backend historical Ask/Brain; browser, native Linux, Tailscale, Notion, Hindsight, and AI qualification only where the actual environment exists; exact requirement promotion; GitHub parity; Notion execution record; and append-only governance updates.
+- Exclusions: New architecture, test-count optimization, fabricated native/live/off-machine/provider/browser evidence, secrets or credential persistence, normative changes, R-056 closure before its complete fresh-install gate, deployment, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Every R-031–R-056 row is reconciled criterion-by-criterion against current code and Continuation 015 evidence; locally executable exact acceptance paths are run; only complete requirement evidence promotes a row to VERIFIED; obsolete blockers are removed; remaining gaps identify exact native/external criteria; governed evidence, ledger, `.agent` records, Notion, and GitHub `main` are synchronized; R-056 remains OPEN and deployment remains NOT PERFORMED unless separately authorized.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-015
+- Status at issuance: ISSUED

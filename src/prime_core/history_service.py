@@ -278,13 +278,25 @@ class HistoryService:
         if row["source_class"] == "EVIDENCE":
             with connect(self.settings) as db:
                 evidence = db.execute("SELECT evidence_id,retracted_at,purged_at FROM prime_core.evidence_records WHERE project_id=%s AND source_reference_id=%s", (project_id, source_reference_id)).fetchone()
+        if row["source_class"] == "GIT_COMMIT":
+            with connect(self.settings) as db:
+                checkpoint = db.execute("SELECT bundle_locator,content_hash,retained FROM prime_core.git_history_checkpoints WHERE project_id=%s AND source_reference_id=%s", (project_id, source_reference_id)).fetchone()
+            if not checkpoint or not checkpoint.get("retained"):
+                return {"source_reference_id": source_reference_id, "status": "UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False, "reason": "CHECKPOINT_NOT_RETAINED"}
+            checkpoint_status = checkpoint_bundle_status(checkpoint.get("bundle_locator"), checkpoint.get("content_hash"))
+            if checkpoint_status != "EXACT":
+                return {"source_reference_id": source_reference_id, "status": checkpoint_status, "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False, "reason": "CHECKPOINT_BUNDLE_UNAVAILABLE"}
         if not source_available:
             return {"source_reference_id": source_reference_id, "status": "CHANGED_HISTORICAL_CONTENT_UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False}
+        if evidence and evidence.get("purged_at"):
+            return {"source_reference_id": source_reference_id, "status": "UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False, "reason": "EVIDENCE_PURGED"}
         revision_match = current_revision is None or current_revision == row["revision"]
         hash_match = current_content_hash is None or current_content_hash == row["content_hash"]
         if revision_match and hash_match:
+            if evidence and evidence.get("retracted_at"):
+                return {"source_reference_id": source_reference_id, "status": "HISTORICAL", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "warning": "SOURCE_RETRACTED", "historical_available": True, "later_retracted": True, "purged": False}
             return {"source_reference_id": source_reference_id, "status": "EXACT", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": True, "later_retracted": bool(evidence and evidence.get("retracted_at")), "purged": bool(evidence and evidence.get("purged_at"))}
-        return {"source_reference_id": source_reference_id, "status": "HISTORICAL", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "warning": "SOURCE_CHANGED", "historical_available": True, "later_retracted": bool(evidence and evidence.get("retracted_at"))}
+        return {"source_reference_id": source_reference_id, "status": "HISTORICAL", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "warning": "SOURCE_CHANGED", "historical_available": True, "later_retracted": bool(evidence and evidence.get("retracted_at")), "purged": False}
 
     def add_git_checkpoint(self, project_id: str, repository_path: str, commit_id: str, cache_root: str | None = None) -> dict[str, Any]:
         repo = Path(repository_path).resolve()
@@ -350,8 +362,21 @@ class HistoryService:
             repository = db.execute("SELECT relative_path,content_hash,size_bytes,file_kind,source_revision,observed_at FROM prime_core.repository_files WHERE project_id=%s AND source_revision=%s ORDER BY relative_path", (project_id, selected_revision)).fetchall() if selected_revision else []
             retained_git = [dict(item) for item in git if item.get("bundle_locator") and checkpoint_bundle_status(item["bundle_locator"], item.get("content_hash")) == "EXACT"]
             brain = db.execute("SELECT 1 FROM prime_core.brain_snapshots WHERE project_id=%s AND source_revision=%s LIMIT 1", (project_id, selected_revision)).fetchone() if selected_revision else None
-            statuses = {"repository": "EXACT" if repository or retained_git else "UNAVAILABLE", "authority": "EXACT" if authority else "UNAVAILABLE", "goal": "EXACT" if goal else "UNAVAILABLE", "evidence": "EXACT" if evidence else "UNAVAILABLE", "progress": "EXACT" if progress else "UNAVAILABLE", "memory": "EXACT" if memories else "UNAVAILABLE", "notion": "EXACT" if notion else "UNAVAILABLE", "brain": "EXACT" if brain else "UNAVAILABLE", "git": "EXACT" if retained_git else ("PARTIAL" if git else "UNAVAILABLE")}
-            return {"project_id": project_id, "as_of": as_of, "selected_revision": selected_revision, "reconstruction_status": reconstruction_status(statuses), "source_statuses": statuses, "evidence": [dict(item) for item in evidence], "progress": [dict(item) for item in progress], "memory": [dict(item) for item in memories], "notion": [dict(item) for item in notion], "authority": [dict(item) for item in authority], "goal": [dict(item) for item in goal], "git": [dict(item) for item in git], "repository": [dict(item) for item in repository], "historical_artifacts": [dict(item) for item in historical], "repository_reconstruction": {"status": statuses["repository"], "source": "INDEX" if repository else ("PRIME_GIT_CHECKPOINT" if retained_git else None), "commit_id": retained_git[0]["commit_id"] if retained_git else selected_revision}}
+            repository_source = "INDEX" if repository else None
+            repository_status = "EXACT" if repository else "UNAVAILABLE"
+            if selected_revision and repository:
+                binding = db.execute("SELECT r.canonical_path FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id WHERE b.project_id=%s", (project_id,)).fetchone()
+                if binding:
+                    try:
+                        subprocess.run(["git", "-C", str(Path(binding["canonical_path"]).resolve()), "cat-file", "-e", f"{selected_revision}^{{commit}}"], check=True, capture_output=True, text=True, timeout=10)
+                    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+                        repository_status = "UNAVAILABLE"
+                        repository_source = None
+            if retained_git:
+                repository_status = "EXACT"
+                repository_source = "PRIME_GIT_CHECKPOINT"
+            statuses = {"repository": repository_status, "authority": "EXACT" if authority else "UNAVAILABLE", "goal": "EXACT" if goal else "UNAVAILABLE", "evidence": "EXACT" if evidence else "UNAVAILABLE", "progress": "EXACT" if progress else "UNAVAILABLE", "memory": "EXACT" if memories else "UNAVAILABLE", "notion": "EXACT" if notion else "UNAVAILABLE", "brain": "EXACT" if brain else "UNAVAILABLE", "git": "EXACT" if retained_git else ("PARTIAL" if git else "UNAVAILABLE")}
+            return {"project_id": project_id, "as_of": as_of, "selected_revision": selected_revision, "reconstruction_status": reconstruction_status(statuses), "source_statuses": statuses, "evidence": [dict(item) for item in evidence], "progress": [dict(item) for item in progress], "memory": [dict(item) for item in memories], "notion": [dict(item) for item in notion], "authority": [dict(item) for item in authority], "goal": [dict(item) for item in goal], "git": [dict(item) for item in git], "repository": [dict(item) for item in repository], "historical_artifacts": [dict(item) for item in historical], "repository_reconstruction": {"status": statuses["repository"], "source": repository_source, "commit_id": retained_git[0]["commit_id"] if retained_git else selected_revision}}
 
     def list_evidence(self, project_id: str, include_retracted: bool = False) -> list[dict[str, Any]]:
         predicate = "" if include_retracted else " AND retracted_at IS NULL"
