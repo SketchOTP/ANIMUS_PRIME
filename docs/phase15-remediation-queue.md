@@ -1,7 +1,7 @@
 # Phase 15 remediation queue — Continuation 006
 
 Baseline: `PRIME-SPEC-V1.0.0`  
-Governed checkpoint: `9b1b2a8f257356f2d96a7bfb169fca9b73192794`  
+Governed implementation/evidence checkpoint: `7d0d552` / `e7934cb`
 Observed qualification: `27 passed, 15 skipped`
 Deployment: `NOT PERFORMED`  
 V1: `FAIL`

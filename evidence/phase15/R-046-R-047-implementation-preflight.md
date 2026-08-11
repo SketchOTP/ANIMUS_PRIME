@@ -24,8 +24,8 @@ Qualification still required:
 
 Validation in this run:
 
-- focused Evidence validation tests: `PASSED` (3 tests);
-- full regression: `PASSED` (24 passed, 15 skipped);
+- focused Evidence/history primitive tests: `PASSED` (6 tests without PostgreSQL);
+- clean disposable PostgreSQL full regression: `PASSED` (42 passed);
 - Python compile check: `PASSED`;
-- PostgreSQL integration qualification: `NOT RUN` (`PRIME_PHASE1_DB_URL` unset);
-- requirement qualification: `NOT RUN`; R-046/R-047 remain `IMPLEMENTING` / `OPEN`.
+- PostgreSQL migration/history integration: `PASSED` in the disposable Phase-1 database;
+- requirement qualification: `PARTIAL`; R-046/R-047 remain `IMPLEMENTING` / `OPEN` because parser/index recovery, citation-backed product runs, backup/restore and live isolation evidence are still open.
