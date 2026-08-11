@@ -502,7 +502,11 @@ def index_project(project_id: str, request: Request, prime_session: str | None =
 @app.get("/v1/projects/{project_id}/search")
 def search_project(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
-    return {"project_id": project_id, "results": indexer.search(project_id, q)}
+    grouped = intelligence.search(project_id, q)
+    results = []
+    for group, rows in grouped["groups"].items():
+        results.extend([{**row, "result_group": group} for row in rows])
+    return {"project_id": project_id, "results": results, "groups": grouped["groups"]}
 
 
 @app.post("/v1/projects/{project_id}/ask")

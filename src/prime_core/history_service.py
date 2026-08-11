@@ -342,7 +342,7 @@ class HistoryService:
             if cutoff:
                 selected = db.execute("SELECT source_revision FROM prime_core.repository_files WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at DESC LIMIT 1", (project_id, cutoff)).fetchone()
                 selected_revision = selected["source_revision"] if selected else None
-                evidence = db.execute("SELECT evidence_id,source_reference_id,content_hash,captured_at,retracted_at,source_revision,parser_status,index_status FROM prime_core.evidence_records WHERE project_id=%s AND captured_at<=%s ORDER BY captured_at", (project_id, cutoff)).fetchall()
+                evidence = db.execute("SELECT evidence_id,source_reference_id,content_hash,captured_at,retracted_at,source_revision,parser_status,index_status,storage_mode,storage_path,source_uri FROM prime_core.evidence_records WHERE project_id=%s AND captured_at<=%s ORDER BY captured_at", (project_id, cutoff)).fetchall()
                 progress = db.execute("SELECT assessment_id,repository_revision,progress_percent,created_at FROM prime_core.progress_assessments WHERE project_id=%s AND created_at<=%s ORDER BY created_at", (project_id, cutoff)).fetchall()
                 memories = db.execute("SELECT memory_id,source_revision,status,created_at FROM prime_core.memory_records WHERE project_id=%s AND created_at<=%s ORDER BY created_at", (project_id, cutoff)).fetchall()
                 notion = db.execute("SELECT projection_revision_id,content_hash,sync_status,observed_at FROM prime_core.notion_projection_revisions WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at", (project_id, cutoff)).fetchall()
@@ -351,7 +351,7 @@ class HistoryService:
                 git = db.execute("SELECT checkpoint_id,commit_id,bundle_locator,content_hash,captured_at,retained FROM prime_core.git_history_checkpoints WHERE project_id=%s AND captured_at<=%s AND retained=TRUE ORDER BY captured_at", (project_id, cutoff)).fetchall()
                 historical = db.execute("SELECT artifact_type,artifact_id,source_revision,content_hash,snapshot,availability_status,observed_at FROM prime_core.historical_revisions WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at", (project_id, cutoff)).fetchall()
             else:
-                evidence = db.execute("SELECT evidence_id,source_reference_id,content_hash,captured_at,retracted_at,source_revision,parser_status,index_status FROM prime_core.evidence_records WHERE project_id=%s AND source_revision=%s", (project_id, as_of)).fetchall()
+                evidence = db.execute("SELECT evidence_id,source_reference_id,content_hash,captured_at,retracted_at,source_revision,parser_status,index_status,storage_mode,storage_path,source_uri FROM prime_core.evidence_records WHERE project_id=%s AND source_revision=%s", (project_id, as_of)).fetchall()
                 progress = db.execute("SELECT assessment_id,repository_revision,progress_percent,created_at FROM prime_core.progress_assessments WHERE project_id=%s AND repository_revision=%s", (project_id, as_of)).fetchall()
                 memories = db.execute("SELECT memory_id,source_revision,status,created_at FROM prime_core.memory_records WHERE project_id=%s AND source_revision=%s", (project_id, as_of)).fetchall()
                 notion = db.execute("SELECT projection_revision_id,content_hash,sync_status,observed_at FROM prime_core.notion_projection_revisions WHERE project_id=%s AND metadata->>'source_revision'=%s", (project_id, as_of)).fetchall()
@@ -375,7 +375,23 @@ class HistoryService:
             if retained_git:
                 repository_status = "EXACT"
                 repository_source = "PRIME_GIT_CHECKPOINT"
-            statuses = {"repository": repository_status, "authority": "EXACT" if authority else "UNAVAILABLE", "goal": "EXACT" if goal else "UNAVAILABLE", "evidence": "EXACT" if evidence else "UNAVAILABLE", "progress": "EXACT" if progress else "UNAVAILABLE", "memory": "EXACT" if memories else "UNAVAILABLE", "notion": "EXACT" if notion else "UNAVAILABLE", "brain": "EXACT" if brain else "UNAVAILABLE", "git": "EXACT" if retained_git else ("PARTIAL" if git else "UNAVAILABLE")}
+            evidence_states = []
+            for item in evidence:
+                if item.get("storage_mode") == "MANAGED_COPY":
+                    path = Path(item.get("storage_path") or "")
+                    available = path.is_file()
+                    if available and item.get("content_hash"):
+                        try:
+                            available = hashlib.sha256(path.read_bytes()).hexdigest() == item["content_hash"]
+                        except OSError:
+                            available = False
+                    evidence_states.append("EXACT" if available else "UNAVAILABLE")
+                elif item.get("storage_mode") == "NODE_REFERENCE":
+                    evidence_states.append("EXACT" if Path(item.get("source_uri") or "").is_file() else "UNAVAILABLE")
+                else:
+                    evidence_states.append("EXACT" if item.get("source_uri") else "UNAVAILABLE")
+            evidence_status = "UNAVAILABLE" if not evidence_states else ("EXACT" if all(value == "EXACT" for value in evidence_states) else ("UNAVAILABLE" if not any(value == "EXACT" for value in evidence_states) else "PARTIAL"))
+            statuses = {"repository": repository_status, "authority": "EXACT" if authority else "UNAVAILABLE", "goal": "EXACT" if goal else "UNAVAILABLE", "evidence": evidence_status, "progress": "EXACT" if progress else "UNAVAILABLE", "memory": "EXACT" if memories else "UNAVAILABLE", "notion": "EXACT" if notion else "UNAVAILABLE", "brain": "EXACT" if brain else "UNAVAILABLE", "git": "EXACT" if retained_git else ("PARTIAL" if git else "UNAVAILABLE")}
             return {"project_id": project_id, "as_of": as_of, "selected_revision": selected_revision, "reconstruction_status": reconstruction_status(statuses), "source_statuses": statuses, "evidence": [dict(item) for item in evidence], "progress": [dict(item) for item in progress], "memory": [dict(item) for item in memories], "notion": [dict(item) for item in notion], "authority": [dict(item) for item in authority], "goal": [dict(item) for item in goal], "git": [dict(item) for item in git], "repository": [dict(item) for item in repository], "historical_artifacts": [dict(item) for item in historical], "repository_reconstruction": {"status": statuses["repository"], "source": repository_source, "commit_id": retained_git[0]["commit_id"] if retained_git else selected_revision}}
 
     def list_evidence(self, project_id: str, include_retracted: bool = False) -> list[dict[str, Any]]:

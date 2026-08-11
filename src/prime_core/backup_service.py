@@ -270,6 +270,7 @@ class BackupCoordinator:
         replace: bool = False,
         safety_destination: Path | None = None,
         storage_root: Path | None = None,
+        fail_after_tables: int | None = None,
     ) -> dict[str, Any]:
         preflight = self.preflight_restore(bundle, passphrase)
         components = preflight["components"]
@@ -293,11 +294,13 @@ class BackupCoordinator:
                 "INSERT INTO prime_core.restore_workflows(restore_id,bundle_locator,status,current_step,started_at,updated_at) VALUES (%s,%s,'RUNNING','PREPARE',%s,%s)",
                 (restore_id, str(bundle), _utcnow(), _utcnow()),
             )
-            try:
+        try:
+            with transaction(settings) as db:
                 if replace:
                     db.execute("TRUNCATE TABLE prime_core.projects CASCADE")
                     db.execute("TRUNCATE TABLE prime_core.nodes CASCADE")
                 db.execute("SET session_replication_role = replica")
+                processed_tables = 0
                 for table, table_rows in rows.items():
                     if table in self.OMITTED_TABLES or not table_rows:
                         continue
@@ -314,23 +317,24 @@ class BackupCoordinator:
                             f"INSERT INTO prime_core.{table_name} ({quoted}) VALUES ({placeholders}) ON CONFLICT DO NOTHING",
                             values,
                         )
+                    processed_tables += 1
+                    if fail_after_tables is not None and processed_tables >= fail_after_tables:
+                        raise RuntimeError("deterministic qualification interruption")
                 db.execute("SET session_replication_role = origin")
                 restored_files = self._restore_managed_files(components, storage_root)
                 for evidence_id, path in restored_files.get("evidence", {}).items():
                     db.execute("UPDATE prime_core.evidence_records SET storage_path=%s WHERE evidence_id=%s", (path, evidence_id))
                 for checkpoint_id, path in restored_files.get("git_checkpoints", {}).items():
                     db.execute("UPDATE prime_core.git_history_checkpoints SET bundle_locator=%s WHERE checkpoint_id=%s", (path, checkpoint_id))
-                db.execute(
-                    "UPDATE prime_core.restore_workflows SET status='SUCCEEDED',current_step='COMPLETE',updated_at=%s,completed_at=%s WHERE restore_id=%s",
-                    (_utcnow(), _utcnow(), restore_id),
-                )
-            except Exception as exc:
-                db.execute("SET session_replication_role = origin")
-                db.execute(
-                    "UPDATE prime_core.restore_workflows SET status='REPAIR_REQUIRED',current_step='FAILED',error_code=%s,error_message=%s,updated_at=%s WHERE restore_id=%s",
-                    (type(exc).__name__, str(exc)[:500], _utcnow(), restore_id),
-                )
-                raise BackupError("restore failed before completion") from exc
+        except Exception as exc:
+            with transaction(settings) as db:
+                db.execute("UPDATE prime_core.restore_workflows SET status='REPAIR_REQUIRED',current_step='FAILED',error_code=%s,error_message=%s,updated_at=%s WHERE restore_id=%s", (type(exc).__name__, str(exc)[:500], _utcnow(), restore_id))
+            raise BackupError("restore failed before completion") from exc
+        with transaction(settings) as db:
+            db.execute(
+                "UPDATE prime_core.restore_workflows SET status='SUCCEEDED',current_step='COMPLETE',updated_at=%s,completed_at=%s WHERE restore_id=%s",
+                (_utcnow(), _utcnow(), restore_id),
+            )
         return {
             "status": "RESTORED",
             "restore_id": restore_id,
@@ -408,7 +412,10 @@ class BackupCoordinator:
 
     def _destination_class(self, destination: Path) -> str:
         try:
-            return "off-machine" if destination.resolve().anchor != Path.cwd().resolve().anchor else "same-host"
+            target = destination.resolve()
+            while not target.exists() and target != target.parent:
+                target = target.parent
+            return "off-machine" if os.stat(target).st_dev != os.stat(Path.cwd().resolve()).st_dev else "same-host"
         except OSError:
             return "operator-selected"
 

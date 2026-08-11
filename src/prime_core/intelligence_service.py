@@ -24,7 +24,19 @@ class IntelligenceService:
         with connect(self.settings) as db:
             activity = [dict(row) for row in db.execute("SELECT event_id,event_type,observed_at,source_revision FROM prime_core.events WHERE project_id=%s AND event_type ILIKE %s ORDER BY observed_at DESC LIMIT %s", (project_id, f"%{query}%", min(limit, 50))).fetchall()]
             progress = [dict(row) for row in db.execute("SELECT assessment_id,progress_percent,confidence,freshness_state,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchall()]
-        return {"project_id": project_id, "groups": {"Repository": repository, "Activity": activity, "Progress": progress, "Memory": self.memory.recall(project_id, query, min(limit, 8)).get("results", [])}}
+            evidence = [dict(row) for row in db.execute(
+                "SELECT evidence_id,source_reference_id,locator,source_revision,content_hash,privacy_class,parser_status,index_status,extracted_text,captured_at "
+                "FROM prime_core.evidence_records WHERE project_id=%s AND retracted_at IS NULL AND purged_at IS NULL "
+                "AND index_status='READY' AND (locator ILIKE %s OR COALESCE(extracted_text,'') ILIKE %s) "
+                "ORDER BY captured_at DESC LIMIT %s",
+                (project_id, f"%{query}%", f"%{query}%", min(limit, 50)),
+            ).fetchall()]
+        for row in evidence:
+            row["source_class"] = "Evidence"
+            row["source_id"] = row["evidence_id"]
+            row["historical_authority"] = False
+            row.pop("extracted_text", None)
+        return {"project_id": project_id, "groups": {"Repository": repository, "Activity": activity, "Progress": progress, "Memory": self.memory.recall(project_id, query, min(limit, 8)).get("results", []), "Evidence": evidence}}
 
     def ask(self, project_id: str, question: str) -> dict[str, Any]:
         sources = self.search(project_id, question, 8)
@@ -56,6 +68,11 @@ class IntelligenceService:
             source_id = row["memory_id"]
             citations.append({"source_class": "Memory", "source_id": source_id, "memory_id": source_id, "source_revision": row.get("source_revision")})
             model_sources.append({"source_class": "Memory", "source_id": source_id, "locator": f"memory:{source_id}", "project_id": project_id, "source_revision": row.get("source_revision"), "text": memory_content.get(source_id, "")})
+        for row in sources["groups"]["Evidence"]:
+            source_id = row["evidence_id"]
+            citations.append({"source_class": "Evidence", "source_id": source_id, "source_reference_id": row.get("source_reference_id"), "content_hash": row.get("content_hash"), "source_revision": row.get("source_revision"), "historical": False})
+            evidence = self.history.retrieve_evidence(project_id, source_id)
+            model_sources.append({"source_class": "Evidence", "source_id": source_id, "source_reference_id": row.get("source_reference_id"), "locator": row.get("locator"), "project_id": project_id, "source_revision": row.get("source_revision"), "content_hash": row.get("content_hash"), "privacy_class": row.get("privacy_class"), "text": (evidence.get("content") or b"").decode("utf-8", errors="replace") if evidence.get("availability") == "EXACT" else ""})
         model = self.ai.execute(project_id, "ASK_PRIME", {"question": question}, model_sources)
         if model["status"] == "SUCCEEDED":
             result = dict(model["result"])
