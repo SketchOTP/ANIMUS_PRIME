@@ -26,6 +26,7 @@ from src.prime_core.remote_access_service import RemoteAccessSettings, Tailscale
 from src.prime_core.backup_service import BackupCoordinator, BackupError
 from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
+from src.prime_core.brain_service import BrainService
 
 settings = Settings()
 configure()
@@ -37,6 +38,7 @@ remote_access = TailscaleService(RemoteAccessSettings(web_port=int(__import__("o
 backups = BackupCoordinator()
 history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
+brain = BrainService(settings)
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
 
@@ -100,6 +102,8 @@ class AuthorityRequest(BaseModel):
     source_hash: str
     validation_status: str
     metadata: dict[str, Any] = Field(default_factory=dict)
+    content_snapshot: str | None = None
+    canonical_commit: str | None = None
 
 
 class MemoryRequest(BaseModel):
@@ -352,7 +356,7 @@ def create_goal(project_id: str, body: GoalRequest, request: Request, prime_sess
 @app.post("/v1/authority/revisions")
 def record_authority(body: AuthorityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
-    return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata)
+    return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata, body.content_snapshot, body.canonical_commit)
 
 
 @app.post("/v1/projects/{project_id}/index")
@@ -407,6 +411,26 @@ def reference_project_evidence(project_id: str, body: EvidenceReferenceRequest, 
         return error("EVIDENCE_REJECTED", str(exc), request_id(request), status_code=400)
 
 
+@app.get("/v1/projects/{project_id}/evidence/{evidence_id}")
+def retrieve_project_evidence(project_id: str, evidence_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        result = history.retrieve_evidence(project_id, evidence_id)
+        result.pop("content", None)
+        return result
+    except KeyError as exc:
+        return error("EVIDENCE_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/projects/{project_id}/evidence/{evidence_id}/reindex")
+def reindex_project_evidence(project_id: str, evidence_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return history.reindex_evidence(project_id, evidence_id)
+    except KeyError as exc:
+        return error("EVIDENCE_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
 @app.delete("/v1/projects/{project_id}/evidence/{evidence_id}")
 def retract_project_evidence(project_id: str, evidence_id: str, reason: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -443,6 +467,18 @@ def time_lens_state(project_id: str, as_of: str, request: Request, prime_session
         return history.time_lens(project_id, as_of)
     except ValueError as exc:
         return error("TIME_LENS_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/time-lens/now")
+def time_lens_now(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return history.return_to_now(project_id)
+
+
+@app.get("/v1/projects/{project_id}/time-lens/brain")
+def time_lens_brain(project_id: str, as_of: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return brain.build_historical(project_id, as_of)
 
 
 @app.post("/v1/projects/{project_id}/time-lens/ask")

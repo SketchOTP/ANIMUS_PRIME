@@ -11,6 +11,7 @@ from typing import Any
 from .config import Settings
 from .db import connect, transaction
 from .security import new_token, password_hash, password_verify, token_digest
+from .history_primitives import record_historical_snapshot
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -177,15 +178,17 @@ class CoreService:
             if approve:
                 db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND goal_revision_id<>%s AND status='APPROVED'", (project_id, row["goal_revision_id"]))
                 db.execute("UPDATE prime_core.projects SET work_condition='NORMAL', updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+            record_historical_snapshot(db, project_id, "GOAL", row["goal_revision_id"], row["content_hash"], {"goal_revision_id": row["goal_revision_id"], "revision_number": row["revision_number"], "content": content, "status": status}, row["created_at"], row["content_hash"])
             self._audit(db, "operator", "operator", "goal.revision_created", project_id=project_id, target_id=row["goal_revision_id"])
             return dict(row)
 
-    def record_authority_revision(self, project_id: str, source_path: str, source_hash: str, validation_status: str, metadata: dict[str, Any] | None = None) -> dict[str, Any]:
+    def record_authority_revision(self, project_id: str, source_path: str, source_hash: str, validation_status: str, metadata: dict[str, Any] | None = None, content_snapshot: str | None = None, canonical_commit: str | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:
             row = db.execute(
-                "INSERT INTO prime_core.authority_revisions(authority_revision_id,project_id,source_path,source_hash,contract_version,validation_status,observed_at,metadata) VALUES (%s,%s,%s,%s,'authority-file-contract-v1',%s,now(),%s) RETURNING *",
-                (_id("authority"), project_id, source_path, source_hash, validation_status, json.dumps(metadata or {})),
+                "INSERT INTO prime_core.authority_revisions(authority_revision_id,project_id,source_path,source_hash,contract_version,validation_status,observed_at,metadata,content_snapshot,canonical_commit) VALUES (%s,%s,%s,%s,'authority-file-contract-v1',%s,now(),%s,%s,%s) RETURNING *",
+                (_id("authority"), project_id, source_path, source_hash, validation_status, json.dumps(metadata or {}), content_snapshot, canonical_commit),
             ).fetchone()
+            record_historical_snapshot(db, project_id, "AUTHORITY", row["authority_revision_id"], canonical_commit or source_hash, {"authority_revision_id": row["authority_revision_id"], "source_path": source_path, "source_hash": source_hash, "validation_status": validation_status, "content_snapshot": content_snapshot}, row["observed_at"], source_hash)
             self._audit(db, "system", "authority-observer", "authority.observed", project_id=project_id, target_id=row["authority_revision_id"])
             return dict(row)
 

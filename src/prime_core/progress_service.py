@@ -6,6 +6,7 @@ from typing import Any
 
 from .db import connect, transaction
 from .service import _id, now
+from .history_primitives import record_historical_snapshot
 
 
 class ProgressService:
@@ -44,6 +45,7 @@ class ProgressService:
             total = sum(float(item.get("weight", 0)) * max(0.0, min(1.0, float(item.get("completion", 0)))) for item in results)
             confidence = sum(float(item.get("confidence", 0)) for item in results) / len(results) if results else 0.0
             assessment_id = _id("assessment")
-            db.execute("INSERT INTO prime_core.progress_assessments(assessment_id,project_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,item_results,created_at) VALUES (%s,%s,%s,%s,%s,%s,'CURRENT',%s,%s,%s)", (assessment_id, project_id, goal_revision_id, repository_revision, total * 100, confidence, summary, json.dumps(results), now()))
+            created = now()
+            db.execute("INSERT INTO prime_core.progress_assessments(assessment_id,project_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,item_results,created_at) VALUES (%s,%s,%s,%s,%s,%s,'CURRENT',%s,%s,%s)", (assessment_id, project_id, goal_revision_id, repository_revision, total * 100, confidence, summary, json.dumps(results), created))
+            record_historical_snapshot(db, project_id, "PROGRESS", assessment_id, repository_revision, {"assessment_id": assessment_id, "goal_revision_id": goal_revision_id, "repository_revision": repository_revision, "progress_percent": total * 100, "confidence": confidence, "summary": summary, "item_results": results}, created)
             return {"assessment_id": assessment_id, "project_id": project_id, "goal_revision_id": goal_revision_id, "progress_percent": total * 100, "confidence": confidence, "freshness_state": "CURRENT", "goal_items": results}
-

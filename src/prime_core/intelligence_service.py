@@ -38,12 +38,13 @@ class IntelligenceService:
         citations = []
         for row in context["evidence"]:
             if row.get("retracted_at") is None:
-                citations.append({"source_class": "Evidence", "source_reference_id": row.get("source_reference_id"), "content_hash": row.get("content_hash")})
+                citations.append({"source_class": "Evidence", "source_reference_id": row.get("source_reference_id"), "content_hash": row.get("content_hash"), "source_revision": row.get("source_revision"), "historical": True})
         for row in context["progress"]:
-            citations.append({"source_class": "ProgressAssessment", "assessment_id": row.get("assessment_id"), "repository_revision": row.get("repository_revision")})
+            citations.append({"source_class": "ProgressAssessment", "assessment_id": row.get("assessment_id"), "repository_revision": row.get("repository_revision"), "historical": True})
         return {
             "project_id": project_id,
             "as_of": as_of,
+            "selected_revision": context.get("selected_revision"),
             "reconstruction_status": context["reconstruction_status"],
             "answer": "Historical evidence is available in the cited sources." if citations else "UNKNOWN: no evidence available at the selected historical boundary.",
             "citations": citations[:16],
