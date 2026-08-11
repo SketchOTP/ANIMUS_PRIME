@@ -5,6 +5,7 @@ import logging
 import time
 import uuid
 import hashlib
+import os
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -104,6 +105,11 @@ class CoreService:
             existing = db.execute("SELECT * FROM prime_core.jobs WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
             if existing:
                 return dict(existing)
+            queue_limit = int(os.getenv("PRIME_QUEUE_LIMIT", "1000"))
+            queue_count = db.execute("SELECT count(*) AS count FROM prime_core.jobs WHERE status IN ('QUEUED','RUNNING')").fetchone()["count"]
+            derived_job = job_type.upper() in {"INDEX", "REINDEX", "BRAIN", "PARSER", "NOTION_PROJECTION", "MODEL_CACHE", "REPOSITORY_SCAN"}
+            if int(queue_count) >= queue_limit and derived_job:
+                raise ValueError("derived work backpressure: queue capacity exceeded")
             row = db.execute(
                 "INSERT INTO prime_core.jobs(job_id, project_id, job_type, status, idempotency_key, available_at, payload, created_at, updated_at) "
                 "VALUES (%s,%s,%s,'QUEUED',%s,%s,%s,%s,%s) RETURNING *",
@@ -111,6 +117,12 @@ class CoreService:
             ).fetchone()
             self._audit(db, "operator", "operator", "job.created", project_id=project_id, target_id=row["job_id"])
             return dict(row)
+
+    def create_coalesced_job(self, job_type: str, payload: dict[str, Any], project_id: str, source_key: str) -> dict[str, Any]:
+        """Coalesce bursty derived work into one durable, idempotent job."""
+        window_ms = int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000"))
+        bucket = int(time.time() * 1000 // max(window_ms, 1))
+        return self.create_job(job_type, payload, f"coalesced:{project_id}:{job_type}:{source_key}:{bucket}", project_id)
 
     def create_project(self, name: str) -> dict[str, Any]:
         timestamp = now()
@@ -255,6 +267,11 @@ class CoreService:
                 (_id("evt"), project_id, event_type, occurred_at or timestamp, timestamp, sequence, json.dumps(payload), dedupe_key),
             ).fetchone()
             return dict(row)
+
+    def emit_coalesced_event(self, event_type: str, payload: dict[str, Any], project_id: str, source_key: str) -> dict[str, Any]:
+        window_ms = int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000"))
+        bucket = int(time.time() * 1000 // max(window_ms, 1))
+        return self.emit_event(event_type, payload, project_id=project_id, dedupe_key=f"coalesced:{project_id}:{event_type}:{source_key}:{bucket}")
 
     @staticmethod
     def _audit(db: Any, actor_type: str, actor_id: str, action: str, project_id: str | None = None,

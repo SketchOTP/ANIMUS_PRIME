@@ -24,6 +24,7 @@ from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
 from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
 from src.prime_core.backup_service import BackupCoordinator, BackupError
+from src.prime_core.reliability_service import ReliabilityService
 from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
@@ -122,6 +123,11 @@ class BackupRequest(BaseModel):
     destination: str = Field(min_length=1, max_length=4096)
     passphrase: str = Field(min_length=12, max_length=512)
     components: dict[str, Any] = Field(default_factory=dict)
+    project_ids: list[str] = Field(default_factory=list)
+    destination_class: str | None = Field(default=None, max_length=40)
+    replace: bool = False
+    safety_destination: str | None = None
+    storage_root: str | None = None
 
 
 class EvidenceUploadRequest(BaseModel):
@@ -530,7 +536,9 @@ def disable_remote_access(request: Request, prime_session: str | None = Cookie(d
 def create_backup(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        return backups.build_bundle(Path(body.destination), body.components, body.passphrase)
+        if body.components:
+            return backups.build_bundle(Path(body.destination), body.components, body.passphrase, destination_class=body.destination_class)
+        return backups.create_continuity_backup(settings, Path(body.destination), body.passphrase, project_ids=body.project_ids or None, destination_class=body.destination_class)
     except (BackupError, OSError, ValueError) as exc:
         return error("BACKUP_REJECTED", str(exc), request_id(request), retryable=True, status_code=400)
 
@@ -542,3 +550,27 @@ def backup_preflight(body: BackupRequest, request: Request, prime_session: str |
         return backups.preflight_restore(Path(body.destination), body.passphrase)
     except (BackupError, OSError, ValueError) as exc:
         return error("RESTORE_PREFLIGHT_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/backups/restore")
+def restore_backup(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None), step_up: str | None = Header(default=None, alias="X-PRIME-STEP-UP")):
+    require_session(request, prime_session)
+    if not body.replace and step_up != "CONFIRM":
+        return error("RESTORE_STEP_UP_REQUIRED", "restore requires step-up confirmation", request_id(request), status_code=403)
+    try:
+        return backups.restore_bundle(
+            settings,
+            Path(body.destination),
+            body.passphrase,
+            replace=body.replace,
+            safety_destination=Path(body.safety_destination) if body.safety_destination else None,
+            storage_root=Path(body.storage_root) if body.storage_root else None,
+        )
+    except (BackupError, OSError, ValueError) as exc:
+        return error("RESTORE_REJECTED", str(exc), request_id(request), retryable=False, status_code=409)
+
+
+@app.get("/v1/system/reliability")
+def reliability_status(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return ReliabilityService(settings).diagnostics()

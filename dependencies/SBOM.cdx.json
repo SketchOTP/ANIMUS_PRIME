@@ -18,5 +18,6 @@
     {"type":"container","name":"pgvector","version":"0.8.2-pg17","purl":"pkg:docker/pgvector/pgvector@0.8.2-pg17","licenses":[{"license":{"id":"PostgreSQL"}}]},
     {"type":"container","name":"python","version":"3.13.7-slim","purl":"pkg:docker/library/python@3.13.7-slim"},
     {"type":"container","name":"node","version":"20.19.0-bookworm-slim","purl":"pkg:docker/library/node@20.19.0-bookworm-slim"}
+    ,{"type":"library","name":"cryptography","version":"46.0.5","purl":"pkg:pypi/cryptography@46.0.5","licenses":[{"license":{"id":"Apache-2.0"}},{"license":{"id":"BSD-3-Clause"}}]}
   ]
 }

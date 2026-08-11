@@ -2,6 +2,8 @@
 
 The exact pins are recorded in `pins.yaml`. Registry manifest inspection verified the pinned amd64 image digests. Source release identities were verified from the upstream Hindsight and pgvector Git repositories. PostgreSQL 17.10 is within the upstream supported PostgreSQL 17 series.
 
+Continuation 008 adds `cryptography==46.0.5` for AES-256-GCM authenticated backup payloads. Its Apache-2.0/BSD-3-Clause licensing is recorded in the SBOM; the backup path fails closed if the pinned dependency is unavailable.
+
 ## Required smoke matrix
 
 | Component | Normal | Unavailable | Degraded | Recovery | Status |
