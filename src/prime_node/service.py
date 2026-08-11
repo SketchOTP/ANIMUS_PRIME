@@ -6,6 +6,7 @@ import os
 import secrets
 import subprocess
 import uuid
+import time
 from pathlib import Path
 from typing import Any
 
@@ -19,11 +20,11 @@ class NodeService:
 
     def _load(self) -> dict[str, Any]:
         if not self.settings.state_file.exists():
-            return {"node_id": None, "token_hash": None, "revoked": False, "enrollment_hash": None, "bootstrap_consumed": False}
+            return {"node_id": None, "token_hash": None, "revoked": False, "enrollment_hash": None, "bootstrap_consumed": False, "approval_state": "UNENROLLED", "last_heartbeat": None, "allowed_roots": []}
         try:
             return json.loads(self.settings.state_file.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
-            return {"node_id": None, "token_hash": None, "revoked": True, "enrollment_hash": None, "bootstrap_consumed": True}
+            return {"node_id": None, "token_hash": None, "revoked": True, "enrollment_hash": None, "bootstrap_consumed": True, "approval_state": "REVOKED"}
 
     def _save(self) -> None:
         self.settings.state_file.parent.mkdir(parents=True, exist_ok=True)
@@ -51,6 +52,9 @@ class NodeService:
             "name": self.settings.node_name,
             "protocol_version": self.settings.protocol_version,
             "capabilities": list(self.settings.capabilities),
+            "approval_state": "APPROVED",
+            "last_heartbeat": None,
+            "allowed_roots": [str(root) for root in self.settings.allowed_roots],
         }
         self._save()
         return node_id, token
@@ -60,6 +64,7 @@ class NodeService:
 
     def revoke(self) -> str:
         self.state["revoked"] = True
+        self.state["approval_state"] = "REVOKED"
         replacement = secrets.token_urlsafe(32)
         self.state["enrollment_hash"] = self.digest(replacement)
         self._save()
@@ -74,19 +79,60 @@ class NodeService:
         return replacement
 
     def status(self) -> dict[str, Any]:
+        last = self.state.get("last_heartbeat")
+        health = "OFFLINE" if self.state.get("revoked") else "ONLINE"
+        if last and time.time() - float(last) > self.settings.heartbeat_stale_seconds:
+            health = "STALE"
         return {
             "node_id": self.state.get("node_id"),
             "name": self.state.get("name", self.settings.node_name),
             "protocol_version": self.state.get("protocol_version", self.settings.protocol_version),
             "capabilities": self.state.get("capabilities", list(self.settings.capabilities)),
-            "allowed_roots": [str(root) for root in self.settings.allowed_roots],
+            "allowed_roots": list(self.state.get("allowed_roots") or [str(root) for root in self.settings.allowed_roots]),
             "revoked": bool(self.state.get("revoked")),
+            "approval_state": self.state.get("approval_state", "UNENROLLED"),
+            "health": health,
+            "node_version": self.settings.node_version,
+            "protocol_versions": list(self.settings.supported_protocols),
             "service": "prime-node",
         }
 
+    def heartbeat(self, protocol_version: str) -> dict[str, Any]:
+        if protocol_version not in self.settings.supported_protocols:
+            raise ValueError("incompatible node control protocol")
+        self.state["last_heartbeat"] = time.time()
+        self._save()
+        return {"status": "ONLINE", "node_id": self.state.get("node_id"), "protocol_version": self.settings.protocol_version, "node_version": self.settings.node_version, "capabilities": self.state.get("capabilities", [])}
+
+    def set_allowed_roots(self, roots: list[str]) -> list[str]:
+        normalized = []
+        for raw in roots:
+            root = Path(raw).expanduser().resolve(strict=True)
+            if not root.is_dir():
+                raise NotADirectoryError(str(root))
+            if str(root) not in normalized:
+                normalized.append(str(root))
+        self.state["allowed_roots"] = normalized
+        self._save()
+        return normalized
+
+    def diagnostics(self) -> dict[str, Any]:
+        result = self.status()
+        result["state_file"] = str(self.settings.state_file)
+        result["credential_present"] = bool(self.state.get("token_hash"))
+        return result
+
+    def repository_snapshot(self, requested: str) -> dict[str, Any]:
+        path = self.safe_path(requested)
+        result = self.inspect_repository(str(path))
+        result["head"] = self._git(path, ["rev-parse", "HEAD"], allow_failure=True) or None
+        result["status"] = self._git(path, ["status", "--porcelain"], allow_failure=True)
+        return result
+
     def safe_path(self, requested: str) -> Path:
         candidate = Path(requested).expanduser().resolve(strict=True)
-        if not any(candidate == root or root in candidate.parents for root in self.settings.allowed_roots):
+        roots = tuple(Path(item).resolve() for item in (self.state.get("allowed_roots") or [str(root) for root in self.settings.allowed_roots]))
+        if not any(candidate == root or root in candidate.parents for root in roots):
             raise PermissionError("path is outside configured Node roots")
         return candidate
 

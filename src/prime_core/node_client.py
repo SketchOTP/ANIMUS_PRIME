@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import ssl
 import urllib.error
 import urllib.request
@@ -23,6 +24,7 @@ class NodeClientSettings:
     client_cert: Path | None = None
     client_key: Path | None = None
     timeout_seconds: int = 10
+    max_response_bytes: int = 256 * 1024
 
 
 class NodeClient:
@@ -44,6 +46,12 @@ class NodeClient:
     def read_file(self, path: str) -> dict[str, Any]:
         return self._request("POST", "/v1/files/read", {"path": path})
 
+    def diagnostics(self) -> dict[str, Any]:
+        return self._request("GET", "/v1/diagnostics")
+
+    def repository_snapshot(self, path: str) -> dict[str, Any]:
+        return self._request("POST", "/v1/repositories/snapshot", {"path": path})
+
     def _request(self, method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
         request = urllib.request.Request(
             self.settings.base_url.rstrip("/") + path,
@@ -59,12 +67,22 @@ class NodeClient:
         context = self._tls_context()
         try:
             with self._opener(request, timeout=self.settings.timeout_seconds, context=context) as response:
-                result = json.loads(response.read().decode())
+                try:
+                    payload = response.read(self.settings.max_response_bytes + 1)
+                except TypeError:  # small test doubles and legacy urllib wrappers
+                    payload = response.read()
+                if len(payload) > self.settings.max_response_bytes:
+                    raise NodeClientError("Node response exceeded bound")
+                result = json.loads(payload.decode())
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
             raise NodeClientError("Node control-plane request failed") from exc
         if not isinstance(result, dict):
             raise NodeClientError("Node returned an invalid response")
         return result
+
+    @staticmethod
+    def idempotency_key(operation: str, request_body: dict[str, Any] | None = None) -> str:
+        return hashlib.sha256(json.dumps([operation, request_body or {}], sort_keys=True).encode()).hexdigest()
 
     def _tls_context(self) -> ssl.SSLContext:
         context = ssl.create_default_context(cafile=str(self.settings.ca_file) if self.settings.ca_file else None)

@@ -8,7 +8,7 @@ from src.prime_node.service import NodeService
 
 settings = NodeSettings()
 service = NodeService(settings)
-app = FastAPI(title="ANIMUS PRIME Node", version="1.0.0-phase2")
+app = FastAPI(title="ANIMUS PRIME Node", version="1.0.0")
 
 
 class EnrollRequest(BaseModel):
@@ -26,6 +26,8 @@ def require_node(authorization: str | None, node_id: str | None = None, protocol
         raise HTTPException(status_code=401, detail="node identity mismatch")
     if protocol != settings.protocol_version:
         raise HTTPException(status_code=426, detail="incompatible node control protocol")
+    if node_id != service.state.get("node_id"):
+        raise HTTPException(status_code=401, detail="authenticated Node identity mismatch")
 
 
 @app.get("/health/live")
@@ -53,7 +55,10 @@ def status(authorization: str | None = Header(default=None), x_prime_node_id: st
 @app.post("/v1/heartbeat")
 def heartbeat(authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
     require_node(authorization, x_prime_node_id, x_prime_protocol)
-    return {"status": "ONLINE", "node_id": service.state["node_id"], "protocol_version": settings.protocol_version}
+    try:
+        return service.heartbeat(x_prime_protocol or "")
+    except ValueError as exc:
+        raise HTTPException(status_code=426, detail=str(exc)) from exc
 
 
 @app.post("/v1/credentials/rotate")
@@ -97,10 +102,26 @@ def revoke(authorization: str | None = Header(default=None), x_prime_node_id: st
     return {"status": "REVOKED", "re_enrollment_credential": service.revoke()}
 
 
+@app.get("/v1/diagnostics")
+def diagnostics(authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    return service.diagnostics()
+
+
+@app.post("/v1/repositories/snapshot")
+def snapshot(body: PathRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.repository_snapshot(body.path)
+    except (PermissionError, ValueError, FileNotFoundError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 def run() -> None:
     """Run the packaged Node with mandatory TLS/mTLS service configuration."""
     import uvicorn
 
+    settings.validate()
     uvicorn.run(app, **settings.uvicorn_kwargs())
 
 
