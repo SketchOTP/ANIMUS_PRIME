@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `python3 scripts/validate_governance.py --mode ADOPTED`
+- Command or check: `./.venv/bin/python scripts/validate_governance.py --mode ADOPTED`; `./.venv/bin/python -m pytest tests -q`; `./.venv/bin/python -m compileall -q src apps tests`; `git diff --check`
 - Result: `PASSED`
 
 ## Risks
