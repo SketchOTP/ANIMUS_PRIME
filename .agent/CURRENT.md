@@ -41,8 +41,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 005 deterministic qualification procedures cover native Node, Tailscale, live Notion, backup/restore/capacity, Evidence/Time Lens, browser UX, approved AI, and full V1 walkthroughs.
 - R-046/R-047 implementation preflight added project-scoped Evidence upload/reference/list/retraction routes and explicit parser/index status; no requirement was promoted to VERIFIED.
 - Continuation 006 added durable Evidence source references, safe HTTPS/Node locators, bounded inert-text extraction, Evidence quota/annotation/link boundaries, historical cutoff context, historical Ask context, and PRIME-owned Git checkpoint bundle preservation.
-- R-049 is now `IMPLEMENTED` with `qualification_status=partial`; its local bundle fixture survives normal-ref removal, reflog expiry, and GC. PostgreSQL registration and release qualification remain open.
-- Latest governed commits: implementation `7d0d552`; outcome `e7934cb`; qualification-evidence refresh `7e1459e`.
+- R-049 is now `IMPLEMENTED` with `qualification_status=partial`; its local bundle fixture survives normal-ref removal, reflog expiry, and GC. PostgreSQL registration and release qualification remain open. Latest governed commits: implementation `7d0d552`, outcome `e7934cb`, qualification-evidence refresh `7e1459e`, current-state refresh `886a9b0`.
 - Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
 - Remediation counts — `implementation_complete=1/26`, `IMPLEMENTING=25`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; `VERIFIED / 26 = 0/26`.
 
