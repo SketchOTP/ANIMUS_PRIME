@@ -802,6 +802,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: missing approved AI provider/local inference environment, missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL` for database-backed gates, codebase-memory transport, supported browser/device qualification, and prior native/live release environments.
 - Follow-up directive: none
 
+## D-PRIME-PHASE15-REMEDIATION-014 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-028
+- Supersedes outcome: none
+- Closed: 2026-08-11T19:12:00Z
+- Acceptance: PARTIAL
+- Summary: Published the complete governed ANIMUS PRIME repository to canonical GitHub `SketchOTP/ANIMUS_PRIME`. The verified disposable remote placeholder was reconciled with explicit force-with-lease; local `main` and remote `main` matched at publication commit `a8300cf0b649940f0036b53a29a717a4c94ee798`. No secrets were published. R-056 remains OPEN, 0/26 requirements are VERIFIED, V1 remains FAIL, and deployment was not performed.
+- Changed areas: canonical Git remote configuration, `.agent/PROJECT_PROFILE.md`, `.agent/CURRENT.md`, `.agent/REPO_MAP.md`, `.agent/RECORD.md`, `.agent/OUTCOMES.md`, and `evidence/phase15/github-publication-014.md`.
+- Validation:
+  - local/remote prepublication history inspection - PASSED
+  - GitHub authentication and repository access - PASSED
+  - tracked-file secret-safety inspection - PASSED
+  - explicit force-with-lease publication against verified placeholder - PASSED
+  - local `main` / `origin/main` / `ls-remote` parity - PASSED
+  - representative remote path verification - PASSED
+  - GitHub connector representative-file verification - PASSED
+  - governed tag inspection - PASSED (none present)
+  - deployment - NOT PERFORMED
+- Remaining risks: all previously recorded native/live/provider/browser/recovery/capacity qualification gaps and aggregate R-056 clean-install evidence remain open.
+- Blockers: no publication blocker remains; Phase-15 qualification still lacks database URL, approved AI/local inference, native/live integrations, supported browser/device, recovery/capacity, and aggregate end-to-end environments.
+- Follow-up directive: none
+
 ## D-PRIME-PHASE15-REMEDIATION-013 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-027

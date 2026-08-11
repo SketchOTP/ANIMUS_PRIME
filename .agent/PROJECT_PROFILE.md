@@ -10,7 +10,7 @@
 - Project name or identifier: `ANIMUS PRIME`
 - Purpose: `Local-first project continuity and intelligence layer for repository-backed AI-assisted engineering projects.`
 - Repository root: `/home/sketch/Projects/ANIMUS_PRIME`
-- Verified remote: `NONE — local canonical implementation repository`
+- Verified remote: `git@github.com:SketchOTP/ANIMUS_PRIME.git — canonical GitHub publication; local checkout remains the implementation authority`
 - Maturity or current phase: `Phase 15 remediation — requirement-level qualification in progress`
 
 ## Languages and runtimes

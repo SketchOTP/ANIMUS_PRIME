@@ -97,3 +97,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: AI provider qualification is not reproducible or safe when profile identity, source revisions, privacy mode, usage, and output validation are implicit. The Core boundary makes those conditions durable while keeping live qualification separate.
 - Affected areas: `src/prime_core/ai_service.py`; `src/prime_core/intelligence_service.py`; `apps/core/main.py`; `migrations/prime/0024_ai_execution.sql`; AI golden fixtures; R-054/R-055 qualification ledger and evidence.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-014
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-014
+- Status: CLOSED
+- Decision or event: Publish the complete governed PRIME repository to `SketchOTP/ANIMUS_PRIME` and make exact `main` parity a checkpoint requirement.
+- Rationale: GitHub was a stale placeholder while the governed implementation existed only locally. Explicit force-with-lease publication against the verified placeholder preserves continuity without allowing an unrestricted overwrite, and future governed checkpoints must be externally inspectable before completion.
+- Affected areas: canonical Git remote, `main` publication, secret-safety inspection, representative source/governance/test/migration/evidence paths, Phase-15 publication evidence.
+- Supersedes record: none
