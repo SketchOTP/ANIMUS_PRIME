@@ -358,7 +358,7 @@ class AIExecutionService:
         with transaction(self.settings) as db:
             db.execute(
                 "INSERT INTO prime_core.ai_runs(run_id,project_id,function,provider,model,profile_revision,prompt_revision,schema_revision,retrieval_policy_revision,fixture_revision,privacy_mode,source_revision_set,created_at,status,latency_ms,input_tokens,output_tokens,estimated_cost,provider_usage,error_class,result) "
-                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                 (record["run_id"], record["project_id"], record["function"], record["provider"], record["model"], record["profile_revision"], record["prompt_revision"], record["schema_revision"], record["retrieval_policy_revision"], record["fixture_revision"], record["privacy_mode"], json.dumps(record["source_revision_set"]), record["created_at"], record["status"], record["latency_ms"], record["input_tokens"], record["output_tokens"], record["estimated_cost"], json.dumps(record["provider_usage"]), record["error_class"], json.dumps(record["result"])),
             )
             units = (record["input_tokens"] or 0) + (record["output_tokens"] or 0)

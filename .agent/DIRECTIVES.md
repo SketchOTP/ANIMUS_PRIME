@@ -193,3 +193,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-013
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-015
+
+- Issued: 2026-08-11T13:35:00-04:00
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 015 / Checkpoint 014
+- Objective: Remove every locally solvable Phase-15 qualification blocker, beginning with a fresh disposable PostgreSQL/pgvector environment, then execute the complete available qualification matrix and promote individual requirements only from real evidence.
+- Scope: Existing approved disposable PostgreSQL/pgvector stack; non-secret environment prechecks; clean-from-zero migrations; Phase 1–13 gates; database-backed R-042–R-050 qualification; applicable local recovery/capacity/history fixtures; native/live/browser/provider qualification only where the actual environment exists; requirement-centric evidence; GitHub parity; Notion execution record; and append-only governance updates.
+- Exclusions: A second database architecture, production data, committed credentials, fabricated native/live/off-machine/browser/provider evidence, test-count optimization, normative changes, new features unrelated to demonstrated defects, deployment, R-056 closure before prerequisites, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Every locally exercisable qualification path is executed against truthful PASS/FAIL/BLOCKED_BY_ENVIRONMENT states; database gates are no longer blocked when the approved disposable environment is available; actual defects are minimally repaired and requalified; `VERIFIED / 26` advances only on complete row evidence; exact governed local/GitHub SHAs, evidence, Notion execution state, and `.agent` records are reconciled; deployment remains NOT PERFORMED unless separately authorized.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-014
+- Status at issuance: ISSUED
