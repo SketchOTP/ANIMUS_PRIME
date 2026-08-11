@@ -29,3 +29,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: PRIME-SPEC-V1.0.0 requires immutable inputs, explicit contracts, pinned dependencies, Hindsight adapter boundaries, and a governed Git baseline before feature implementation.
 - Affected areas: baseline, authority-template/v1, contracts, dependencies, threat-model, qualification harness.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-007
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-007
+- Status: CLOSED
+- Decision or event: Continuation 007 closed the local implementation milestone for R-046 through R-050 while retaining partial qualification and the V1 release block.
+- Rationale: Evidence, citation, historical reconstruction, Git checkpoint, Time Lens, Historical Ask, and historical Brain boundaries must stabilize before backup/restore and capacity work consumes them.
+- Affected areas: Evidence lifecycle/parser boundary, SourceReference/citation, historical revisions, Git checkpoint preservation, Time Lens, Historical Ask/Brain, qualification ledger, and Phase-15 governance records.
+- Supersedes record: none
