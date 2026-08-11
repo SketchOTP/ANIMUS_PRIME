@@ -195,3 +195,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Phase 1–13 database gates, AI execution persistence, migration qualification, and requirement-level Phase-15 evidence.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-018
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-018
+- Fact or lesson: Historical Git qualification must distinguish a durable PRIME-owned checkpoint from ordinary repository reachability. After refs, reflogs, and unreachable objects are pruned, Time Lens may report repository `EXACT` only when the retained checkpoint bundle itself is intact; citation resolution must downgrade when that bundle is missing or partial and recover only after the retained artifact is restored.
+- Evidence location: `src/prime_core/history_service.py`; `tests/phase15/test_requirement_qualification.py`; `evidence/phase15/qualification-continuation-016.md`
+- Confidence: VERIFIED
+- Scope: R-047–R-050 Git checkpoints, citations, Time Lens, historical reconstruction, and recovery semantics.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-019
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-019
+- Fact or lesson: A citation linked to retracted Evidence is historical and must expose the retraction; a citation whose managed bytes were purged is `UNAVAILABLE`, not `EXACT`. Current revision/hash equality alone is insufficient to determine citation availability.
+- Evidence location: `src/prime_core/history_service.py`; `tests/phase15/test_requirement_qualification.py`; `evidence/phase15/qualification-continuation-016.md`
+- Confidence: VERIFIED
+- Scope: R-046/R-047 Evidence lifecycle, citation durability, retraction, privacy purge, and project isolation.
+- Supersedes learning: none

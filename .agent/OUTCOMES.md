@@ -892,3 +892,30 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-042–R-050 remain `partial` because off-machine/fresh-install, live Hindsight, sustained capacity, and complete historical/product-path evidence remains absent; R-031–R-041 and R-051–R-056 retain their exact environment blockers. Native Linux/Windows, Tailscale, live Notion, off-machine/interrupted restore, live Hindsight, sustained capacity, supported browser/accessibility, approved model/local inference, and aggregate R-056 remain unqualified.
 - Blockers: external qualification environments remain unavailable; default host database variables are unset but are no longer a blocker when the approved disposable stack is created.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-016 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-031
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-030
+- Closed: 2026-08-11T17:54:50-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 016 reconciled stale qualification blockers, repaired citation and retained-checkpoint status defects, and produced the first genuine VERIFIED requirement. R-049 is VERIFIED from a real PostgreSQL/Git/Time Lens fixture with positive, negative, degraded, recovery, citation, and security evidence. The fresh complete run passed 73 tests and Phases 1–14; V1 remains FAIL at 1/26 because the remaining rows and R-056 are not fully qualified.
+- Changed areas: `src/prime_core/history_service.py`, `tests/phase15/test_requirement_qualification.py`, `.agent/`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, and `evidence/phase15/qualification-continuation-016.md`.
+- Validation:
+  - codebase-memory MCP discovery - BLOCKED (`Transport closed`); targeted fallback used and recorded
+  - fresh disposable PostgreSQL/pgvector precheck - PASSED
+  - migrations from zero - PASSED (`24/24`)
+  - full regression - PASSED (`73 passed`)
+  - Phases 1–14 - PASSED
+  - R-049 exact qualification fixture - PASSED; row promoted
+  - real Evidence/citation focused qualification - PASSED for exercised cases; row remains PARTIAL for remaining matrix
+  - Hindsight real backend probe - PARTIAL/DEGRADED without approved model/provider
+  - Tailscale real status/refusal probe - PASSED safety refusal; private qualification remains PARTIAL
+  - Chromium real shell load - PASSED; full interactive browser matrix remains PARTIAL
+  - native Linux installer/systemd - PARTIAL; service registration not run without root
+  - Notion credential discovery - PASSED as `NOT FOUND`; no secret exposed
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`1/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-031–R-036, R-042–R-048, and R-050–R-053 remain partial; R-037–R-041 and R-054–R-056 remain environment constrained; off-machine/interrupted restore, complete A/B/C/D history, full product citation flow, capacity, native Windows, live Notion, approved Hindsight/AI, and full browser interaction remain open.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-016.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none

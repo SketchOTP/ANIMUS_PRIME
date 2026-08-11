@@ -117,3 +117,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Phase 1–13 gates must reflect a real clean migration environment rather than an unavailable host variable. The first real Ask execution exposed a 21-column/22-placeholder `ai_runs` insert mismatch; qualification required the minimum repair and a fresh rerun.
 - Affected areas: disposable PostgreSQL/pgvector qualification environment, migrations through `0024_ai_execution.sql`, `src/prime_core/ai_service.py`, Phase 1–14 gates, full regression, Phase-15 evidence, and qualification governance.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-016
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-016
+- Status: CLOSED
+- Decision or event: Promote R-049 independently to VERIFIED after exact PostgreSQL/Git/Time Lens qualification; repair citation resolution so Evidence retraction/purge and missing Git checkpoint bundles cannot report `EXACT`.
+- Rationale: Qualification is per requirement. A retained PRIME-owned Git checkpoint is independently releasable evidence when ordinary refs/history are pruned and the retained artifact survives restart, degraded loss, and recovery. Citation status must follow retained source identity and lifecycle state rather than current hash equality alone.
+- Affected areas: `src/prime_core/history_service.py`, `tests/phase15/test_requirement_qualification.py`, R-049 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
+- Supersedes record: DEC-PRIME-PHASE15-015

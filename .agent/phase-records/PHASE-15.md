@@ -34,3 +34,20 @@ result: FAIL
 - security_tests_run: `PASS` for available local suite; live/native security environments not available.
 - recovery_tests_run: `PASS` for available local database-backed tests; off-machine/interrupted/fresh-install recovery evidence remains unverified.
 - result: `FAIL` — V1 gate remains truthful; deployment `NOT PERFORMED`.
+
+## Continuation 016 — first requirement-level verification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-016`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_commit: `8893b2b5a6612eaa85b5767a80fe4b462069d4f1`
+- database_environment: `PASS` — fresh PostgreSQL `17.10`, pgvector `0.8.2`, all 24 migrations from zero.
+- phase_gates: `PASS` — Phases 1 through 14.
+- full_regression: `PASS` — `73 passed`.
+- newly_verified: `R-049` — retained PRIME-owned checkpoint survives repository rewrite/reflog expiry/GC, restart, bundle loss/recovery, citation resolution, Time Lens reconstruction, non-retained degradation, and ownership-boundary checks.
+- implementation_defect: `PASS` — purged Evidence now resolves `UNAVAILABLE`; retracted Evidence resolves historical with explicit retraction; Git citation checks retained bundle integrity; Time Lens distinguishes live repository reachability from retained PRIME checkpoint.
+- requirement_state: `1/26 VERIFIED`; `17 partial`; `8 blocked_by_environment`; `0 failed`; R-056 remains `OPEN`.
+- environment_reconciliation: Linux/systemd, Chromium, Tailscale, and Hindsight are present but incomplete for exact normative qualification; Notion secret source is `NOT FOUND`; approved AI/local inference is unavailable.
+- qualification_evidence: `evidence/phase15/qualification-continuation-016.md`
+- security_tests_run: `PASS` for R-049 and exercised Evidence/citation cases; remaining live/native security environments remain incomplete.
+- recovery_tests_run: `PASS` for R-049 retained bundle loss/recovery; destructive/interrupted/off-machine recovery remains unverified.
+- result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.

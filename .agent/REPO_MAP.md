@@ -141,8 +141,10 @@
 - `evidence/phase15/R-054-R-055-implementation-closure-013.md` — Continuation 013 local AI profile, provenance, privacy, citation, injection, isolation, and fixture implementation closure; not approved provider/local-model release qualification.
 - `evidence/phase15/github-publication-014.md` — secret-safe canonical GitHub publication, remote parity, representative-path, and reconciliation evidence.
 - `evidence/phase15/qualification-continuation-015.md` — fresh disposable PostgreSQL/pgvector precheck, clean migration/gate results, AI persistence defect repair, and truthful requirement-centric Phase-15 continuation result.
+- `evidence/phase15/qualification-continuation-016.md` — R-049 exact PostgreSQL/Git/Time Lens qualification, Evidence citation lifecycle qualification, environment reconciliation, and truthful 1/26 result.
 - `tests/phase15/fixtures/ai_golden.json` — versioned machine-readable AI behavior fixture expectations.
 - `tests/phase15/test_ai_execution.py` — local AI profile, provenance, privacy, injection, citation, and isolation regression tests.
+- `tests/phase15/test_requirement_qualification.py` — real PostgreSQL-backed R-049 retained-checkpoint and R-046/R-047 Evidence/citation qualification fixtures.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 

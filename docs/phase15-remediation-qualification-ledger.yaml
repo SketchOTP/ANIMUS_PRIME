@@ -1,15 +1,15 @@
 baseline: PRIME-SPEC-V1.0.0
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 qualification_status_vocabulary: [not_run, partial, blocked_by_environment, verified, failed]
-latest_qualification_evidence: evidence/phase15/qualification-continuation-015.md
-latest_qualification_commit: 344efd6
+latest_qualification_evidence: evidence/phase15/qualification-continuation-016.md
+latest_qualification_commit: 8893b2b5a6612eaa85b5767a80fe4b462069d4f1
 qualification_status:
-  R-031: blocked_by_environment
-  R-032: blocked_by_environment
-  R-033: blocked_by_environment
-  R-034: blocked_by_environment
-  R-035: blocked_by_environment
-  R-036: blocked_by_environment
+  R-031: partial
+  R-032: partial
+  R-033: partial
+  R-034: partial
+  R-035: partial
+  R-036: partial
   R-037: blocked_by_environment
   R-038: blocked_by_environment
   R-039: blocked_by_environment
@@ -22,11 +22,11 @@ qualification_status:
   R-046: partial
   R-047: partial
   R-048: partial
-  R-049: partial
+  R-049: verified
   R-050: partial
-  R-051: blocked_by_environment
-  R-052: blocked_by_environment
-  R-053: blocked_by_environment
+  R-051: partial
+  R-052: partial
+  R-053: partial
   R-054: blocked_by_environment
   R-055: blocked_by_environment
   R-056: blocked_by_environment
@@ -49,7 +49,7 @@ records:
   - {requirement_id: R-046, spec_section: "§16A.30/§18.7", original_owning_phase: 11, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Real Evidence files and parser/index execution", positive_test: "store/hash/provenance/index", negative_test: "active content, bad MIME, oversize", degraded_test: "parser unavailable", recovery_test: "reprocess after recovery", security_test: "safe data handling and project isolation", evidence_paths: ["evidence/phase15/R-046-R-047-implementation-preflight.md", "evidence/phase15/R-046-R-050-implementation-closure-007.md"], implementation_commit: 723809e, evidence_commit: a617ae5, remaining_gap: "Native/live parser-index, backup/restore, capacity, and product-isolation qualification", final_status: OPEN}
   - {requirement_id: R-047, spec_section: "§16A.30/§25.6", original_owning_phase: 11, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Evidence-backed Ask/Search/Progress/Documentation run", positive_test: "citation resolves", negative_test: "retracted evidence", degraded_test: "index unavailable", recovery_test: "restore/reindex", security_test: "evidence cannot promote authority", evidence_paths: ["evidence/phase15/R-046-R-050-implementation-closure-007.md"], implementation_commit: 723809e, evidence_commit: a617ae5, remaining_gap: "Evidence-backed product citation, backup/restore, reindex and live isolation qualification", final_status: OPEN}
   - {requirement_id: R-048, spec_section: "§16A.31/§25.10", original_owning_phase: 11, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Historical project checkpoints", positive_test: "EXACT reconstruction", negative_test: "missing checkpoint", degraded_test: "PARTIAL/UNAVAILABLE", recovery_test: "recovered checkpoint", security_test: "no inferred historical truth", evidence_paths: ["evidence/phase15/R-046-R-050-implementation-closure-007.md"], implementation_commit: 723809e, evidence_commit: a617ae5, remaining_gap: "Native/live historical walkthrough, backup/restore and complete State A/B/C/D qualification", final_status: OPEN}
-  - {requirement_id: R-049, spec_section: "§16A.31/§26", original_owning_phase: 11, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Git repository subject to rewrite/prune/GC", positive_test: "checkpoint survives", negative_test: "ordinary history pruned", degraded_test: "partial bundle", recovery_test: "restore checkpoint", security_test: "PRIME-owned boundary", evidence_paths: ["evidence/phase15/R-049-git-checkpoint-implementation.md", "evidence/phase15/R-046-R-050-implementation-closure-007.md"], implementation_commit: 723809e, evidence_commit: a617ae5, remaining_gap: "PostgreSQL registration, full Time Lens reconstruction and release qualification evidence for preserved canonical checkpoints", final_status: OPEN}
+  - {requirement_id: R-049, spec_section: "§16A.31/§26", original_owning_phase: 11, current_status: VERIFIED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Git repository subject to rewrite/prune/GC", positive_test: "checkpoint survives", negative_test: "ordinary history pruned", degraded_test: "non-retained checkpoint is UNAVAILABLE", recovery_test: "service reopen and retained bundle restore", security_test: "PRIME-owned boundary", evidence_paths: ["evidence/phase15/R-049-git-checkpoint-implementation.md", "evidence/phase15/R-046-R-050-implementation-closure-007.md", "evidence/phase15/qualification-continuation-016.md"], implementation_commit: 8893b2b5a6612eaa85b5767a80fe4b462069d4f1, evidence_commit: 8893b2b5a6612eaa85b5767a80fe4b462069d4f1, remaining_gap: NONE, final_status: VERIFIED}
   - {requirement_id: R-050, spec_section: "§16A.31/§25.6/§25.10", original_owning_phase: 11, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Historical Ask/Brain and correction fixtures", positive_test: "as_of cutoff", negative_test: "later data excluded", degraded_test: "missing historical source", recovery_test: "return-to-current", security_test: "later correction labeled", evidence_paths: ["evidence/phase15/R-046-R-050-implementation-closure-007.md"], implementation_commit: 723809e, evidence_commit: a617ae5, remaining_gap: "Native/live historical walkthrough, correction overlays, browser state and complete State A/B/C/D qualification", final_status: OPEN}
   - {requirement_id: R-051, spec_section: "§16/§16A.1/§16A.18", original_owning_phase: 14, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Supported browser and fresh setup state", positive_test: "apps/web/index.html setup/auth/project creation and /v1/operator/state", negative_test: "invalid setup/auth response and protected unauthenticated state", degraded_test: "Core/offline/stale health state", recovery_test: "refresh and resume setup after service recovery", security_test: "no-store protected state, CSRF/authenticated mutations, no secret display", evidence_paths: ["evidence/phase15/R-051-R-053-implementation-closure-012.md"], implementation_commit: 3fd09a10aad5b2fff4856b6e75fac5e893e08b3b, evidence_commit: e2f50703e88689a035b686d4eed89234fb2f1c8d, remaining_gap: "Fresh supported-browser setup and global-navigation walkthrough", final_status: OPEN}
   - {requirement_id: R-052, spec_section: "§16.3/§16A.3-§16A.17", original_owning_phase: 14, current_status: IMPLEMENTED, implementation_complete: yes, native_or_live_execution_required: yes, environment_required: "Supported browser at desktop/mobile sizes", positive_test: "required project surfaces, project selection, project-scoped Ask/Search, Brain list alternative", negative_test: "invalid project selection/query and protected lifecycle confirmation", degraded_test: "service/provider unavailable state per surface", recovery_test: "refresh/reconnect and preserved project selection boundary", security_test: "project-scoped routes, no generic success for degraded providers, destructive step-up entry", evidence_paths: ["evidence/phase15/R-051-R-053-implementation-closure-012.md"], implementation_commit: 3fd09a10aad5b2fff4856b6e75fac5e893e08b3b, evidence_commit: e2f50703e88689a035b686d4eed89234fb2f1c8d, remaining_gap: "Complete supported-browser normal operator journey and restart recovery evidence", final_status: OPEN}
