@@ -865,3 +865,30 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: approved provider/local-model, live Notion/Tailscale/Hindsight, native Linux/Windows, browser/accessibility, recovery/capacity, historical, and aggregate clean-install/end-to-end qualification remain open.
 - Blockers: missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL`, approved AI/local inference environment, live/native/browser/recovery environments, and codebase-memory transport.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-015 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-030
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-029
+- Closed: 2026-08-11T17:08:17-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 015 removed the locally solvable database qualification blocker using a freshly recreated disposable PostgreSQL/pgvector environment. PostgreSQL `17.10`, pgvector `0.8.2`, empty-database prechecks, all 24 migrations from zero, and Phases 1–14 passed. The first real database-backed Ask execution exposed an `ai_runs` placeholder mismatch; the minimum repair was committed at `344efd6`, and a fresh rerun passed `71` tests. The Phase-15/V1 gate remains FAIL with `0/26 VERIFIED`; R-056 remains OPEN; deployment was not performed.
+- Changed areas: `.agent/DIRECTIVES.md`, `.agent/CURRENT.md`, `.agent/LEARNINGS.md`, `.agent/RECORD.md`, `.agent/REPO_MAP.md`, `.agent/OUTCOMES.md`, `.agent/phase-records/PHASE-15.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `src/prime_core/ai_service.py`, and `evidence/phase15/qualification-continuation-015.md`.
+- Validation:
+  - codebase-memory MCP index/search - BLOCKED (`Transport closed`); targeted local inspection used for configuration and governance fallback
+  - fresh disposable PostgreSQL/pgvector precheck - PASSED
+  - PostgreSQL version/role/reachability/empty-schema checks - PASSED
+  - pgvector extension availability and enablement - PASSED (`0.8.2`)
+  - migration chain from zero through `0024_ai_execution.sql` - PASSED
+  - migration idempotence/schema/table checks - PASSED
+  - first database-backed full run - FAILED on real `ai_runs` placeholder mismatch
+  - minimum defect repair at `344efd6` - PASSED
+  - focused requalification - PASSED (`7 passed`)
+  - reused populated-database suite invocation - FAILED (three state-collision failures; not used as qualification evidence)
+  - fresh complete regression - PASSED (`71 passed`)
+  - Phase 1–14 gates - PASSED
+  - Phase-15/V1 release gate - FAILED truthfully (`0/26 VERIFIED`; implementation `25/26`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-042–R-050 remain `partial` because off-machine/fresh-install, live Hindsight, sustained capacity, and complete historical/product-path evidence remains absent; R-031–R-041 and R-051–R-056 retain their exact environment blockers. Native Linux/Windows, Tailscale, live Notion, off-machine/interrupted restore, live Hindsight, sustained capacity, supported browser/accessibility, approved model/local inference, and aggregate R-056 remain unqualified.
+- Blockers: external qualification environments remain unavailable; default host database variables are unset but are no longer a blocker when the approved disposable stack is created.
+- Follow-up directive: none

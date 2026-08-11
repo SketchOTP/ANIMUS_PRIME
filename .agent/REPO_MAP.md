@@ -140,6 +140,7 @@
 - `evidence/phase15/R-051-R-053-implementation-closure-012.md` — Continuation 012 credential-reuse boundary and local operator UX implementation closure; not live Notion or browser release qualification.
 - `evidence/phase15/R-054-R-055-implementation-closure-013.md` — Continuation 013 local AI profile, provenance, privacy, citation, injection, isolation, and fixture implementation closure; not approved provider/local-model release qualification.
 - `evidence/phase15/github-publication-014.md` — secret-safe canonical GitHub publication, remote parity, representative-path, and reconciliation evidence.
+- `evidence/phase15/qualification-continuation-015.md` — fresh disposable PostgreSQL/pgvector precheck, clean migration/gate results, AI persistence defect repair, and truthful requirement-centric Phase-15 continuation result.
 - `tests/phase15/fixtures/ai_golden.json` — versioned machine-readable AI behavior fixture expectations.
 - `tests/phase15/test_ai_execution.py` — local AI profile, provenance, privacy, injection, citation, and isolation regression tests.
 - `.pytest_cache/` — local pytest cache and not a release artifact.

@@ -35,6 +35,8 @@ requirements:
   # Phase-15 remediation rows are requirement-level release obligations. Their
   # original phase evidence remains historical; current release verification is
   # reopened until the matrix records passing implementation and evidence.
+  # Continuation 015 removed the disposable database blocker and recorded the
+  # resulting database-backed evidence without promoting any row to VERIFIED.
   - {id: R-031, section: "§18.2/§18.12", summary: "Native Node authenticated encrypted control plane with enrollment, rotation, revocation and re-enrollment", owner: 2, validate: [1,2,12,15], status: IMPLEMENTED, phase15_note: "Continuation 009 closes local authenticated lifecycle and TLS fail-closed boundary; native lifecycle qualification remains blocked_by_environment."}
   - {id: R-032, section: "§21.2/§25.3/§25.9", summary: "Supported Linux and Windows native Node packages, service lifecycle, restart and identity persistence", owner: 2, validate: [1,2,15], status: IMPLEMENTED, phase15_note: "Continuation 009 adds idempotent systemd/sc.exe registration paths and protected external state; host/reboot qualification remains blocked_by_environment."}
   - {id: R-033, section: "§6/§18.2/§25.4/§25.5", summary: "Node heartbeat, capability/version negotiation, offline/reconnect reconciliation and filesystem boundary enforcement", owner: 2, validate: [2,12,15], status: IMPLEMENTED, phase15_note: "Continuation 009 adds durable health, protocol/capability reporting, diagnostics/snapshot and persistent root boundary tests; native reconciliation evidence remains blocked_by_environment."}

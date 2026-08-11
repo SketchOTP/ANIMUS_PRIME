@@ -185,3 +185,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-054/R-055 implementation-versus-qualification separation.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-017
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-017
+- Fact or lesson: A qualification environment must be recreated from zero before database-backed evidence is trusted. The approved pgvector image provides the vector extension, but a new PostgreSQL database requires explicit `CREATE EXTENSION vector`; once enabled, the full PRIME migration chain applied idempotently through `0024_ai_execution.sql`. Database-backed regression also exposed a real AI persistence placeholder mismatch that unit-only provider tests could not see.
+- Evidence location: `docker-compose.phase1.yml`; `evidence/phase15/qualification-continuation-015.md`; `src/prime_core/ai_service.py`; `migrations/prime/0024_ai_execution.sql`
+- Confidence: VERIFIED
+- Scope: Phase 1–13 database gates, AI execution persistence, migration qualification, and requirement-level Phase-15 evidence.
+- Supersedes learning: none

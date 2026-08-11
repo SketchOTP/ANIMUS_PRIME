@@ -107,3 +107,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: GitHub was a stale placeholder while the governed implementation existed only locally. Explicit force-with-lease publication against the verified placeholder preserves continuity without allowing an unrestricted overwrite, and future governed checkpoints must be externally inspectable before completion.
 - Affected areas: canonical Git remote, `main` publication, secret-safety inspection, representative source/governance/test/migration/evidence paths, Phase-15 publication evidence.
 - Supersedes record: none
+
+## DEC-PRIME-PHASE15-015
+
+- Date: 2026-08-11
+- Record or decision ID: DEC-PRIME-PHASE15-015
+- Status: CLOSED
+- Decision or event: Remove the local PostgreSQL qualification blocker using the existing disposable Phase-1 stack and repair the actual AI persistence defect exposed by clean database-backed execution.
+- Rationale: Phase 1–13 gates must reflect a real clean migration environment rather than an unavailable host variable. The first real Ask execution exposed a 21-column/22-placeholder `ai_runs` insert mismatch; qualification required the minimum repair and a fresh rerun.
+- Affected areas: disposable PostgreSQL/pgvector qualification environment, migrations through `0024_ai_execution.sql`, `src/prime_core/ai_service.py`, Phase 1–14 gates, full regression, Phase-15 evidence, and qualification governance.
+- Supersedes record: none

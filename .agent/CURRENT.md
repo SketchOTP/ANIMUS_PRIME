@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T13:28:00Z`
+- Last updated: `2026-08-11T17:08:17-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-014`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-015`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
+- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression now PASS; Phase 15/V1 gate remains FAIL because 0/26 requirements are VERIFIED.`
 - Current phase: `15`
-- Expected or actual touched areas: `canonical GitHub publication, remote SHA/content verification, secret-safety evidence, GitHub/Notion publication records, and subsequent Phase-15 qualification matrix`
-- Immediate next action: `Execute available R-056 qualification without adding architecture; preserve the exact GitHub publication parity and the open V1 gate.`
+- Expected or actual touched areas: `disposable PostgreSQL/pgvector qualification environment, clean migration chain, AI persistence defect repair, database-backed Phase 1–13 gates, requirement-centric Phase-15 evidence, and governed GitHub/Notion checkpoint`
+- Immediate next action: `Publish the governed Continuation 015 evidence and then pursue the remaining individual R-031–R-056 qualification environments without adding architecture.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `./.venv/bin/python scripts/validate_governance.py --mode ADOPTED`; `./.venv/bin/python -m pytest tests -q`; `./.venv/bin/python -m compileall -q src apps tests`; `git diff --check`; `./.venv/bin/python scripts/phase15_qualify.py`
+- Command or check: `docker compose -f docker-compose.phase1.yml down --remove-orphans`; `docker compose -f docker-compose.phase1.yml up -d postgres`; fresh pgvector precheck; `PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted> ./.venv/bin/python scripts/phase15_qualify.py`
 - Result: `FAILED`
 
 ## Risks
@@ -56,7 +56,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Blockers
 
-- System Python lacks `psycopg`, and the default host `PRIME_PHASE1_DB_URL` is unset; the qualified `.venv` plus disposable PostgreSQL path was exercised for local evidence. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
+- System Python lacks `psycopg`, and the default host database variables remain unset; the approved `.venv` plus freshly recreated disposable PostgreSQL/pgvector path was exercised successfully. The separate off-machine target, fresh-install/destructive restore drill, native Windows/Linux service, live Notion/Tailscale, live Hindsight, approved AI, browser, sustained capacity, and full end-to-end environments remain unqualified.
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
@@ -65,6 +65,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 014 publication preflight: canonical remote configured and authenticated; verified remote placeholder `4bd3e232f7d90655b5857a3b382a372366122931` replaced by local governed `a8300cf0b649940f0036b53a29a717a4c94ee798` using explicit `--force-with-lease`; exact parity and representative remote paths PASSED; no governed tags exist; publication evidence is `evidence/phase15/github-publication-014.md`.
 - Continuation 014 publication closure: evidence/governance commit `d5e25db827eaa23fcbf3ebf7cacf00cdbce1f289` is published to `origin/main`; local/remote/advertised SHA parity MATCHED; worktree CLEAN; GitHub connector representative-file verification PASSED; Notion implementation execution record appended and re-fetched successfully; deployment NOT PERFORMED.
 - Continuation 014 available qualification continuation: Phase-15 runner FAILED truthfully on governed commit `f8f3f17b793cb69421e175db86ca52de678c76c0`; governance PASS; full suite `54 passed, 17 skipped`; Phase 1–13 database gates BLOCKED by missing database URL; Phase 14 PASS; implementation `25/26`; R-056 OPEN; `0/26 VERIFIED`; V1 FAIL; deployment NOT PERFORMED.
+- Continuation 015 recreated the approved disposable PostgreSQL/pgvector qualification database from zero, verified PostgreSQL `17.10` and pgvector `0.8.2`, applied all 24 migrations, and converted the Phase 1–13 database gates from BLOCKED to PASS. The first complete run exposed and the minimum repair fixed an `ai_runs` placeholder-count defect; the fresh rerun passed `71` tests and Phases 1–14. The V1 gate remains FAIL at `0/26 VERIFIED`; R-056 remains OPEN; evidence is `evidence/phase15/qualification-continuation-015.md`.
 
 ## Pending decisions
 
