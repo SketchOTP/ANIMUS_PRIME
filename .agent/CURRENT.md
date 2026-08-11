@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T13:05:00Z`
+- Last updated: `2026-08-11T13:28:00Z`
 
 ## Active state after adoption
 
 - Local directive ID: `D-PRIME-PHASE15-REMEDIATION-012`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
-- Current status: `VALIDATING`
+- Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
 - Expected or actual touched areas: `Notion credential-reference/import/capability boundary, migrations/prime/0023_notion_credential_reference.sql, Core operator-state and Ask routes, apps/web/index.html, tests/phase7, tests/phase14, docs/phase15 ledger/matrix, evidence/phase15, .agent governance records`
-- Immediate next action: `Complete full validation and governed closure for R-051–R-053; retain live Notion qualification blocked_by_environment because NOTION_READONLY_KEY is absent from this runtime and retain browser qualification NOT RUN.`
+- Immediate next action: `Record final Continuation 012 correction commit, then proceed to R-054–R-055 AI production behavior and regression qualification; retain browser and live Notion qualification blocks.`
 
 ## Temporary task-relevant facts
 
@@ -59,6 +59,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - `NOTION_READONLY_KEY` was absent from the current runtime and no local MyAssistant config reference was found; no token material was printed or persisted. Live PRIME Notion capability qualification remains blocked_by_environment.
+- Continuation 012 validation: focused tests PASSED (17 passed, 1 skipped); full suite PASSED (48 passed, 17 skipped); compileall PASSED; diff check PASSED; adopted governance PASSED; Phase-15 gate FAIL with database-backed phases blocked and 0/26 VERIFIED; deployment NOT PERFORMED.
 
 ## Pending decisions
 

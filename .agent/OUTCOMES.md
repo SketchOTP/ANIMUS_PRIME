@@ -749,3 +749,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: separate off-machine target, fresh-install destructive safety and interrupted restore, live Hindsight loss/rebuild, sustained capacity/disk-pressure, native/live integrations, browser, AI, and aggregate end-to-end evidence remain unqualified.
 - Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
+## D-PRIME-PHASE15-REMEDIATION-012 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-025
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-024
+- Closed: 2026-08-11T13:28:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 012 closes the local implementation boundary for R-051 through R-053 at implementation commit `3fd09a10aad5b2fff4856b6e75fac5e893e08b3b` and establishes secret-safe, idempotent MyAssistant Notion credential-reference reuse. Implementation convergence is 23/26. Live Notion capability remains blocked because `NOTION_READONLY_KEY` is absent from this runtime; supported-browser, mobile, keyboard-only, and assistive-technology qualification was not run. V1 remains FAIL at 0/26 VERIFIED and deployment was not performed.
+- Changed areas: `src/prime_core/notion_credentials.py`, `src/prime_core/notion_api.py`, `migrations/prime/0023_notion_credential_reference.sql`, `apps/core/main.py`, `apps/web/index.html`, `tests/phase7`, `tests/phase14`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `evidence/phase15/R-051-R-053-implementation-closure-012.md`, and `.agent` governance files.
+- Validation:
+  - PRIME source and Implementation Handoff reread - PASSED
+  - Checkpoint 011 direct fetch - BLOCKED (`object_not_found` in connected Notion workspace); attached directive used as supplied
+  - codebase-memory MCP index - BLOCKED (`Transport closed`); targeted local fallback used
+  - MyAssistant credential discovery - BLOCKED (`NOTION_READONLY_KEY` absent; no secret printed or persisted)
+  - focused credential/Notion/API/web tests - PASSED (`17 passed`, `1 skipped`)
+  - full local test suite - PASSED (`48 passed`, `17 skipped`)
+  - compileall - PASSED
+  - adopted governance validation - PASSED
+  - diff check - PASSED
+  - Phase-15 qualification gate - FAILED truthfully: database URL unavailable, 0/26 VERIFIED
+  - supported-browser desktop/mobile/assistive technology walkthrough - NOT RUN
+  - live PRIME Notion import/read/write/provider lifecycle - BLOCKED
+  - deployment - NOT PERFORMED
+- Remaining risks: live Notion provider capability and lifecycle evidence, supported browser/device accessibility evidence, native/live Node/Tailscale/Hindsight/recovery/capacity/AI environments, and aggregate end-to-end qualification remain open.
+- Blockers: absent `NOTION_READONLY_KEY` in this runtime, missing `PRIME_PHASE1_DB_URL`/`PRIME_DATABASE_URL` for database-backed phase gates, codebase-memory MCP transport, supported browser/device qualification environment, and prior native/live release environments.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-012
