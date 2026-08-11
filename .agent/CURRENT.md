@@ -14,7 +14,7 @@
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
 - Expected or actual touched areas: `canonical GitHub publication, remote SHA/content verification, secret-safety evidence, GitHub/Notion publication records, and subsequent Phase-15 qualification matrix`
-- Immediate next action: `Publish the publication evidence/governance commit, verify final local/remote parity, update Notion, then execute available R-056 qualification without adding architecture.`
+- Immediate next action: `Execute available R-056 qualification without adding architecture; preserve the exact GitHub publication parity and the open V1 gate.`
 
 ## Temporary task-relevant facts
 
@@ -63,6 +63,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 013 re-inspected candidate config paths, service names, process command lines, and matching runtime environment variable names without printing values; no usable existing MyAssistant Notion secret source was found. Live PRIME Notion capability qualification remains blocked_by_environment.
 - Continuation 013 final validation: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; adopted governance PASSED; diff check PASSED; Phase-15 qualification FAILED truthfully at 25/26 implementation-complete and 0/26 VERIFIED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; evidence/governance commit `e81010f27ef74b34e6bdc7d2618a219ac61ba2bb`; final governance state is recorded in the current HEAD; deployment NOT PERFORMED.
 - Continuation 014 publication preflight: canonical remote configured and authenticated; verified remote placeholder `4bd3e232f7d90655b5857a3b382a372366122931` replaced by local governed `a8300cf0b649940f0036b53a29a717a4c94ee798` using explicit `--force-with-lease`; exact parity and representative remote paths PASSED; no governed tags exist; publication evidence is `evidence/phase15/github-publication-014.md`.
+- Continuation 014 publication closure: evidence/governance commit `d5e25db827eaa23fcbf3ebf7cacf00cdbce1f289` is published to `origin/main`; local/remote/advertised SHA parity MATCHED; worktree CLEAN; GitHub connector representative-file verification PASSED; Notion implementation execution record appended and re-fetched successfully; deployment NOT PERFORMED.
 
 ## Pending decisions
 
