@@ -1,7 +1,7 @@
 # Phase 15 remediation queue — Continuation 008
 
 Baseline: `PRIME-SPEC-V1.0.0`  
-Governed implementation/evidence checkpoint: `7b5ef0a` / `PENDING`
+Governed implementation/evidence checkpoint: `7b5ef0a` / `342fc58`
 Observed qualification: `47 passed` on clean disposable PostgreSQL; external recovery obligations remain partial
 Deployment: `NOT PERFORMED`  
 V1: `FAIL`
