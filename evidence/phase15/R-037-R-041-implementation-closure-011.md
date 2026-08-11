@@ -3,6 +3,7 @@
 - Baseline: `PRIME-SPEC-V1.0.0`
 - Directive: `D-PRIME-PHASE15-REMEDIATION-011`
 - Implementation commit: `a4d22635f7036ca4f86029c8e681c08923aaf157`
+- Evidence/governance commit: `d1ade44e44558ec2b1c6e94368a05c84efe8bb5a`
 - Scope: bounded Notion provider lifecycle, Project Record binding, Documentation Agent projection, attached read-only Knowledge Sources, reconciliation, and managed history rollover.
 - Implementation status: R-037–R-041 `IMPLEMENTED` locally; implementation convergence `20/26`.
 - Qualification status: R-037–R-041 remain `blocked_by_environment`; `VERIFIED = 0/26`.
