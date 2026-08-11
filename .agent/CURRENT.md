@@ -50,6 +50,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Remediation counts — `implementation_complete=15/26`, `IMPLEMENTING=11`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
 - Continuation 010 closes the local R-035–R-036 Tailscale adapter boundary with actual-state vocabulary, fixed command allowlist, Serve-only ownership/refusal, loopback validation, persisted desired state, reconciliation, and focused local tests. Live tailnet/second-device qualification remains blocked_by_environment; implementation convergence is now 15/26.
 - Continuation 011 closes the local R-037–R-041 Notion lifecycle boundary with Core-owned credential references, Project Record idempotency, stable managed regions, source provenance/retraction, reconciliation, provider-double fault tests, and idempotent managed-history rollover. Live Notion qualification remains blocked_by_environment; implementation convergence is now 20/26.
+- Continuation 011 persistence correction adds atomic non-secret lifecycle state snapshot/load and restart coverage at `659fc3ce9659611e34dedf3d6e2b4b892088d355`; live Notion qualification remains blocked_by_environment.
 
 ## Blockers
 

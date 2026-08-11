@@ -541,6 +541,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 
 ## D-PRIME-PHASE15-REMEDIATION-011 - PARTIAL
 
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-024
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T11:45:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 011 persistence correction adds atomic non-secret Notion lifecycle state snapshot/load and simulated restart coverage in `659fc3ce9659611e34dedf3d6e2b4b892088d355`. The R-037–R-041 local implementation boundary remains complete; live Notion qualification is blocked_by_environment, implementation convergence is 20/26, VERIFIED is 0/26, V1 remains FAIL, and deployment was not performed.
+- Changed areas: `src/prime_core/notion_service.py`, `tests/phase7/test_notion_lifecycle.py`, `evidence/phase15/R-037-R-041-implementation-closure-011.md`, `.agent/CURRENT.md`
+- Validation:
+  - focused lifecycle tests - PASSED (`8 passed`)
+  - focused lifecycle/API tests - PASSED (`11 passed`)
+  - full local test suite - PASSED (`42 passed`, `17 skipped`)
+  - compileall - PASSED
+  - adopted governance validation - NOT RUN until final correction commit
+  - live Notion provider lifecycle - NOT RUN
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: live Notion provider/access, actual block revision, source deletion/permission, long-running rollover, and aggregate Phase-15 evidence remain unqualified.
+- Blockers: controlled live Notion workspace, codebase-memory transport, and remaining native/live/recovery/browser/AI release environments.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-011
+
+## D-PRIME-PHASE15-REMEDIATION-011 - PARTIAL
+
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-023
 - Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
 - Closed: 2026-08-11T11:42:00Z

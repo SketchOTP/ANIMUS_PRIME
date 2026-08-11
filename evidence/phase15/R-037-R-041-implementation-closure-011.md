@@ -3,6 +3,7 @@
 - Baseline: `PRIME-SPEC-V1.0.0`
 - Directive: `D-PRIME-PHASE15-REMEDIATION-011`
 - Implementation commit: `a4d22635f7036ca4f86029c8e681c08923aaf157`
+- Persistence correction commit: `659fc3ce9659611e34dedf3d6e2b4b892088d355`
 - Evidence/governance commit: `d1ade44e44558ec2b1c6e94368a05c84efe8bb5a`
 - Scope: bounded Notion provider lifecycle, Project Record binding, Documentation Agent projection, attached read-only Knowledge Sources, reconciliation, and managed history rollover.
 - Implementation status: R-037–R-041 `IMPLEMENTED` locally; implementation convergence `20/26`.
@@ -21,10 +22,11 @@
 
 ## Deterministic local qualification
 
-- Focused lifecycle/provider-double tests: `10 passed`.
+- Focused lifecycle/provider-double tests: `8 passed`; lifecycle plus API focused tests: `11 passed`.
 - Full test tree: `42 passed, 17 skipped`.
 - Compile check: `PASSED`.
 - Covered positive, negative, degraded, recovery, privacy, conflict, source-isolation, stale-ordering, self-write, and idempotency paths using `InMemoryNotionProvider`.
+- Atomic non-secret state snapshot/load was exercised across a simulated Core restart; raw provider credentials are never written to the snapshot.
 
 ## Not run / not release evidence
 
