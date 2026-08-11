@@ -539,6 +539,31 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: system Python lacks psycopg; native Windows/Linux, live Notion/Tailscale/Hindsight, approved AI, browser, off-machine recovery target, and sustained capacity environments are unavailable or unqualified.
 - Follow-up directive: D-PRIME-PHASE15-REMEDIATION-008
 
+## D-PRIME-PHASE15-REMEDIATION-009 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-018
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-016
+- Closed: 2026-08-11T03:55:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 009 closes the local implementation boundary for R-031 through R-034 at implementation commit `084ea85d19d3c56df6c14601e532e9bc346862b6`. Node identity/health/protocol lifecycle, secure root boundaries, bounded diagnostics/snapshots, private-bind/TLS controls, Linux systemd packaging, Windows service registration, and lifecycle migration are implemented. R-031–R-034 remain qualification `blocked_by_environment`; R-042–R-050 remain IMPLEMENTED with partial qualification; implementation convergence is 13/26; VERIFIED is 0/26; V1 remains FAIL; deployment was not performed.
+- Changed areas: `src/prime_node`, `apps/node/main.py`, `src/prime_core/node_client.py`, `migrations/prime/0021_node_lifecycle.sql`, `packaging/node`, `tests/phase2/test_node_continuation009.py`, `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/requirements-traceability.yaml`, `evidence/phase15/R-031-R-034-implementation-closure-009.md`, `.agent/CURRENT.md`, `.agent/DIRECTIVES.md`, `.agent/LEARNINGS.md`, `.agent/RECORD.md`, `.agent/REPO_MAP.md`
+- Validation:
+  - PRIME source, Implementation Handoff, and Checkpoint 008 reread - PASSED
+  - codebase-memory MCP index - BLOCKED (`Transport closed`); targeted local fallback used
+  - focused Node/control-plane tests - PASSED (`6 passed`)
+  - full local test suite - PASSED (`32 passed`, `17 skipped`)
+  - compileall - PASSED
+  - diff check - PASSED
+  - governance validation - NOT RUN until final evidence commit
+  - native Linux qualification - NOT RUN
+  - native Windows qualification - NOT RUN
+  - qualified private deployment/upgrade - NOT RUN
+  - V1 release gate - FAILED by design at 0/26 VERIFIED
+  - deployment - NOT PERFORMED
+- Remaining risks: native service/reboot/reconnect/upgrade evidence, qualified private deployment, live integrations, recovery/capacity, browser, AI, and aggregate end-to-end evidence remain unqualified.
+- Blockers: codebase-memory transport, native Windows/Linux host qualification, private deployment environment, PostgreSQL-dependent tests on system Python, live Notion/Tailscale/Hindsight/AI, browser, and aggregate release environment.
+- Follow-up directive: D-PRIME-PHASE15-REMEDIATION-009
+
 ## D-PRIME-PHASE15-REMEDIATION-008 - PARTIAL
 
 - Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-015

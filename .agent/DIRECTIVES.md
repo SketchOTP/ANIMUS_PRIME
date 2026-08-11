@@ -109,3 +109,17 @@ Use one live entry for each accepted project task. Keep examples outside this fi
 ```
 
 Do not record execution results here. Do not rewrite historical entries after adoption. Append corrections, amendments, and supersessions referencing the original entry.
+
+## D-PRIME-PHASE15-REMEDIATION-009
+
+- Issued: 2026-08-11T03:42:00Z
+- Issuer: User
+- External directive: Phase 15 Remediation Checkpoint 008 / Continuation 009
+- Objective: Complete the locally implementable PRIME Node and private Core↔Node control-plane implementation for R-031 through R-034 while preserving separate implementation and qualification states.
+- Scope: Node identity/health/protocol lifecycle, secure allowed-root and repository observation boundaries, bounded diagnostics and snapshots, credential persistence behavior, Linux and Windows service packaging/lifecycle paths, node lifecycle migration, focused tests, regression qualification, and append-only governance/evidence records.
+- Exclusions: Fabricated native Linux/Windows or private deployment evidence, normative changes, collapsing implementation with qualification, deployment, V1 release claims, or a new planning phase.
+- Acceptance: R-031 through R-034 are marked IMPLEMENTED only where local code and tests cover the complete implementation boundary; native/live qualification remains explicitly blocked or partial; R-042 through R-050 remain IMPLEMENTED; regression and governance checks are recorded; V1 remains FAIL unless 26/26 are VERIFIED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-008
+- Status at issuance: ISSUED

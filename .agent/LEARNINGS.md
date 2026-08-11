@@ -26,6 +26,16 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Scope: PRIME Hindsight adapter and all future memory writes.
 - Supersedes learning: none
 
+## L-PRIME-PHASE15-010
+
+- Date: 2026-08-11
+- Learning ID: L-PRIME-PHASE15-010
+- Fact or lesson: Node identity state must be constructed from environment at instance creation, not captured in dataclass class defaults; otherwise test order or service reuse can silently point multiple Node instances at one state file. Native packaging must keep identity/configuration outside the repository and make repair idempotent.
+- Evidence location: src/prime_node/config.py; packaging/node/install-node.sh; packaging/node/install-node.ps1; tests/phase2/test_node_continuation009.py; evidence/phase15/R-031-R-034-implementation-closure-009.md.
+- Confidence: VERIFIED
+- Scope: R-031–R-034 Node lifecycle and packaging.
+- Supersedes learning: none
+
 ## L-PRIME-PHASE15-001
 
 - Date: 2026-08-10

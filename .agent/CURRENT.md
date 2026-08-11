@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-008`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-009`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; Phase 15 mechanical regression PASS but V1 Definition-of-Done gate FAIL.`
 - Current phase: `15`
-- Expected or actual touched areas: `R-042/R-045 backup/restore/capacity cluster, apps/core, src/prime_core/backup_service.py, src/prime_core/reliability_service.py, src/prime_core/service.py, migrations/prime/0020, tests/phase13, docs/phase15 ledger/matrix, evidence/phase15`
-- Immediate next action: `Advance to R-031–R-034 Node/native control-plane implementation while preserving R-042–R-050 implementation-complete and partial qualification states; then continue remaining local implementation rows and native/live qualification.`
+- Expected or actual touched areas: `R-031/R-034 Node/control-plane lifecycle, src/prime_node/config.py, src/prime_node/service.py, apps/node/main.py, src/prime_core/node_client.py, packaging/node, migrations/prime/0021, tests/phase2, docs/phase15 ledger/matrix, evidence/phase15`
+- Immediate next action: `Advance to R-035–R-036 private Tailscale access while preserving R-031–R-034 IMPLEMENTED / blocked_by_environment and R-042–R-050 IMPLEMENTED / partial states; execute native qualification when hosts become available.`
 
 ## Temporary task-relevant facts
 
@@ -32,6 +32,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Historical phase PASS records remain unchanged audit evidence and are superseded for final release verification only where the remediation matrix says so.
 - Requirement-level ledger added at `docs/phase15-remediation-qualification-ledger.yaml` and linked from the release matrix.
 - R-031 implementation tightened: packaged Node service now refuses service-mode startup without complete TLS/mTLS files; disposable Compose qualification explicitly opts into insecure HTTP.
+- Continuation 009 closes local R-031–R-034 implementation with persistent Node lifecycle/health/protocol state, bounded diagnostics/snapshots, persistent allowed roots, private-bind validation, idempotent Linux/Windows service registration paths, and focused path/identity tests. Native Linux/Windows and qualified private deployment remain unqualified.
 - Local real-process HTTPS/mTLS evidence recorded at `evidence/phase15/R-031-local-tls-mtls-process.md`.
 - R-031 remains `IMPLEMENTING` / `OPEN`; native Linux service, Windows service, restart/reboot, offline recovery, and upgrade evidence are not present.
 - Full disposable Phase-15 run recorded at `evidence/phase15/remediation-qualification-003.md`: 38 tests and Phases 1–14 passed; V1 gate correctly failed on open remediation rows.
@@ -46,7 +47,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - R-046–R-050 remain `qualification_status=partial`; R-049 is still `IMPLEMENTED`, not `VERIFIED`, until the complete release qualification succeeds.
 - Continuation 008 closes local R-042–R-045 implementation: authenticated continuity v2 backup/manifest, clean restore workflow, component fidelity/rebuild semantics, schedule persistence, quotas, retention, queue/disk backpressure, coalescing helpers, and recovery regression protection. R-042–R-045 remain `qualification_status=partial` because separate off-machine, fresh-install/destructive, live Hindsight, interrupted-restore, and sustained capacity evidence is not complete. Governed implementation commit: `7b5ef0a`; evidence/governance commit: `342fc58`.
 - Separate remediation qualification states now exist for all R-031–R-056 rows; skipped/unavailable environments do not imply implementation completion.
-- Remediation counts — `implementation_complete=9/26`, `IMPLEMENTING=17`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
+- Remediation counts — `implementation_complete=13/26`, `IMPLEMENTING=13`, `OPEN=26`, `BLOCKED=0`, `VERIFIED=0`; qualification `partial=9`, `blocked_by_environment=17`; `VERIFIED / 26 = 0/26`.
 
 ## Blockers
 

@@ -49,7 +49,7 @@
 - `src/prime_core/remote_access_service.py` — private Tailscale Serve control and status boundary.
 - `src/prime_core/node_client.py` — Core-to-Node protocol client with identity and TLS support.
 - `src/prime_node/service.py` — Node lifecycle, repository boundary, heartbeat, and enrollment behavior.
-- `src/prime_node/config.py` — Node bind, TLS/mTLS, and service-mode configuration.
+- `src/prime_node/config.py` — Node bind, TLS/mTLS, protocol/version, request bounds, and service-mode configuration.
 
 ## Interfaces and contracts
 
@@ -111,8 +111,10 @@
 - `migrations/prime/0018_historical_snapshot_immutability.sql` — append-only lifecycle snapshot identity correction.
 - `migrations/prime/0019_evidence_parser_states.sql` — explicit parser lifecycle states including retraction.
 - `migrations/prime/0020_continuity_capacity.sql` — continuity backup manifest fields, durable restore workflow, schedule state, and capacity policies.
+- `migrations/prime/0021_node_lifecycle.sql` — durable Node protocol/version, approval, heartbeat, compatibility, and diagnostics fields.
 - `packaging/node/prime-node.service` — Linux service definition.
-- `packaging/node/install-node.ps1` — Windows installation guidance.
+- `packaging/node/install-node.sh` — Linux idempotent install/uninstall path.
+- `packaging/node/install-node.ps1` — Windows service registration/repair/uninstall path.
 - `packaging/node/README.md` — Node packaging and TLS/mTLS configuration contract.
 
 ## Generated areas
@@ -127,6 +129,7 @@
 - `evidence/phase15/R-049-git-checkpoint-implementation.md` — implementation-only Git checkpoint preservation record; not release qualification.
 - `evidence/phase15/R-046-R-050-implementation-closure-007.md` — Continuation 007 local implementation closure evidence; not release qualification.
 - `evidence/phase15/R-042-R-045-implementation-closure-008.md` — Continuation 008 local backup/restore/capacity implementation closure; not release qualification.
+- `evidence/phase15/R-031-R-034-implementation-closure-009.md` — Continuation 009 local Node/control-plane implementation closure; not native release qualification.
 - `.pytest_cache/` — local pytest cache and not a release artifact.
 - `src/**/__pycache__/` — local Python bytecode cache and not a release artifact.
 
