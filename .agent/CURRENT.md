@@ -3,15 +3,15 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T02:20:00Z`
+- Last updated: `2026-08-12T12:10:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-020`
+- Local directive ID: `D-PRIME-TAKEOVER-VERIFY-021`
 - External directive ID: `NONE`
-- Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
+- Objective: `Verify the inherited Continuation 020 implementation and qualification state against the authoritative Atlas checkout, GitHub main, .agent records, and Architect Notion record.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, R-049, R-054, and R-055 are VERIFIED from exact local evidence; R-037–R-041 remain partial on the unavailable live Notion parent; Phase 15/V1 remains FAIL at 5/26; R-056 remains OPEN.`
+- Acceptance: `Atlas and GitHub main agree at e7f6099679a982d9708c3a4c96d87fa900a0e89d; Continuation 020 remains the latest governed state; R-046, R-047, R-049, R-054, and R-055 are VERIFIED from recorded evidence; R-037–R-041 remain partial on the archived live Notion parent; Phase 15/V1 remains FAIL at 5/26; R-056 remains OPEN; no source or qualification result is changed by takeover verification.`
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, PRIME Notion read capability, Evidence/product citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
 - Immediate next action: `Provision an operator-approved non-archived disposable Notion parent and rerun PRIME's live R-037–R-041 adapter lifecycle; continue exact R-042/R-043/R-045/R-048/R-050–R-053 gaps; preserve R-046/R-047/R-049/R-054/R-055 VERIFIED; keep R-056 OPEN.`
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `fresh docker-compose.phase1 PostgreSQL/pgvector recreation; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted>; ephemeral Paragon profile; ./.venv/bin/python scripts/phase15_qualify.py`
+- Command or check: `Atlas/GitHub parity; scripts/validate_governance.py --mode ADOPTED; ./.venv/bin/python -m pytest tests -q with and without the existing disposable DB; compileall; Notion source and Architect record fetch`
 - Result: `FAILED`
 
 ## Risks
@@ -74,6 +74,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 017: codebase-memory MCP again returned `Transport closed`; targeted fallback was used. Chromium CDP qualified setup/auth/project/navigation/degraded paths but `agent-browser` was not installed and full assistive-technology/historical-browser evidence remains partial. Independent `/dev/sdb1` backup target passed but R-042 remains partial for complete scheduled recovery. Notion remains `NOT FOUND`; no secret was printed or persisted.
 - Continuation 019: codebase-memory MCP index/search again returned `Transport closed`; targeted fallback was used. Connected Notion disposable page `3ba833cb-27ff-8176-b7f6-cd00f2de016e` and child source `3ba833cb-27ff-81c4-8733-ed23b4aa6dcf` passed safe create/read/update probes. Local PRIME Notion adapter lifecycle and integrated R-055 projection/correction gaps remain open; no secret was printed or persisted.
 - Continuation 020: codebase-memory MCP index/search again returned `Transport closed`; targeted fallback was used. Real Paragon was exercised through `IntelligenceService` with durable `ai_runs`; product Project A/B rejection, Documentation projection, invalid-citation rejection, correction supersession/history, managed-region conflict, provider degradation/recovery, and history rollover passed against PRIME's local lifecycle provider. R-055 is now `VERIFIED`; R-037–R-041 remain partial because the approved live parent is in trash and the Notion API returns a bounded archived-parent validation error. Fresh authoritative regression: `86 passed`; Phase 15/V1 remains `FAIL` at `5/26`; R-056 remains `OPEN`; no secret was printed or persisted.
+- Takeover verification 021: Atlas and GitHub `main` are synchronized at `e7f6099679a982d9708c3a4c96d87fa900a0e89d`; the attached Checkpoint 019 is three commits behind and its Notion page is deleted/archived. Correct governance validation passed. The current reused database produced three deterministic state-collision failures, so it is not a substitute for a fresh qualification database. No implementation, qualification, or external project content was changed.
 
 ## Pending decisions
 

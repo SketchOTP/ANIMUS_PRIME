@@ -167,3 +167,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: R-055's exact product AI lifecycle is independently complete; live Notion adapter qualification is a separate requirement family. The qualification target failure is concrete and must not be worked around by mutating canonical pages. R-056 remains OPEN and V1 remains FAIL until all 26 rows are verified.
 - Affected areas: `src/prime_core/intelligence_service.py`, `src/prime_core/memory_service.py`, `src/prime_core/notion_api.py`, `src/prime_core/notion_service.py`, `scripts/phase15_qualify_continuation_020.py`, R-055 ledgers/matrix/traceability, and `evidence/phase15/qualification-continuation-020.md`.
 - Supersedes record: DEC-PRIME-PHASE15-019
+
+## DEC-PRIME-PHASE15-021
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-021
+- Status: CLOSED
+- Decision or event: Treat Atlas `/home/sketch/Projects/ANIMUS_PRIME` at GitHub-synchronized `e7f6099679a982d9708c3a4c96d87fa900a0e89d` as the authoritative inherited state. Accept Continuation 020's fresh disposable `86 passed` result as the recorded qualification evidence, while classifying the current populated-database `83 passed/3 state-collision failures` rerun as non-authoritative reuse evidence rather than a code regression.
+- Rationale: the current failures are deterministic collisions from prior durable test state, while governance and compileall pass and the current ledgers, evidence, implementation diff, and Architect record agree on the same 5/26 qualification state. A fresh reset is required for a new authoritative regression and was intentionally not performed during this read/verify takeover pass.
+- Affected areas: `.agent/CURRENT.md`, `.agent/DIRECTIVES.md`, `.agent/OUTCOMES.md`, `.agent/LEARNINGS.md`, qualification execution records, and future fresh-database rerun procedure.
+- Supersedes record: none

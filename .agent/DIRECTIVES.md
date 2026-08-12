@@ -277,3 +277,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-019
 - Status at issuance: ISSUED
+
+## D-PRIME-TAKEOVER-VERIFY-021
+
+- Issued: 2026-08-12T12:10:00Z
+- Issuer: User
+- External directive: attached Continuation 020 / Checkpoint 019 handoff
+- Objective: Verify inherited ANIMUS PRIME work against the authoritative Atlas checkout, GitHub `main`, `.agent` records, qualification evidence, and the Architect-owned Notion record; determine the exact current project state before further implementation.
+- Scope: Atlas repository identity and parity; recent commit and working-tree review; Continuation 020 evidence and requirement ledger; governance and regression checks; implementation/harness inspection; Notion source and execution-record reconciliation; sanitized takeover status update.
+- Exclusions: source changes, qualification promotion, credential disclosure or persistence, canonical/user-authored Notion mutation, destructive database reset, deployment, R-056 closure, and V1 PASS claims.
+- Acceptance: Atlas and GitHub parity are verified; inherited Continuation 020 state is reconciled; current qualification and blockers are reported with evidence; fresh-versus-reused database behavior is distinguished; `.agent`, Notion, and GitHub status are synchronized without changing product or qualification claims.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-020
+- Status at issuance: ISSUED

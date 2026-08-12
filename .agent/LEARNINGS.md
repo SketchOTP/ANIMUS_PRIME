@@ -295,3 +295,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-037–R-041 production Notion adapter idempotency, isolation, and live write qualification.
 - Supersedes learning: L-PRIME-PHASE15-025
+
+## L-PRIME-PHASE15-028
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-028
+- Fact or lesson: ANIMUS PRIME's full regression is database-state sensitive. The default environment ran 61 passed and 25 skipped because database variables were unset; the existing populated disposable database ran 83 passed and 3 deterministic state-collision failures. Those failures are not equivalent to a fresh qualification run and must not be used to replace the recorded fresh 86-pass Continuation 020 evidence. A future rerun must use a newly recreated disposable database and record the reset explicitly.
+- Evidence location: `.agent/OUTCOMES.md`; `tests/phase1/test_core.py`; `tests/phase4/test_indexer.py`; `tests/phase9/test_intelligence.py`; `evidence/phase15/qualification-continuation-020.md`
+- Confidence: VERIFIED
+- Scope: qualification execution, database isolation, and takeover verification.
+- Supersedes learning: none

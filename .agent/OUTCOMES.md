@@ -1063,3 +1063,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-037–R-041, R-042–R-053 except R-046/R-047/R-049, and R-056 remain partial/open as recorded in the qualification ledger; V1 is not qualified.
 - Blockers: a non-archived operator-approved disposable Notion parent with write scope is required to close R-037–R-041; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-TAKEOVER-VERIFY-021 - PARTIAL
+
+- Outcome ID: OUT-PRIME-TAKEOVER-VERIFY-038
+- Supersedes outcome: none
+- Closed: 2026-08-12T12:10:00Z
+- Acceptance: PARTIAL
+- Summary: Took over the authoritative Atlas checkout and independently reconciled inherited Continuation 020 work. Atlas `/home/sketch/Projects/ANIMUS_PRIME`, local `main`, and GitHub `origin/main` match at `e7f6099679a982d9708c3a4c96d87fa900a0e89d`. Continuation 020 remains the current governed state: R-055 is VERIFIED; R-046, R-047, R-049, and R-054 remain VERIFIED; R-037–R-041 remain PARTIAL because the approved live Notion parent is archived; R-056 remains OPEN; Phase 15/V1 remains FAIL at 5/26; deployment was not performed.
+- Validation:
+  - adopted governance validator - PASSED
+  - compileall and diff-check - PASSED
+  - default regression invocation - PASSED (`61 passed`, `25 skipped` because database variables were unset)
+  - reused populated disposable database invocation - FAILED (83 passed, 3 deterministic persistent-state collisions; not a fresh qualification run and not used to overturn the recorded fresh 86-pass result)
+  - GitHub connector repository, current commit, and e1a9ebd-to-e7f6099 comparison - PASSED
+  - Architect Notion root and handoff fetch - PASSED; Checkpoint 019 is deleted/archived and no canonical or user-authored page was mutated
+- Changed areas: `.agent/CURRENT.md`, `.agent/DIRECTIVES.md`, `.agent/OUTCOMES.md`, `.agent/LEARNINGS.md`, `.agent/RECORD.md`.
+- Remaining risks: the fresh 86-pass qualification was not rerun during takeover; live Notion R-037–R-041 still require an operator-approved non-archived disposable parent; all other Continuation 020 gaps remain as recorded.
+- Blockers: a fresh disposable database rerun was not performed during takeover because the current database is populated and resetting it was outside this read/verify pass; live Notion R-037–R-041 still require an operator-approved non-archived disposable parent; all other Continuation 020 gaps remain as recorded.
+- Follow-up directive: none
