@@ -1,4 +1,7 @@
 baseline: PRIME-SPEC-V1.0.0
+product_alignment_audit: docs/v1-product-goal-alignment-audit.yaml
+product_alignment_status: FAIL
+product_alignment_item_count: 81
 governed_start_commit: 275bfc69252ebe6506ca6c6d3c35c32da37ad1e2
 historical_phase15_result: FAIL
 qualification_ledger: docs/phase15-remediation-qualification-ledger.yaml

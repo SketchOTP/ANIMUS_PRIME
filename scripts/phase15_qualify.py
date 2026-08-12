@@ -7,6 +7,8 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).parents[1]
 
@@ -55,6 +57,11 @@ def main() -> int:
     checks.append(("requirement-level qualification ledger is complete", ledger_ids == expected_ids and all(all(f"{field}:" in line for field in required_fields) for line in ledger_rows)))
     qualification_statuses = dict(re.findall(r"^  (R-\d+): (not_run|partial|blocked_by_environment|verified|failed)$", ledger, re.MULTILINE))
     checks.append(("separate qualification status is recorded for every remediation requirement", set(qualification_statuses) == expected_ids))
+    product_audit = yaml.safe_load((ROOT / "docs" / "v1-product-goal-alignment-audit.yaml").read_text(encoding="utf-8"))
+    product_items = product_audit.get("items", [])
+    product_statuses = Counter(item.get("status") for item in product_items)
+    product_gate = len(product_items) == 81 and all(item.get("status") == "USER_USABLE_VERIFIED" for item in product_items)
+    checks.append(("V1_PRODUCT_GOAL_ALIGNMENT is mechanically derived from complete §26 inventory", product_gate and product_audit.get("release_gate_status") == ("PASS" if product_gate else "FAIL")))
     current_counts = Counter()
     final_counts = Counter()
     implementation_complete = 0
@@ -77,6 +84,8 @@ def main() -> int:
     print("R-031–R-056 final status counts: " + ", ".join(f"{name}={final_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
     print("qualification status counts: " + ", ".join(f"{name}={list(qualification_statuses.values()).count(name)}" for name in ("not_run", "partial", "blocked_by_environment", "verified", "failed")))
     print(f"VERIFIED / 26: {current_counts.get('VERIFIED', 0)}/26")
+    print("§26 product status counts: " + ", ".join(f"{name}={product_statuses.get(name, 0)}" for name in ("USER_USABLE_VERIFIED", "IMPLEMENTED_NOT_PRODUCT_QUALIFIED", "BACKEND_ONLY", "UI_SHELL_ONLY", "PARTIAL", "MISSING", "BLOCKED_BY_ENVIRONMENT")))
+    print("V1_PRODUCT_GOAL_ALIGNMENT: " + ("PASS" if product_gate else "FAIL"))
     print("PHASE 15 QUALIFICATION: " + ("PASS" if passed else "FAIL"))
     if not passed:
         print("V1 release result: FAIL — inspect the failing gate evidence before claiming completion.")

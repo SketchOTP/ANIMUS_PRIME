@@ -236,3 +236,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: R-043 used a genuinely new PostgreSQL target, complete representative source state, production restore route, unconditional replacement step-up, safety checkpoint, populated-target refusal, and durable interruption state. R-048 independently removed and restored every required historical source class and proved the P1/P2 correction timeline without backward leakage. A real sustained parser load did not establish the missing R-045 normative boundaries, so no over-promotion was made. Hindsight retain is unavailable because no Hindsight process/listener or Docker runtime exists on the qualification host; no external AT environment is available.
 - Affected areas: `apps/core/main.py`, `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_027.py`, `evidence/phase15/qualification-continuation-027.md`, the three governed requirement views, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-026
+
+## DEC-PRIME-PHASE15-028
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-028
+- Status: CLOSED
+- Decision or event: Continuation 028 audited all 81 frozen §26 Definition-of-Done items, fixed the CSP-blocked operator shell and the first highest-value product slice, promoted only Home and Since You Were Here to user-usable status, and kept `V1_PRODUCT_GOAL_ALIGNMENT` FAIL.
+- Rationale: A fresh disposable PostgreSQL/browser run exercised initialization, sign-in, project creation, live Home/Overview/Needs Attention/Recently Active/Activity, checkpoint advancement, safe UNKNOWN Ask, grouped Search, derived-only Brain, and Time Lens controls. The remaining data-backed workflows, integrations, lifecycle paths, and environment-bounded evidence are not complete, so no blanket remediation-row reopen or release promotion is justified.
+- Affected areas: `apps/core/main.py`, `apps/web/index.html`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `evidence/phase15/product-goal-alignment-continuation-028.md`, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-027

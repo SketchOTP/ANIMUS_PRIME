@@ -1216,3 +1216,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent; Phase 15/V1 remains FAIL at 16/26.
 - Blockers: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-ALIGNMENT-045
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-044
+- Closed: 2026-08-12T18:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 028 mechanically inventoried all 81 frozen §26 items, added the enforced `V1_PRODUCT_GOAL_ALIGNMENT` gate, exposed a bounded project snapshot and normalized Since You Were Here flow, fixed the CSP-blocked shell with per-response nonces, and browser-qualified Home plus Since You Were Here. The final audit is 3 USER_USABLE_VERIFIED, 6 IMPLEMENTED_NOT_PRODUCT_QUALIFIED, 43 BACKEND_ONLY, 15 UI_SHELL_ONLY, 10 PARTIAL, 3 MISSING, and 1 BLOCKED_BY_ENVIRONMENT. The gate remains FAIL, R-056 remains OPEN, and deployment was not performed.
+- Changed areas: `apps/core/main.py`, `apps/web/index.html`, `scripts/phase15_qualify.py`, `scripts/validate_product_alignment.py`, `docs/v1-product-goal-alignment-audit.yaml`, the three governed requirement views, the Continuation 028 evidence, and append-only `.agent` records.
+- Validation:
+  - product-alignment YAML inventory/structural validator - PASSED (`81` items; gate FAIL is expected and truthful)
+  - YAML parse, AST parse, governance validation, and `git diff --check` - PASSED
+  - focused Phase 14/15 regression excluding the pre-existing Windows `python3` alias test - PASSED (`120 passed, 50 skipped, 2 deselected`)
+  - full phase regression - FAILED at the harness's `python3 -m py_compile` subprocess (`9009`, Windows alias unavailable); phase migrations 1–14 passed against the disposable database
+  - browser CSP/product-path qualification - PASSED after the nonce fix; initial CSP run retained as a diagnostic failure
+  - deployment - NOT PERFORMED
+- Remaining risks: the deeper project surfaces and lifecycle workflows remain incomplete; Search source coverage, populated Ask citations, interactive Brain, Fork/Clone, onboarding/export, Hindsight retain, external assistive technology, native node paths, and R-045 boundaries remain open.
+- Blockers: the repository test harness assumes a `python3` executable on Windows; Hindsight, external AT, and native-node qualification environments remain unavailable where previously recorded.
+- Follow-up directive: continue with R-051/R-053/R-050 product completion and then R-043/R-045/R-048, without changing the frozen baseline or deploying.

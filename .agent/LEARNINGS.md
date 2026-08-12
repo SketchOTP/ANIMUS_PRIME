@@ -305,3 +305,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: qualification execution, database isolation, and takeover verification.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-029
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-029
+- Fact or lesson: A static PRIME shell is not a qualified product. Browser qualification found the global CSP blocking the inline shell, and after a per-response nonce fix the real operator path verified Home, project snapshot state, normalized Since You Were Here recap/advance, safe UNKNOWN Ask output, grouped Search empty state, derived-only Brain unavailable state, and Time Lens controls. Product alignment must classify frozen §26 items from exercised user paths, not headings or backend symbols.
+- Evidence location: `apps/core/main.py`; `apps/web/index.html`; `docs/v1-product-goal-alignment-audit.yaml`; `evidence/phase15/product-goal-alignment-continuation-028.md`
+- Confidence: VERIFIED
+- Scope: Continuation 028 product-goal alignment, CSP serving boundary, Home and Since You Were Here qualification.
+- Supersedes learning: none

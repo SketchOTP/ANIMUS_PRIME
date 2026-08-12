@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import base64
+import secrets
 import time
 import uuid
 from collections import defaultdict
@@ -9,7 +10,7 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import Cookie, FastAPI, Header, HTTPException, Request, Response, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 from src.prime_core.config import Settings
@@ -246,9 +247,19 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="ANIMUS PRIME Core", version="1.0.0-phase1", lifespan=lifespan)
 
 
+@app.get("/", include_in_schema=False)
+def web_shell(request: Request) -> HTMLResponse:
+    nonce = getattr(request.state, "csp_nonce", "")
+    markup = (Path(__file__).parents[1] / "web" / "index.html").read_text(encoding="utf-8")
+    markup = markup.replace("<style>", f'<style nonce="{nonce}">', 1)
+    markup = markup.replace("<script>", f'<script nonce="{nonce}">', 1)
+    return HTMLResponse(markup, headers={"Cache-Control": "no-store"})
+
+
 @app.middleware("http")
 async def security_middleware(request: Request, call_next):
     rid = request_id(request)
+    request.state.csp_nonce = secrets.token_urlsafe(18)
     if request.method in {"POST", "PUT", "PATCH", "DELETE"} and not origin_allowed(request):
         return error("ORIGIN_REJECTED", "request origin is not allowed", rid, status_code=403)
     response = await call_next(request)
@@ -258,7 +269,12 @@ async def security_middleware(request: Request, call_next):
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
         "Referrer-Policy": "no-referrer",
-        "Content-Security-Policy": "default-src 'self'; frame-ancestors 'none'",
+        "Content-Security-Policy": (
+            "default-src 'self'; "
+            f"script-src 'self' 'nonce-{request.state.csp_nonce}'; "
+            f"style-src 'self' 'nonce-{request.state.csp_nonce}'; "
+            "object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+        ),
     })
     return response
 
@@ -546,6 +562,81 @@ def search_project(project_id: str, q: str, request: Request, prime_session: str
     return {"project_id": project_id, "results": results, "groups": grouped["groups"]}
 
 
+def _project_snapshot(project_id: str) -> dict[str, Any]:
+    """Return the bounded, read-only product snapshot used by the operator UI."""
+    with connect(settings) as db:
+        project = db.execute("SELECT * FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone()
+        if not project:
+            raise KeyError("project not found")
+        binding = db.execute(
+            "SELECT b.binding_status,b.canonical_revision,r.repository_id,r.canonical_path,r.identity_fingerprint,r.last_observed_at,n.node_id,n.name AS node_name,n.platform,n.status AS node_status "
+            "FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
+            "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE b.project_id=%s",
+            (project_id,),
+        ).fetchone()
+        goal = db.execute("SELECT goal_revision_id,revision_number,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
+        goal_items = db.execute("SELECT goal_item_id,title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY goal_item_id", (project_id, goal["goal_revision_id"] if goal else "")).fetchall()
+        progress = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
+        authority = db.execute("SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
+        notion = db.execute("SELECT project_id,page_id,page_url,connection_status,managed_content_hash,last_synced_at FROM prime_core.notion_projects WHERE project_id=%s", (project_id,)).fetchone()
+        evidence = db.execute("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE retracted_at IS NULL AND purged_at IS NULL) AS current, COUNT(*) FILTER (WHERE parser_status='FAILED' OR index_status='FAILED') AS failed FROM prime_core.evidence_records WHERE project_id=%s", (project_id,)).fetchone()
+        memory = db.execute("SELECT COUNT(*) AS total, MAX(created_at) AS last_created FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchone()
+        events = [dict(row) for row in db.execute("SELECT event_id,event_type,project_sequence,observed_at,payload,source_revision FROM prime_core.events WHERE project_id=%s ORDER BY observed_at DESC LIMIT 20", (project_id,)).fetchall()]
+        files = db.execute("SELECT COUNT(*) AS total, MAX(observed_at) AS last_observed, MAX(source_revision) AS source_revision FROM prime_core.repository_files WHERE project_id=%s", (project_id,)).fetchone()
+        checkpoint = db.execute("SELECT last_seen_event_sequence,updated_at FROM prime_core.activity_checkpoints WHERE project_id=%s", (project_id,)).fetchone()
+    attention: list[dict[str, Any]] = []
+    project_dict = dict(project)
+    if not binding:
+        attention.append({"code": "REPOSITORY_UNBOUND", "severity": "HIGH", "message": "Bind one verified repository before treating this project as operational."})
+    if not goal or goal["status"] != "APPROVED":
+        attention.append({"code": "GOAL_NOT_APPROVED", "severity": "HIGH", "message": "An approved PROJECT_GOAL.md revision is not visible in Core."})
+    if project_dict.get("freshness_state") in {"STALE", "UNKNOWN"}:
+        attention.append({"code": "PROJECT_STALE", "severity": "MEDIUM", "message": f"Project freshness is {project_dict.get('freshness_state')}."})
+    if evidence and int(evidence["failed"] or 0):
+        attention.append({"code": "EVIDENCE_DEGRADED", "severity": "MEDIUM", "message": "One or more Evidence parser/index operations failed."})
+    return {
+        "project": project_dict,
+        "binding": dict(binding) if binding else None,
+        "goal": dict(goal) if goal else None,
+        "goal_items": [dict(row) for row in goal_items],
+        "progress": dict(progress) if progress else None,
+        "authority": dict(authority) if authority else None,
+        "notion": dict(notion) if notion else {"connection_status": "DISCONNECTED"},
+        "evidence": dict(evidence) if evidence else {"total": 0, "current": 0, "failed": 0},
+        "memory": dict(memory) if memory else {"total": 0},
+        "files": dict(files) if files else {"total": 0},
+        "events": events,
+        "checkpoint": dict(checkpoint) if checkpoint else {"last_seen_event_sequence": 0},
+        "attention": attention,
+        "brain": {"availability": "DERIVED_ON_REQUEST"},
+    }
+
+
+@app.get("/v1/projects/{project_id}/snapshot")
+def project_snapshot(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return _project_snapshot(project_id)
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+
+
+@app.get("/v1/projects/{project_id}/since-you-were-here")
+def since_you_were_here(project_id: str, request: Request, advance: bool = False, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return intelligence.since_last_seen(project_id, advance=advance)
+
+
+@app.post("/v1/projects/{project_id}/since-you-were-here/advance")
+def advance_since_you_were_here(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return intelligence.since_last_seen(project_id, advance=True)
+
+
 @app.post("/v1/projects/{project_id}/ask")
 def ask_project(project_id: str, question: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -650,6 +741,14 @@ def time_lens_state(project_id: str, as_of: str, request: Request, prime_session
         return history.time_lens(project_id, as_of)
     except ValueError as exc:
         return error("TIME_LENS_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/brain")
+def project_brain(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return brain.build(project_id)
 
 
 @app.get("/v1/projects/{project_id}/time-lens/now")

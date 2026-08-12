@@ -375,3 +375,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-026
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028
+
+- Issued: 2026-08-12T17:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 028 Frozen V1 Product Goal Alignment Audit + Product Remediation
+- Objective: Audit every frozen §26 Definition-of-Done item against the actual operator product, implement confirmed local product gaps in value order, and add an enforced V1_PRODUCT_GOAL_ALIGNMENT gate without changing the frozen baseline or creating Phase 16.
+- Scope: Mechanical §26 inventory, actual UI/API/browser qualification, Since You Were Here, Overview, Goal, Progress, Alignment, Integrity, Search, Brain, Fork/Clone, onboarding, handoff/context, activity, attention, settings, governance reconciliation, and bounded product remediation.
+- Exclusions: changing PRIME-SPEC-V1.0.0; creating PRIME-SPEC-V1.0.1, SpecChangeRecord, or Phase 16; autonomous coding-agent behavior; fabricated native/Hindsight/AT evidence; R-056 closure before product alignment is complete; and deployment.
+- Acceptance: Every frozen §26 item is classified with evidence; confirmed local product gaps are fixed where actionable; V1_PRODUCT_GOAL_ALIGNMENT is mechanically derived and truthful; valid VERIFIED remediation rows are preserved; exact reopened rows and remaining gaps are recorded; GitHub and Notion are reconciled; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-027
+- Status at issuance: ISSUED

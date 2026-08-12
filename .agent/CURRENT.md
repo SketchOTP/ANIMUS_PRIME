@@ -3,27 +3,27 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T17:20:00-04:00`
+- Last updated: `2026-08-12T17:48:35-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-027`
-- External directive ID: `ANIMUS PRIME — Phase 15 Qualification Continuation 027`
-- Objective: `Close R-043, R-045, and R-048 where complete native evidence exists; investigate R-044 and evaluate R-053 without fabricated environment evidence.`
-- Current status: `VALIDATING`
-- Acceptance: `R-043 and R-048 are promoted only on complete normative evidence; R-045, R-044, and R-053 remain exact partial states; all governed views reconcile at 16/26; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028`
+- External directive ID: `ANIMUS PRIME — Continuation 028 Frozen V1 Product Goal Alignment Audit + Product Remediation`
+- Objective: `Audit every frozen §26 item against the actual operator product, fix confirmed local gaps, and enforce V1_PRODUCT_GOAL_ALIGNMENT without changing the frozen baseline.`
+- Current status: `CLOSED_PARTIAL`
+- Acceptance: `Every §26 item has an evidence-backed product status; local user-facing gaps are fixed where actionable; valid remediation rows are preserved; V1_PRODUCT_GOAL_ALIGNMENT remains truthful; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `backup/restore safety and recovery paths, secret-safe backup projection, historical Evidence availability, Continuation 027 qualification harness/evidence, the three requirement views, append-only governance records, GitHub publication, and bounded Notion reconciliation.`
-- Immediate next action: `Complete final diff/secret/parity checks, publish the Continuation 027 evidence and governance records, then record the exact final SHAs and remaining environment gaps.`
+- Expected or actual touched areas: `frozen §26 audit, product snapshot and Since You Were Here routes, data-backed operator surfaces, Project Brain visualization boundary, product browser qualification, release-gate enforcement, evidence, and append-only governance records.`
+- Immediate next action: `Continue the remaining product-alignment gaps in value order, beginning with onboarding/setup resume and external accessibility evidence boundaries; do not alter the frozen baseline or deploy.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 qualification implementation commit: `23cd1fd`; evidence/governance publication commit: `46ae788`; R-043/R-048 are VERIFIED, R-045/R-044/R-053 remain partial, and R-056 remains blocked/open; GitHub parity and Notion append/refetch: `PASSED`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 final tip: `adaf0c0`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; Continuation 028 is auditing the 81 frozen §26 items; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Fresh disposable PostgreSQL Continuation 027 harness; focused tests; full regression; Phases 1–14; AST/YAML/count/governance/diff/secret checks; GitHub parity; Notion append/refetch`
-- Result: `PASSED`
+- Command or check: `Continuation 028 product audit, disposable browser/API qualification, focused regression, governance/YAML/AST/diff checks`
+- Result: `PARTIAL — product gate FAIL is expected; focused tests and final browser path passed; full harness retains the Windows python3 alias failure`
 
 ## Risks
 

@@ -1,4 +1,7 @@
 baseline: PRIME-SPEC-V1.0.0
+product_alignment_audit: docs/v1-product-goal-alignment-audit.yaml
+product_alignment_status: FAIL
+product_alignment_item_count: 81
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 unassigned_allowed: false
 requirements:
