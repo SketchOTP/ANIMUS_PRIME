@@ -1164,7 +1164,8 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - focused R-043/R-045/R-048/R-050 regression - PASSED (`3 passed`)
   - web shell test - PASSED (`1 passed`)
   - native compile - PASSED
-  - governance/YAML/diff/secret/publication checks - PASSED
+  - governance/YAML/diff/secret/GitHub publication checks - PASSED
+  - Notion execution-record append - BLOCKED (connected MCP unavailable; published page read-only in bounded browser fallback)
   - deployment - NOT PERFORMED
 - Remaining risks: R-050 needs a populated State-B browser fixture and source removal/recovery; R-053 needs external assistive technology; R-043/R-045/R-048 exact normative gaps remain; R-044 retain remains UNAVAILABLE; R-056 remains OPEN; V1 remains FAIL at 13/26.
 - Blockers: external assistive technology and complete historical/recovery fixtures are not available in this run.

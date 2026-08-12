@@ -55,3 +55,7 @@ Decision: `PARTIAL`.
 ## State
 
 Current governed qualification: `13/26 VERIFIED`, `12 partial`, `1 blocked_by_environment` (`R-056`), `0 failed`. V1/Phase 15 remains `FAIL`; R-056 remains `OPEN`; deployment `NOT PERFORMED`.
+
+## Publication boundary
+
+GitHub `main` was pushed and independently verified at `e44a904d0cec78db1e3891e0e26a4ff615765ff0`, with exact local/origin parity. The connected Notion MCP tool was not callable in this run. The bounded gstack browser fallback reached the published Checkpoint 024 page, but redirected to the public read-only Notion site and exposed no authenticated edit surface; no Notion write is claimed.

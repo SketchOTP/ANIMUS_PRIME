@@ -18,7 +18,7 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 024 qualification implementation/evidence commit: `95db422`; Continuation 025 Time Lens implementation commit: `44608f1`; current publication is reconciled at closure; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 024 qualification implementation/evidence commit: `95db422`; Continuation 025 Time Lens implementation commit: `44608f1`; GitHub publication is reconciled at `e44a904`; Notion append is blocked because only the public read-only page was reachable; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
