@@ -52,6 +52,23 @@ result: FAIL
 - recovery_tests_run: `PASS` for R-049 retained bundle loss/recovery; destructive/interrupted/off-machine recovery remains unverified.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
 
+## Continuation 020 — integrated product AI lifecycle
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-020`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_implementation_commit: `4531fb05523f4036382be1d1eda7d9a4c19d989d`
+- qualification_evidence: `evidence/phase15/qualification-continuation-020.md`
+- database_environment: `PASS` — fresh disposable PostgreSQL/pgvector container and all migrations from zero.
+- full_regression: `PASS` — `86 passed`.
+- phase_gates: `PASS` — Phases 1 through 14.
+- implementation_changes: `IntelligenceService` now owns product-level Documentation projection and memory admission/correction side effects; memory correction persists supersession and history; Notion API/provider translation now has exact marker idempotency and bounded page lifecycle support; Continuation 020 adds product-path qualification and focused provider/lifecycle tests.
+- R-055: `VERIFIED` — real Paragon through IntelligenceService; durable ai_runs; product Project A/B source rejection before provider dispatch; Goal, Progress, Ask, Alignment, Documentation, memory; managed projection/conflict; invalid citation rejection; correction supersession/history; provider degradation/recovery; history rollover/restart; secret-safe metadata.
+- R-037–R-041: `PARTIAL` — offline PRIME provider/lifecycle path passed, but live Notion create-page requests return archived-parent validation because the approved disposable target is in trash; no canonical or user-authored page was mutated.
+- preserved_verified: `R-046`, `R-047`, `R-049`, `R-054`.
+- qualification_state: `5/26 VERIFIED`; `20 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
+- R-056: `OPEN`.
+- result: `FAIL` — Phase 15/V1 remains below 26/26; deployment `NOT PERFORMED`.
+
 ## Continuation 018 — approved local AI and PRIME Notion capability
 
 - directive: `D-PRIME-PHASE15-REMEDIATION-018`

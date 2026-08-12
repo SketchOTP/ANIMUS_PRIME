@@ -167,6 +167,13 @@
 - `evidence/phase15/qualification-continuation-019.md` — Continuation 019 evidence and exact remaining gaps.
 - `src/prime_core/ai_service.py` — explicit per-function provider output contract and admitted-source citation instruction.
 - `.agent/` — D-PRIME-PHASE15-REMEDIATION-019 directive, current state, learning, outcome, decision, and phase closure records.
+- `src/prime_core/intelligence_service.py` — product-level AI orchestration for durable runs, Documentation projection, memory admission, and correction supersession.
+- `src/prime_core/memory_service.py` — correction-aware durable memory storage with historical supersession provenance.
+- `src/prime_core/notion_api.py` — bounded live Notion API operations, exact page search boundary, and disposable archive operation.
+- `src/prime_core/notion_service.py` — production Notion provider translation, exact idempotency marker recovery, managed-region projection, source lifecycle, reconciliation, and history rollover.
+- `scripts/phase15_qualify_continuation_020.py` — Continuation 020 product-path qualification; real Paragon plus offline PRIME lifecycle qualification, live-target diagnostics, bounded output, and no credential persistence.
+- `tests/phase15/test_product_lifecycle_continuation020.py` — production provider/lifecycle contract tests for idempotency, managed conflicts, redaction, restart, and history.
+- `evidence/phase15/qualification-continuation-020.md` — R-055 verification and concrete R-037–R-041 archived-parent limitation.
 
 ## Areas that must not be edited manually
 

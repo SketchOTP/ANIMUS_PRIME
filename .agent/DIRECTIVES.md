@@ -263,3 +263,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-018
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-020
+
+- Issued: 2026-08-12T01:12:21Z
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 020 / Checkpoint 019
+- Objective: Exercise Paragon and Notion through PRIME-owned product/service lifecycles, close R-055 where complete evidence supports promotion, qualify R-037–R-041 through the production Notion adapter, and continue exact remaining recovery/history/browser gaps without weakening PRIME-SPEC-V1.0.0.
+- Scope: integrated product AI execution and durable ai_runs provenance; product-level Goal, Progress, Ask, Alignment, Documentation, memory admission and correction paths; live invalid-citation rejection; Project A/B source admission; production NotionApiClient provider, Project Record binding, managed-region projection, source lifecycle, reconciliation, and history rollover against disposable content; exact positive/negative/degraded/recovery/security evidence; tracked secret scan; GitHub and Notion parity.
+- Exclusions: credential persistence or disclosure, canonical or user-authored Notion mutation, hidden provider fallback, normative changes, fabricated evidence, unsafe Tailscale changes, R-056 closure before its own gate, deployment, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Credentials remain process-ephemeral; production paths—not direct capability probes—are exercised; each promoted row has complete exact evidence and remaining_gap NONE; four verified rows remain preserved; R-056 remains OPEN; deployment remains NOT PERFORMED; all ledgers, `.agent` records, evidence, Notion execution state, GitHub main, and final SHAs reconcile.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-019
+- Status at issuance: ISSUED

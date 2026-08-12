@@ -275,3 +275,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-037–R-041 Notion write capability, managed-region ownership, source refresh, and lifecycle evidence boundaries.
 - Supersedes learning: L-PRIME-PHASE15-023
+
+## L-PRIME-PHASE15-026
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-026
+- Fact or lesson: The integrated AI acceptance boundary must be exercised through IntelligenceService, not only AIExecutionService. The product path must preserve durable ai_runs identity, admitted source sets, citations, managed Documentation projection, and memory correction history. A live invalid citation must reject the complete result before projection; silently dropping the citation would violate the frozen contract.
+- Evidence location: `src/prime_core/intelligence_service.py`; `src/prime_core/memory_service.py`; `scripts/phase15_qualify_continuation_020.py`; `evidence/phase15/qualification-continuation-020.md`
+- Confidence: VERIFIED
+- Scope: R-055 integrated product AI lifecycle, projection, citation validation, correction/supersession, and provenance.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-027
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-027
+- Fact or lesson: Notion search is relevance-ranked, not an exact idempotency lookup. PRIME must fetch candidate pages and require an exact internal marker before recovering an ambiguous create; otherwise Project A/B can bind to the same remote page. Live qualification also requires a non-archived disposable parent: read authorization alone cannot create a page under an archived target.
+- Evidence location: `src/prime_core/notion_service.py`; `src/prime_core/notion_api.py`; `evidence/phase15/qualification-continuation-020.md`
+- Confidence: VERIFIED
+- Scope: R-037–R-041 production Notion adapter idempotency, isolation, and live write qualification.
+- Supersedes learning: L-PRIME-PHASE15-025

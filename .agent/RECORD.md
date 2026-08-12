@@ -157,3 +157,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The new environments support meaningful qualification, but direct provider-boundary success and connector-level disposable writes must not be overstated as complete integrated product lifecycle evidence. The frozen baseline, authority boundary, secret policy, R-046/R-047/R-049/R-054 VERIFIED set, R-056 OPEN state, and no-deployment rule remain unchanged.
 - Affected areas: `src/prime_core/ai_service.py`, `scripts/phase15_qualify_continuation_019.py`, Notion disposable sandbox, R-037–R-041/R-055 ledgers and evidence, Phase-15 governance records, and GitHub publication.
 - Supersedes record: DEC-PRIME-PHASE15-018
+
+## DEC-PRIME-PHASE15-020
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-020
+- Status: CLOSED
+- Decision or event: Promote R-055 to VERIFIED after Continuation 020 completed the real Paragon AI lifecycle through IntelligenceService, durable ai_runs/provenance, product Project A/B source rejection, managed Documentation projection, invalid-citation rejection, correction/supersession history, provider degradation/recovery, and bounded history rollover. Keep R-037–R-041 partial because their approved live disposable parent is in trash and the Notion API rejected create-page requests against archived targets.
+- Rationale: R-055's exact product AI lifecycle is independently complete; live Notion adapter qualification is a separate requirement family. The qualification target failure is concrete and must not be worked around by mutating canonical pages. R-056 remains OPEN and V1 remains FAIL until all 26 rows are verified.
+- Affected areas: `src/prime_core/intelligence_service.py`, `src/prime_core/memory_service.py`, `src/prime_core/notion_api.py`, `src/prime_core/notion_service.py`, `scripts/phase15_qualify_continuation_020.py`, R-055 ledgers/matrix/traceability, and `evidence/phase15/qualification-continuation-020.md`.
+- Supersedes record: DEC-PRIME-PHASE15-019

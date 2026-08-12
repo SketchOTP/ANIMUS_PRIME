@@ -1035,3 +1035,31 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031–R-045, R-048, R-050–R-053, R-055, and R-056 remain partial or environment constrained; local PRIME Notion adapter lifecycle, full integrated AI projection/correction, native Windows/root lifecycle, private second-device Tailscale, full Hindsight/provider-dependent paths, complete browser accessibility/history, and aggregate R-056 remain open.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-019.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-020 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-037
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-036
+- Closed: 2026-08-12T02:20:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 020 completed the real Paragon AI lifecycle through PRIME's IntelligenceService and promoted R-055 to VERIFIED. Product Goal, Progress, Ask, Alignment, Documentation, memory admission, Project A/B source rejection, durable ai_runs, managed projection/conflict, invalid-citation rejection, correction/supersession history, provider degradation/recovery, and history rollover/restart passed. R-037–R-041 remain partial because the approved live disposable Notion parent is in trash and the production API rejects writes against archived targets; no canonical or user-authored page was mutated.
+- Changed areas: `src/prime_core/intelligence_service.py`, `src/prime_core/memory_service.py`, `src/prime_core/notion_api.py`, `src/prime_core/notion_service.py`, `scripts/phase15_qualify_continuation_020.py`, focused tests, `docs/`, `.agent/`, and `evidence/phase15/qualification-continuation-020.md`.
+- Validation:
+  - codebase-memory MCP discovery - BLOCKED (`Transport closed`); targeted fallback used and recorded
+  - focused provider/lifecycle tests - PASSED (`25 passed`)
+  - real Paragon product lifecycle - PASSED; one Alignment rate-limit degradation recovered with a new durable run
+  - product Project A/B isolation - PASSED; cross-project source set rejected before provider dispatch
+  - invalid citation - PASSED; durable run rejected and no projection accepted
+  - correction/supersession/history - PASSED; earlier memory superseded, correction recorded, historical snapshots retained
+  - offline PRIME Notion lifecycle - PASSED; managed projection, user-content preservation, conflict, outage/recovery, source detach/review, and history restart passed
+  - live PRIME Notion adapter - PARTIAL; reads worked, create returned archived-parent validation because the approved target is in trash
+  - canonical Notion execution-record append - BLOCKED; the adopted source page is archived and no canonical or user-authored page workaround was attempted
+  - governance validation - PASSED
+  - fresh authoritative regression - PASSED (`86 passed`)
+  - Phases 1–14 - PASSED
+  - tracked-file secret scan - PASSED after final publication review; no supplied credential values recorded
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`5/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-037–R-041, R-042–R-053 except R-046/R-047/R-049, and R-056 remain partial/open as recorded in the qualification ledger; V1 is not qualified.
+- Blockers: a non-archived operator-approved disposable Notion parent with write scope is required to close R-037–R-041; codebase-memory transport remains unavailable.
+- Follow-up directive: none
