@@ -319,3 +319,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-022
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-024
+
+- Issued: 2026-08-12T21:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Phase 15 Qualification Continuation 024
+- Objective: Converge the remaining locally executable Phase-15 qualification gaps without repeating the already verified Notion or Paragon matrices, preserving the ten VERIFIED rows and keeping R-056 OPEN.
+- Scope: Native Atlas scheduled off-machine backup failure/recovery/retention; fresh-install and populated-target restore; sustained capacity/backpressure; historical A/B/C/D reconstruction; real Chromium historical browser, fresh browser/auth/restart, operator journey, and accessibility qualification; opportunistic closure of the existing approved Hindsight integration; exact requirement promotion only from complete evidence; append-only evidence, ledgers, `.agent`, GitHub, and Notion reconciliation.
+- Exclusions: additional Notion or Paragon qualification except ordinary regression; architecture changes; credential persistence or disclosure; fabricated native, browser, Hindsight, off-machine, or Tailscale evidence; weakening the frozen baseline; R-056 closure before its own full gate; deployment; and V1 PASS before all 26 rows are VERIFIED.
+- Acceptance: Attempt all locally executable exact criteria for R-042, R-043, R-045, R-048, and R-050–R-053, advance R-044 only if its existing approved environment genuinely completes, promote each row independently only when positive, negative, degraded, recovery, and security evidence is complete, preserve all ten VERIFIED rows, report exact remaining native/Tailscale gaps, keep R-056 OPEN, and reconcile separate qualification, governance/publication, and final-tip SHAs.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-023
+- Status at issuance: ISSUED

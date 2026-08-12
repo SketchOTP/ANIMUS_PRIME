@@ -13,6 +13,7 @@ protocol_versions_changed: full-v1-qualification
 tests_run: python3 -m pytest tests -q; scripts/phase15_qualify.py
 tests_passed: local suite 20 passed; 15 PostgreSQL integration tests skipped; V1 DoD gate failed
 security_tests_run: PENDING_GATE
+
 recovery_tests_run: PENDING_GATE
 known_limitations: Full V1 Definition of Done must be reconciled against all normative deliverables; a passing scaffold/regression suite is not sufficient. See docs/phase15-remediation-matrix.yaml.
 remediation_progress: R1-R6 implementation foundations added, including Core-side Node client; R1-R6 live/cross-platform/recovery/provider/UX evidence still open
@@ -73,6 +74,29 @@ result: FAIL
 - security_tests_run: `PASS` for R-049 and exercised Evidence/citation cases; remaining live/native security environments remain incomplete.
 - recovery_tests_run: `PASS` for R-049 retained bundle loss/recovery; destructive/interrupted/off-machine recovery remains unverified.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
+
+## Continuation 024 — scheduled recovery and Chromium operator qualification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-024`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_implementation_commit: `95db422`
+- database_environment: `PASS` — freshly recreated disposable PostgreSQL/pgvector environment; all migrations applied from zero.
+- native_compile: `PASS`
+- full_regression: `PASS` — `86 passed`.
+- phase_gates: `PASS` — Phases 1 through 14.
+- newly_verified: `R-042`, `R-052`.
+- preserved_verified: `R-037`–`R-041`, `R-046`, `R-047`, `R-049`, `R-054`, and `R-055`.
+- R-042: `VERIFIED` — durable schedule persisted across Core restart; scheduled backup succeeded; destination failure recorded `FAILED` with retry; known-good remained preserved; destination recovery and retry succeeded; retention preserved the latest known-good; wrong-key/tamper/truncation/credential-exclusion coverage passed.
+- R-052: `VERIFIED` — real Chromium authenticated two-project journey, required project surfaces, switching/isolation, refresh/restart recovery, invalid Search/Ask project rejection, healthy/degraded states, responsive rendering, reduced-motion rule, and protected lifecycle dialog were exercised.
+- R-044: `PARTIAL` — approved Hindsight health, bank isolation, delete/recreate, and unavailable behavior passed; retain remained `UNAVAILABLE`.
+- remaining_partial: `R-043`, `R-044`, `R-045`, `R-048`, `R-050`, `R-051`, `R-053`; exact gaps are recorded in `evidence/phase15/qualification-continuation-024.md`.
+- qualification_state: `12/26 VERIFIED`; `15 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
+- R-056: `OPEN`.
+- security_tests_run: `PASS` for available native/browser/backup negative and secret-boundary checks; full keyboard/assistive-technology/untrusted-text and remaining environment-specific security gates remain unqualified.
+- recovery_tests_run: `PASS` for R-042 scheduled failure/retry/recovery/retention and R-052 restart/session recovery; fresh-install/interrupted restore, sustained capacity, historical correction, and setup-resume recovery remain open.
+- qualification_evidence: `evidence/phase15/qualification-continuation-024.md`
+- governance_publication: `recorded by the final governance/publication commit and exact GitHub parity check at closure`
+- result: `FAIL` — aggregate V1 gate remains truthful at 12/26; deployment `NOT PERFORMED`.
 
 ## Continuation 020 — integrated product AI lifecycle
 

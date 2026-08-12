@@ -196,3 +196,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Fresh native Docker/PostgreSQL qualification and the 86-test regression passed. The previous sandbox was unavailable to the supplied integration, so a disposable child under accessible ANIMUS PRIME was provisioned under the explicit Continuation 023 exception. Live Project Record binding, managed projection, source lifecycle, degradation/recovery, and history rollover evidence passed without canonical/user-authored mutation or credential persistence.
 - Affected areas: `evidence/phase15/qualification-continuation-023.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `.agent/phase-records/PHASE-15.md`, `.agent/CURRENT.md`, and publication records.
 - Supersedes record: DEC-PRIME-PHASE15-022
+
+## DEC-PRIME-PHASE15-024
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-024
+- Status: CLOSED
+- Decision or event: Promote R-042 and R-052 to VERIFIED from Continuation 024 evidence. Preserve the prior ten VERIFIED rows, keep R-043, R-044, R-045, R-048, R-050, R-051, and R-053 partial, keep R-056 OPEN, and keep Phase 15/V1 FAIL at 12/26.
+- Rationale: The native Atlas backup harness exercised durable schedule persistence, failure/retry, known-good preservation, recovery, retention, and negative security cases against the independent off-machine target. The real Chromium run exercised the complete supported operator journey across two projects, project isolation/switching, restart recovery, invalid project rejection, required surfaces, responsive rendering, degraded truthfulness, and protected lifecycle entry. Hindsight retain returned UNAVAILABLE and was not overstated. The two product fixes were minimal and directly evidenced by the fresh regression and browser run.
+- Affected areas: `apps/core/main.py`, `src/prime_core/reliability_service.py`, `scripts/phase15_qualify_continuation_024.py`, `evidence/phase15/qualification-continuation-024.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-023

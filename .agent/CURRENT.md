@@ -3,26 +3,26 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T00:45:00Z`
+- Last updated: `2026-08-12T11:45:26-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-023`
-- External directive ID: `ANIMUS PRIME Continuation 023 credential authorization`
-- Objective: `Continue exact Phase-15 remediation gaps after completing live PRIME Notion adapter qualification for R-037–R-041.`
-- Current status: `IN_PROGRESS`
-- Acceptance: `Qualification implementation/evidence lineage remains 4531fb0; R-037–R-041 are VERIFIED from Continuation 023 live adapter evidence; R-046, R-047, R-049, R-054, and R-055 remain VERIFIED; R-042 records only its scheduled failure/recovery/retention gap; Phase 15/V1 remains FAIL at 10/26; R-056 remains OPEN; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-024`
+- External directive ID: `ANIMUS PRIME — Phase 15 Qualification Continuation 024`
+- Objective: `Converge locally executable Phase-15 qualification gaps without repeating the already verified Notion or Paragon matrices.`
+- Current status: `COMPLETE`
+- Acceptance: `Directive execution MET: R-042 and R-052 were independently promoted from complete native and real-Chromium evidence; the ten prior VERIFIED rows remain VERIFIED; R-043, R-044, R-045, R-048, R-050, R-051, and R-053 remain partial with exact gaps recorded; R-056 remains OPEN; Phase 15/V1 remains FAIL at 12/26; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, live PRIME Notion lifecycle, requirement ledger, phase-15 evidence, governed GitHub/Notion checkpoint, and remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps`
-- Immediate next action: `Continue with R-042 scheduled failure/recovery/retention, R-043, R-045, R-048, and R-050–R-053 exact remaining gaps; preserve the ten VERIFIED rows and keep R-056 OPEN.`
+- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, scheduled backup failure/recovery/retention harness, real Chromium operator lifecycle qualification, route validation guards, requirement ledgers, Continuation 024 evidence, append-only governance records, GitHub publication, and bounded Hindsight probing.`
+- Immediate next action: `Accepted task is COMPLETE; awaiting reset to IDLE and the next directive. R-056 remains OPEN.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; approved local provider profile: `paragon/paragon`, `LOCAL_ONLY`; supplied credentials remain ephemeral and unrecorded; published qualification/publication SHA: `a9a688f4a76f648698e2073e0d4076ff8fb7eee5`; local `main` and `origin/main` match; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; qualification implementation/evidence commit: `95db422`; governance/publication commit and final branch tip are recorded by the Continuation 024 publication parity check; local `main` and `origin/main` must match; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_020.py with live Notion and Paragon; governance/YAML/secret/diff checks; GitHub fetch/parity`
+- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_024.py; fresh 86-test regression; real Chromium qualification; governance/YAML/secret/diff checks; GitHub fetch/parity`
 - Result: `PASSED`
 
 ## Risks

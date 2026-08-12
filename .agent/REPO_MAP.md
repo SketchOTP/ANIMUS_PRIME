@@ -176,6 +176,8 @@
 - `evidence/phase15/qualification-continuation-020.md` — R-055 verification and concrete R-037–R-041 archived-parent limitation.
 - `evidence/phase15/qualification-continuation-022.md` — Continuation 022 environment preflight, R-042 gap correction, and blocked live-adapter qualification record.
 - `evidence/phase15/qualification-continuation-023.md` — Native Atlas fresh regression and live PRIME Notion/Paragon adapter evidence promoting R-037–R-041 to VERIFIED.
+- `scripts/phase15_qualify_continuation_024.py` — Continuation 024 disposable native scheduled-backup failure/retry/recovery/retention and bounded Hindsight qualification harness.
+- `evidence/phase15/qualification-continuation-024.md` — Continuation 024 native backup and real Chromium operator evidence, exact promotions, remaining gaps, and truthful 12/26 result.
 
 ## Areas that must not be edited manually
 

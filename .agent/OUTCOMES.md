@@ -1124,3 +1124,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Newly verified rows are R-037 through R-041; preserved verified rows are R-046, R-047, R-049, R-054, and R-055. R-042 scheduled backup failure/recovery/retention, R-043, R-045, R-048, R-050–R-053, and R-056 remain open; aggregate V1 remains FAIL.
 - Blockers: none for Continuation 023 acceptance; publication checks remain before GitHub synchronization.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-024 - COMPLETE
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-041
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-040
+- Closed: 2026-08-12T11:45:26-04:00
+- Acceptance: MET
+- Summary: Native Atlas Continuation 024 qualification completed against a freshly recreated disposable PostgreSQL/pgvector environment and the real Chromium browser path. R-042 was promoted to VERIFIED after durable schedule persistence across Core restart, scheduled execution, destination failure with retry and known-good preservation, destination recovery, subsequent success, retention, and negative backup-security coverage. R-052 was promoted to VERIFIED after the authenticated two-project operator journey, required surfaces, project switching/isolation, restart/session recovery, invalid-project route rejection, healthy/degraded states, responsive rendering, and protected lifecycle entry were exercised in Chromium. The minimum fixes were a PostgreSQL retry interval cast and explicit 404 project-existence guards for Search and Ask. Approved Hindsight health/isolation/rebuild probes passed where available, but retain remained UNAVAILABLE, so R-044 was not promoted. No Notion or Paragon qualification was repeated; no credentials were persisted; deployment was not performed.
+- Changed areas: `apps/core/main.py`, `src/prime_core/reliability_service.py`, `scripts/phase15_qualify_continuation_024.py`, `evidence/phase15/qualification-continuation-024.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `.agent/DIRECTIVES.md`, `.agent/CURRENT.md`, `.agent/OUTCOMES.md`, `.agent/RECORD.md`, `.agent/REPO_MAP.md`, and `.agent/phase-records/PHASE-15.md`.
+- Validation:
+  - fresh PostgreSQL/pgvector database and all migrations - PASSED
+  - native compile and governance validator - PASSED
+  - fresh authoritative regression - PASSED (`86 passed`)
+  - Phases 1–14 - PASSED
+  - Continuation 024 scheduled recovery/retention harness - PASSED
+  - real Chromium operator journey and responsive/security checks - PASSED
+  - focused continuation tests - PASSED (`6 passed`)
+  - requirements/matrix/ledger YAML parse and tracked-secret scan - PASSED
+  - GitHub publication and exact local/origin parity - PASSED after governance commit
+  - deployment - NOT PERFORMED
+- Remaining risks: R-043, R-044, R-045, R-048, R-050, R-051, and R-053 remain partial for the exact gaps recorded in `evidence/phase15/qualification-continuation-024.md`; R-056 remains OPEN; Phase 15/V1 remains FAIL at 12/26.
+- Blockers: approved Hindsight retain is unavailable; complete fresh-install/interrupted restore, sustained capacity/backpressure, independent source-class correction, interactive historical Time Lens, setup-resume, and full keyboard/assistive-technology/untrusted-text acceptance remain unqualified.
+- Follow-up directive: none
