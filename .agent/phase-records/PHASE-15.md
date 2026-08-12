@@ -168,3 +168,19 @@ result: FAIL
 - security_tests_run: `PASS` for R-046/R-047 exercised boundaries; remaining live/native/provider security environments incomplete.
 - recovery_tests_run: `PASS` for Evidence parser/reindex, managed restore identity, off-mount encrypted backup, and durable interrupted restore state; complete R-042/R-043 recovery matrix remains open.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
+
+## Continuation 025 — ledger reconciliation, setup resume, and Time Lens control
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-025`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualification_implementation_commit: `44608f1`
+- prior evidence basis: `evidence/phase15/qualification-continuation-024.md`; R-042 and R-052 were not rerun.
+- governance correction: `qualification_status` map, ledger records, matrix, and traceability now agree on `R-042` and `R-052` as VERIFIED; mechanical count is `12/26 VERIFIED`, `13 partial`, `1 blocked_by_environment` (`R-056`), `0 failed` before new promotion.
+- R-051: `VERIFIED` — fresh browser bootstrap interrupted by Core stop returned `502`; same form resumed after Core recovery and returned `200`; login, operator state, project creation, and global navigation passed; prior negative/CSRF/restart/reconnect evidence preserved.
+- R-053: `PARTIAL` — keyboard focus traversal, Enter form submission, untrusted project-name rendering, responsive/no-overflow, reduced-motion, textual-state, Brain alternative, and dialog checks passed; external assistive-technology run remains unavailable.
+- R-050: `PARTIAL` — interactive Time Lens boundary selector, custom revision/timestamp field, historical-state action, safe status rendering, and Return to Now were added and exercised; populated State-B browser fixture, source removal/recovery, historical citations/Brain, and complete browser return-to-current remain open.
+- focused_regression: `PASS` — R-043, R-045, and R-048/R-050 tests, `3 passed`; no promotion claimed for those rows.
+- qualification_state: `13/26 VERIFIED`; `12 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
+- R-056: `OPEN`.
+- governance_publication: `pending final Continuation 025 evidence/governance commit and parity check`
+- result: `FAIL` — aggregate V1 gate remains truthful at 13/26; deployment `NOT PERFORMED`.

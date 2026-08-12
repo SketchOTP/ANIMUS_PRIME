@@ -3,22 +3,22 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T11:45:26-04:00`
+- Last updated: `2026-08-12T14:50:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-024`
-- External directive ID: `ANIMUS PRIME — Phase 15 Qualification Continuation 024`
-- Objective: `Converge locally executable Phase-15 qualification gaps without repeating the already verified Notion or Paragon matrices.`
-- Current status: `COMPLETE`
-- Acceptance: `Directive execution MET: R-042 and R-052 were independently promoted from complete native and real-Chromium evidence; the ten prior VERIFIED rows remain VERIFIED; R-043, R-044, R-045, R-048, R-050, R-051, and R-053 remain partial with exact gaps recorded; R-056 remains OPEN; Phase 15/V1 remains FAIL at 12/26; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-025`
+- External directive ID: `ANIMUS PRIME — Continuation 025 ledger reconciliation and remaining local qualification`
+- Objective: `Reconcile the authoritative Continuation 024 count, then continue R-051, R-053, R-050, R-043, R-045, and R-048 locally without rerunning R-042 or R-052.`
+- Current status: `IN_PROGRESS`
+- Acceptance: `R-042 and R-052 qualification status maps are verified; all governed views agree at 12/26 before continuation work and now at 13/26 VERIFIED, 12 partial, R-056 blocked/open, 0 failed; remaining locally actionable requirements are attempted with truthful evidence.`
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, scheduled backup failure/recovery/retention harness, real Chromium operator lifecycle qualification, route validation guards, requirement ledgers, Continuation 024 evidence, append-only governance records, GitHub publication, and bounded Hindsight probing.`
-- Immediate next action: `Accepted task is COMPLETE; awaiting reset to IDLE and the next directive. R-056 remains OPEN.`
+- Immediate next action: `Continue R-043, R-045, and R-048 exact remaining recovery/history gaps; then qualify R-050 with a populated State-B browser fixture and revisit R-053 when external assistive technology is available.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; qualification implementation/evidence commit: `95db422`; governance/publication commit and final branch tip are recorded by the Continuation 024 publication parity check; local `main` and `origin/main` must match; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 024 qualification implementation/evidence commit: `95db422`; Continuation 025 Time Lens implementation commit: `44608f1`; current publication is reconciled at closure; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 

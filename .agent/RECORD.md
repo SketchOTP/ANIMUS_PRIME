@@ -206,3 +206,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The native Atlas backup harness exercised durable schedule persistence, failure/retry, known-good preservation, recovery, retention, and negative security cases against the independent off-machine target. The real Chromium run exercised the complete supported operator journey across two projects, project isolation/switching, restart recovery, invalid project rejection, required surfaces, responsive rendering, degraded truthfulness, and protected lifecycle entry. Hindsight retain returned UNAVAILABLE and was not overstated. The two product fixes were minimal and directly evidenced by the fresh regression and browser run.
 - Affected areas: `apps/core/main.py`, `src/prime_core/reliability_service.py`, `scripts/phase15_qualify_continuation_024.py`, `evidence/phase15/qualification-continuation-024.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-023
+
+## DEC-PRIME-PHASE15-025
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-025
+- Status: ACTIVE
+- Decision or event: Treat the Continuation 025 reconciliation as the authoritative current qualification state: R-042 and R-052 remain VERIFIED from Continuation 024, R-051 is newly VERIFIED from fresh browser setup-resume evidence, R-050 remains partial after the minimum interactive Time Lens implementation, and R-053 remains partial pending external assistive technology.
+- Rationale: The stale top-level ledger map, not the row records, caused the 12/26 versus 10/26 inconsistency. Mechanical parsing of all three governed views now yields 12/26 before Continuation 025 promotion. The fresh R-051 browser interruption/resume path returned `502` during Core outage and `200` after recovery. Time Lens controls now call the existing bounded backend routes and render returned status with text-only DOM updates.
+- Affected areas: `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/requirements-traceability.yaml`, `apps/web/index.html`, `tests/phase14/test_web_shell.py`, and Continuation 025 evidence.
+- Supersedes record: DEC-PRIME-PHASE15-024

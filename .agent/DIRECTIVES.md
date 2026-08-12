@@ -333,3 +333,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-023
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-025
+
+- Issued: 2026-08-12T12:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 025 ledger reconciliation and remaining local qualification
+- Objective: Reconcile the authoritative Continuation 024 count, then continue R-051, R-053, R-050, R-043, R-045, and R-048 locally without rerunning R-042 or R-052.
+- Scope: Reconcile the requirements traceability, remediation matrix, and qualification ledger; mechanically verify counts; fresh supported-browser setup interruption/resume; available keyboard, responsive, and untrusted-text checks; minimal Time Lens interaction needed for browser qualification; focused regression for R-043, R-045, R-048, and R-050; append-only evidence, `.agent`, GitHub, and Notion reconciliation.
+- Exclusions: rerunning R-042 or R-052; repeating Notion or Paragon qualification; papering over approved Hindsight `retain` unavailability; fabricated external assistive-technology, historical fixture, or recovery evidence; R-056 closure; deployment; and V1 PASS before all 26 rows are VERIFIED.
+- Acceptance: R-042 and R-052 are `verified` in all governed views; pre-continuation mechanical count is 12 VERIFIED, 13 partial, 1 R-056 blocked/open, and 0 failed; locally actionable requirements are attempted and promoted only from complete evidence; exact remaining gaps are recorded; GitHub and Notion are reconciled; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-024
+- Status at issuance: ISSUED

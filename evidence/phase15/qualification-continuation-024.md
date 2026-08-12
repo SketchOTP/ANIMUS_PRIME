@@ -107,3 +107,7 @@ Preserved `VERIFIED`: `R-037`, `R-038`, `R-039`, `R-040`, `R-041`, `R-046`, `R-0
 Still open or partial by exact evidence: `R-043`, `R-044`, `R-045`, `R-048`, `R-050`, `R-051`, `R-053`; native `R-031–R-034`; private Tailscale `R-035–R-036`; and integrated `R-056 = OPEN`.
 
 No credentials or raw provider/Hindsight payloads are included in this evidence. Deployment: `NOT PERFORMED`.
+
+## Post-publication governance correction
+
+The initial summary line above was published before the qualification ledger's top-level status map was reconciled. The evidence decisions in this record already promote `R-042` and `R-052` to `VERIFIED`; the authoritative governed count after the Continuation 025 correction is `12/26 VERIFIED`, `13 partial`, `1 blocked_by_environment` (`R-056`), and `0 failed`. No R-042 or R-052 qualification was rerun.

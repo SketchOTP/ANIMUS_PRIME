@@ -1147,3 +1147,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-043, R-044, R-045, R-048, R-050, R-051, and R-053 remain partial for the exact gaps recorded in `evidence/phase15/qualification-continuation-024.md`; R-056 remains OPEN; Phase 15/V1 remains FAIL at 12/26.
 - Blockers: approved Hindsight retain is unavailable; complete fresh-install/interrupted restore, sustained capacity/backpressure, independent source-class correction, interactive historical Time Lens, setup-resume, and full keyboard/assistive-technology/untrusted-text acceptance remain unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-025 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-042
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-041
+- Closed: 2026-08-12T14:50:00-04:00
+- Acceptance: PARTIAL
+- Summary: The Continuation 024 governance inconsistency was corrected without rerunning R-042 or R-052. The qualification ledger's stale top-level status map now marks both rows `verified`; ledger records, remediation matrix, and requirements traceability agree; the mechanical count is 12 VERIFIED, 13 partial, 1 R-056 blocked/open, and 0 failed before new work. Continuation 025 then completed fresh supported-browser setup interruption/resume evidence and promoted R-051 to VERIFIED. The real browser exercised the remaining R-053 keyboard/untrusted-text checks, and the Time Lens UI gap was minimally implemented with a boundary selector, custom revision input, historical status, and Return to Now control. R-053, R-050, R-043, R-045, and R-048 remain partial for exact gaps recorded in the Continuation 025 evidence.
+- Changed areas: `apps/web/index.html`, `tests/phase14/test_web_shell.py`, `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/requirements-traceability.yaml`, `.agent/DIRECTIVES.md`, `.agent/CURRENT.md`, `.agent/REPO_MAP.md`, `.agent/phase-records/PHASE-15.md`, `evidence/phase15/qualification-continuation-024.md`, and `evidence/phase15/qualification-continuation-025.md`.
+- Validation:
+  - mechanical YAML reconciliation/count - PASSED (`26 rows; 12 verified, 13 partial, 1 blocked_by_environment`)
+  - fresh R-051 browser setup interruption/resume - PASSED (`502` during Core outage, `200` after recovery)
+  - R-053 browser focus, keyboard submit, untrusted text, and responsive checks - PASSED for available environment
+  - Time Lens browser controls and Return to Now - PASSED for available disposable project; historical fixture returned truthful `UNAVAILABLE`
+  - focused R-043/R-045/R-048/R-050 regression - PASSED (`3 passed`)
+  - web shell test - PASSED (`1 passed`)
+  - native compile - PASSED
+  - governance/YAML/diff/secret/publication checks - pending final closure
+  - deployment - NOT PERFORMED
+- Remaining risks: R-050 needs a populated State-B browser fixture and source removal/recovery; R-053 needs external assistive technology; R-043/R-045/R-048 exact normative gaps remain; R-044 retain remains UNAVAILABLE; R-056 remains OPEN; V1 remains FAIL at 13/26.
+- Blockers: external assistive technology and complete historical/recovery fixtures are not available in this run.
+- Follow-up directive: none

@@ -178,6 +178,8 @@
 - `evidence/phase15/qualification-continuation-023.md` — Native Atlas fresh regression and live PRIME Notion/Paragon adapter evidence promoting R-037–R-041 to VERIFIED.
 - `scripts/phase15_qualify_continuation_024.py` — Continuation 024 disposable native scheduled-backup failure/retry/recovery/retention and bounded Hindsight qualification harness.
 - `evidence/phase15/qualification-continuation-024.md` — Continuation 024 native backup and real Chromium operator evidence, exact promotions, remaining gaps, and truthful 12/26 result.
+- `evidence/phase15/qualification-continuation-025.md` — Continuation 025 ledger correction, R-051 setup-resume promotion, R-053 browser evidence, R-050 Time Lens implementation/partial qualification, and truthful remaining gaps.
+- `apps/web/index.html` — operator console, including the interactive Time Lens boundary selector and Return to Now control.
 
 ## Areas that must not be edited manually
 
