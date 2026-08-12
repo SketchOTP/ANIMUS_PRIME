@@ -15,11 +15,10 @@
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, live PRIME Notion lifecycle, requirement ledger, phase-15 evidence, governed GitHub/Notion checkpoint, and remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps`
 - Immediate next action: `Continue with R-042 scheduled failure/recovery/retention, R-043, R-045, R-048, and R-050–R-053 exact remaining gaps; preserve the ten VERIFIED rows and keep R-056 OPEN.`
-- Published state: `qualification/publication commit 025d64f50718417a5e69e350b59864e6131ae240; local main and origin/main MATCH; deployment NOT PERFORMED.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; approved local provider profile: `paragon/paragon`, `LOCAL_ONLY`; supplied credentials remain ephemeral and unrecorded.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; approved local provider profile: `paragon/paragon`, `LOCAL_ONLY`; supplied credentials remain ephemeral and unrecorded; published qualification/publication SHA: `a9a688f4a76f648698e2073e0d4076ff8fb7eee5`; local `main` and `origin/main` match; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
