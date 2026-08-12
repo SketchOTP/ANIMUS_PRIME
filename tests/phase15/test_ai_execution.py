@@ -132,4 +132,6 @@ def test_openai_compatible_provider_returns_structured_json_without_persisting_k
     assert result.output_tokens == 4
     assert captured["request"].full_url == "https://paragon.invalid/v1/chat/completions"
     assert captured["request"].get_header("Authorization") == "Bearer routerbot"
-    assert "routerbot" not in captured["request"].data.decode()
+    body = captured["request"].data.decode()
+    assert "routerbot" not in body
+    assert "every citation source_id must exactly match an admitted source_id" in body

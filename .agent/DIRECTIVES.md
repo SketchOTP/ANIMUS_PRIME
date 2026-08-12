@@ -249,3 +249,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-017
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-019
+
+- Issued: 2026-08-12T00:30:00Z
+- Issuer: User
+- External directive: Phase 15 Qualification Continuation 019 / Checkpoint 018
+- Objective: Use the approved Paragon environment to complete the real R-055 cross-surface qualification, safely capability-test and exercise disposable live Notion lifecycle paths for R-037–R-041, then advance the closest available recovery/history/browser rows without persisting credentials or changing the frozen baseline.
+- Scope: Real Project A/B fixtures and provider-scoped Goal, Progress, Ask, Documentation, Alignment, and memory qualification; isolation, authority conflict, prompt injection, UNKNOWN, invalid citation, outage/recovery, privacy, provenance, and secret-safety evidence; disposable Notion write capability and PRIME Project Record, managed-region, knowledge-source, reconciliation, and history lifecycle qualification; R-042/R-043/R-045/R-048/R-050/R-051/R-052/R-053 completion where the actual environment supports it; exact ledger, evidence, `.agent`, Notion execution record, and GitHub parity updates.
+- Exclusions: credential persistence or disclosure, production/canonical Notion mutations, destructive user-content changes, hidden provider fallback, new architecture, fabricated external/native/browser evidence, R-056 closure before its complete gate, deployment, normative changes, and V1 PASS before 26/26 VERIFIED.
+- Acceptance: Credentials remain ephemeral; R-055 and R-037–R-041 are promoted only from complete real evidence; read-only or insufficient Notion scope is recorded exactly if encountered; R-046/R-047/R-049/R-054 remain VERIFIED; R-056 remains OPEN; deployment remains NOT PERFORMED; local HEAD, GitHub `main`, Notion execution state, ledgers, evidence, repo map, learnings, outcomes, and phase records are synchronized.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-018
+- Status at issuance: ISSUED
