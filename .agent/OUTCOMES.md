@@ -1276,3 +1276,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: interrupted restart/resume recovery, complete GoalModel-bound progress, AGENTS-chain inventory and precedence, activity filters/drill-down, AI rotation/revocation, Hindsight retain, native Node/Tailscale, external assistive technology, and R-056 remain open.
 - Blockers: environment-bounded qualification and remaining product-completion gaps.
 - Follow-up directive: none
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-031 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-048
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-047
+- Closed: 2026-08-12T23:55:00-04:00
+- Acceptance: PARTIAL
+- Summary: Added a bounded Wave-3 implementation slice for GoalModel/progress assessment and stale marking, AGENTS-chain inventory, activity filters, project-scoped AI grant rotation/revocation, source-labelled Brain graph/search, and protected committed-revision Fork/Clone. Added the Wave-3 browser controls and safe archive path-traversal regression. No user-facing requirement was promoted because authenticated restart/resume, 3D Brain, live update, and A/B Fork/Clone qualification were not completed.
+- Validation:
+  - AST parse - PASSED
+  - Web script parse - PASSED
+  - Focused product/GoalModel/Brain/history regression (`320 passed, 125 skipped`) - PASSED
+  - Product alignment structural audit; V1 gate remains FAIL - PASSED
+  - Disposable no-lifespan Core OpenAPI route inspection - PASSED
+  - Supported-browser shell and console-error check - PASSED
+  - `git diff --check` - PASSED
+  - Full regression, fresh database lifecycle, authenticated Wave-3 browser journey, A/B isolation, governance publication, and Notion append - NOT RUN
+- Changed areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `src/prime_core/indexer.py`, `src/prime_core/mcp_service.py`, `src/prime_core/brain_service.py`, `migrations/prime/0026_product_completion_wave3.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 031 evidence, and append-only `.agent` records.
+- Remaining risks: DOD-016, DOD-017, and DOD-051 moved to `IMPLEMENTED_NOT_PRODUCT_QUALIFIED`; counts are `4/7/22/31/9/7/0/1` in the documented order; authenticated restart/resume and GoalModel qualification; exact AGENTS conflict semantics; AI/browser rotation evidence; activity source drill-down; full Repository/Authority/Git mutation-proof evidence; interactive 3D Brain and live update; full Fork/Clone A/B isolation; external Hindsight, native Node, Tailscale, and assistive-technology evidence.
+- Blockers: fresh database lifespan migration blocked during this bounded browser attempt; external environment gaps remain explicit.
+- Follow-up directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-031

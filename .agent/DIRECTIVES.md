@@ -417,3 +417,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-029
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-031
+
+- Issued: 2026-08-12T23:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 031 V1 Product Completion Wave 3: Onboarding Closure + Project Brain + Fork/Clone
+- Objective: Finish the implemented Wave-2 onboarding and handoff workflows, then implement and qualify the frozen Project Brain and isolated Fork/Clone product paths without changing PRIME-SPEC-V1.0.0.
+- Scope: restart/resume and interruption truthfulness; GoalModel-bound baseline and explainable progress; AGENTS-chain inventory; activity filters and drill-down; AI grant rotation/revocation/reissue; Repository/Authority/Git qualification; Project Brain interactions and live update; selected committed-revision Fork/Clone with independent project resources; Time Lens/Search reconciliation; governed audit, evidence, GitHub, and Notion publication.
+- Exclusions: changing PRIME-SPEC-V1.0.0; creating v1.0.1, a SpecChangeRecord, or Phase 16; fabricated Hindsight/native Node/Tailscale/assistive-technology evidence; R-056 closure; deployment; silent authority overwrite; hidden source mutation; shared fork credentials, memory, progress, or authority.
+- Acceptance: Promote only complete frozen workflows with direct evidence; keep V1_PRODUCT_GOAL_ALIGNMENT, Phase 15, V1, and R-056 truthful; preserve all external environment gaps; reconcile governed views and append-only records; publish exact local/origin parity and Notion execution state.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-030
+- Status at issuance: ISSUED

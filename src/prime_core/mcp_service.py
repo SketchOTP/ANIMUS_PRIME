@@ -36,9 +36,25 @@ class MCPService:
             db.execute("INSERT INTO prime_core.mcp_grants(grant_id,project_id,client_id,token_hash,created_at,expires_at) VALUES (%s,%s,%s,%s,%s,%s)", (grant_id, project_id, client_id, self.digest(token), timestamp, timestamp + timedelta(days=30)))
         return {"grant_id": grant_id, "client_id": client_id, "project_id": project_id, "token": token, "expires_at": timestamp + timedelta(days=30)}
 
-    def revoke_grant(self, grant_id: str) -> None:
+    def revoke_grant(self, grant_id: str, project_id: str | None = None) -> None:
         with transaction(self.settings) as db:
+            row = db.execute("SELECT 1 FROM prime_core.mcp_grants WHERE grant_id=%s AND (%s IS NULL OR project_id=%s)", (grant_id, project_id, project_id)).fetchone()
+            if not row:
+                raise KeyError("grant not found")
             db.execute("UPDATE prime_core.mcp_grants SET revoked_at=now() WHERE grant_id=%s", (grant_id,))
+
+    def list_grants(self, project_id: str) -> list[dict[str, Any]]:
+        with connect(self.settings) as db:
+            rows = db.execute("SELECT grant_id,project_id,client_id,created_at,expires_at,revoked_at FROM prime_core.mcp_grants WHERE project_id=%s ORDER BY created_at DESC", (project_id,)).fetchall()
+        return [dict(row) for row in rows]
+
+    def rotate_grant(self, project_id: str, grant_id: str, client_id: str | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            row = db.execute("SELECT client_id FROM prime_core.mcp_grants WHERE grant_id=%s AND project_id=%s AND revoked_at IS NULL", (grant_id, project_id)).fetchone()
+            if not row:
+                raise KeyError("active grant not found")
+            db.execute("UPDATE prime_core.mcp_grants SET revoked_at=now() WHERE grant_id=%s", (grant_id,))
+        return self.issue_grant(project_id, client_id or row["client_id"])
 
     def call(self, token: str, tool: str, body: dict[str, Any]) -> dict[str, Any]:
         if tool not in CANONICAL_TOOLS:

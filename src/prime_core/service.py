@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import io
 import logging
 import time
 import uuid
 import hashlib
 import os
 import subprocess
+import tarfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -294,6 +296,90 @@ class CoreService:
     def list_nodes(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:
             return [dict(row) for row in db.execute("SELECT * FROM prime_core.nodes ORDER BY enrolled_at").fetchall()]
+
+    def agent_instruction_chain(self, project_id: str, relative_path: str = "") -> dict[str, Any]:
+        with connect(self.settings) as db:
+            row = db.execute("SELECT r.canonical_path FROM prime_core.repositories r WHERE r.project_id=%s", (project_id,)).fetchone()
+        if not row:
+            raise KeyError("project has no repository binding")
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        target = (root / relative_path).resolve(strict=False)
+        if target != root and root not in target.parents:
+            raise PermissionError("agent-chain path is outside the bound repository")
+        if target.is_dir():
+            target = target / "__TARGET__"
+        directories = [root, *target.parent.relative_to(root).parents]
+        directories = sorted({root, *[root / part for part in target.parent.relative_to(root).parts]}, key=lambda item: len(item.parts))
+        instructions = []
+        for directory in directories:
+            candidate = directory / "AGENTS.md"
+            if candidate.is_file():
+                instructions.append({"path": candidate.relative_to(root).as_posix(), "scope": directory.relative_to(root).as_posix() or ".", "content_hash": hashlib.sha256(candidate.read_bytes()).hexdigest()})
+        return {"project_id": project_id, "target": target.relative_to(root).as_posix(), "instructions": instructions, "precedence": "EXPOSED_FOR_CODER_REVIEW; PRIME_DOES_NOT_INVENT_EXTERNAL_AGENT_SEMANTICS", "authority_relationship": ".agent is project authority; AGENTS.md is coding-agent instruction input", "mcp_relationship": "MCP/project context remains bounded by the project grant and exported provenance"}
+
+    @staticmethod
+    def _safe_archive_extract(archive: bytes, target: Path) -> None:
+        with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as bundle:
+            for member in bundle.getmembers():
+                destination = (target / member.name).resolve(strict=False)
+                if destination != target and target not in destination.parents:
+                    raise ValueError("fork archive contains a path traversal entry")
+                if member.issym() or member.islnk():
+                    raise ValueError("fork archive contains an unsafe link")
+                bundle.extract(member, target)
+
+    def fork_project(self, source_project_id: str, source_revision: str, destination_node_id: str, parent_path: str, repository_name: str, confirm: bool = False) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before fork")
+        if not repository_name or repository_name in {".", ".."} or Path(repository_name).name != repository_name:
+            raise ValueError("repository name must be one directory name")
+        with connect(self.settings) as db:
+            source = db.execute("SELECT p.*,r.canonical_path,r.node_id FROM prime_core.projects p JOIN prime_core.repositories r ON r.project_id=p.project_id WHERE p.project_id=%s", (source_project_id,)).fetchone()
+            node = db.execute("SELECT node_id,name,status,allowed_roots FROM prime_core.nodes WHERE node_id=%s", (destination_node_id,)).fetchone()
+            goal = db.execute("SELECT content FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (source_project_id,)).fetchone()
+        if not source:
+            raise KeyError("source project not found")
+        if not node:
+            raise KeyError("destination node not found")
+        if node["status"] in {"OFFLINE", "REVOKED"}:
+            raise ValueError(f"Node is {node['status']}")
+        source_root = Path(source["canonical_path"]).resolve(strict=True)
+        clean = subprocess.run(["git", "-C", str(source_root), "status", "--porcelain"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+        if clean:
+            raise ValueError("fork requires a clean source working tree")
+        subprocess.run(["git", "-C", str(source_root), "cat-file", "-e", f"{source_revision}^{{commit}}"], check=True, capture_output=True, text=True, timeout=10)
+        roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
+        parent = Path(parent_path).expanduser().resolve(strict=True)
+        if not parent.is_dir() or not self._within_allowed_root(parent, roots):
+            raise PermissionError("fork destination is outside the enrolled Node allowed roots")
+        target = parent / repository_name
+        if target.exists() or target.is_symlink():
+            raise FileExistsError("fork destination already exists")
+        project = self.create_project(repository_name, source.get("description", ""), source.get("image_url"))
+        workflow = self.create_workflow("FORK_PROJECT", f"fork:{source_project_id}:{source_revision}:{target}", project["project_id"])
+        try:
+            archive = subprocess.run(["git", "-C", str(source_root), "archive", "--format=tar", source_revision], check=True, capture_output=True, timeout=60).stdout
+            target.mkdir()
+            self._safe_archive_extract(archive, target)
+            subprocess.run(["git", "-C", str(target), "init", "--initial-branch=main"], check=True, capture_output=True, text=True, timeout=10)
+            subprocess.run(["git", "-C", str(target), "add", "."], check=True, capture_output=True, text=True, timeout=30)
+            subprocess.run(["git", "-C", str(target), "-c", "user.name=ANIMUS PRIME", "-c", "user.email=prime@localhost", "commit", "--allow-empty", "-m", f"Fork from {source_revision}"], check=True, capture_output=True, text=True, timeout=30)
+            inspection = self.inspect_repository_for_onboarding(project["project_id"], destination_node_id, str(target))
+            binding = self.bind_verified_repository(inspection, confirm=True)
+            if goal:
+                self.create_goal_revision(project["project_id"], goal["content"], approve=True)
+            indexed = __import__("src.prime_core.indexer", fromlist=["RepositoryIndexer"]).RepositoryIndexer(self).build(project["project_id"])
+            grant = __import__("src.prime_core.mcp_service", fromlist=["MCPService"]).MCPService(self.settings).issue_grant(project["project_id"], "fork-initial-coder")
+            destination_revision = indexed["source_revision"]
+            with transaction(self.settings) as db:
+                fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], destination_revision, json.dumps({"source": "git archive", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NOT_COPIED", "hindsight": "DEGRADED_OR_UNAVAILABLE"}), now())).fetchone()
+                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED',current_step='INDEXED',completed_steps='[\"ARCHIVED\",\"BOUND\",\"GOAL\",\"INDEXED\"]'::jsonb,updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
+            return {"fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "DEGRADED_OR_UNAVAILABLE"}
+        except Exception as exc:
+            with transaction(self.settings) as db:
+                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED',current_step='RECONCILIATION_REQUIRED',last_error=%s,updated_at=%s WHERE workflow_id=%s", (type(exc).__name__, now(), workflow["workflow_id"]))
+                db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING',work_condition='REVIEW_REQUIRED',onboarding_state='REPAIR_REQUIRED',updated_at=%s WHERE project_id=%s", (now(), project["project_id"]))
+            raise
 
     def bind_repository(self, project_id: str, node_id: str, identity_fingerprint: str, canonical_path: str, is_bare: bool = False) -> dict[str, Any]:
         timestamp = now()

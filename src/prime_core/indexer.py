@@ -27,6 +27,7 @@ class RepositoryIndexer:
                 raise ValueError("bound path is not a working repository")
             source_revision = self._revision(root)
             observed = now()
+            previous_revision = db.execute("SELECT canonical_revision FROM prime_core.project_bindings WHERE project_id=%s", (project_id,)).fetchone()["canonical_revision"]
             count = 0
             for path in sorted(root.rglob("*")):
                 if ".git" in path.relative_to(root).parts or not path.is_file():
@@ -49,6 +50,8 @@ class RepositoryIndexer:
                 "UPDATE prime_core.project_bindings SET canonical_revision=%s,updated_at=%s WHERE project_id=%s",
                 (source_revision, observed, project_id),
             )
+            if previous_revision and previous_revision != source_revision:
+                db.execute("UPDATE prime_core.progress_assessments SET freshness_state='STALE' WHERE project_id=%s AND repository_revision<>%s AND freshness_state='CURRENT'", (project_id, source_revision))
             db.execute(
                 "UPDATE prime_core.projects SET lifecycle_state='ACTIVE', connectivity_state='ONLINE', freshness_state='CURRENT', onboarding_step='BASELINE', onboarding_state='AWAITING_BASELINE', updated_at=%s WHERE project_id=%s",
                 (observed, project_id),

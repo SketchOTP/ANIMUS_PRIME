@@ -266,3 +266,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Fresh disposable PostgreSQL/browser qualification proved setup status, enrolled-root rejection, safe non-bare repository creation, authority-template bootstrap, reviewed goal approval, initial index request, truthful `UNBORN` Git identity, provenance/redacted Markdown and JSON export, and Project A/B isolation. It did not prove the complete interrupted-resume, GoalModel-bound progress, AGENTS-chain, activity filtering, or external/native integration requirements.
 - Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/indexer.py`, `migrations/prime/0025_product_onboarding.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 030 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-029
+
+## DEC-PRIME-PHASE15-031
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-031
+- Status: ACTIVE
+- Decision or event: Continue Continuation 031 as a bounded partial implementation slice. Add durable GoalModel/progress, AGENTS-chain, activity, project-scoped AI grant lifecycle, source-labelled Brain, and protected committed-revision Fork/Clone boundaries, but do not promote product rows without authenticated qualification evidence.
+- Rationale: The frozen product objective requires durable lifecycle state and independent project resources. The implementation now makes those boundaries explicit while the fresh database/browser journey, interactive 3D behavior, live Brain update, and A/B isolation remain unverified. Keeping the audit at implementation-open status preserves truthful release gating.
+- Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `src/prime_core/indexer.py`, `src/prime_core/mcp_service.py`, `src/prime_core/brain_service.py`, `migrations/prime/0026_product_completion_wave3.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 031 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-030

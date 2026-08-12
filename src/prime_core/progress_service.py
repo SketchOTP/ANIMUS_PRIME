@@ -35,7 +35,7 @@ class ProgressService:
             db.execute("UPDATE prime_core.progress_baseline_reviews SET status='APPROVED',approved_at=now() WHERE review_id=%s", (review_id,))
             for item in items:
                 db.execute("INSERT INTO prime_core.goal_items(goal_item_id,project_id,goal_revision_id,title,description,weight,required,acceptance_expectations) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING", (_id("goalitem"), review["project_id"], review["goal_revision_id"], item["title"], item.get("description", item["title"]), item["weight"], item.get("required", True), json.dumps(item.get("acceptance_expectations", []))))
-            return {"review_id": review_id, "status": "APPROVED"}
+            return {"review_id": review_id, "project_id": review["project_id"], "goal_revision_id": review["goal_revision_id"], "status": "APPROVED"}
 
     def assess(self, project_id: str, goal_revision_id: str, results: list[dict[str, Any]], repository_revision: str | None = None, summary: str = "", evidence_refs: list[str] | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:
@@ -50,3 +50,27 @@ class ProgressService:
             db.execute("INSERT INTO prime_core.progress_assessments(assessment_id,project_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,item_results,evidence_refs,created_at) VALUES (%s,%s,%s,%s,%s,%s,'CURRENT',%s,%s,%s,%s)", (assessment_id, project_id, goal_revision_id, repository_revision, total * 100, confidence, summary, json.dumps(results), json.dumps(refs), created))
             record_historical_snapshot(db, project_id, "PROGRESS", assessment_id, repository_revision, {"assessment_id": assessment_id, "goal_revision_id": goal_revision_id, "repository_revision": repository_revision, "progress_percent": total * 100, "confidence": confidence, "summary": summary, "item_results": results}, created)
             return {"assessment_id": assessment_id, "project_id": project_id, "goal_revision_id": goal_revision_id, "progress_percent": total * 100, "confidence": confidence, "freshness_state": "CURRENT", "goal_items": results, "evidence_refs": refs}
+
+    def snapshot(self, project_id: str) -> dict[str, Any]:
+        """Return the durable GoalModel and explainable latest assessment."""
+        with connect(self.settings) as db:
+            goal = db.execute("SELECT goal_revision_id,revision_number,status,content_hash FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
+            items = db.execute("SELECT goal_item_id,goal_revision_id,title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s ORDER BY goal_item_id", (project_id,)).fetchall()
+            assessment = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,item_results,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
+        parsed_items = [dict(row) for row in items]
+        for item in parsed_items:
+            if isinstance(item.get("acceptance_expectations"), str):
+                item["acceptance_expectations"] = json.loads(item["acceptance_expectations"])
+        result = dict(assessment) if assessment else None
+        if result:
+            for key in ("item_results", "evidence_refs"):
+                if isinstance(result.get(key), str):
+                    result[key] = json.loads(result[key])
+            if hasattr(result.get("created_at"), "isoformat"):
+                result["created_at"] = result["created_at"].isoformat()
+        return {
+            "project_id": project_id,
+            "goal_model": {"goal_revision": dict(goal) if goal else None, "items": parsed_items, "status": "APPROVED" if goal and parsed_items else "AWAITING_BASELINE"},
+            "assessment": result,
+            "explanation": result.get("summary") if result else "UNKNOWN: no evidence-backed assessment exists.",
+        }

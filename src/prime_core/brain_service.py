@@ -13,7 +13,7 @@ class BrainService:
     def __init__(self, settings: Any):
         self.settings = settings
 
-    def build(self, project_id: str, source_revision: str | None = None) -> dict[str, Any]:
+    def build(self, project_id: str, source_revision: str | None = None, query: str | None = None, kinds: list[str] | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:
             latest = db.execute("SELECT source_revision FROM prime_core.repository_files WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
             revision = source_revision or (latest["source_revision"] if latest else None)
@@ -25,17 +25,22 @@ class BrainService:
             known = set()
             for row in rows:
                 path = row["relative_path"]
+                kind = "authority" if path.startswith(".agent/") else "file"
+                if query and query.lower() not in path.lower():
+                    continue
+                if kinds and kind not in kinds and not (kind == "file" and "source" in kinds):
+                    continue
                 node_id = "file_" + hashlib.sha256(f"{project_id}:{path}".encode()).hexdigest()[:24]
-                nodes.append({"id": node_id, "kind": "authority" if path.startswith(".agent/") else "file", "label": path, "size_bytes": row["size_bytes"], "content_hash": row["content_hash"], "source_revision": revision})
+                nodes.append({"id": node_id, "kind": kind, "label": path, "size_bytes": row["size_bytes"], "content_hash": row["content_hash"], "source_revision": revision, "source_class": "REPOSITORY_FILE"})
                 known.add(path)
                 parent = str(PurePosixPath(path).parent)
                 if parent != ".":
                     parent_id = "dir_" + hashlib.sha256(f"{project_id}:{parent}".encode()).hexdigest()[:24]
                     if parent not in known:
-                        nodes.append({"id": parent_id, "kind": "directory", "label": parent, "source_revision": revision})
+                        nodes.append({"id": parent_id, "kind": "directory", "label": parent, "source_revision": revision, "source_class": "REPOSITORY_DIRECTORY"})
                         known.add(parent)
-                    edges.append({"from": parent_id, "to": node_id, "kind": "contains"})
-            graph = {"project_id": project_id, "source_revision": revision, "nodes": nodes, "edges": edges, "layout": "derived-only"}
+                    edges.append({"from": parent_id, "to": node_id, "kind": "contains", "relationship": "SOURCE_BASED", "reason": "filesystem parent directory observed in the indexed repository"})
+            graph = {"project_id": project_id, "source_revision": revision, "nodes": nodes, "edges": edges, "layout": "derived-3d", "relationship_policy": "SOURCE_BASED_ONLY", "filters": {"query": query or "", "kinds": kinds or []}}
             db.execute("INSERT INTO prime_core.brain_snapshots(brain_snapshot_id,project_id,source_revision,graph,created_at) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (project_id,source_revision) DO UPDATE SET graph=EXCLUDED.graph,created_at=EXCLUDED.created_at", (_id("brain"), project_id, revision, json.dumps(graph), now()))
             return graph
 

@@ -346,3 +346,22 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 030 repository onboarding, Git identity, browser export, and Atlas SSHFS boundary.
 - Supersedes learning: none
+## L-PRIME-PHASE15-033
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-033
+- Fact or lesson: A product implementation must expose its durable lifecycle identity at the API boundary before browser qualification can prove restart/resume. GoalModel baseline, progress assessment, source revision, and freshness are separate persisted facts; an opaque percentage or a shell control is not evidence of a complete workflow.
+- Evidence location: `src/prime_core/progress_service.py`; `src/prime_core/indexer.py`; `apps/core/main.py`; `evidence/phase15/product-goal-alignment-continuation-031.md`
+- Confidence: VERIFIED
+- Scope: Continuation 031 GoalModel/progress and freshness implementation slice.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-034
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-034
+- Fact or lesson: Fork safety requires a clean committed source revision, approved destination root, safe archive extraction, explicit new identity, and explicit non-copy provenance. Creating a UI form or database fork row without these boundaries is not a fork qualification.
+- Evidence location: `src/prime_core/service.py`; `migrations/prime/0026_product_completion_wave3.sql`; `tests/phase15/test_product_completion_031.py`; `evidence/phase15/product-goal-alignment-continuation-031.md`
+- Confidence: VERIFIED
+- Scope: Continuation 031 Fork/Clone implementation slice.
+- Supersedes learning: none

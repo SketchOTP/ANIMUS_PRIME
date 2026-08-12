@@ -3,29 +3,29 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T23:15:00-04:00`
+- Last updated: `2026-08-12T23:55:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-030`
-- External directive ID: `ANIMUS PRIME — Continuation 030 V1 Product Completion Wave 2`
-- Objective: `Make PRIME capable of safely onboarding a real existing or new Git-backed project, establishing authority and an approved guided goal, and preparing an isolated replacement-coder handoff.`
-- Current status: `COMPLETE`
-- Acceptance: `Continuation 030's bounded Wave-2 implementation and fresh disposable browser qualification are complete; unresolved product and environment gaps remain explicit; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-031`
+- External directive ID: `ANIMUS PRIME — Continuation 031 V1 Product Completion Wave 3`
+- Objective: `Close Wave-2 lifecycle gaps, then deliver source-grounded Project Brain and isolated Fork/Clone without changing PRIME-SPEC-V1.0.0.`
+- Current status: `IN_PROGRESS`
+- Acceptance: `Wave-3 implementation is bounded and structurally validated; authenticated restart/resume, full GoalModel/browser qualification, 3D Brain, and A/B Fork/Clone evidence remain before closure; deployment remains NOT PERFORMED.`
 - Current phase: `15`
 - Expected or actual touched areas: `Wave-1 audit reconciliation, setup status/resume, Node-constrained repository registration/creation, project metadata, authority bootstrap/adopt/review, guided goal approval, initial index/baseline, handoff, evidence, and append-only governance records.`
-- Immediate next action: `Continue with interrupted restart/resume recovery, GoalModel-bound progress, AGENTS-chain inventory, activity drill-down, and remaining product gaps.`
+- Immediate next action: `Run a fresh disposable database qualification for restart/resume, GoalModel assessment/freshness, AI grant rotation, activity drill-down, Brain interaction/live update, and Fork/Clone isolation.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 029 final published tip: `0273f07682461e9795bbd469fbd7cbd13f5364de`; Continuation 030 bounded implementation and fresh disposable browser qualification are complete; governed remediation remains `16 VERIFIED / 9 implemented-open / 1 blocked-open`; §26 product alignment was mechanically recalculated after the DOD-042 reconciliation; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 030 published tip: `44cbc219968ae53ff88ab3cdb7e6fd0c46b5ebc0`; Continuation 031 bounded implementation tip is not yet published; governed remediation remains `16 VERIFIED / 9 implemented-open / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 22 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 030 implementation; focused regression and audit reconciliation`
+- Command or check: `Continuation 031 bounded Wave-3 implementation; focused regression and structural audit`
 - Result: `PASSED`
 
-Continuation 030 is complete for this bounded slice and awaiting reset. The V1 product gate remains FAIL because unresolved product and environment requirements remain.
+Continuation 031 remains IN_PROGRESS after a bounded implementation slice. The V1 product gate remains FAIL because authenticated product qualification and environment requirements remain.
 
 ## Risks
 

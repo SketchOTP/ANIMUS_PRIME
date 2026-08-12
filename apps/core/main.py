@@ -32,6 +32,7 @@ from src.prime_core.reliability_service import ReliabilityService
 from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
+from src.prime_core.progress_service import ProgressService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
@@ -52,6 +53,7 @@ history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
 ai = AIExecutionService(settings)
 brain = BrainService(settings)
+progress = ProgressService(settings)
 notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
@@ -165,6 +167,27 @@ class ProductAIRequest(AIExecutionRequest):
 
 class GrantRequest(BaseModel):
     client_id: str = Field(min_length=1, max_length=160)
+
+
+class ForkRequest(BaseModel):
+    source_revision: str = Field(min_length=7, max_length=200)
+    destination_node_id: str = Field(min_length=1, max_length=160)
+    parent_path: str = Field(min_length=1, max_length=4096)
+    repository_name: str = Field(min_length=1, max_length=160)
+    confirm: bool = False
+
+
+class BaselineRequest(BaseModel):
+    goal_revision_id: str = Field(min_length=1, max_length=160)
+    items: list[dict[str, Any]] = Field(min_length=1, max_length=128)
+
+
+class AssessmentRequest(BaseModel):
+    goal_revision_id: str = Field(min_length=1, max_length=160)
+    results: list[dict[str, Any]] = Field(min_length=1, max_length=128)
+    repository_revision: str | None = Field(default=None, max_length=240)
+    summary: str = Field(default="", max_length=4000)
+    evidence_refs: list[str] = Field(default_factory=list, max_length=128)
 
 
 class BackupRequest(BaseModel):
@@ -654,6 +677,44 @@ def create_goal(project_id: str, body: GoalRequest, request: Request, prime_sess
         return error("GOAL_REJECTED", type(exc).__name__, request_id(request), status_code=400)
 
 
+@app.post("/v1/projects/{project_id}/progress/baseline")
+def propose_progress_baseline(project_id: str, body: BaselineRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return progress.propose_baseline(project_id, body.goal_revision_id, body.items)
+    except (KeyError, ValueError) as exc:
+        return error("BASELINE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/progress/baseline/{review_id}/approve")
+def approve_progress_baseline(project_id: str, review_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        result = progress.approve_baseline(review_id)
+        if result.get("project_id") not in (None, project_id):
+            return error("BASELINE_REJECTED", "baseline does not belong to project", request_id(request), status_code=400)
+        return result
+    except (KeyError, ValueError) as exc:
+        return error("BASELINE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/progress/assess")
+def assess_project_progress(project_id: str, body: AssessmentRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return progress.assess(project_id, body.goal_revision_id, body.results, body.repository_revision, body.summary, body.evidence_refs)
+    except (KeyError, ValueError) as exc:
+        return error("PROGRESS_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/progress")
+def project_progress(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return progress.snapshot(project_id)
+
+
 @app.post("/v1/authority/revisions")
 def record_authority(body: AuthorityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -989,6 +1050,17 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
     }
 
 
+@app.get("/v1/projects/{project_id}/agent-chain")
+def agent_chain(project_id: str, request: Request, path: str = "", prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.agent_instruction_chain(project_id, path)
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project or repository not found", request_id(request), status_code=404)
+    except (PermissionError, ValueError, OSError) as exc:
+        return error("AGENT_CHAIN_REJECTED", str(exc), request_id(request), status_code=400)
+
+
 @app.get("/v1/projects/{project_id}/snapshot")
 def project_snapshot(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -1004,6 +1076,25 @@ def since_you_were_here(project_id: str, request: Request, advance: bool = False
     if not project_exists(project_id):
         return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
     return intelligence.since_last_seen(project_id, advance=advance)
+
+
+@app.get("/v1/projects/{project_id}/activity")
+def project_activity(project_id: str, request: Request, event_type: str | None = None, source_revision: str | None = None, limit: int = 50, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    clauses = ["project_id=%s"]
+    params: list[Any] = [project_id]
+    if event_type:
+        clauses.append("event_type=%s")
+        params.append(event_type)
+    if source_revision:
+        clauses.append("source_revision=%s")
+        params.append(source_revision)
+    params.append(min(max(limit, 1), 200))
+    with connect(settings) as db:
+        rows = db.execute(f"SELECT event_id,event_type,project_sequence,occurred_at,observed_at,source_revision,source_ref,payload FROM prime_core.events WHERE {' AND '.join(clauses)} ORDER BY observed_at DESC LIMIT %s", tuple(params)).fetchall()
+    return {"project_id": project_id, "filters": {"event_type": event_type, "source_revision": source_revision}, "events": [dict(row) for row in rows]}
 
 
 @app.post("/v1/projects/{project_id}/since-you-were-here/advance")
@@ -1121,11 +1212,11 @@ def time_lens_state(project_id: str, as_of: str, request: Request, prime_session
 
 
 @app.get("/v1/projects/{project_id}/brain")
-def project_brain(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+def project_brain(project_id: str, request: Request, q: str | None = None, kind: list[str] | None = None, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     if not project_exists(project_id):
         return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
-    return brain.build(project_id)
+    return brain.build(project_id, query=q, kinds=kind)
 
 
 @app.get("/v1/projects/{project_id}/time-lens/now")
@@ -1156,6 +1247,45 @@ def issue_mcp_grant(project_id: str, body: GrantRequest, request: Request, prime
         return mcp.issue_grant(project_id, body.client_id)
     except KeyError as exc:
         return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
+@app.get("/v1/projects/{project_id}/ai/connections")
+def list_ai_connections(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    profiles = ai.public_profiles()
+    return {"project_id": project_id, "profiles": profiles, "grants": mcp.list_grants(project_id), "secrets": "NEVER_RETURNED_AFTER_ISSUANCE"}
+
+
+@app.post("/v1/projects/{project_id}/ai/connections/{grant_id}/rotate")
+def rotate_ai_connection(project_id: str, grant_id: str, body: GrantRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return {"project_id": project_id, "rotation": "REVOKED_AND_REISSUED", "grant": mcp.rotate_grant(project_id, grant_id, body.client_id), "secret_policy": "one_time_issue_only"}
+    except KeyError as exc:
+        return error("AI_CONNECTION_REJECTED", str(exc), request_id(request), status_code=404)
+
+
+@app.delete("/v1/projects/{project_id}/ai/connections/{grant_id}")
+def revoke_ai_connection(project_id: str, grant_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        mcp.revoke_grant(grant_id, project_id)
+        return {"project_id": project_id, "grant_id": grant_id, "state": "REVOKED"}
+    except KeyError as exc:
+        return error("AI_CONNECTION_REJECTED", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/projects/{project_id}/fork")
+def fork_project(project_id: str, body: ForkRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.fork_project(project_id, body.source_revision, body.destination_node_id, body.parent_path, body.repository_name, body.confirm)
+    except KeyError as exc:
+        return error("FORK_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError, subprocess.CalledProcessError) as exc:
+        return error("FORK_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/mcp/{tool}")
