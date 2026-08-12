@@ -26,6 +26,7 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Scope: PRIME Hindsight adapter and all future memory writes.
 - Supersedes learning: none
 
+
 ## L-PRIME-PHASE15-010
 
 - Date: 2026-08-11
@@ -334,4 +335,14 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Evidence location: `docs/v1-product-goal-alignment-audit.yaml`; `evidence/phase15/product-goal-alignment-continuation-029.md`
 - Confidence: VERIFIED
 - Scope: DOD-003, DOD-010, DOD-025, DOD-029, DOD-046, DOD-072, and DOD-078 audit classification.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-032
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-032
+- Fact or lesson: Onboarding must treat an enrolled Node root as a real security boundary: an approved-root child can be created and bound, while a parent outside the enrolled root is rejected before mutation. A newly initialized repository is valid Git state but has no `HEAD`; handoff and export must report `UNBORN`, not `UNAVAILABLE`. Fresh browser qualification also requires a local writable session directory when the authoritative Atlas SSHFS checkout cannot accept browser artifacts.
+- Evidence location: `src/prime_core/service.py`; `apps/core/main.py`; `evidence/phase15/product-goal-alignment-continuation-030.md`
+- Confidence: VERIFIED
+- Scope: Continuation 030 repository onboarding, Git identity, browser export, and Atlas SSHFS boundary.
 - Supersedes learning: none

@@ -3,29 +3,29 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T19:20:00-04:00`
+- Last updated: `2026-08-12T23:15:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-029`
-- External directive ID: `ANIMUS PRIME — Continuation 029 V1 Product Completion Wave 1`
-- Objective: `Complete the first product-understandability wave with a durable disposable fixture, real operator project context surfaces, interpreter-portable qualification, and an architecture-aware §26 audit without changing the frozen baseline.`
+- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-030`
+- External directive ID: `ANIMUS PRIME — Continuation 030 V1 Product Completion Wave 2`
+- Objective: `Make PRIME capable of safely onboarding a real existing or new Git-backed project, establishing authority and an approved guided goal, and preparing an isolated replacement-coder handoff.`
 - Current status: `COMPLETE`
-- Acceptance: `The authorized Continuation 029 product slice is implemented and evidence-backed; remaining product and environment gaps stay truthful; governed records are reconciled; deployment remains NOT PERFORMED.`
+- Acceptance: `Continuation 030's bounded Wave-2 implementation and fresh disposable browser qualification are complete; unresolved product and environment gaps remain explicit; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `qualification harness portability, durable disposable fixture, project context/search/repository/authority surfaces, bounded context export, architecture-aware §26 audit, evidence, and append-only governance records.`
-- Immediate next action: `Reset mutable current state to IDLE after publication review; do not alter the frozen baseline or deploy.`
+- Expected or actual touched areas: `Wave-1 audit reconciliation, setup status/resume, Node-constrained repository registration/creation, project metadata, authority bootstrap/adopt/review, guided goal approval, initial index/baseline, handoff, evidence, and append-only governance records.`
+- Immediate next action: `Continue with interrupted restart/resume recovery, GoalModel-bound progress, AGENTS-chain inventory, activity drill-down, and remaining product gaps.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 029 final published tip: `23b504a5a322f3fd98da021dfd35b03c84adf593`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 product alignment remains `3 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 71 not yet release-qualified`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 029 final published tip: `0273f07682461e9795bbd469fbd7cbd13f5364de`; Continuation 030 bounded implementation and fresh disposable browser qualification are complete; governed remediation remains `16 VERIFIED / 9 implemented-open / 1 blocked-open`; §26 product alignment was mechanically recalculated after the DOD-042 reconciliation; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 029 implementation, fresh-database harness, browser/API qualification, governance/YAML/AST/diff checks`
+- Command or check: `Continuation 030 implementation; focused regression and audit reconciliation`
 - Result: `PASSED`
 
-Continuation 029 acceptance is complete for the authorized Wave 1 scope and is awaiting reset. The V1 product gate remains FAIL by design because unresolved product and environment requirements remain.
+Continuation 030 is complete for this bounded slice and awaiting reset. The V1 product gate remains FAIL because unresolved product and environment requirements remain.
 
 ## Risks
 

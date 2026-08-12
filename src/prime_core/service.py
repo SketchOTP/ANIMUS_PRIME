@@ -6,13 +6,16 @@ import time
 import uuid
 import hashlib
 import os
+import subprocess
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any
 
 from .config import Settings
 from .db import connect, transaction
 from .security import new_token, password_hash, password_verify, token_digest
 from .history_primitives import record_historical_snapshot
+from .authority import provision_authority, validate_authority
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -124,17 +127,153 @@ class CoreService:
         bucket = int(time.time() * 1000 // max(window_ms, 1))
         return self.create_job(job_type, payload, f"coalesced:{project_id}:{job_type}:{source_key}:{bucket}", project_id)
 
-    def create_project(self, name: str) -> dict[str, Any]:
+    def create_project(self, name: str, description: str = "", image_url: str | None = None) -> dict[str, Any]:
         timestamp = now()
         project_id = _id("project")
         with transaction(self.settings) as db:
             row = db.execute(
-                "INSERT INTO prime_core.projects(project_id, name, lifecycle_state, connectivity_state, freshness_state, work_condition, created_at, updated_at) "
-                "VALUES (%s,%s,'DRAFT','OFFLINE','UNKNOWN','REVIEW_REQUIRED',%s,%s) RETURNING *",
-                (project_id, name, timestamp, timestamp),
+                "INSERT INTO prime_core.projects(project_id, name, description, image_url, lifecycle_state, connectivity_state, freshness_state, work_condition, onboarding_step, onboarding_state, created_at, updated_at) "
+                "VALUES (%s,%s,%s,%s,'DRAFT','OFFLINE','UNKNOWN','REVIEW_REQUIRED','IDENTITY','IN_PROGRESS',%s,%s) RETURNING *",
+                (project_id, name, description, image_url, timestamp, timestamp),
             ).fetchone()
             self._audit(db, "operator", "operator", "project.created", project_id=project_id, target_id=project_id)
             return dict(row)
+
+    def update_project_metadata(self, project_id: str, name: str, description: str = "", image_url: str | None = None) -> dict[str, Any]:
+        timestamp = now()
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "UPDATE prime_core.projects SET name=%s, description=%s, image_url=%s, updated_at=%s WHERE project_id=%s RETURNING *",
+                (name, description, image_url, timestamp, project_id),
+            ).fetchone()
+            if not row:
+                raise KeyError("project not found")
+            self._audit(db, "operator", "operator", "project.metadata_updated", project_id=project_id, target_id=project_id)
+            return dict(row)
+
+    @staticmethod
+    def _within_allowed_root(candidate: Path, allowed_roots: list[str]) -> bool:
+        resolved = candidate.resolve(strict=False)
+        return any(resolved == Path(raw).resolve(strict=False) or Path(raw).resolve(strict=False) in resolved.parents for raw in allowed_roots)
+
+    def inspect_repository_for_onboarding(self, project_id: str, node_id: str, requested_path: str) -> dict[str, Any]:
+        candidate = Path(requested_path).expanduser()
+        if ".." in candidate.parts:
+            raise ValueError("repository path traversal is not allowed")
+        with connect(self.settings) as db:
+            project = db.execute("SELECT project_id FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone()
+            node = db.execute("SELECT node_id,name,status,allowed_roots FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone()
+        if not project:
+            raise KeyError("project not found")
+        if not node:
+            raise KeyError("node not found")
+        if node["status"] in {"OFFLINE", "REVOKED"}:
+            raise ValueError(f"Node is {node['status']}")
+        roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
+        if not self._within_allowed_root(candidate, roots):
+            raise PermissionError("path is outside the enrolled Node allowed roots")
+        if not candidate.exists() or not candidate.is_dir():
+            raise FileNotFoundError("repository path does not exist or is not a directory")
+        try:
+            values = subprocess.run(["git", "-C", str(candidate), "rev-parse", "--show-toplevel", "--git-common-dir", "--is-bare-repository"], check=True, capture_output=True, text=True, timeout=5).stdout.splitlines()
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            raise ValueError("path is not a readable Git working repository") from exc
+        if len(values) < 3 or values[2].strip().lower() == "true":
+            raise ValueError("bare repositories are not supported")
+        top = Path(values[0]).resolve()
+        common = Path(values[1])
+        if not common.is_absolute():
+            common = (top / common).resolve()
+        identity = hashlib.sha256(str(common).encode("utf-8")).hexdigest()
+        with connect(self.settings) as db:
+            duplicate = db.execute("SELECT project_id FROM prime_core.repositories WHERE identity_fingerprint=%s AND project_id<>%s", (identity, project_id)).fetchone()
+        authority_root = top / ".agent"
+        if not authority_root.exists():
+            authority_state = "NONE"
+        else:
+            authority_state = "CURRENT" if validate_authority(top)["valid"] else "INVALID"
+        return {"project_id": project_id, "node_id": node_id, "node_name": node["name"], "canonical_path": str(top), "git_common_dir": str(common), "identity_fingerprint": identity, "is_bare": False, "branch": subprocess.run(["git", "-C", str(top), "branch", "--show-current"], check=False, capture_output=True, text=True, timeout=5).stdout.strip() or "DETACHED", "authority_state": authority_state, "duplicate_project_id": duplicate["project_id"] if duplicate else None, "onboarding_decision": "REJECT_DUPLICATE" if duplicate else "REVIEW_AUTHORITY" if authority_state != "NONE" else "READY_TO_BIND"}
+
+    def bind_verified_repository(self, inspection: dict[str, Any], confirm: bool = False) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before binding a repository")
+        if inspection.get("duplicate_project_id"):
+            raise ValueError("repository is already bound to another active project")
+        result = self.bind_repository(inspection["project_id"], inspection["node_id"], inspection["identity_fingerprint"], inspection["canonical_path"], False)
+        with transaction(self.settings) as db:
+            db.execute("UPDATE prime_core.projects SET onboarding_step='AUTHORITY', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), inspection["project_id"]))
+        return {**result, "authority_state": inspection.get("authority_state", "UNKNOWN")}
+
+    def create_repository_for_onboarding(self, project_id: str, node_id: str, parent_path: str, repository_name: str, confirm: bool = False) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before creating a repository")
+        if not repository_name or repository_name in {".", ".."} or Path(repository_name).name != repository_name:
+            raise ValueError("repository name must be one directory name")
+        with connect(self.settings) as db:
+            node = db.execute("SELECT allowed_roots,status FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone()
+        if not node:
+            raise KeyError("node not found")
+        if node["status"] in {"OFFLINE", "REVOKED"}:
+            raise ValueError(f"Node is {node['status']}")
+        roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
+        parent = Path(parent_path).expanduser().resolve(strict=True)
+        if not parent.is_dir() or not self._within_allowed_root(parent, roots):
+            raise PermissionError("repository parent is outside the enrolled Node allowed roots")
+        target = parent / repository_name
+        if target.exists() or target.is_symlink():
+            raise FileExistsError("repository target already exists")
+        workflow = self.create_workflow("CREATE_REPOSITORY", f"create-repository:{project_id}:{target}", project_id)
+        try:
+            target.mkdir()
+            subprocess.run(["git", "-C", str(target), "init", "--initial-branch=main"], check=True, capture_output=True, text=True, timeout=10)
+            inspection = self.inspect_repository_for_onboarding(project_id, node_id, str(target))
+            bound = self.bind_verified_repository(inspection, confirm=True)
+            with transaction(self.settings) as db:
+                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED', current_step='BOUND', completed_steps='[\"DIRECTORY_CREATED\",\"GIT_INITIALIZED\",\"BOUND\"]'::jsonb, updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
+            return {"workflow": workflow["workflow_id"], "repository": bound, "inspection": inspection}
+        except Exception as exc:
+            with transaction(self.settings) as db:
+                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED', current_step='RECONCILIATION_REQUIRED', last_error=%s, updated_at=%s WHERE workflow_id=%s", (type(exc).__name__, now(), workflow["workflow_id"]))
+                db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING', work_condition='REVIEW_REQUIRED', onboarding_state='REPAIR_REQUIRED', updated_at=%s WHERE project_id=%s", (now(), project_id))
+            raise
+
+    def bootstrap_project_authority(self, project_id: str, confirm: bool = False) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before authority bootstrap")
+        with connect(self.settings) as db:
+            row = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+        if not row:
+            raise ValueError("bind a verified repository before authority bootstrap")
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        if (root / ".agent").exists():
+            raise FileExistsError("authority already exists; use explicit adopt or review flow")
+        result = provision_authority(Path("authority-template/v1").resolve(), root)
+        authority = validate_authority(root)
+        with transaction(self.settings) as db:
+            db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
+        self.record_authority_revision(project_id, ".agent", hashlib.sha256(json.dumps(authority, sort_keys=True).encode()).hexdigest(), "VALID", {"provenance": "operator-approved authority-template/v1", "template_manifest": str(Path("authority-template/v1/MANIFEST.sha256").resolve())}, canonical_commit=None)
+        return {"project_id": project_id, "authority": result, "state": "CURRENT", "template": "authority-template/v1"}
+
+    def review_or_adopt_project_authority(self, project_id: str, decision: str, confirm: bool = False) -> dict[str, Any]:
+        if decision not in {"REVIEW", "ADOPT"}:
+            raise ValueError("authority decision must be REVIEW or ADOPT")
+        with connect(self.settings) as db:
+            row = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+        if not row:
+            raise ValueError("bind a verified repository before authority review")
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        validation = validate_authority(root)
+        state = "CURRENT" if validation["valid"] else "INVALID" if (root / ".agent").exists() else "NONE"
+        if decision == "ADOPT" and not confirm:
+            raise ValueError("operator confirmation is required before adopting existing authority")
+        if decision == "ADOPT" and state != "CURRENT":
+            raise ValueError("only a valid existing authority package can be adopted")
+        if decision == "ADOPT":
+            source_hash = hashlib.sha256(json.dumps(validation, sort_keys=True).encode()).hexdigest()
+            self.record_authority_revision(project_id, ".agent", source_hash, "VALID", {"provenance": "operator-approved existing authority adoption", "decision": "ADOPT"}, canonical_commit=None)
+            with transaction(self.settings) as db:
+                db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
+        return {"project_id": project_id, "decision": decision, "state": state, "valid": validation["valid"], "missing": validation["missing"], "files": validation["files"], "rewrite": "NONE"}
 
     def list_projects(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:
@@ -180,6 +319,14 @@ class CoreService:
 
     def create_goal_revision(self, project_id: str, content: str, approve: bool = False) -> dict[str, Any]:
         timestamp = now()
+        if approve:
+            with connect(self.settings) as db:
+                binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+            if binding:
+                goal_path = Path(binding["canonical_path"]).resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
+                if not goal_path.parent.is_dir():
+                    raise ValueError("authority package is missing .agent/PROJECT_GOAL.md parent")
+                goal_path.write_text(content, encoding="utf-8")
         with transaction(self.settings) as db:
             last = db.execute("SELECT COALESCE(MAX(revision_number),0) AS number FROM prime_core.goal_revisions WHERE project_id=%s", (project_id,)).fetchone()["number"]
             status = "APPROVED" if approve else "DRAFT"
@@ -189,7 +336,7 @@ class CoreService:
             ).fetchone()
             if approve:
                 db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND goal_revision_id<>%s AND status='APPROVED'", (project_id, row["goal_revision_id"]))
-                db.execute("UPDATE prime_core.projects SET work_condition='NORMAL', updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+                db.execute("UPDATE prime_core.projects SET work_condition='NORMAL', onboarding_step='INDEX', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (timestamp, project_id))
             record_historical_snapshot(db, project_id, "GOAL", row["goal_revision_id"], row["content_hash"], {"goal_revision_id": row["goal_revision_id"], "revision_number": row["revision_number"], "content": content, "status": status}, row["created_at"], row["content_hash"])
             self._audit(db, "operator", "operator", "goal.revision_created", project_id=project_id, target_id=row["goal_revision_id"])
             return dict(row)

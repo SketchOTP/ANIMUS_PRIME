@@ -256,3 +256,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Fresh qualification passed 86 tests and Phases 1–14. The browser path loaded real Project A state, exposed goal/progress/integrity/repository/authority/memory/evidence/activity, returned bounded Markdown/JSON context, and proved Project A/B search/export isolation. Seven architecture-only invariants are now PRODUCT_VERIFIED with explicit evidence; all remaining user-facing and environment-bound gaps remain visible.
 - Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/indexer.py`, `src/prime_core/intelligence_service.py`, `scripts/seed_product_completion_029.py`, `tests/phase0/test_harness.py`, `tests/phase15/test_product_completion_029.py`, `docs/v1-product-goal-alignment-audit.yaml`, the three governed views, Continuation 029 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-028
+
+## DEC-PRIME-PHASE15-030
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-030
+- Status: CLOSED
+- Decision or event: Close the bounded Continuation 030 Wave-2 onboarding slice as PARTIAL. Preserve the frozen V1 baseline, keep the V1 product gate FAIL, keep R-056 OPEN, and do not deploy.
+- Rationale: Fresh disposable PostgreSQL/browser qualification proved setup status, enrolled-root rejection, safe non-bare repository creation, authority-template bootstrap, reviewed goal approval, initial index request, truthful `UNBORN` Git identity, provenance/redacted Markdown and JSON export, and Project A/B isolation. It did not prove the complete interrupted-resume, GoalModel-bound progress, AGENTS-chain, activity filtering, or external/native integration requirements.
+- Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/indexer.py`, `migrations/prime/0025_product_onboarding.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 030 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-029

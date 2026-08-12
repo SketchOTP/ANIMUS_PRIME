@@ -1256,3 +1256,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: onboarding/setup resume, complete Progress/Alignment/Milestones/Attention workflows, interactive historical selector, broader lifecycle surfaces, Hindsight retain, external assistive technology, native node/Tailscale qualification, and R-056 remain open.
 - Blockers: Hindsight, external assistive technology, native/Tailscale environments, and remaining product implementation gaps.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-030 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-047
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-046
+- Closed: 2026-08-12T23:15:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 030 reconciled the stale DOD-042 audit classification, implemented the bounded first-run/setup and real Git project onboarding slice, and qualified a fresh disposable browser path for approved-root repository creation, authority bootstrap, reviewed goal approval, initial indexing, truthful UNBORN Git state, portable redacted context export, and Project A/B isolation. The V1 product gate remains FAIL, R-056 remains OPEN, and remaining restart/resume, GoalModel, AGENTS-chain, activity-drilldown, integration, native-node, Hindsight, and assistive-technology gaps remain explicit.
+- Changed areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/indexer.py`, `migrations/prime/0025_product_onboarding.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 030 evidence, and append-only `.agent` records.
+- Validation:
+  - focused product/export regression - PASSED (`62 passed, 25 skipped`)
+  - product plus Node regression - PASSED (`186 passed, 75 skipped`)
+  - in-process AST compilation - PASSED
+  - §26 structural audit - PASSED; V1 product gate - FAILED truthfully
+  - fresh disposable PostgreSQL/browser onboarding/export/isolation - PASSED
+  - governed-view reconciliation - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: interrupted restart/resume recovery, complete GoalModel-bound progress, AGENTS-chain inventory and precedence, activity filters/drill-down, AI rotation/revocation, Hindsight retain, native Node/Tailscale, external assistive technology, and R-056 remain open.
+- Blockers: environment-bounded qualification and remaining product-completion gaps.
+- Follow-up directive: none

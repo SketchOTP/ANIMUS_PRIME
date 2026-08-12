@@ -403,3 +403,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-030
+
+- Issued: 2026-08-12T20:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 030 V1 Product Completion Wave 2: Zero-to-Managed-Project + AI-Coder Handoff
+- Objective: Reconcile the Wave-1 product audit, then make PRIME capable of safely onboarding an existing or newly created real Git repository, establishing authority and an approved guided goal, creating initial project intelligence, and exporting an isolated replacement-coder handoff.
+- Scope: DOD-022/040/041/042/043/044/054–060/062–063 reconciliation; first-run setup status and resume; enrolled-Node repository registration and approved-root validation; safe non-bare repository creation; persistent project metadata; authority detection/bootstrap/adopt-review boundaries; guided goal proposal/review/approval; GoalModel and initial progress; canonical index; Notion/Hindsight truthful onboarding states; AI Connections; context-export provenance; fresh-coder handoff; negative onboarding matrix; Project A/B isolation; append-only evidence, `.agent`, GitHub, and Notion reconciliation.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; creating v1.0.1, a SpecChangeRecord, or Phase 16; repo-less projects; arbitrary host traversal; silent authority overwrite or migration; fabricated Hindsight, native Node, Tailscale, assistive-technology, or external Notion evidence; R-056 closure; Project Brain/Fork-Clone unless Wave 2 closes early; deployment; and SHA-chasing self-reference commits.
+- Acceptance: Wave-1 classifications are reconciled against exact frozen clauses; existing and new repository onboarding are explicit, Node/root constrained, durable, recoverable, and project-isolated; authority and goal writes require operator confirmation; initial index/progress/freshness are truthful; context export is portable, fresh, provenance-labelled, redacted, usable, and isolated; a zero-prior-context replacement-coder handoff is evidenced; unresolved environment gaps remain explicit; V1 and Phase 15 gates remain FAIL unless genuinely complete; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-029
+- Status at issuance: ISSUED

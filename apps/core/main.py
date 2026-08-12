@@ -80,6 +80,12 @@ class EventRequest(BaseModel):
 
 class ProjectRequest(BaseModel):
     name: str = Field(min_length=1, max_length=200)
+    description: str = Field(default="", max_length=4000)
+    image_url: str | None = Field(default=None, max_length=2048)
+
+
+class ProjectMetadataRequest(ProjectRequest):
+    pass
 
 
 class WorkflowRequest(BaseModel):
@@ -103,6 +109,22 @@ class RepositoryBindingRequest(BaseModel):
     identity_fingerprint: str
     canonical_path: str
     is_bare: bool = False
+
+
+class RepositoryInspectRequest(BaseModel):
+    node_id: str = Field(min_length=1, max_length=160)
+    path: str = Field(min_length=1, max_length=4096)
+
+
+class RepositoryCreateRequest(BaseModel):
+    node_id: str = Field(min_length=1, max_length=160)
+    parent_path: str = Field(min_length=1, max_length=4096)
+    repository_name: str = Field(min_length=1, max_length=160)
+    confirm: bool = False
+
+
+class AuthorityBootstrapRequest(BaseModel):
+    confirm: bool = False
 
 
 class GoalRequest(BaseModel):
@@ -348,6 +370,28 @@ def core_status(request: Request, prime_session: str | None = Cookie(default=Non
     return {"service": "prime-core", "actor_id": session["operator_id"], "schema_version": startup_state.get("migrations"), "health": startup_state}
 
 
+@app.get("/v1/system/setup")
+def setup_status(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    nodes = service.list_nodes()
+    notion = notion_credentials.public_status()
+    return {
+        "steps": {
+            "operator_security": {"status": "READY", "detail": "Operator session is authenticated; credentials remain server-side."},
+            "storage": {"status": "READY" if startup_state.get("database") == "CONNECTED" else "DEGRADED", "detail": "PostgreSQL/Core is the canonical persistence layer."},
+            "ai_provider": {"status": "READY" if ai.default_provider != "unconfigured" else "DEGRADED", "detail": "Provider health is reported without exposing credential material."},
+            "notion": {"status": notion.get("status", "NOT_CONFIGURED"), "detail": "Notion is optional and cannot block canonical project state."},
+            "hindsight": {"status": "DEGRADED", "detail": "PRIME source-ledger memory remains available; approved Hindsight retain is not qualified in this environment."},
+            "nodes": {"status": "READY" if nodes else "REQUIRES_ACTION", "detail": f"{len(nodes)} enrolled Node record(s)."},
+            "allowed_roots": {"status": "READY" if any(node.get("allowed_roots") for node in nodes) else "REQUIRES_ACTION", "detail": "Repository operations are constrained to enrolled Node roots."},
+            "backup": {"status": "REQUIRES_ACTION", "detail": "Configure and verify a recovery destination before release."},
+            "system_health": {"status": "READY" if startup_state.get("database") == "CONNECTED" else "DEGRADED", "detail": "Core readiness and schema migration state."},
+            "first_project": {"status": "READY" if service.list_projects() else "REQUIRES_ACTION", "detail": "Create or register one real Git-backed project."},
+        },
+        "resume": {"supported": True, "durable": True, "instruction": "Reopen this endpoint after restart; project onboarding state is stored in Core."},
+    }
+
+
 @app.get("/v1/system/ai/profiles")
 def ai_profiles(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -490,7 +534,16 @@ def emit_event(body: EventRequest, request: Request, prime_session: str | None =
 @app.post("/v1/projects")
 def create_project(body: ProjectRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
-    return service.create_project(body.name)
+    return service.create_project(body.name, body.description, body.image_url)
+
+
+@app.patch("/v1/projects/{project_id}")
+def update_project(project_id: str, body: ProjectMetadataRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.update_project_metadata(project_id, body.name, body.description, body.image_url)
+    except KeyError as exc:
+        return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
 
 
 @app.get("/v1/projects")
@@ -527,6 +580,69 @@ def bind_repository(body: RepositoryBindingRequest, request: Request, prime_sess
         return service.bind_repository(body.project_id, body.node_id, body.identity_fingerprint, body.canonical_path, body.is_bare)
     except (KeyError, ValueError) as exc:
         return error("BINDING_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/repositories/inspect")
+def inspect_repository_for_onboarding(project_id: str, body: RepositoryInspectRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.inspect_repository_for_onboarding(project_id, body.node_id, body.path)
+    except KeyError as exc:
+        return error("ONBOARDING_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (PermissionError, ValueError, FileNotFoundError, OSError) as exc:
+        return error("REPOSITORY_INSPECTION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/repositories/register")
+def register_existing_repository(project_id: str, body: RepositoryInspectRequest, request: Request, prime_session: str | None = Cookie(default=None), confirm: bool = False):
+    require_session(request, prime_session)
+    try:
+        inspection = service.inspect_repository_for_onboarding(project_id, body.node_id, body.path)
+        return {"inspection": inspection, "binding": service.bind_verified_repository(inspection, confirm=confirm)}
+    except KeyError as exc:
+        return error("ONBOARDING_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError) as exc:
+        return error("REPOSITORY_REGISTRATION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/repositories/create")
+def create_repository_for_onboarding(project_id: str, body: RepositoryCreateRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.create_repository_for_onboarding(project_id, body.node_id, body.parent_path, body.repository_name, body.confirm)
+    except KeyError as exc:
+        return error("ONBOARDING_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError) as exc:
+        return error("REPOSITORY_CREATION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/authority/bootstrap")
+def bootstrap_project_authority(project_id: str, body: AuthorityBootstrapRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.bootstrap_project_authority(project_id, body.confirm)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError) as exc:
+        return error("AUTHORITY_BOOTSTRAP_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/authority/{decision}")
+def review_or_adopt_project_authority(project_id: str, decision: str, body: AuthorityBootstrapRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.review_or_adopt_project_authority(project_id, decision.upper(), body.confirm)
+    except (PermissionError, ValueError, FileNotFoundError, OSError) as exc:
+        return error("AUTHORITY_DECISION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/onboarding")
+def project_onboarding_state(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        snapshot = _project_snapshot(project_id)
+        project = snapshot["project"]
+        return {"project_id": project_id, "step": project.get("onboarding_step", "UNKNOWN"), "state": project.get("onboarding_state", "UNKNOWN"), "lifecycle": project.get("lifecycle_state"), "binding": bool(snapshot.get("binding")), "authority": (snapshot.get("authority") or {}).get("validation_status", "UNKNOWN"), "goal": (snapshot.get("goal") or {}).get("status", "UNKNOWN"), "next": "REPOSITORY" if not snapshot.get("binding") else "AUTHORITY" if not snapshot.get("authority") else "GOAL" if not snapshot.get("goal") or snapshot["goal"].get("status") != "APPROVED" else "INDEX_AND_BASELINE"}
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
 
 
 @app.post("/v1/projects/{project_id}/goal")
@@ -628,10 +744,13 @@ def _git_state(project_id: str) -> dict[str, Any]:
         parts = line.split("\x1f", 3)
         if len(parts) == 4:
             recent.append({"revision": parts[0], "short_revision": parts[1], "timestamp": parts[2], "summary": parts[3]})
+    canonical_revision = _git(root, "rev-parse", "HEAD")
+    if canonical_revision == "UNAVAILABLE" and _git(root, "rev-parse", "--is-inside-work-tree") == "true":
+        canonical_revision = "UNBORN"
     return {
         "status": "CURRENT" if _git(root, "status", "--porcelain") == "UNKNOWN" else "AVAILABLE",
         "repository_path": str(root),
-        "canonical_revision": _git(root, "rev-parse", "HEAD"),
+        "canonical_revision": canonical_revision,
         "branch": _git(root, "branch", "--show-current") or "DETACHED",
         "dirty": bool(_git(root, "status", "--porcelain") not in {"", "UNKNOWN", "UNAVAILABLE"}),
         "worktrees": worktrees,
@@ -643,6 +762,7 @@ def _project_context(project_id: str) -> dict[str, Any]:
     snapshot = _project_snapshot(project_id)
     binding = snapshot.get("binding") or {}
     git_state = _git_state(project_id)
+    generated_at = time.time()
     with connect(settings) as db:
         goal = db.execute(
             "SELECT goal_revision_id,revision_number,content,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions "
@@ -687,9 +807,17 @@ def _project_context(project_id: str) -> dict[str, Any]:
                 authority_files[name] = {"sha256": hashlib.sha256(content.encode()).hexdigest(), "content": content}
     except (KeyError, OSError, ValueError):
         pass
+    provenance = [
+        {"claim": "project_identity", "source_class": "PRIME_CORE", "reference": f"prime_core.projects:{project_id}", "revision": snapshot["project"].get("updated_at")},
+        {"claim": "repository_identity", "source_class": "GIT", "reference": git_state.get("repository_path", "UNKNOWN"), "revision": git_state.get("canonical_revision", "UNKNOWN")},
+        {"claim": "approved_goal", "source_class": "PRIME_CORE_GOAL_REVISION", "reference": (goal or {}).get("goal_revision_id", "UNKNOWN"), "revision": (goal or {}).get("content_hash", "UNKNOWN")},
+        {"claim": "authority_health", "source_class": "PRIME_CORE_AUTHORITY_REVISION", "reference": (snapshot.get("authority") or {}).get("authority_revision_id", "UNKNOWN"), "revision": (snapshot.get("authority") or {}).get("source_hash", "UNKNOWN")},
+        {"claim": "progress", "source_class": "PRIME_CORE_PROGRESS", "reference": (snapshot.get("progress") or {}).get("assessment_id", "UNKNOWN"), "revision": (snapshot.get("progress") or {}).get("repository_revision", "UNKNOWN")},
+        {"claim": "activity", "source_class": "PRIME_CORE_ACTIVITY", "reference": f"prime_core.events:{project_id}", "revision": git_state.get("canonical_revision", "UNKNOWN")},
+    ]
     return {
         "schema": "prime.project-context.v1",
-        "generated_at": time.time(),
+        "generated_at": generated_at,
         "project": snapshot["project"],
         "repository": {**binding, "git": git_state, "checkpoint_history": checkpoints},
         "goal": {"revision": dict(goal) if goal else None, "items": snapshot.get("goal_items", []), "history": progress_history},
@@ -701,7 +829,8 @@ def _project_context(project_id: str) -> dict[str, Any]:
         "evidence": evidence_rows,
         "activity": snapshot.get("events", []),
         "sources": {"authority": authority_files, "notion": notion_sources},
-        "freshness": {"project": snapshot["project"].get("freshness_state", "UNKNOWN"), "repository": git_state.get("canonical_revision", "UNKNOWN"), "generated_at": time.time()},
+        "provenance": provenance,
+        "freshness": {"project": snapshot["project"].get("freshness_state", "UNKNOWN"), "repository": git_state.get("canonical_revision", "UNKNOWN"), "generated_at": generated_at},
         "redaction": {"credentials": "OMITTED", "session_tokens": "OMITTED", "authorization_headers": "OMITTED", "chain_of_thought": "OMITTED"},
     }
 
@@ -725,7 +854,7 @@ def _context_markdown(context: dict[str, Any]) -> str:
         f"- Attention: {len(attention)} item(s)", "", "## BLOCKERS / ATTENTION",
     ]
     lines.extend([f"- {item.get('severity', 'UNKNOWN')}: {item.get('code', 'UNKNOWN')} - {item.get('message', 'UNKNOWN')}" for item in attention] or ["- NONE REPORTED"])
-    lines.extend(["", "## AUTHORITY", f"- Validation: {(context.get('authority') or {}).get('latest', {}).get('validation_status', 'UNKNOWN') if (context.get('authority') or {}).get('latest') else 'UNKNOWN'}", "- Credential material: OMITTED", "", "## MEMORY / EVIDENCE / ACTIVITY", f"- Durable memory entries exported: {len(context.get('memory') or [])}", f"- Evidence references exported: {len(context.get('evidence') or [])}", f"- Meaningful activity events exported: {len(context.get('activity') or [])}", "", "## FRESHNESS", f"- Generated at: {context.get('generated_at', 'UNKNOWN')}", f"- Project freshness: {(context.get('freshness') or {}).get('project', 'UNKNOWN')}", f"- Redaction: credentials, tokens, authorization headers, and chain of thought omitted."])
+    lines.extend(["", "## PROVENANCE", *[f"- {item.get('claim', 'UNKNOWN')}: {item.get('source_class', 'UNKNOWN')} / {item.get('reference', 'UNKNOWN')} / revision {item.get('revision', 'UNKNOWN')}" for item in (context.get('provenance') or [])], "", "## AUTHORITY", f"- Validation: {(context.get('authority') or {}).get('latest', {}).get('validation_status', 'UNKNOWN') if (context.get('authority') or {}).get('latest') else 'UNKNOWN'}", "- Credential material: OMITTED", "", "## MEMORY / EVIDENCE / ACTIVITY", f"- Durable memory entries exported: {len(context.get('memory') or [])}", f"- Evidence references exported: {len(context.get('evidence') or [])}", f"- Meaningful activity events exported: {len(context.get('activity') or [])}", "", "## FRESHNESS", f"- Generated at: {context.get('generated_at', 'UNKNOWN')}", f"- Project freshness: {(context.get('freshness') or {}).get('project', 'UNKNOWN')}", f"- Canonical repository revision: {(context.get('freshness') or {}).get('repository', 'UNKNOWN')}", f"- Redaction: credentials, tokens, authorization headers, and chain of thought omitted."])
     return "\n".join(lines) + "\n"
 
 

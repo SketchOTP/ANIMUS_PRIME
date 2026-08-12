@@ -20,5 +20,6 @@ def test_context_markdown_is_bounded_and_redacted() -> None:
     assert "abc123" in exported
     assert "68" in exported
     assert "credentials, tokens, authorization headers, and chain of thought omitted." in exported
+    assert "## PROVENANCE" in exported
     assert "Product029!Passphrase-2026" not in exported
     assert len(exported) < 8_000
