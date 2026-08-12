@@ -3,26 +3,26 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T14:50:00-04:00`
+- Last updated: `2026-08-12T15:46:04-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-025`
-- External directive ID: `ANIMUS PRIME — Continuation 025 ledger reconciliation and remaining local qualification`
-- Objective: `Reconcile the authoritative Continuation 024 count, then continue R-051, R-053, R-050, R-043, R-045, and R-048 locally without rerunning R-042 or R-052.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-026`
+- External directive ID: `ANIMUS PRIME — Continuation 026 historical qualification and governed reconciliation`
+- Objective: `Qualify the populated historical State-A/B/C/D path, promote only fully evidenced requirements, reconcile all governed views, and publish the truthful result.`
 - Current status: `IN_PROGRESS`
-- Acceptance: `R-042 and R-052 qualification status maps are verified; all governed views agree at 12/26 before continuation work and now at 13/26 VERIFIED, 12 partial, R-056 blocked/open, 0 failed; remaining locally actionable requirements are attempted with truthful evidence.`
+- Acceptance: `R-050 is VERIFIED from complete populated browser historical evidence; all governed views agree at 14/26 VERIFIED, 11 partial, R-056 blocked/open, 0 failed; remaining gaps are explicit and deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, scheduled backup failure/recovery/retention harness, real Chromium operator lifecycle qualification, route validation guards, requirement ledgers, Continuation 024 evidence, append-only governance records, GitHub publication, and bounded Hindsight probing.`
-- Immediate next action: `Continue R-043, R-045, and R-048 exact remaining recovery/history gaps; then qualify R-050 with a populated State-B browser fixture and revisit R-053 when external assistive technology is available.`
+- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, real Git/Evidence/Goal/Progress/Memory/Notion/Brain historical fixture, supported-browser Time Lens/Ask/Brain/Return-to-Now path, runtime history verification, requirement ledgers, Continuation 026 evidence, append-only governance records, GitHub publication, and bounded Notion reconciliation.`
+- Immediate next action: `Complete publication/parity and cleanup, then continue R-043, R-045, and R-048 exact recovery gaps; revisit R-053 when external assistive technology is available.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 024 qualification implementation/evidence commit: `95db422`; Continuation 025 Time Lens implementation commit: `44608f1`; GitHub publication is reconciled at `e44a904`; Notion append is blocked because only the public read-only page was reachable; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 026 qualification implementation commit: `5c2ec8e`; final governance/publication commit pending; Notion append remains blocked if the authenticated write connector is unavailable; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_024.py; fresh 86-test regression; real Chromium qualification; governance/YAML/secret/diff checks; GitHub fetch/parity`
+- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; Continuation 026 focused regression; web shell; compileall; populated real Chromium historical fixture; governance/YAML/count/secret/diff checks; GitHub fetch/parity`
 - Result: `PASSED`
 
 ## Risks

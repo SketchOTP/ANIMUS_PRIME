@@ -216,3 +216,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The stale top-level ledger map, not the row records, caused the 12/26 versus 10/26 inconsistency. Mechanical parsing of all three governed views now yields 12/26 before Continuation 025 promotion. The fresh R-051 browser interruption/resume path returned `502` during Core outage and `200` after recovery. Time Lens controls now call the existing bounded backend routes and render returned status with text-only DOM updates.
 - Affected areas: `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/requirements-traceability.yaml`, `apps/web/index.html`, `tests/phase14/test_web_shell.py`, and Continuation 025 evidence.
 - Supersedes record: DEC-PRIME-PHASE15-024
+
+## DEC-PRIME-PHASE15-026
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-026
+- Status: ACTIVE
+- Decision or event: Promote R-050 to VERIFIED from Continuation 026's real State-A/B/C/D browser qualification. Preserve R-042, R-052, and the prior thirteen verified rows; keep R-043, R-044, R-045, R-048, and R-053 partial; keep R-056 OPEN; and set the governed count to 14/26.
+- Rationale: The populated historical fixture reconstructed State B exactly across repository, authority, Goal, Evidence, Progress, Memory, Notion, Brain, and Git. Historical Ask/Brain excluded later current state, deliberate Evidence loss produced truthful source-level PARTIAL status, exact restoration recovered all sources, and Return to Now selected CURRENT with exact sources. The browser path therefore meets R-050's qualification boundary while the other rows retain explicit incomplete criteria.
+- Affected areas: `Dockerfile.core`, `src/prime_core/git_history.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_026.py`, `evidence/phase15/qualification-continuation-026.md`, the three governed requirement views, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-025

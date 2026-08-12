@@ -184,3 +184,26 @@ result: FAIL
 - R-056: `OPEN`.
 - governance_publication: `governance/evidence commit d261c2b; final-tip e44a904; local/origin parity confirmed; Notion append BLOCKED by unavailable authenticated edit surface`
 - result: `FAIL` — aggregate V1 gate remains truthful at 13/26; deployment `NOT PERFORMED`.
+
+## Continuation 026 — populated historical browser qualification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-026`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualification_implementation_commit: `5c2ec8e`
+- qualification_evidence: `evidence/phase15/qualification-continuation-026.md`
+- native_focused_regression: `PASS` — `4 passed`; web shell `1 passed`; compileall `PASS`.
+- fresh_full_regression: `PASS` — `86 passed` with `--import-mode=importlib`.
+- phase_gates: `PASS` — Phases 1 through 14 qualification scripts.
+- historical_fixture: `PASS` — real disposable Git A/B/C/D repository and durable PRIME records for repository, authority, Goal, Progress, Evidence, Memory, Notion projection, Brain, and retained Git bundles.
+- browser_historical_state: `PASS` — State B displayed `HISTORICAL · EXACT`; all source classes were `EXACT`.
+- browser_ask_brain: `PASS` — Ask and Brain returned HTTP `200`; Ask used only State-A/State-B material and `later_current_state_used=false`.
+- browser_loss_recovery: `PASS` — deliberate State-B Evidence loss displayed source-level `PARTIAL`; exact restore returned all sources `EXACT`.
+- browser_return_to_now: `PASS` — current boundary displayed `CURRENT · EXACT` after the history-service correction.
+- newly_verified: `R-050`.
+- preserved_verified: `R-037`, `R-038`, `R-039`, `R-040`, `R-041`, `R-042`, `R-046`, `R-047`, `R-049`, `R-051`, `R-052`, `R-054`, `R-055`.
+- qualification_state: `14/26 VERIFIED`; `11 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
+- partial_rows: `R-031`–`R-036`, `R-043`, `R-044`, `R-045`, `R-048`, `R-053`.
+- R-056: `OPEN`.
+- governance_publication: `PENDING` until final governance commit and local/origin parity are confirmed.
+- notion_publication: `BLOCKED` if the authenticated write connector remains unavailable; no unsupported publication claim.
+- result: `FAIL` — Phase 15/V1 remains below 26/26; deployment `NOT PERFORMED`.

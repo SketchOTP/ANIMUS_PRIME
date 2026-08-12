@@ -347,3 +347,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-024
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-026
+
+- Issued: 2026-08-12T15:46:04-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 026 historical qualification and governed reconciliation
+- Objective: Continue locally actionable Phase-15 qualification from the accepted Continuation 025 state, qualify the populated historical State-A/B/C/D path, promote only fully evidenced requirements, reconcile all governed views, and publish the truthful result.
+- Scope: Native Atlas disposable PostgreSQL/pgvector qualification, historical Git/Evidence/Goal/Progress/Memory/Notion/Brain fixture, supported-browser Time Lens/Ask/Brain/Return-to-Now path, R-043/R-045/R-048/R-050 assessment, exact evidence, governed ledgers, append-only `.agent` records, GitHub publication, and bounded Notion status reconciliation.
+- Exclusions: rerunning R-042 or R-052; fabricated recovery or assistive-technology evidence; credential persistence or disclosure; weakening the frozen baseline; R-056 closure; deployment; and V1 PASS before all 26 rows are VERIFIED.
+- Acceptance: Promote R-050 only if its populated historical browser, cutoff, loss/recovery, and current-return criteria pass; preserve all prior VERIFIED rows; record exact remaining gaps for R-043, R-045, R-048, R-053, and R-044; reconcile the three governed views mechanically; publish GitHub and truthful Notion status; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-025
+- Status at issuance: ISSUED

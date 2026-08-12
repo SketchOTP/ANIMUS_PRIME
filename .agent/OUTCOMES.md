@@ -1170,3 +1170,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-050 needs a populated State-B browser fixture and source removal/recovery; R-053 needs external assistive technology; R-043/R-045/R-048 exact normative gaps remain; R-044 retain remains UNAVAILABLE; R-056 remains OPEN; V1 remains FAIL at 13/26.
 - Blockers: external assistive technology and complete historical/recovery fixtures are not available in this run.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-026 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-043
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-042
+- Closed: 2026-08-12T15:46:04-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 026 qualified a real disposable State-A/B/C/D historical fixture through the supported browser. State B reconstructed exactly; historical Ask and Brain returned HTTP 200 with no later-current-state leakage; deliberate Evidence loss degraded only the Evidence source to PARTIAL; exact restoration returned all sources to EXACT; and Return to Now displayed CURRENT with exact current sources. R-050 is promoted to VERIFIED. R-042, R-052, and the prior thirteen verified rows are preserved. R-043, R-045, R-048, and R-053 remain partial for their explicit normative gaps; R-044 remains partial because approved Hindsight retain is unavailable; R-056 remains OPEN.
+- Changed areas: `Dockerfile.core`, `src/prime_core/git_history.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_026.py`, `evidence/phase15/qualification-continuation-026.md`, the three governed requirement views, and append-only `.agent` records.
+- Validation:
+  - fresh PostgreSQL/pgvector focused qualification regression - PASSED (`4 passed`)
+  - web shell test - PASSED (`1 passed`)
+  - native compileall - PASSED
+  - populated browser State-B reconstruction, Ask/Brain, source-loss/restoration, and Return to Now - PASSED
+  - mechanical governance/YAML/count reconciliation - PASSED (`26 rows; 14 verified, 11 partial, 1 blocked_by_environment`)
+  - fresh full regression - PASSED (`86 passed`, `--import-mode=importlib`)
+  - Phases 1–14 qualification scripts - PASSED
+  - tracked-secret scan and final diff checks - PASSED
+  - GitHub publication/parity - PENDING publication completion
+  - Notion publication - PENDING final publication record
+  - deployment - NOT PERFORMED
+- Remaining risks: R-043 lacks the complete fresh-install destructive/interrupted restore drill; R-045 lacks sustained capacity/parser/index/stale-job/retention and bounded usage evidence; R-048 lacks the full independent source-class recovery matrix; R-053 lacks external assistive-technology evidence; R-044 retain remains unavailable; R-056 remains OPEN; Phase 15/V1 remains FAIL at 14/26.
+- Blockers: authenticated Notion write connector availability and the remaining environment-backed qualification criteria.
+- Follow-up directive: none
