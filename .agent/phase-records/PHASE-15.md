@@ -18,6 +18,28 @@ known_limitations: Full V1 Definition of Done must be reconciled against all nor
 remediation_progress: R1-R6 implementation foundations added, including Core-side Node client; R1-R6 live/cross-platform/recovery/provider/UX evidence still open
 result: FAIL
 
+## Continuation 023 — live PRIME Notion adapter qualification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-023`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualification_evidence: `evidence/phase15/qualification-continuation-023.md`
+- qualification_implementation_lineage: `4531fb0`
+- database_environment: `PASS` — fresh disposable PostgreSQL/pgvector recreated on native Atlas
+- native_compile: `PASS`
+- full_regression: `PASS` — `86 passed`; Phases 1 through 14 `PASS`
+- live_credentials: `PRESENT` for Notion read/API and Paragon; values remained process-ephemeral and were not recorded
+- live_notion_target: `PASS` — inaccessible prior sandbox was replaced by a disposable child under accessible `ANIMUS PRIME` root; no canonical/user-authored content was mutated
+- Paragon: `PASS` — existing `paragon`/`paragon`, `LOCAL_ONLY`, OpenAI-compatible profile exercised through the product path
+- R-037: `VERIFIED` — live Project Record, binding, managed-region initialization, Documentation projection, readback, retry/idempotency and secrecy
+- R-038: `VERIFIED` — live Documentation projection, user preservation, managed conflict, redaction, stale/replay/self-write and reconciliation matrix
+- R-039: `VERIFIED` — live source attach, revision refresh, independent A/B bindings, detach/retraction, provenance and memory review
+- R-040: `VERIFIED` — live degraded outage, canonical-state preservation, recovery/reconciliation, missing-page and restart/idempotency behavior
+- R-041: `VERIFIED` — live history rollover, response-loss retry, source range, persisted identity, restart and idempotency
+- preserved_verified: `R-046`, `R-047`, `R-049`, `R-054`, `R-055`
+- remaining: `R-042` scheduled failure/recovery/retention; `R-043`, `R-045`, `R-048`, `R-050`–`R-053`; `R-056 OPEN`
+- requirement_state: `10/26 VERIFIED`; implementation `25/26`; Phase 15/V1 `FAIL`; deployment `NOT PERFORMED`
+- result: `FAIL` — aggregate V1 gate remains truthful until all 26 rows are verified
+
 ## Continuation 015 — database qualification recovery
 
 - directive: `D-PRIME-PHASE15-REMEDIATION-015`

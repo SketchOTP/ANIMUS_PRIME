@@ -180,6 +180,19 @@ Do not add live decisions or milestones to this template. Examples must remain o
 ## DEC-PRIME-PHASE15-022
 
 - Date: 2026-08-12
-- Decision: Treat the existing `PRIME Qualification Sandbox — Continuation 019` as a current disposable-parent candidate only; do not mutate it until PRIME's own production adapter can execute with the existing runtime authorization. Correct R-042 to remove the already-satisfied off-machine-target criterion and retain only scheduled failure/recovery, retry, known-good preservation, subsequent success, and retention gaps.
+- Record or decision ID: DEC-PRIME-PHASE15-022
+- Status: ACTIVE
+- Decision or event: Treat the existing `PRIME Qualification Sandbox — Continuation 019` as a current disposable-parent candidate only; do not mutate it until PRIME's own production adapter can execute with the existing runtime authorization. Correct R-042 to remove the already-satisfied off-machine-target criterion and retain only scheduled failure/recovery, retry, known-good preservation, subsequent success, and retention gaps.
 - Rationale: Notion workspace access is not equivalent to PRIME `NotionApiClient` authorization. Continuation 017 already proved `/mnt/storage1tb` on `/dev/sdb1`; repeating that criterion would misstate qualification progress.
-- Evidence: `evidence/phase15/qualification-continuation-022.md`; `evidence/phase15/qualification-continuation-017.md`; `docs/phase15-remediation-qualification-ledger.yaml`; `docs/phase15-remediation-matrix.yaml`.
+- Affected areas: `evidence/phase15/qualification-continuation-022.md`, `evidence/phase15/qualification-continuation-017.md`, `docs/phase15-remediation-qualification-ledger.yaml`, and `docs/phase15-remediation-matrix.yaml`.
+- Supersedes record: none
+
+## DEC-PRIME-PHASE15-023
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-023
+- Status: CLOSED
+- Decision or event: Promote R-037 through R-041 to VERIFIED after native Atlas qualification completed the actual PRIME NotionApiClient/NotionApiProvider/NotionLifecycleService path against a disposable live Notion sandbox with the approved Paragon profile. Preserve R-046, R-047, R-049, R-054, and R-055 VERIFIED; keep R-042's scheduled failure/recovery/retention gap and R-056 OPEN; keep Phase 15/V1 FAIL at 10/26.
+- Rationale: Fresh native Docker/PostgreSQL qualification and the 86-test regression passed. The previous sandbox was unavailable to the supplied integration, so a disposable child under accessible ANIMUS PRIME was provisioned under the explicit Continuation 023 exception. Live Project Record binding, managed projection, source lifecycle, degradation/recovery, and history rollover evidence passed without canonical/user-authored mutation or credential persistence.
+- Affected areas: `evidence/phase15/qualification-continuation-023.md`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `.agent/phase-records/PHASE-15.md`, `.agent/CURRENT.md`, and publication records.
+- Supersedes record: DEC-PRIME-PHASE15-022

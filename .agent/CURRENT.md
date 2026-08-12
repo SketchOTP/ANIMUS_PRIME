@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T20:00:00Z`
+- Last updated: `2026-08-13T00:45:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-022`
-- External directive ID: `ANIMUS PRIME Takeover Accepted / Continuation 022 Authorization`
-- Objective: `Resume Phase-15 qualification beginning with the real PRIME Notion production adapter lifecycle for R-037–R-041, then close exact remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps where the actual environment supports it.`
-- Current status: `BLOCKED`
-- Acceptance: `Qualification implementation/evidence lineage remains 4531fb0; the prior governance/publication lineage remains b445631; current branch tip is reported separately. R-046, R-047, R-049, R-054, and R-055 remain VERIFIED; R-037–R-041 are not promoted without complete live adapter evidence; R-042 now records only its scheduled failure/recovery/retention gap; Phase 15/V1 remains FAIL at 5/26; R-056 remains OPEN; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-023`
+- External directive ID: `ANIMUS PRIME Continuation 023 credential authorization`
+- Objective: `Continue exact Phase-15 remediation gaps after completing live PRIME Notion adapter qualification for R-037–R-041.`
+- Current status: `IN_PROGRESS`
+- Acceptance: `Qualification implementation/evidence lineage remains 4531fb0; R-037–R-041 are VERIFIED from Continuation 023 live adapter evidence; R-046, R-047, R-049, R-054, and R-055 remain VERIFIED; R-042 records only its scheduled failure/recovery/retention gap; Phase 15/V1 remains FAIL at 10/26; R-056 remains OPEN; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, PRIME Notion read capability, Evidence/product citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Make the existing PRIME runtime authorization (NOTION_READONLY_KEY) and approved disposable PostgreSQL/pgvector environment available; then run the production R-037–R-041 lifecycle against the fetched non-archived disposable sandbox. Preserve R-046/R-047/R-049/R-054/R-055 VERIFIED and keep R-056 OPEN.`
+- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, live PRIME Notion lifecycle, requirement ledger, phase-15 evidence, governed GitHub/Notion checkpoint, and remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps`
+- Immediate next action: `Continue with R-042 scheduled failure/recovery/retention, R-043, R-045, R-048, and R-050–R-053 exact remaining gaps; preserve the ten VERIFIED rows and keep R-056 OPEN.`
 
 ## Temporary task-relevant facts
 
@@ -22,12 +22,13 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `Atlas/GitHub parity; scripts/validate_governance.py --mode ADOPTED; ./.venv/bin/python -m pytest tests -q with and without the existing disposable DB; compileall; Notion source and Architect record fetch`
-- Result: `FAILED`
+- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_020.py with live Notion and Paragon`
+- Result: `PASSED`
 
 ## Risks
 
 - Phase 15 V1 release gate failed on seven explicit normative gap categories in evidence/phase15/qualification-report.md.
+- R-037–R-041 live PRIME Notion adapter qualification is complete and independently VERIFIED; the replacement disposable sandbox is recorded in Continuation 023.
 - Release-gap reconciliation reopened R-005, R-008, R-011, R-014, R-015, R-017, R-018, R-020, R-023 and R-024; granular rows R-031 through R-045 and R-051 through R-056 remain IMPLEMENTING, while R-046 through R-050 are IMPLEMENTED.
 - Historical phase PASS records remain unchanged audit evidence and are superseded for final release verification only where the remediation matrix says so.
 - Requirement-level ledger added at `docs/phase15-remediation-qualification-ledger.yaml` and linked from the release matrix.

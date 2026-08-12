@@ -175,6 +175,7 @@
 - `tests/phase15/test_product_lifecycle_continuation020.py` — production provider/lifecycle contract tests for idempotency, managed conflicts, redaction, restart, and history.
 - `evidence/phase15/qualification-continuation-020.md` — R-055 verification and concrete R-037–R-041 archived-parent limitation.
 - `evidence/phase15/qualification-continuation-022.md` — Continuation 022 environment preflight, R-042 gap correction, and blocked live-adapter qualification record.
+- `evidence/phase15/qualification-continuation-023.md` — Native Atlas fresh regression and live PRIME Notion/Paragon adapter evidence promoting R-037–R-041 to VERIFIED.
 
 ## Areas that must not be edited manually
 

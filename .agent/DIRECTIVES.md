@@ -305,3 +305,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-TAKEOVER-VERIFY-021
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-023
+
+- Issued: 2026-08-12T20:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 023 credential authorization
+- Objective: Inject the approved temporary Notion and Paragon credentials ephemerally into the native Atlas qualification process, restore a usable disposable Notion sandbox if the prior sandbox is inaccessible to the PRIME integration, and complete R-037–R-041 through PRIME's actual production adapter.
+- Scope: Native Atlas Docker/PostgreSQL, native compile and fresh regression, approved Paragon profile, PRIME NotionApiClient/NotionApiProvider/NotionLifecycleService, disposable live Notion qualification pages, exact requirement promotion, evidence, ledgers, GitHub, and Notion reconciliation.
+- Exclusions: credential persistence or disclosure; canonical, frozen, MyAssistant, or unrelated user-authored Notion mutation; provider substitution; new architecture; reopening preserved VERIFIED rows without regression; R-056 closure; deployment; and V1 PASS before all 26 rows are VERIFIED.
+- Acceptance: Report credentials only as PRESENT/ABSENT; execute the real adapter; promote R-037–R-041 only from complete evidence; preserve R-046/R-047/R-049/R-054/R-055; keep R-042's scheduled failure/recovery/retention gap and R-056 OPEN; publish truthful local/GitHub/Notion state; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-022
+- Status at issuance: ISSUED
