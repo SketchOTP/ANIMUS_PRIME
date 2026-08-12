@@ -1119,7 +1119,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - fresh database-backed regression - PASSED (`86 passed`)
   - Phases 1–14 - PASSED
   - PRIME live Notion/Paragon adapter harness - PASSED (exit 0)
-  - governance, YAML, tracked-secret scan, final diff, and GitHub parity - PENDING publication
+  - governance, YAML, tracked-secret scan, final diff, GitHub push, fetch, and exact parity - PASSED (`025d64f50718417a5e69e350b59864e6131ae240`)
   - deployment - NOT PERFORMED
 - Remaining risks: Newly verified rows are R-037 through R-041; preserved verified rows are R-046, R-047, R-049, R-054, and R-055. R-042 scheduled backup failure/recovery/retention, R-043, R-045, R-048, R-050–R-053, and R-056 remain open; aggregate V1 remains FAIL.
 - Blockers: none for Continuation 023 acceptance; publication checks remain before GitHub synchronization.

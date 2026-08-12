@@ -15,6 +15,7 @@
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, live PRIME Notion lifecycle, requirement ledger, phase-15 evidence, governed GitHub/Notion checkpoint, and remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps`
 - Immediate next action: `Continue with R-042 scheduled failure/recovery/retention, R-043, R-045, R-048, and R-050–R-053 exact remaining gaps; preserve the ten VERIFIED rows and keep R-056 OPEN.`
+- Published state: `qualification/publication commit 025d64f50718417a5e69e350b59864e6131ae240; local main and origin/main MATCH; deployment NOT PERFORMED.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +23,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_020.py with live Notion and Paragon`
+- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; compileall; scripts/phase15_qualify.py; scripts/phase15_qualify_continuation_020.py with live Notion and Paragon; governance/YAML/secret/diff checks; GitHub fetch/parity`
 - Result: `PASSED`
 
 ## Risks
