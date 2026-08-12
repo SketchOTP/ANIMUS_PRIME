@@ -11,5 +11,8 @@ def test_web_shell_is_accessible_and_non_caching():
     assert 'href="#projects"' in html
     for surface in ("setup", "nodes", "notion", "remote", "backup", "progress", "integrity", "ask", "search", "memory", "brain", "evidence", "timelens", "lifecycle"):
         assert f'id="{surface}"' in html
+    assert 'id="time-lens-form"' in html
+    assert 'id="time-lens-boundary"' in html
+    assert 'id="time-lens-now"' in html
     assert "Authentication required" in html
     assert "Funnel/public exposure" in html
