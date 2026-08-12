@@ -75,7 +75,7 @@ class ReliabilityService:
             db.execute(
                 "UPDATE prime_core.backup_schedules SET last_completed_at=CASE WHEN %s THEN now() ELSE last_completed_at END,"
                 "last_error=%s,last_status=%s,retry_count=CASE WHEN %s THEN 0 ELSE retry_count+1 END,"
-                "next_run_at=now()+CASE WHEN %s THEN interval '1 hour' ELSE make_interval(mins => LEAST(60, 2 ^ retry_count)) END,updated_at=now() WHERE schedule_id=%s",
+                "next_run_at=now()+CASE WHEN %s THEN interval '1 hour' ELSE make_interval(mins => LEAST(60, (2 ^ retry_count)::integer)) END,updated_at=now() WHERE schedule_id=%s",
                 (success, error, "VERIFIED" if success else "FAILED", success, success, schedule_id),
             )
 

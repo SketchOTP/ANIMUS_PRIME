@@ -227,6 +227,11 @@ def require_session(request: Request, token: str | None) -> dict[str, Any]:
     return session
 
 
+def project_exists(project_id: str) -> bool:
+    with connect(settings) as db:
+        return db.execute("SELECT 1 FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone() is not None
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
@@ -532,6 +537,8 @@ def index_project(project_id: str, request: Request, prime_session: str | None =
 @app.get("/v1/projects/{project_id}/search")
 def search_project(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
     grouped = intelligence.search(project_id, q)
     results = []
     for group, rows in grouped["groups"].items():
@@ -542,6 +549,8 @@ def search_project(project_id: str, q: str, request: Request, prime_session: str
 @app.post("/v1/projects/{project_id}/ask")
 def ask_project(project_id: str, question: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
     try:
         return intelligence.ask(project_id, question)
     except (KeyError, ValueError) as exc:
