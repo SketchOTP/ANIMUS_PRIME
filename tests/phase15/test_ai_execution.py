@@ -69,6 +69,15 @@ def test_ask_rejects_citation_outside_admitted_sources(monkeypatch):
     assert records[0]["result"]["category"] == "UNKNOWN"
 
 
+def test_product_documentation_rejects_live_invalid_citation(monkeypatch):
+    provider = FakeLocalProvider({"sections": {"CURRENT_STATUS": "unsafe"}, "citations": [{"source_id": "not-admitted"}]})
+    service, records = service_with("local", provider, monkeypatch)
+    result = service.execute("project-a", "DOCUMENTATION", {"request": "project update"}, [{"project_id": "project-a", "source_class": "Repository", "source_id": "repo-a", "locator": "README.md"}])
+    assert result["status"] == "REJECTED"
+    assert result["error_class"] == "INVALID_OUTPUT_OR_INPUT"
+    assert records[0]["status"] == "REJECTED"
+
+
 def test_project_isolation_rejects_other_project_source(monkeypatch):
     provider = FakeLocalProvider({"category": "UNKNOWN", "answer": "UNKNOWN", "citations": []})
     service, records = service_with("local", provider, monkeypatch)

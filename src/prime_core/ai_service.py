@@ -161,9 +161,9 @@ class OpenAICompatibleProvider:
                         "For GOAL_ASSISTANCE return goal_items and optional citations. "
                         "For PROGRESS return status or assessment and optional citations. "
                         "For ALIGNMENT return alignment or unknown and optional citations. "
-                        "For DOCUMENTATION return a sections object and optional citations; never request a whole-page rewrite. "
+                        "For DOCUMENTATION return a sections object using only PROJECT_OVERVIEW, CURRENT_STATUS, PROGRESS, or RECENT_HISTORY keys and optional citations; never request a whole-page rewrite. "
                         "For MEMORY_ADMISSION return an explicit boolean admit, a proposition when admitted, and optional citations. "
-                        "For CORRECTION return a correction or supersession result and optional citations. "
+                        "For CORRECTION return proposition, supersedes_memory_id, correction_reason, and optional citations. "
                         "For all other functions return the smallest JSON object satisfying the requested function."
                     ),
                 },
@@ -324,6 +324,14 @@ def _validate_output(function: str, output: dict[str, Any], source_ids: set[str]
     if _contains_chain_of_thought(output):
         raise AIInputError("chain-of-thought fields are not accepted")
     output = _safe_metadata(output)
+    def validate_citations(value: dict[str, Any]) -> None:
+        citations = value.get("citations", [])
+        if not isinstance(citations, list) or len(citations) > 16:
+            raise AIInputError("citations must be a bounded list")
+        for citation in citations:
+            if not isinstance(citation, dict) or str(citation.get("source_id", "")) not in source_ids:
+                raise AIInputError("citation is not in the admitted source set")
+
     if function == "ASK_PRIME":
         category = str(output.get("category", "UNKNOWN")).upper()
         if category not in {"SOURCE FACT", "DERIVED INTERPRETATION", "UNKNOWN"}:
@@ -337,23 +345,28 @@ def _validate_output(function: str, output: dict[str, Any], source_ids: set[str]
         for citation in citations:
             if not isinstance(citation, dict) or str(citation.get("source_id", "")) not in source_ids:
                 raise AIInputError("Ask citation is not in the admitted source set")
-    elif function in {"PROGRESS", "ALIGNMENT"}:
+    elif function in {"GOAL_ASSISTANCE", "PROGRESS", "ALIGNMENT"}:
         if not any(key in output for key in ("status", "assessment", "goal_items", "alignment", "unknown")):
             raise AIInputError("assessment output is missing a structured result")
-        for citation in output.get("citations", []) or []:
-            if not isinstance(citation, dict) or str(citation.get("source_id", "")) not in source_ids:
-                raise AIInputError("assessment citation is not in the admitted source set")
+        validate_citations(output)
     elif function == "MEMORY_ADMISSION":
         if not isinstance(output.get("admit"), bool):
             raise AIInputError("memory admission requires an explicit admit boolean")
-        for citation in output.get("citations", []) or []:
-            if not isinstance(citation, dict) or str(citation.get("source_id", "")) not in source_ids:
-                raise AIInputError("memory citation is not in the admitted source set")
+        validate_citations(output)
     elif function == "DOCUMENTATION":
         if not isinstance(output.get("sections", {}), dict):
             raise AIInputError("documentation output requires targeted sections")
         if output.get("whole_page_rewrite") is True:
             raise AIInputError("whole-page documentation rewrites are prohibited")
+        if any(not isinstance(key, str) or key not in {"PROJECT_OVERVIEW", "CURRENT_STATUS", "PROGRESS", "RECENT_HISTORY"} or not isinstance(value, str) for key, value in output["sections"].items()):
+            raise AIInputError("documentation output contains an unsupported or non-text managed region")
+        validate_citations(output)
+    elif function == "CORRECTION":
+        if not isinstance(output.get("proposition"), str) or not output["proposition"].strip():
+            raise AIInputError("correction output requires a proposition")
+        if not isinstance(output.get("supersedes_memory_id"), str) or not output["supersedes_memory_id"].strip():
+            raise AIInputError("correction output requires the superseded memory identity")
+        validate_citations(output)
     return output
 
 

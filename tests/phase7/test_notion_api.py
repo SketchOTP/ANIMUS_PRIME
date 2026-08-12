@@ -82,3 +82,16 @@ def test_capability_test_distinguishes_read_and_explicit_write_probe():
     write = client.capability_test("approved", write_probe=True, probe_parent_id="approved")
     assert write["page_write"] is True and write["managed_write"] == "CAPABILITY_PRESENT"
     assert all("token" not in path for path in paths)
+
+
+def test_search_pages_is_bounded_and_uses_page_filter():
+    seen = {}
+
+    def opener(request, timeout):
+        seen["body"] = json.loads(request.data)
+        return Response({"results": [{"id": "page-1"}]})
+
+    client = NotionApiClient(NotionApiSettings("token"), opener=opener)
+    assert client.search_pages("marker")['results'][0]['id'] == "page-1"
+    assert seen["body"]["query"] == "marker"
+    assert seen["body"]["filter"] == {"property": "object", "value": "page"}

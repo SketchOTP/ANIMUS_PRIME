@@ -29,6 +29,7 @@ from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
+from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
 
 settings = Settings()
@@ -128,6 +129,12 @@ class AIExecutionRequest(BaseModel):
     prompt_input: dict[str, Any] = Field(default_factory=dict)
     sources: list[dict[str, Any]] = Field(default_factory=list, max_length=32)
     privacy_mode: str | None = Field(default=None, max_length=40)
+
+
+class ProductAIRequest(AIExecutionRequest):
+    source_revision: str = Field(default="product-current", min_length=1, max_length=240)
+    source_rank: int = Field(default=0, ge=0, le=2_147_483_647)
+    project_notion_parent_id: str | None = Field(default=None, max_length=80)
 
 
 class GrantRequest(BaseModel):
@@ -336,6 +343,29 @@ def execute_ai(project_id: str, body: AIExecutionRequest, request: Request, prim
         return ai.execute(project_id, body.function, body.prompt_input, body.sources, project_privacy_mode=body.privacy_mode)
     except (KeyError, ValueError) as exc:
         return error("AI_EXECUTION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+def _live_notion_lifecycle() -> NotionLifecycleService:
+    """Resolve the approved Notion credential only for an explicit product write."""
+    client = notion_credentials.client()
+    return NotionLifecycleService(
+        NotionApiProvider(client),
+        state_path=Path(settings.notion_credential_state_path).with_name("notion-lifecycle-state.json"),
+        settings=settings,
+    )
+
+
+@app.post("/v1/projects/{project_id}/ai/product")
+def execute_product_ai(project_id: str, body: ProductAIRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        notion = _live_notion_lifecycle() if body.function.upper() == "DOCUMENTATION" and body.project_notion_parent_id else None
+        if notion is not None and not notion.projects.get(project_id, None):
+            notion.configure(project_id, "env/myassistant/notion-readonly")
+            notion.create_project_record(project_id, body.project_notion_parent_id or "", f"PRIME Project {project_id}")
+        return intelligence.execute_product(project_id, body.function, body.prompt_input, body.sources, notion=notion, source_revision=body.source_revision, source_rank=body.source_rank)
+    except (KeyError, LookupError, ValueError) as exc:
+        return error("PRODUCT_AI_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.get("/v1/operator/state")

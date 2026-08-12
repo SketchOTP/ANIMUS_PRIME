@@ -132,6 +132,147 @@ class InMemoryNotionProvider:
     def create_history_page(self, parent_id: str, title: str, content: str, idempotency_key: str) -> NotionPage:
         return self.create_page(parent_id, title, content, idempotency_key)
 
+    def append_text(self, page_id: str, content: str) -> None:
+        self._fail()
+        page = self.get_page(page_id)
+        page.content += "\n" + content
+        page.revision += 1
+
+    def archive_page(self, page_id: str) -> None:
+        self._fail()
+        page = self.pages.get(page_id)
+        if not page:
+            raise NotionProviderError("PAGE_MISSING", "Notion page is missing")
+        page.archived = True
+
+
+class NotionApiProvider:
+    """Production NotionApiClient-backed provider for PRIME lifecycle services.
+
+    The lifecycle service owns ordering, projection state, and recovery. This
+    adapter owns only translation between Notion blocks and the narrow provider
+    protocol, with bounded idempotency markers for retry/restart recovery.
+    """
+
+    is_external = True
+
+    def __init__(self, client: Any):
+        self.client = client
+        self._idempotent_pages: dict[str, str] = {}
+
+    @staticmethod
+    def _error(exc: Exception) -> NotionProviderError:
+        status = getattr(exc, "status", 503)
+        retryable = bool(getattr(exc, "retryable", False))
+        code = {401: "ACCESS_DENIED", 403: "ACCESS_DENIED", 404: "PAGE_MISSING", 409: "CONFLICT", 429: "RATE_LIMIT"}.get(status, "UNAVAILABLE" if retryable else "PROVIDER_ERROR")
+        return NotionProviderError(code, "Notion provider request failed", retryable=retryable)
+
+    @staticmethod
+    def _rich_text(block: dict[str, Any]) -> str:
+        payload = block.get(block.get("type", ""), {}) if isinstance(block, dict) else {}
+        parts = payload.get("rich_text", []) if isinstance(payload, dict) else []
+        return "".join(item.get("plain_text") or item.get("text", {}).get("content", "") for item in parts if isinstance(item, dict))
+
+    @classmethod
+    def _blocks(cls, content: str) -> list[dict[str, Any]]:
+        lines = [line for line in content.splitlines() if line.strip()]
+        return [{"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": line[:2000]}}]}} for line in (lines or ["PRIME content"])]
+
+    @classmethod
+    def _title(cls, page: dict[str, Any]) -> str:
+        properties = page.get("properties", {}) if isinstance(page, dict) else {}
+        for prop in properties.values():
+            if isinstance(prop, dict) and prop.get("type") == "title":
+                return "".join(item.get("plain_text", "") for item in prop.get("title", []))
+        return "PRIME Project Record"
+
+    def _page(self, page_id: str) -> NotionPage:
+        try:
+            page = self.client.retrieve_page(page_id)
+            blocks = self.client.retrieve_children(page_id).get("results", [])
+        except Exception as exc:
+            raise self._error(exc) from exc
+        content = "\n".join(self._rich_text(block) for block in blocks if isinstance(block, dict) and block.get("type"))
+        digits = re.sub(r"\D", "", str(page.get("last_edited_time", "")))
+        archived = bool(page.get("archived", False) or page.get("in_trash", False))
+        if archived:
+            raise NotionProviderError("PAGE_MISSING", "Notion page is archived", retryable=False)
+        return NotionPage(page_id, self._title(page), content, (page.get("parent") or {}).get("page_id"), revision=int(digits[-9:] or "1"), archived=False)
+
+    def health(self) -> dict[str, Any]:
+        try:
+            return {**self.client.provider_health(), "capabilities": ["read", "write", "search"]}
+        except Exception as exc:
+            return {"status": "DEGRADED", "error_code": type(exc).__name__}
+
+    def create_page(self, parent_id: str, title: str, content: str, idempotency_key: str) -> NotionPage:
+        marker = f"<!-- PRIME_IDEMPOTENCY:{hashlib.sha256(idempotency_key.encode()).hexdigest()[:24]} -->"
+        try:
+            known_id = self._idempotent_pages.get(idempotency_key)
+            if known_id:
+                return self._page(known_id)
+            # Search makes retry safe even after Core/provider adapter restart.
+            matches = self.client.search_pages(marker).get("results", [])
+            for match in matches[:20]:
+                if not isinstance(match, dict) or not match.get("id"):
+                    continue
+                candidate = self._page(match["id"])
+                # Notion search is relevance-ranked, not an exact-key lookup.
+                # Require the marker in fetched page content before treating a
+                # result as the prior idempotent creation.
+                if marker in candidate.content:
+                    self._idempotent_pages[idempotency_key] = candidate.page_id
+                    return candidate
+            properties = {"title": {"title": [{"type": "text", "text": {"content": title[:2000]}}]}}
+            parent = {"type": "workspace", "workspace": True} if parent_id == "workspace" else {"type": "page_id", "page_id": parent_id}
+            payload = self.client.create_page(parent, properties, self._blocks(marker + "\n" + content))
+            page = self._page(payload["id"])
+            self._idempotent_pages[idempotency_key] = page.page_id
+            return page
+        except NotionProviderError:
+            raise
+        except Exception as exc:
+            raise self._error(exc) from exc
+
+    def get_page(self, page_id: str) -> NotionPage:
+        return self._page(page_id)
+
+    def update_region(self, page_id: str, region: str, expected_hash: str | None, content: str, write_id: str) -> NotionPage:
+        try:
+            self._page(page_id)
+            blocks = self.client.retrieve_children(page_id).get("results", [])
+            texts = [self._rich_text(block) for block in blocks]
+            start_marker = REGION_START.format(region=region)
+            end_marker = REGION_END.format(region=region)
+            starts = [i for i, text in enumerate(texts) if text.strip() == start_marker]
+            ends = [i for i, text in enumerate(texts) if text.strip() == end_marker]
+            if len(starts) != 1 or len(ends) != 1 or ends[0] != starts[0] + 2:
+                raise NotionProviderError("CONFLICT", "managed region is missing or ambiguous")
+            current = texts[starts[0] + 1].strip()
+            if expected_hash and hashlib.sha256(current.encode()).hexdigest() != expected_hash:
+                raise NotionProviderError("CONFLICT", "managed region was manually edited")
+            self.client.update_block(blocks[starts[0] + 1]["id"], {"paragraph": {"rich_text": [{"type": "text", "text": {"content": content.strip()[:2000]}}]}})
+            return self._page(page_id)
+        except NotionProviderError:
+            raise
+        except Exception as exc:
+            raise self._error(exc) from exc
+
+    def create_history_page(self, parent_id: str, title: str, content: str, idempotency_key: str) -> NotionPage:
+        return self.create_page(parent_id, title, content, idempotency_key)
+
+    def append_text(self, page_id: str, content: str) -> None:
+        try:
+            self.client.append_children(page_id, self._blocks(content))
+        except Exception as exc:
+            raise self._error(exc) from exc
+
+    def archive_page(self, page_id: str) -> None:
+        try:
+            self.client.archive_page(page_id)
+        except Exception as exc:
+            raise self._error(exc) from exc
+
 
 @dataclass
 class _ProjectState:
@@ -153,12 +294,27 @@ class _ProjectState:
 class NotionLifecycleService:
     """Project-scoped lifecycle, Documentation Agent and Knowledge Source boundary."""
 
-    def __init__(self, provider: NotionProvider | None = None, history_limit: int = 20, state_path: Path | None = None):
+    def __init__(self, provider: NotionProvider | None = None, history_limit: int = 20, state_path: Path | None = None, settings: Any | None = None, event_sink: Any | None = None):
         self.provider = provider or InMemoryNotionProvider()
         self.history_limit = max(1, history_limit)
         self.state_path = state_path
+        self.settings = settings
+        self.event_sink = event_sink
         self.projects: dict[str, _ProjectState] = {}
         self._load()
+
+    def _event(self, event_type: str, project_id: str, payload: dict[str, Any]) -> None:
+        if self.event_sink:
+            self.event_sink(event_type, payload, project_id=project_id, dedupe_key=f"notion:{event_type}:{project_id}:{payload.get('page_id') or payload.get('binding_id') or payload.get('documentation_run_id') or payload.get('period')}")
+
+    def _record_binding(self, state: _ProjectState, status: str, page_id: str | None = None, content_hash: str | None = None, metadata: dict[str, Any] | None = None) -> None:
+        if not self.settings:
+            return
+        from .db import transaction
+        with transaction(self.settings) as db:
+            db.execute("INSERT INTO prime_core.notion_projects(project_id,page_id,connection_status,managed_content_hash,last_synced_at,updated_at) VALUES (%s,%s,%s,%s,CASE WHEN %s='CONNECTED' THEN now() ELSE NULL END,now()) ON CONFLICT (project_id) DO UPDATE SET page_id=COALESCE(EXCLUDED.page_id,prime_core.notion_projects.page_id),connection_status=EXCLUDED.connection_status,managed_content_hash=COALESCE(EXCLUDED.managed_content_hash,prime_core.notion_projects.managed_content_hash),last_synced_at=EXCLUDED.last_synced_at,updated_at=now()", (state.project_id, page_id, "CONNECTED" if status in {"BOUND", "SYNCED"} else ("CONFLICT" if status == "CONFLICT" else "DEGRADED"), content_hash, status))
+            revision_id = _local_id("notionrev")
+            db.execute("INSERT INTO prime_core.notion_projection_revisions(projection_revision_id,project_id,content_hash,source_set,sync_status,observed_at,metadata) VALUES (%s,%s,%s,%s,%s,now(),%s)", (revision_id, state.project_id, content_hash or "", json.dumps([]), "SYNCED" if status == "SYNCED" else ("CONFLICT" if status == "CONFLICT" else "DEGRADED"), json.dumps(metadata or {})))
 
     def _persist(self) -> None:
         if not self.state_path:
@@ -249,6 +405,8 @@ class NotionLifecycleService:
         state.page_id, state.parent_id, state.status = page.page_id, parent_id, "BOUND"
         state.projection_revisions.append({"source_revision": "initial", "provider_revision": page.revision, "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "self_write": True})
         self._persist()
+        self._record_binding(state, "BOUND", page.page_id, state.projection_revisions[-1]["content_hash"], {"source_revision": "initial", "page_revision": page.revision})
+        self._event("notion.project_record.bound", project_id, {"page_id": page.page_id, "status": "BOUND"})
         return {"status": "BOUND", "page_id": page.page_id, "page_revision": page.revision, "idempotent": False}
 
     def bind_existing(self, project_id: str, page_id: str, expected_parent_id: str | None = None) -> dict[str, Any]:
@@ -309,6 +467,8 @@ class NotionLifecycleService:
         state.status = "BOUND"
         state.jobs[run_id] = {"status": "SUCCEEDED", "source_revision": source_revision}
         self._persist()
+        self._record_binding(state, "SYNCED", page.page_id, projection["rendered_hash"], projection)
+        self._event("notion.documentation.projected", project_id, projection)
         return {"status": "SYNCED", "page_id": page.page_id, "page_revision": page.revision, "projection": projection}
 
     def attach_source(self, project_id: str, source_binding_id: str, page_id: str) -> dict[str, Any]:
@@ -323,6 +483,7 @@ class NotionLifecycleService:
         binding = {"binding_id": source_binding_id, "project_id": project_id, "page_id": page_id, "status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()}
         state.sources[source_binding_id] = binding
         self._persist()
+        self._event("notion.source.attached", project_id, binding)
         return binding
 
     def refresh_source(self, project_id: str, source_binding_id: str) -> dict[str, Any]:
@@ -350,6 +511,7 @@ class NotionLifecycleService:
             if memory.get("source_binding_id") == source_binding_id:
                 memory["reconciliation_status"] = "REVIEW_REQUIRED"
         self._persist()
+        self._event("notion.source.detached", project_id, binding)
         return dict(binding)
 
     def admit_memory_reference(self, project_id: str, memory_id: str, source_binding_id: str) -> dict[str, Any]:
@@ -383,10 +545,17 @@ class NotionLifecycleService:
             raise NotionProviderError("PROJECT_RECORD_MISSING", "Project Record is not bound")
         if period in state.history_pages:
             return {**state.history_pages[period], "idempotent": True}
-        page = self.provider.create_history_page(state.page_id, f"PRIME History — {period}", self._redact(managed_content), f"history/{project_id}/{period}")
+        key = f"history/{project_id}/{period}"
+        try:
+            page = self.provider.create_history_page(state.page_id, f"PRIME History — {period}", self._redact(managed_content), key)
+        except NotionProviderError as exc:
+            if exc.code != "LOST_RESPONSE":
+                raise
+            page = self.provider.create_history_page(state.page_id, f"PRIME History — {period}", self._redact(managed_content), key)
         result = {"project_id": project_id, "history_page_id": page.page_id, "period": period, "source_revision_start": source_revision_start, "source_revision_end": source_revision_end, "managed_content_hash": hashlib.sha256(managed_content.encode()).hexdigest(), "created_at": _utcnow().isoformat(), "notion_target_id": page.page_id}
         state.history_pages[period] = result
         self._persist()
+        self._event("notion.history.rolled_over", project_id, result)
         return result
 
     def backup_metadata(self, project_id: str) -> dict[str, Any]:

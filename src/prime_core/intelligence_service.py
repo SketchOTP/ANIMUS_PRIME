@@ -19,6 +19,35 @@ class IntelligenceService:
         self.history = HistoryService(settings)
         self.ai = AIExecutionService(settings)
 
+    @staticmethod
+    def _run_metadata(model: dict[str, Any]) -> dict[str, Any]:
+        return {key: model.get(key) for key in ("run_id", "provider", "model", "profile_revision", "prompt_revision", "schema_revision", "privacy_mode", "source_revision_set", "status")}
+
+    def execute_product(self, project_id: str, function: str, prompt_input: dict[str, Any], sources: list[dict[str, Any]], *, notion: Any | None = None, source_revision: str = "product-current", source_rank: int = 0) -> dict[str, Any]:
+        """Execute one AI function through the product/service boundary.
+
+        The AI boundary remains responsible for provider validation and durable
+        ``ai_runs``. This layer owns PRIME side effects: documentation
+        projection and memory admission/correction, so qualification can prove
+        that the durable run and product result agree.
+        """
+        model = self.ai.execute(project_id, function, prompt_input, sources)
+        response: dict[str, Any] = {"project_id": project_id, "function": function.upper(), "status": model["status"], "ai_run": self._run_metadata(model), "result": model.get("result", {})}
+        if model["status"] != "SUCCEEDED":
+            return response
+        output = model["result"]
+        if function.upper() == "DOCUMENTATION" and notion is not None:
+            projection = notion.document(project_id, output.get("sections", {}), source_revision, source_rank, documentation_run_id=model["run_id"])
+            response["projection"] = projection
+            response["status"] = projection.get("status", response["status"])
+        elif function.upper() == "MEMORY_ADMISSION" and output.get("admit") is True:
+            citation = (output.get("citations") or [{}])[0]
+            response["memory"] = self.memory.store(project_id, output.get("proposition", ""), "FACT", source_revision=source_revision, source_reference_id=citation.get("source_id"))
+        elif function.upper() == "CORRECTION":
+            citation = (output.get("citations") or [{}])[0]
+            response["memory"] = self.memory.store(project_id, output["proposition"], "FACT", source_revision=source_revision, source_reference_id=citation.get("source_id"), supersedes_memory_id=output["supersedes_memory_id"], correction_reason=output.get("correction_reason"))
+        return response
+
     def search(self, project_id: str, query: str, limit: int = 20) -> dict[str, Any]:
         repository = self.indexer.search(project_id, query, min(limit, 50))
         with connect(self.settings) as db:

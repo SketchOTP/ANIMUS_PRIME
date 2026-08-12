@@ -20,7 +20,8 @@ class MemoryService:
         self.adapter_factory = adapter_factory or (lambda project_id: PrimeMemoryAdapter("http://127.0.0.1:18888", project_id))
 
     def store(self, project_id: str, content: str, content_class: str, source_revision: str | None = None,
-              source_reference_id: str | None = None, branch_context: str | None = None) -> dict[str, Any]:
+              source_reference_id: str | None = None, branch_context: str | None = None,
+              supersedes_memory_id: str | None = None, correction_reason: str | None = None) -> dict[str, Any]:
         if SECRET_PATTERN.search(content):
             return {"status": "REJECTED", "reason": "secret-sensitive content rejected"}
         content_hash = hashlib.sha256(content.encode()).hexdigest()
@@ -35,9 +36,14 @@ class MemoryService:
             status = "STORED" if result.status == "CURRENT" else ("DEGRADED" if result.status in {"DEGRADED", "UNAVAILABLE"} else "QUEUED")
             created = now()
             db.execute(
-                "INSERT INTO prime_core.memory_records(memory_id,project_id,source_reference_id,document_id,content_hash,content_class,content,status,bank_id,branch_context,source_revision,created_at,metadata) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-                (memory_id, project_id, source_reference_id, memory_id, content_hash, content_class, content, status, bank_id, branch_context, source_revision, created, json.dumps({"adapter_status": result.status, "adapter_reason": result.reason})),
+                "INSERT INTO prime_core.memory_records(memory_id,project_id,source_reference_id,document_id,content_hash,content_class,content,status,bank_id,branch_context,source_revision,created_at,supersedes_memory_id,metadata) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                (memory_id, project_id, source_reference_id, memory_id, content_hash, content_class, content, status, bank_id, branch_context, source_revision, created, supersedes_memory_id, json.dumps({"adapter_status": result.status, "adapter_reason": result.reason, "correction_reason": correction_reason})),
             )
+            if supersedes_memory_id:
+                old = db.execute("UPDATE prime_core.memory_records SET status='SUPERSEDED' WHERE project_id=%s AND memory_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') RETURNING memory_id", (project_id, supersedes_memory_id)).fetchone()
+                if not old:
+                    raise ValueError("superseded memory is not current in this project")
+                db.execute("INSERT INTO prime_core.memory_corrections(correction_id,project_id,memory_id,correction_type,reason,created_at,actor_type,actor_id) VALUES (%s,%s,%s,'SUPERSEDE',%s,%s,'system','ai-correction')", (_id("correction"), project_id, supersedes_memory_id, correction_reason or "AI correction", created))
             record_historical_snapshot(db, project_id, "MEMORY", memory_id, source_revision, {"memory_id": memory_id, "content": content, "content_class": content_class, "status": status, "source_revision": source_revision}, created, content_hash)
             return {"status": status, "memory_id": memory_id, "bank_id": bank_id, "adapter_status": result.status}
 

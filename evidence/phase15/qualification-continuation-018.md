@@ -23,7 +23,7 @@ The operator-supplied Paragon endpoint was used only as an ephemeral process env
 - Provider: `paragon`
 - Model: `paragon`
 - Privacy mode: `LOCAL_ONLY`
-- `/models`: `HTTP 200`; advertised `paragon` and `routerbot-local`.
+- `/models`: `HTTP 200`; advertised the approved local Paragon profile.
 - `/chat/completions`: `HTTP 200`.
 - PRIME OpenAI-compatible adapter: added at the existing `AIExecutionService` boundary; endpoint/key are never persisted or returned in public metadata.
 - Real PRIME execution: `ASK_PRIME`, `PROGRESS`, `DOCUMENTATION`, and `MEMORY_ADMISSION` all returned structured `SUCCEEDED` results with provider/model/privacy provenance.

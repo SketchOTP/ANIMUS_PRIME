@@ -93,6 +93,12 @@ class NotionApiClient:
     def retrieve_block(self, block_id: str) -> dict[str, Any]:
         return self._request("GET", f"/blocks/{block_id}")
 
+    def search_pages(self, query: str) -> dict[str, Any]:
+        """Find pages by an internal bounded idempotency marker."""
+        if not query or len(query) > 200:
+            raise ValueError("Notion search query is required and bounded")
+        return self._request("POST", "/search", {"query": query, "filter": {"property": "object", "value": "page"}})
+
     def create_page(self, parent: dict[str, Any], properties: dict[str, Any], children: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         body: dict[str, Any] = {"parent": parent, "properties": properties}
         if children:
@@ -108,6 +114,10 @@ class NotionApiClient:
         if not properties:
             raise ValueError("Notion block update requires properties")
         return self._request("PATCH", f"/blocks/{block_id}", properties)
+
+    def archive_page(self, page_id: str) -> dict[str, Any]:
+        """Archive only an explicitly supplied disposable qualification page."""
+        return self._request("PATCH", f"/pages/{page_id}", {"in_trash": True})
 
     def _request(self, method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
         request = urllib.request.Request(
