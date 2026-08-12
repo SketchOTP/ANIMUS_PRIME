@@ -1009,3 +1009,29 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-031–R-045, R-048, R-050–R-053, R-055, and R-056 remain partial or environment constrained; live Notion writes/lifecycle, native Windows/root lifecycle, private second-device Tailscale, full Hindsight/provider-dependent paths, complete browser accessibility/history, and aggregate R-056 remain open.
 - Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-018.md`; codebase-memory transport remains unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-019 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-036
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-035
+- Closed: 2026-08-12T00:55:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 019 qualified real Project A/B-scoped Paragon Goal, Progress, Ask, Documentation, Alignment, and memory execution. Ask produced a grounded Project A fact and UNKNOWN for absent Project B evidence; cross-project source admission was rejected; prompt injection remained inert; supported and unsupported memory outcomes were correct; outage degraded all exercised surfaces without fallback; recovery produced a new durable run. A disposable connected Notion sandbox proved create/read/update, managed-region preservation, and source revision refresh without touching canonical or user-authored pages. R-055 remains partial for integrated projection/correction/invalid-citation lifecycle closure; R-037–R-041 remain partial for the local PRIME adapter lifecycle.
+- Changed areas: `src/prime_core/ai_service.py`, `tests/phase15/test_ai_execution.py`, `scripts/phase15_qualify_continuation_019.py`, `.agent/`, `docs/`, and `evidence/phase15/qualification-continuation-019.md`.
+- Validation:
+  - codebase-memory MCP discovery - BLOCKED (`Transport closed`); targeted fallback used and recorded
+  - real Paragon cross-surface matrix - PASSED for exercised paths
+  - Project A/B isolation and UNKNOWN behavior - PASSED
+  - provider outage/degraded and explicit recovery - PASSED
+  - durable provenance and secret-safety review - PASSED
+  - connected Notion disposable write/read/managed-region/source-refresh probe - PASSED
+  - focused AI tests - PASSED (`7 passed`)
+  - Notion API/credential/lifecycle tests - PASSED (`16 passed`)
+  - fresh complete regression - PASSED (`80 passed`)
+  - Phases 1–14 - PASSED
+  - adopted governance - PASSED
+  - aggregate Phase-15/V1 gate - FAILED truthfully (`4/26 VERIFIED`; R-056 OPEN)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-031–R-045, R-048, R-050–R-053, R-055, and R-056 remain partial or environment constrained; local PRIME Notion adapter lifecycle, full integrated AI projection/correction, native Windows/root lifecycle, private second-device Tailscale, full Hindsight/provider-dependent paths, complete browser accessibility/history, and aggregate R-056 remain open.
+- Blockers: exact external/native/provider criteria listed in `evidence/phase15/qualification-continuation-019.md`; codebase-memory transport remains unavailable.
+- Follow-up directive: none

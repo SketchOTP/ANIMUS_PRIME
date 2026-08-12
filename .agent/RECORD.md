@@ -147,3 +147,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The endpoint and credential were intentionally supplied for qualification. The minimum adapter preserves the frozen provider/privacy/provenance contract without introducing a second architecture or persisting secrets. Notion reads are independently proven, while uncontrolled live writes would not establish safe lifecycle evidence.
 - Affected areas: `src/prime_core/ai_service.py`, `tests/phase15/test_ai_execution.py`, Notion credential/API boundary, R-037–R-041/R-054/R-055 ledger/matrix/traceability, Phase-15 evidence, and continuation governance.
 - Supersedes record: DEC-PRIME-PHASE15-017
+
+## DEC-PRIME-PHASE15-019
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-019
+- Status: CLOSED
+- Decision or event: Use the approved Paragon profile through the existing AI execution boundary for the real Continuation 019 Project A/B and six-function matrix, and use only a standalone connected Notion qualification sandbox for live write capability and managed/source revision probes. Preserve R-055 and R-037–R-041 as partial until integrated product and local-adapter lifecycle criteria are complete.
+- Rationale: The new environments support meaningful qualification, but direct provider-boundary success and connector-level disposable writes must not be overstated as complete integrated product lifecycle evidence. The frozen baseline, authority boundary, secret policy, R-046/R-047/R-049/R-054 VERIFIED set, R-056 OPEN state, and no-deployment rule remain unchanged.
+- Affected areas: `src/prime_core/ai_service.py`, `scripts/phase15_qualify_continuation_019.py`, Notion disposable sandbox, R-037–R-041/R-055 ledgers and evidence, Phase-15 governance records, and GitHub publication.
+- Supersedes record: DEC-PRIME-PHASE15-018

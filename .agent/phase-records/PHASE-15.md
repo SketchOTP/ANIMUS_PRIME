@@ -70,6 +70,24 @@ result: FAIL
 - recovery_tests_run: `PASS` for provider outage/recovery; Notion read re-import/capability passed; live write/reconciliation recovery remains open.
 - result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
 
+## Continuation 019 — real Paragon cross-surface and disposable Notion writes
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-019`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualified_implementation_commit: `877b92ed3cb903022206d874f01e144f1c1e33b3`
+- database_environment: `PASS` — fresh disposable PostgreSQL `17.10`, pgvector `0.8.2`, all migrations from zero.
+- full_regression: `PASS` — `80 passed`; Phases 1 through 14 `PASS`.
+- newly_verified: none; preserved `R-046`, `R-047`, `R-049`, `R-054` `VERIFIED`.
+- Paragon: `PASS` — real Project A/B-scoped Goal, Progress, Ask, Documentation, Alignment, and memory execution; grounded fact, UNKNOWN, source isolation, prompt-injection resistance, supported/unsupported memory, outage degradation, explicit recovery, and durable provenance exercised.
+- Notion: `PASS` — standalone disposable connected-workspace create/read/update, managed-region preservation, child source revision refresh; no canonical or user-authored page touched.
+- R-055: `PARTIAL` — integrated product projection, live invalid-citation, contradiction/correction, and complete lifecycle closure remain.
+- R-037–R-041: `PARTIAL` — local PRIME adapter project binding, managed-region conflict/replay, source detach/retraction, outage reconciliation, and history rollover remain.
+- requirement_state: `4/26 VERIFIED`; `21 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`; R-056 remains `OPEN`.
+- qualification_evidence: `evidence/phase15/qualification-continuation-019.md`
+- security_tests_run: `PASS` for local-only provider, source isolation, untrusted injection, citation bounds, outage/no-fallback, secret-safe durable metadata, and disposable Notion write boundary.
+- recovery_tests_run: `PASS` for Paragon outage/recovery and new run identity; Notion local-adapter reconciliation/history remains unverified.
+- result: `FAIL` — aggregate V1 gate remains truthful; deployment `NOT PERFORMED`.
+
 ## Continuation 017 — Evidence and product citation verification
 
 - directive: `D-PRIME-PHASE15-REMEDIATION-017`

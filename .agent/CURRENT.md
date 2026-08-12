@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-11T20:45:00-04:00`
+- Last updated: `2026-08-12T00:55:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-018`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-019`
 - External directive ID: `NONE`
 - Objective: `Build and qualify ANIMUS PRIME through Phase 15 against PRIME-SPEC-V1.0.0.`
 - Current status: `IN_PROGRESS`
 - Acceptance: `Phase 0 through Phase 14 PASS; database-backed Phase 1–13 gates and full available regression PASS; R-046, R-047, R-049, and R-054 are VERIFIED from exact local evidence; R-037–R-041 and R-055 are partial; Phase 15/V1 remains FAIL at 4/26; R-056 remains OPEN.`
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, PRIME Notion read capability, Evidence/product citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Continue exact open requirement qualification; preserve R-046/R-047/R-049/R-054 VERIFIED, keep R-037–R-041/R-055 partial until their missing write/cross-surface criteria pass, keep R-056 OPEN, and do not claim V1.`
+- Immediate next action: `Close the exact remaining R-055 integrated-product gaps and local PRIME Notion adapter lifecycle gaps; continue R-042/R-043/R-045/R-048/R-050–R-053; preserve R-046/R-047/R-049/R-054 VERIFIED; keep R-056 OPEN.`
 
 ## Temporary task-relevant facts
 
@@ -22,7 +22,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `fresh docker-compose.phase0 PostgreSQL/pgvector recreation; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted>; ephemeral Paragon profile; ./.venv/bin/python scripts/phase15_qualify.py`
+- Command or check: `fresh docker-compose.phase1 PostgreSQL/pgvector recreation; PRIME_PHASE1_DB_URL=<redacted> PRIME_DATABASE_URL=<redacted>; ephemeral Paragon profile; ./.venv/bin/python scripts/phase15_qualify.py`
 - Result: `PASSED`
 
 ## Risks
@@ -55,13 +55,14 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 013 adds the Core-owned AI execution/profile boundary, durable run/source/profile/usage provenance, privacy and no-fallback enforcement, grounded Ask integration, structured-output/citation checks, prompt-injection and project-isolation defenses, and versioned golden fixtures; implementation convergence is now 25/26. R-056 remains open.
 - Continuation 017 adds product Evidence admission to Intelligence Search/Ask, Progress citation retention, device-aware off-machine backup classification, durable interrupted-restore failure state, historical Evidence availability truth, and real R-046/R-047 qualification fixtures. Implementation remains 25/26; R-046/R-047/R-049 are VERIFIED; R-056 remains open.
 - Continuation 018 adds the minimum environment-backed OpenAI-compatible local provider adapter, real Paragon Ask/Progress/Documentation/memory-admission execution, provider outage/recovery and secret-redaction evidence, and PRIME Notion credential/read capability evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 are VERIFIED; R-037–R-041/R-055 are partial; R-056 remains open.
+- Continuation 019 adds the bounded per-function Paragon output contract, real Project A/B Goal/Progress/Ask/Documentation/Alignment/memory qualification, UNKNOWN/isolation/injection/outage/recovery evidence, a reusable qualification harness, and disposable connected-workspace Notion create/update/source-refresh evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 remain VERIFIED; R-037–R-041/R-055 remain partial; R-056 remains open.
 
 ## Blockers
 
 - System Python lacks `psycopg`, and the default host database variables remain unset; the approved `.venv` plus freshly recreated disposable PostgreSQL/pgvector path was exercised successfully. R-049 is verified. The separate off-machine target, fresh-install/destructive/interrupted restore drill, native service lifecycle, private second-device Tailscale path, live Notion, approved Hindsight model/provider, approved AI, full interactive browser, sustained capacity, and full end-to-end environments remain unqualified.
 - Codebase-memory MCP indexing was attempted for Continuation 011 and returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
 - Codebase-memory MCP indexing was retried for Continuation 012 and again returned `Transport closed`; targeted local inspection was used and recorded as a blocker.
-- The supplied Notion authorization was used only ephemerally; PRIME API health and frozen source/handoff page plus child-block reads passed. No token material was printed or persisted. Live write/lifecycle qualification remains partial because no disposable write target was authorized.
+- The supplied Notion authorization was used only ephemerally; PRIME API health and frozen source/handoff page plus child-block reads passed. A connected Notion workspace disposable sandbox also passed create/read/update and managed-region/source-refresh probes. No token material was printed or persisted. Local PRIME adapter lifecycle qualification remains partial.
 - Continuation 013 re-inspected candidate config paths, service names, process command lines, and matching runtime environment variable names without printing values; no usable existing MyAssistant Notion secret source was found. Live PRIME Notion capability qualification remains blocked_by_environment.
 - Continuation 013 final validation: focused AI fixture tests PASSED (6 passed); full suite PASSED (54 passed, 17 skipped); compileall PASSED; adopted governance PASSED; diff check PASSED; Phase-15 qualification FAILED truthfully at 25/26 implementation-complete and 0/26 VERIFIED; implementation commit `10e0650a6fd14df3837baa7b45ff60d9ec33693b`; evidence/governance commit `e81010f27ef74b34e6bdc7d2618a219ac61ba2bb`; final governance state is recorded in the current HEAD; deployment NOT PERFORMED.
 - Continuation 014 publication preflight: canonical remote configured and authenticated; verified remote placeholder `4bd3e232f7d90655b5857a3b382a372366122931` replaced by local governed `a8300cf0b649940f0036b53a29a717a4c94ee798` using explicit `--force-with-lease`; exact parity and representative remote paths PASSED; no governed tags exist; publication evidence is `evidence/phase15/github-publication-014.md`.
@@ -71,6 +72,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 016 added a production-path qualification harness for real Git rewrite/reflog expiry/GC, PostgreSQL checkpoint registration, retained PRIME-owned bundle recovery, citation resolution, Time Lens source selection, non-retained degradation, and Evidence retraction/purge/parser recovery. The exact R-049 row is now `VERIFIED`; evidence is `evidence/phase15/qualification-continuation-016.md`.
 - Continuation 016 reconciled stale environment claims: Linux/systemd, Chromium, Tailscale, and Hindsight are present, but exact release criteria remain partial because root/native lifecycle, interactive browser walkthrough, second-device/private Serve, and approved Hindsight model/provider evidence are incomplete. Notion secret discovery remains `NOT FOUND`; no secrets were printed or persisted.
 - Continuation 017: codebase-memory MCP again returned `Transport closed`; targeted fallback was used. Chromium CDP qualified setup/auth/project/navigation/degraded paths but `agent-browser` was not installed and full assistive-technology/historical-browser evidence remains partial. Independent `/dev/sdb1` backup target passed but R-042 remains partial for complete scheduled recovery. Notion remains `NOT FOUND`; no secret was printed or persisted.
+- Continuation 019: codebase-memory MCP index/search again returned `Transport closed`; targeted fallback was used. Connected Notion disposable page `3ba833cb-27ff-8176-b7f6-cd00f2de016e` and child source `3ba833cb-27ff-81c4-8733-ed23b4aa6dcf` passed safe create/read/update probes. Local PRIME Notion adapter lifecycle and integrated R-055 projection/correction gaps remain open; no secret was printed or persisted.
 
 ## Pending decisions
 

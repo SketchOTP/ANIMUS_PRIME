@@ -255,3 +255,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: R-037–R-041 Notion authentication, read capability, write safety, and remaining lifecycle qualification.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-024
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-024
+- Fact or lesson: Live local-model qualification is sensitive to provider concurrency and output-shape drift. Explicit per-function schema instructions plus exact admitted-source citation rules allow the existing Core boundary to accept real Goal, Progress, Alignment, Documentation, Ask, and memory results without introducing a second provider architecture; controlled serial retries distinguish provider rate limiting from product failure.
+- Evidence location: `src/prime_core/ai_service.py`; `scripts/phase15_qualify_continuation_019.py`; `evidence/phase15/qualification-continuation-019.md`
+- Confidence: VERIFIED
+- Scope: R-055 Paragon cross-surface execution, structured output, source citation, rate-limit/degraded handling, and recovery.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-025
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-025
+- Fact or lesson: Connected Notion write capability can be safely established without mutating canonical PRIME content by using a standalone qualification page and disposable child source. Create/read/update, managed-region preservation, and source revision refresh are useful capability evidence, but they do not substitute for exercising the local PRIME Notion adapter's project binding, reconciliation, and history lifecycle.
+- Evidence location: `evidence/phase15/qualification-continuation-019.md`; disposable page identity is recorded there.
+- Confidence: VERIFIED
+- Scope: R-037–R-041 Notion write capability, managed-region ownership, source refresh, and lifecycle evidence boundaries.
+- Supersedes learning: L-PRIME-PHASE15-023

@@ -163,6 +163,11 @@
 - `docker-compose.phase0*.yml` — PostgreSQL, pgvector, Hindsight, Core, and Node integration environments.
 - `.cursor/` — editor/tool integration rules and local MCP configuration.
 
+- `scripts/phase15_qualify_continuation_019.py` — environment-backed Project A/B Paragon matrix, outage/recovery and bounded qualification output; credentials are process inputs only.
+- `evidence/phase15/qualification-continuation-019.md` — Continuation 019 evidence and exact remaining gaps.
+- `src/prime_core/ai_service.py` — explicit per-function provider output contract and admitted-source citation instruction.
+- `.agent/` — D-PRIME-PHASE15-REMEDIATION-019 directive, current state, learning, outcome, decision, and phase closure records.
+
 ## Areas that must not be edited manually
 
 - `baseline/` — immutable source-lock artifacts; changes require a new approved baseline.
