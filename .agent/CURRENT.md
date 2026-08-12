@@ -18,7 +18,7 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 026 qualification implementation commit: `5c2ec8e`; evidence/governance publication commit: `d11bf98d`; final synchronized tip: `a4a3916`; Notion Continuation 026 append and refetch: `PASSED`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 026 qualification implementation commit: `5c2ec8e`; evidence/governance publication commit: `d11bf98d`; Notion Continuation 026 append and refetch: `PASSED`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 

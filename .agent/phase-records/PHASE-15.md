@@ -204,6 +204,6 @@ result: FAIL
 - qualification_state: `14/26 VERIFIED`; `11 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
 - partial_rows: `R-031`–`R-036`, `R-043`, `R-044`, `R-045`, `R-048`, `R-053`.
 - R-056: `OPEN`.
-- governance_publication: `PASS` — evidence/governance commit `d11bf98d`; final local/origin parity confirmed at `a4a3916f6fc5dc54298f6b2621f7e8e03071fbf0`.
+- governance_publication: `PASS` — evidence/governance commit `d11bf98d`; local/origin parity confirmed, with subsequent append-only publication records synchronized.
 - notion_publication: `PASS` — Continuation 026 execution record appended and refetched on the connected disposable qualification page.
 - result: `FAIL` — Phase 15/V1 remains below 26/26; deployment `NOT PERFORMED`.
