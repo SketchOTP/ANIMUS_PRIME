@@ -207,3 +207,19 @@ result: FAIL
 - governance_publication: `PASS` — evidence/governance commit `d11bf98d`; local/origin parity confirmed, with subsequent append-only publication records synchronized.
 - notion_publication: `PASS` — Continuation 026 execution record appended and refetched on the connected disposable qualification page.
 - result: `FAIL` — Phase 15/V1 remains below 26/26; deployment `NOT PERFORMED`.
+
+## Continuation 027 — recovery and historical source-class qualification
+
+- directive: `D-PRIME-PHASE15-REMEDIATION-027`
+- baseline: `PRIME-SPEC-V1.0.0`
+- qualification_implementation_commit: `23cd1fd`
+- qualification_evidence: `evidence/phase15/qualification-continuation-027.md`
+- R-043: `VERIFIED` — encrypted representative backup, fresh-from-zero PostgreSQL restore, stable identity/hash/provenance recovery, secret exclusion and reprovision labels, populated-target refusal, unconditional replacement step-up and safety checkpoint, and genuine interrupted mutation with durable `REPAIR_REQUIRED` workflow state.
+- R-045: `PARTIAL` — 300 parser events over `20.078s`, queue peak `32`, `268` refusals, canonical-write priority, and `0.031s` drain recovery passed; parser concurrency, index backlog/stale-job protection, retention-pressure matrix, and usage/cost throttle/refusal remain unqualified.
+- R-048: `VERIFIED` — State-B all-source `EXACT` baseline; independent Evidence/SourceReference, Authority, Goal, Progress, memory, Notion projection, Brain, and retained Git loss/recovery matrix; A/B P1, C P2 correction, D current P2 with historical P1 retained.
+- R-044: `PARTIAL` — Hindsight health/retain is `UNAVAILABLE` because no process/listener exists and Docker is unavailable; no Paragon architecture substitution made.
+- R-053: `PARTIAL` — frozen §16.4/§16A/§25.7 accessible responsive operator criterion recorded; external screen-reader/AT environment unavailable.
+- qualification_state: `16/26 VERIFIED`; `9 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
+- newly_verified: `R-043`, `R-048`.
+- preserved_verified: `R-037`, `R-038`, `R-039`, `R-040`, `R-041`, `R-042`, `R-046`, `R-047`, `R-049`, `R-050`, `R-051`, `R-052`, `R-054`, `R-055`.
+- deployment: `NOT PERFORMED`.

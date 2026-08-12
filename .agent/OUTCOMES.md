@@ -1194,3 +1194,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: R-043 lacks the complete fresh-install destructive/interrupted restore drill; R-045 lacks sustained capacity/parser/index/stale-job/retention and bounded usage evidence; R-048 lacks the full independent source-class recovery matrix; R-053 lacks external assistive-technology evidence; R-044 retain remains unavailable; R-056 remains OPEN; Phase 15/V1 remains FAIL at 14/26.
 - Blockers: authenticated Notion write connector availability and the remaining environment-backed qualification criteria.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-027 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-044
+- Supersedes outcome: OUT-PRIME-PHASE15-REMEDIATION-043
+- Closed: 2026-08-12T16:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 027 promoted R-043 and R-048 from complete native evidence while preserving all fourteen prior VERIFIED rows. R-043 passed encrypted backup, fresh-from-zero restore, identity/hash/provenance recovery, populated-target refusal, unconditional replacement step-up, safety checkpoint, and genuine interrupted mutation with durable REPAIR_REQUIRED state. R-048 passed the real A/B/C/D correction timeline and independent loss/recovery matrix for repository/Git, Authority, Goal, Progress, Evidence/SourceReference, memory, Notion projection, Brain, and retained Git. R-045 remains partial after a 300-event/20.078-second parser load because parser concurrency, index/stale-job, retention-pressure, and usage/cost normative observability/enforcement are not present. R-044 remains partial because Hindsight is unavailable; R-053 remains partial because no external assistive-technology environment exists; R-056 remains OPEN. Deployment was not performed.
+- Changed areas: `apps/core/main.py`, `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_027.py`, `evidence/phase15/qualification-continuation-027.md`, the three governed requirement views, and append-only `.agent` records.
+- Validation:
+  - focused Continuation 027 harness - PASSED
+  - existing R-043/R-045/R-048 tests (`3 passed, 83 deselected`) - PASSED
+  - native AST parse - PASSED
+  - full regression (`85 passed, 1 skipped`) - PASSED
+  - Phases 1–14 qualification scripts - PASSED
+  - governance and mechanical YAML/count checks (`26 rows; 16 verified, 9 partial, 1 blocked_by_environment`) - PASSED
+  - final diff/secret scan, GitHub publication/parity, and Notion append - NOT RUN
+- Remaining risks: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent; Phase 15/V1 remains FAIL at 16/26.
+- Blockers: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent.
+- Follow-up directive: none

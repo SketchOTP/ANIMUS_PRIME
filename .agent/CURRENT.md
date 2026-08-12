@@ -3,26 +3,26 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T15:57:06-04:00`
+- Last updated: `2026-08-12T17:05:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-026`
-- External directive ID: `ANIMUS PRIME — Continuation 026 historical qualification and governed reconciliation`
-- Objective: `Qualify the populated historical State-A/B/C/D path, promote only fully evidenced requirements, reconcile all governed views, and publish the truthful result.`
-- Current status: `IN_PROGRESS`
-- Acceptance: `R-050 is VERIFIED from complete populated browser historical evidence; all governed views agree at 14/26 VERIFIED, 11 partial, R-056 blocked/open, 0 failed; remaining gaps are explicit and deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-027`
+- External directive ID: `ANIMUS PRIME — Phase 15 Qualification Continuation 027`
+- Objective: `Close R-043, R-045, and R-048 where complete native evidence exists; investigate R-044 and evaluate R-053 without fabricated environment evidence.`
+- Current status: `VALIDATING`
+- Acceptance: `R-043 and R-048 are promoted only on complete normative evidence; R-045, R-044, and R-053 remain exact partial states; all governed views reconcile at 16/26; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, real Git/Evidence/Goal/Progress/Memory/Notion/Brain historical fixture, supported-browser Time Lens/Ask/Brain/Return-to-Now path, runtime history verification, requirement ledgers, Continuation 026 evidence, append-only governance records, GitHub publication, and bounded Notion reconciliation.`
-- Immediate next action: `Complete publication/parity and cleanup, then continue R-043, R-045, and R-048 exact recovery gaps; revisit R-053 when external assistive technology is available.`
+- Expected or actual touched areas: `backup/restore safety and recovery paths, secret-safe backup projection, historical Evidence availability, Continuation 027 qualification harness/evidence, the three requirement views, append-only governance records, GitHub publication, and bounded Notion reconciliation.`
+- Immediate next action: `Complete final diff/secret/parity checks, publish the Continuation 027 evidence and governance records, then record the exact final SHAs and remaining environment gaps.`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 026 qualification implementation commit: `5c2ec8e`; evidence/governance publication commit: `d11bf98d`; Notion Continuation 026 append and refetch: `PASSED`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 qualification implementation commit: `23cd1fd`; R-043/R-048 are VERIFIED, R-045/R-044/R-053 remain partial, and R-056 remains blocked/open; Notion publication is pending; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Native Atlas fresh Docker/PostgreSQL reset; Continuation 026 focused regression; web shell; compileall; populated real Chromium historical fixture; governance/YAML/count/secret/diff checks; GitHub fetch/parity`
+- Command or check: `Fresh disposable PostgreSQL Continuation 027 harness; focused tests; full regression; Phases 1–14; AST/YAML/count/governance checks`
 - Result: `PASSED`
 
 ## Risks
@@ -57,6 +57,7 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 - Continuation 017 adds product Evidence admission to Intelligence Search/Ask, Progress citation retention, device-aware off-machine backup classification, durable interrupted-restore failure state, historical Evidence availability truth, and real R-046/R-047 qualification fixtures. Implementation remains 25/26; R-046/R-047/R-049 are VERIFIED; R-056 remains open.
 - Continuation 018 adds the minimum environment-backed OpenAI-compatible local provider adapter, real Paragon Ask/Progress/Documentation/memory-admission execution, provider outage/recovery and secret-redaction evidence, and PRIME Notion credential/read capability evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 are VERIFIED; R-037–R-041/R-055 are partial; R-056 remains open.
 - Continuation 019 adds the bounded per-function Paragon output contract, real Project A/B Goal/Progress/Ask/Documentation/Alignment/memory qualification, UNKNOWN/isolation/injection/outage/recovery evidence, a reusable qualification harness, and disposable connected-workspace Notion create/update/source-refresh evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 remain VERIFIED; R-037–R-041/R-055 remain partial; R-056 remains open.
+- Continuation 027 promotes R-043 and R-048 on fresh production-path recovery evidence; R-045 remains partial for missing normative observability/enforcement, R-044 remains partial because Hindsight is unavailable, R-053 remains partial because external AT is unavailable, and R-056 remains blocked/open. Final publication and Notion append remain to be completed.
 
 ## Blockers
 

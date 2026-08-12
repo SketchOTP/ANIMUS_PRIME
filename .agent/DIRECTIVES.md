@@ -361,3 +361,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-025
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-027
+
+- Issued: 2026-08-12T16:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Phase 15 Qualification Continuation 027
+- Objective: Close the deepest locally executable qualification gaps R-043, R-045, and R-048 without regressing the fourteen VERIFIED rows; investigate R-044 and evaluate R-053 only through genuine evidence.
+- Scope: Fresh-install continuity restore and interruption safety, sustained parser/index/queue/retention/usage qualification, independent historical source-class loss and correction recovery, evidence-backed Hindsight diagnosis, exact frozen assistive-technology criterion, governed records, GitHub and Notion publication.
+- Exclusions: R-050 rerun except regression support, R-056 closure, fabricated Windows/Tailscale/assistive-technology evidence, credential persistence or disclosure, Phase 16, and deployment.
+- Acceptance: Promote only rows with complete normative evidence; mechanically reconcile all three governed views; preserve the fourteen VERIFIED rows; keep unresolved environment gaps explicit; publish exact local/origin parity and Notion status; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-REMEDIATION-026
+- Status at issuance: ISSUED

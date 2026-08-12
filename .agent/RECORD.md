@@ -226,3 +226,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The populated historical fixture reconstructed State B exactly across repository, authority, Goal, Evidence, Progress, Memory, Notion, Brain, and Git. Historical Ask/Brain excluded later current state, deliberate Evidence loss produced truthful source-level PARTIAL status, exact restoration recovered all sources, and Return to Now selected CURRENT with exact sources. The browser path therefore meets R-050's qualification boundary while the other rows retain explicit incomplete criteria.
 - Affected areas: `Dockerfile.core`, `src/prime_core/git_history.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_026.py`, `evidence/phase15/qualification-continuation-026.md`, the three governed requirement views, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-025
+
+## DEC-PRIME-PHASE15-027
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-027
+- Status: CLOSED
+- Decision or event: Promote R-043 and R-048 to VERIFIED from Continuation 027's production-path disposable evidence. Preserve R-045 as partial because the system lacks complete parser/index/stale-job, retention-pressure, and usage/cost qualification boundaries. Keep R-044 and R-053 partial, R-056 OPEN, and Phase 15/V1 FAIL at 16/26.
+- Rationale: R-043 used a genuinely new PostgreSQL target, complete representative source state, production restore route, unconditional replacement step-up, safety checkpoint, populated-target refusal, and durable interruption state. R-048 independently removed and restored every required historical source class and proved the P1/P2 correction timeline without backward leakage. A real sustained parser load did not establish the missing R-045 normative boundaries, so no over-promotion was made. Hindsight retain is unavailable because no Hindsight process/listener or Docker runtime exists on the qualification host; no external AT environment is available.
+- Affected areas: `apps/core/main.py`, `src/prime_core/backup_service.py`, `src/prime_core/history_service.py`, `scripts/phase15_qualify_continuation_027.py`, `evidence/phase15/qualification-continuation-027.md`, the three governed requirement views, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-026
