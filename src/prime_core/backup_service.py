@@ -166,7 +166,9 @@ class BackupCoordinator:
                 ).fetchall()
                 columns = [row["column_name"] for row in column_info]
                 column_types[table] = {
-                    row["column_name"]: row["udt_name"] for row in column_info
+                    row["column_name"]: row["udt_name"]
+                    for row in column_info
+                    if not self._is_secret_key(row["column_name"])
                 }
                 quoted_columns = ", ".join(self._quote_identifier(column) for column in columns)
                 query = f"SELECT {quoted_columns} FROM prime_core.{self._quote_identifier(table)}"
@@ -453,7 +455,7 @@ class BackupCoordinator:
     @classmethod
     def _is_secret_key(cls, key: str) -> bool:
         lowered = key.lower()
-        return lowered in cls.SECRET_NAMES or any(token in lowered for token in ("api_key", "private_key", "access_token", "refresh_token"))
+        return lowered in cls.SECRET_NAMES or any(token in lowered for token in ("password", "recovery_hash", "token_hash", "api_key", "private_key", "access_token", "refresh_token"))
 
     @classmethod
     def _reject_secrets(cls, value: Any, path: str = "root") -> None:

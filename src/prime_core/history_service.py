@@ -277,7 +277,7 @@ class HistoryService:
         evidence = None
         if row["source_class"] == "EVIDENCE":
             with connect(self.settings) as db:
-                evidence = db.execute("SELECT evidence_id,retracted_at,purged_at FROM prime_core.evidence_records WHERE project_id=%s AND source_reference_id=%s", (project_id, source_reference_id)).fetchone()
+                evidence = db.execute("SELECT evidence_id,retracted_at,purged_at,content_hash,storage_mode,storage_path,source_uri FROM prime_core.evidence_records WHERE project_id=%s AND source_reference_id=%s", (project_id, source_reference_id)).fetchone()
         if row["source_class"] == "GIT_COMMIT":
             with connect(self.settings) as db:
                 checkpoint = db.execute("SELECT bundle_locator,content_hash,retained FROM prime_core.git_history_checkpoints WHERE project_id=%s AND source_reference_id=%s", (project_id, source_reference_id)).fetchone()
@@ -290,6 +290,20 @@ class HistoryService:
             return {"source_reference_id": source_reference_id, "status": "CHANGED_HISTORICAL_CONTENT_UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False}
         if evidence and evidence.get("purged_at"):
             return {"source_reference_id": source_reference_id, "status": "UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False, "reason": "EVIDENCE_PURGED"}
+        if evidence:
+            evidence_available = True
+            if evidence.get("storage_mode") == "MANAGED_COPY":
+                path = Path(evidence.get("storage_path") or "")
+                evidence_available = path.is_file()
+                if evidence_available and evidence.get("content_hash"):
+                    try:
+                        evidence_available = hashlib.sha256(path.read_bytes()).hexdigest() == evidence["content_hash"]
+                    except OSError:
+                        evidence_available = False
+            elif evidence.get("storage_mode") == "NODE_REFERENCE":
+                evidence_available = Path(evidence.get("source_uri") or "").is_file()
+            if not evidence_available:
+                return {"source_reference_id": source_reference_id, "status": "UNAVAILABLE", "locator": row["locator"], "revision": row["revision"], "content_hash": row["content_hash"], "historical_available": False, "reason": "EVIDENCE_CONTENT_UNAVAILABLE"}
         revision_match = current_revision is None or current_revision == row["revision"]
         hash_match = current_content_hash is None or current_content_hash == row["content_hash"]
         if revision_match and hash_match:

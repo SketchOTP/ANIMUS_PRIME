@@ -732,7 +732,7 @@ def backup_preflight(body: BackupRequest, request: Request, prime_session: str |
 @app.post("/v1/backups/restore")
 def restore_backup(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None), step_up: str | None = Header(default=None, alias="X-PRIME-STEP-UP")):
     require_session(request, prime_session)
-    if not body.replace and step_up != "CONFIRM":
+    if step_up != "CONFIRM":
         return error("RESTORE_STEP_UP_REQUIRED", "restore requires step-up confirmation", request_id(request), status_code=403)
     try:
         return backups.restore_bundle(
