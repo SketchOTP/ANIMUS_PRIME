@@ -18,7 +18,7 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 028 final published tip: `14b4aea119cb8406ae9f3e5f93e5772ee12ec091`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 product alignment remains `3 USER_USABLE_VERIFIED / 78 not yet user-usable`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 029 final published tip: `23b504a5a322f3fd98da021dfd35b03c84adf593`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 product alignment remains `3 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 71 not yet release-qualified`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 

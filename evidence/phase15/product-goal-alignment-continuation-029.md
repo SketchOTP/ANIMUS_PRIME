@@ -62,4 +62,6 @@ The fresh qualification database produced `16 VERIFIED / 9 partial / 1 blocked_b
 - YAML/AST/diff/secret checks: **PASSED**
 - deployment: **NOT PERFORMED**
 
+Publication: implementation/evidence/governance commit `23b504a5a322f3fd98da021dfd35b03c84adf593` is published to GitHub `main`; local/origin parity matched.
+
 The Python `distutils-precedence.pth` warning from the host installation is environmental and did not change any qualification result. The SSHFS session-directory limitation for gstack was handled by using a local writable browser-session working directory; the repository remained the native Atlas checkout.
