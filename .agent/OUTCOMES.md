@@ -1070,7 +1070,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Supersedes outcome: none
 - Closed: 2026-08-12T12:10:00Z
 - Acceptance: PARTIAL
-- Summary: Took over the authoritative Atlas checkout and independently reconciled inherited Continuation 020 work. Atlas `/home/sketch/Projects/ANIMUS_PRIME`, local `main`, and GitHub `origin/main` match at `e7f6099679a982d9708c3a4c96d87fa900a0e89d`. Continuation 020 remains the current governed state: R-055 is VERIFIED; R-046, R-047, R-049, and R-054 remain VERIFIED; R-037–R-041 remain PARTIAL because the approved live Notion parent is archived; R-056 remains OPEN; Phase 15/V1 remains FAIL at 5/26; deployment was not performed.
+- Summary: Took over the authoritative Atlas checkout and independently reconciled inherited Continuation 020 work. The inherited qualification state is at `e7f6099679a982d9708c3a4c96d87fa900a0e89d`; the status-only takeover publication advanced Atlas `/home/sketch/Projects/ANIMUS_PRIME`, local `main`, and GitHub `origin/main` to `e7b70d26f1016bde2d5479cd3adeadda9ee4d725`. Continuation 020 remains the current governed state: R-055 is VERIFIED; R-046, R-047, R-049, and R-054 remain VERIFIED; R-037–R-041 remain PARTIAL because the approved live Notion parent is archived; R-056 remains OPEN; Phase 15/V1 remains FAIL at 5/26; deployment was not performed.
 - Validation:
   - adopted governance validator - PASSED
   - compileall and diff-check - PASSED

@@ -173,7 +173,7 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Date: 2026-08-12
 - Record or decision ID: DEC-PRIME-PHASE15-021
 - Status: CLOSED
-- Decision or event: Treat Atlas `/home/sketch/Projects/ANIMUS_PRIME` at GitHub-synchronized `e7f6099679a982d9708c3a4c96d87fa900a0e89d` as the authoritative inherited state. Accept Continuation 020's fresh disposable `86 passed` result as the recorded qualification evidence, while classifying the current populated-database `83 passed/3 state-collision failures` rerun as non-authoritative reuse evidence rather than a code regression.
+- Decision or event: Treat Atlas `/home/sketch/Projects/ANIMUS_PRIME` at final status-synchronized HEAD `e7b70d26f1016bde2d5479cd3adeadda9ee4d725` as the authoritative current state, with inherited Continuation 020 qualification commit `e7f6099679a982d9708c3a4c96d87fa900a0e89d`. Accept Continuation 020's fresh disposable `86 passed` result as the recorded qualification evidence, while classifying the current populated-database `83 passed/3 state-collision failures` rerun as non-authoritative reuse evidence rather than a code regression.
 - Rationale: the current failures are deterministic collisions from prior durable test state, while governance and compileall pass and the current ledgers, evidence, implementation diff, and Architect record agree on the same 5/26 qualification state. A fresh reset is required for a new authoritative regression and was intentionally not performed during this read/verify takeover pass.
 - Affected areas: `.agent/CURRENT.md`, `.agent/DIRECTIVES.md`, `.agent/OUTCOMES.md`, `.agent/LEARNINGS.md`, qualification execution records, and future fresh-database rerun procedure.
 - Supersedes record: none
