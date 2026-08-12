@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T17:50:29-04:00`
+- Last updated: `2026-08-12T19:20:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028`
-- External directive ID: `ANIMUS PRIME — Continuation 028 Frozen V1 Product Goal Alignment Audit + Product Remediation`
-- Objective: `Audit every frozen §26 item against the actual operator product, fix confirmed local gaps, and enforce V1_PRODUCT_GOAL_ALIGNMENT without changing the frozen baseline.`
-- Current status: `CLOSED_PARTIAL`
-- Acceptance: `Every §26 item has an evidence-backed product status; local user-facing gaps are fixed where actionable; valid remediation rows are preserved; V1_PRODUCT_GOAL_ALIGNMENT remains truthful; deployment remains NOT PERFORMED.`
+- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-029`
+- External directive ID: `ANIMUS PRIME — Continuation 029 V1 Product Completion Wave 1`
+- Objective: `Complete the first product-understandability wave with a durable disposable fixture, real operator project context surfaces, interpreter-portable qualification, and an architecture-aware §26 audit without changing the frozen baseline.`
+- Current status: `COMPLETE`
+- Acceptance: `The authorized Continuation 029 product slice is implemented and evidence-backed; remaining product and environment gaps stay truthful; governed records are reconciled; deployment remains NOT PERFORMED.`
 - Current phase: `15`
-- Expected or actual touched areas: `frozen §26 audit, product snapshot and Since You Were Here routes, data-backed operator surfaces, Project Brain visualization boundary, product browser qualification, release-gate enforcement, evidence, and append-only governance records.`
-- Immediate next action: `Continue the remaining product-alignment gaps in value order, beginning with onboarding/setup resume and external accessibility evidence boundaries; do not alter the frozen baseline or deploy.`
+- Expected or actual touched areas: `qualification harness portability, durable disposable fixture, project context/search/repository/authority surfaces, bounded context export, architecture-aware §26 audit, evidence, and append-only governance records.`
+- Immediate next action: `Reset mutable current state to IDLE after publication review; do not alter the frozen baseline or deploy.`
 
 ## Temporary task-relevant facts
 
@@ -22,8 +22,10 @@ Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 028 product audit, disposable browser/API qualification, focused regression, governance/YAML/AST/diff checks`
-- Result: `PARTIAL — product gate FAIL is expected; focused tests and final browser path passed; full harness retains the Windows python3 alias failure`
+- Command or check: `Continuation 029 implementation, fresh-database harness, browser/API qualification, governance/YAML/AST/diff checks`
+- Result: `PASSED`
+
+Continuation 029 acceptance is complete for the authorized Wave 1 scope and is awaiting reset. The V1 product gate remains FAIL by design because unresolved product and environment requirements remain.
 
 ## Risks
 

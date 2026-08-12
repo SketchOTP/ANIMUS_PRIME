@@ -45,6 +45,10 @@ class RepositoryIndexer:
                 "INSERT INTO prime_core.source_snapshots(source_snapshot_id,project_id,source_class,source_revision,source_hash,freshness_state,observed_at,metadata) VALUES (%s,%s,'REPOSITORY',%s,%s,'CURRENT',%s,%s) ON CONFLICT (project_id,source_class,source_revision) DO UPDATE SET freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
                 (_id("snapshot"), project_id, source_revision, source_revision, observed, "{}"),
             )
+            db.execute(
+                "UPDATE prime_core.project_bindings SET canonical_revision=%s,updated_at=%s WHERE project_id=%s",
+                (source_revision, observed, project_id),
+            )
             return {"project_id": project_id, "source_revision": source_revision, "files_indexed": count, "freshness_state": "CURRENT"}
 
     def search(self, project_id: str, query: str, limit: int = 50) -> list[dict[str, Any]]:

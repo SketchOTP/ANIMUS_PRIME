@@ -5,8 +5,8 @@ product_alignment_item_count: 81
 governed_start_commit: 275bfc69252ebe6506ca6c6d3c35c32da37ad1e2
 historical_phase15_result: FAIL
 qualification_ledger: docs/phase15-remediation-qualification-ledger.yaml
-latest_qualification_evidence: evidence/phase15/product-goal-alignment-continuation-028.md
-latest_qualification_commit: d185280
+latest_qualification_evidence: evidence/phase15/product-goal-alignment-continuation-029.md
+latest_qualification_commit: continuation-029-publication
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 release_rule: "Only VERIFIED rows with passing implementation and evidence may satisfy the V1 release gate."
 requirements:

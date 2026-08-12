@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -14,4 +15,5 @@ def test_compose_file_uses_pinned_images() -> None:
 
 
 def test_phase0_script_compiles() -> None:
-    subprocess.run(["python3", "-m", "py_compile", "scripts/phase0_qualify.py"], cwd=ROOT, check=True)
+    source = (ROOT / "scripts/phase0_qualify.py").read_text(encoding="utf-8")
+    compile(source, "scripts/phase0_qualify.py", "exec")

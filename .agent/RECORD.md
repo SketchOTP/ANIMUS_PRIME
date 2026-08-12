@@ -246,3 +246,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: A fresh disposable PostgreSQL/browser run exercised initialization, sign-in, project creation, live Home/Overview/Needs Attention/Recently Active/Activity, checkpoint advancement, safe UNKNOWN Ask, grouped Search, derived-only Brain, and Time Lens controls. The remaining data-backed workflows, integrations, lifecycle paths, and environment-bounded evidence are not complete, so no blanket remediation-row reopen or release promotion is justified.
 - Affected areas: `apps/core/main.py`, `apps/web/index.html`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/requirements-traceability.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `evidence/phase15/product-goal-alignment-continuation-028.md`, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-027
+
+## DEC-PRIME-PHASE15-029
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-029
+- Status: CLOSED
+- Decision or event: Complete the first V1 product-understandability wave with a production-backed durable fixture, repository/authority/search/context-export operator slice, interpreter-portable qualification, and architecture-aware §26 audit. Preserve the frozen baseline, keep the V1 product gate FAIL, keep R-056 OPEN, and do not deploy.
+- Rationale: Fresh qualification passed 86 tests and Phases 1–14. The browser path loaded real Project A state, exposed goal/progress/integrity/repository/authority/memory/evidence/activity, returned bounded Markdown/JSON context, and proved Project A/B search/export isolation. Seven architecture-only invariants are now PRODUCT_VERIFIED with explicit evidence; all remaining user-facing and environment-bound gaps remain visible.
+- Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/indexer.py`, `src/prime_core/intelligence_service.py`, `scripts/seed_product_completion_029.py`, `tests/phase0/test_harness.py`, `tests/phase15/test_product_completion_029.py`, `docs/v1-product-goal-alignment-audit.yaml`, the three governed views, Continuation 029 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-028

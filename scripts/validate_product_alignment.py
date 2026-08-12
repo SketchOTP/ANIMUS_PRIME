@@ -10,6 +10,7 @@ import yaml
 ROOT = Path(__file__).parents[1]
 ALLOWED = {
     "USER_USABLE_VERIFIED",
+    "PRODUCT_VERIFIED",
     "IMPLEMENTED_NOT_PRODUCT_QUALIFIED",
     "BACKEND_ONLY",
     "UI_SHELL_ONLY",

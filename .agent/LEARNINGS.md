@@ -315,3 +315,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 028 product-goal alignment, CSP serving boundary, Home and Since You Were Here qualification.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-030
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-030
+- Fact or lesson: A durable project handoff must be qualified through production Core services with real Git-backed repository state, approved goal identity, authority health, progress history, evidence, memory provenance, activity, integration metadata, and explicit Project A/B isolation. On Windows SSHFS, Python bytecode and gstack session writes can fail even when source access works, so qualification must use the active interpreter and a local writable browser-session directory without changing the authoritative Atlas checkout.
+- Evidence location: `scripts/seed_product_completion_029.py`; `tests/phase0/test_harness.py`; `evidence/phase15/product-goal-alignment-continuation-029.md`
+- Confidence: VERIFIED
+- Scope: Continuation 029 fixture durability, interpreter portability, browser qualification, project context export, and Atlas SSHFS environment boundary.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-031
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-031
+- Fact or lesson: Frozen §26 audit rows that specify architecture or security invariants can be PRODUCT_VERIFIED when the invariant is exercised and evidenced through production boundaries, even when no dedicated screen is required. This does not turn the remaining user-facing workflows into verified product behavior and must not move the V1 release gate while other rows remain incomplete.
+- Evidence location: `docs/v1-product-goal-alignment-audit.yaml`; `evidence/phase15/product-goal-alignment-continuation-029.md`
+- Confidence: VERIFIED
+- Scope: DOD-003, DOD-010, DOD-025, DOD-029, DOD-046, DOD-072, and DOD-078 audit classification.
+- Supersedes learning: none

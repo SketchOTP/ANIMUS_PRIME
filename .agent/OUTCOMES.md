@@ -1234,4 +1234,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - deployment - NOT PERFORMED
 - Remaining risks: the deeper project surfaces and lifecycle workflows remain incomplete; Search source coverage, populated Ask citations, interactive Brain, Fork/Clone, onboarding/export, Hindsight retain, external assistive technology, native node paths, and R-045 boundaries remain open.
 - Blockers: the repository test harness assumes a `python3` executable on Windows; Hindsight, external AT, and native-node qualification environments remain unavailable where previously recorded.
-- Follow-up directive: continue with R-051/R-053/R-050 product completion and then R-043/R-045/R-048, without changing the frozen baseline or deploying.
+- Follow-up directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-029
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-029 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-046
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-ALIGNMENT-045
+- Closed: 2026-08-12T20:15:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 029 completed the authorized V1 product-understandability Wave 1. It fixed the Windows interpreter/SSHFS harness boundary, added a durable production-service-backed two-project fixture, exposed repository/authority/search/context-export operator surfaces, and qualified real Project A/B isolation. Seven architecture/security-only §26 rows are PRODUCT_VERIFIED with explicit rationales. The V1 product gate remains FAIL, R-056 remains OPEN, R-044 and R-053 remain partial, and native/Tailscale gaps remain open.
+- Changed areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/indexer.py`, `src/prime_core/intelligence_service.py`, `scripts/seed_product_completion_029.py`, `tests/phase0/test_harness.py`, `tests/phase15/test_product_completion_029.py`, `docs/v1-product-goal-alignment-audit.yaml`, the three governed views, Continuation 029 evidence, and append-only `.agent` records.
+- Validation:
+  - fresh full regression - PASSED
+  - Phases 1–14 migration qualification - PASSED
+  - adopted governance and phase-0 harness - PASSED
+  - product alignment structural validation - PASSED
+  - V1 product gate - FAILED
+  - browser project, export, search, repository, authority, and A/B isolation - PASSED
+  - YAML/AST/diff/secret checks - PASSED
+  - deployment - NOT APPLICABLE
+- Remaining risks: onboarding/setup resume, complete Progress/Alignment/Milestones/Attention workflows, interactive historical selector, broader lifecycle surfaces, Hindsight retain, external assistive technology, native node/Tailscale qualification, and R-056 remain open.
+- Blockers: Hindsight, external assistive technology, native/Tailscale environments, and remaining product implementation gaps.
+- Follow-up directive: none

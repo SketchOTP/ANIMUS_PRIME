@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import logging
 import base64
+import hashlib
+import json
 import secrets
+import subprocess
 import time
 import uuid
 from collections import defaultdict
@@ -562,6 +565,247 @@ def search_project(project_id: str, q: str, request: Request, prime_session: str
     return {"project_id": project_id, "results": results, "groups": grouped["groups"]}
 
 
+def _repository_binding(project_id: str) -> dict[str, Any] | None:
+    with connect(settings) as db:
+        row = db.execute(
+            "SELECT b.repository_id,b.canonical_revision,r.canonical_path,r.identity_fingerprint,n.node_id,n.name AS node_name,n.status AS node_status "
+            "FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
+            "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE b.project_id=%s",
+            (project_id,),
+        ).fetchone()
+    return dict(row) if row else None
+
+
+def _safe_repository_path(project_id: str, relative_path: str = "") -> tuple[Path, Path]:
+    binding = _repository_binding(project_id)
+    if not binding:
+        raise KeyError("project has no repository binding")
+    root = Path(binding["canonical_path"]).expanduser().resolve(strict=True)
+    candidate = (root / relative_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise ValueError("repository path escapes the canonical repository root") from exc
+    return root, candidate
+
+
+def _git(root: Path, *args: str) -> str:
+    try:
+        result = subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, text=True, timeout=8)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return "UNAVAILABLE"
+    return result.stdout.strip() or "UNKNOWN"
+
+
+def _git_state(project_id: str) -> dict[str, Any]:
+    try:
+        root, _ = _safe_repository_path(project_id)
+    except (KeyError, OSError, ValueError):
+        return {"status": "UNAVAILABLE", "repository_path": "UNKNOWN"}
+    worktree_lines = _git(root, "worktree", "list", "--porcelain")
+    worktrees: list[dict[str, str]] = []
+    current: dict[str, str] = {}
+    for line in worktree_lines.splitlines():
+        if not line.strip():
+            if current:
+                worktrees.append(current)
+                current = {}
+            continue
+        key, _, value = line.partition(" ")
+        if key == "worktree":
+            current["path"] = value
+        elif key == "HEAD":
+            current["revision"] = value
+        elif key == "branch":
+            current["branch"] = value.removeprefix("refs/heads/")
+        elif key == "detached":
+            current["branch"] = "DETACHED"
+    if current:
+        worktrees.append(current)
+    recent = []
+    log_output = _git(root, "log", "-8", "--format=%H%x1f%h%x1f%ad%x1f%s", "--date=iso-strict")
+    for line in log_output.splitlines():
+        parts = line.split("\x1f", 3)
+        if len(parts) == 4:
+            recent.append({"revision": parts[0], "short_revision": parts[1], "timestamp": parts[2], "summary": parts[3]})
+    return {
+        "status": "CURRENT" if _git(root, "status", "--porcelain") == "UNKNOWN" else "AVAILABLE",
+        "repository_path": str(root),
+        "canonical_revision": _git(root, "rev-parse", "HEAD"),
+        "branch": _git(root, "branch", "--show-current") or "DETACHED",
+        "dirty": bool(_git(root, "status", "--porcelain") not in {"", "UNKNOWN", "UNAVAILABLE"}),
+        "worktrees": worktrees,
+        "recent_commits": recent,
+    }
+
+
+def _project_context(project_id: str) -> dict[str, Any]:
+    snapshot = _project_snapshot(project_id)
+    binding = snapshot.get("binding") or {}
+    git_state = _git_state(project_id)
+    with connect(settings) as db:
+        goal = db.execute(
+            "SELECT goal_revision_id,revision_number,content,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions "
+            "WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,),
+        ).fetchone()
+        progress_history = [dict(row) for row in db.execute(
+            "SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at "
+            "FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 12", (project_id,),
+        ).fetchall()]
+        authority_history = [dict(row) for row in db.execute(
+            "SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at,metadata,content_snapshot,canonical_commit "
+            "FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 8", (project_id,),
+        ).fetchall()]
+        memory_rows = [dict(row) for row in db.execute(
+            "SELECT memory_id,content_class,content,status,source_revision,source_reference_id,branch_context,created_at,supersedes_memory_id "
+            "FROM prime_core.memory_records WHERE project_id=%s ORDER BY created_at DESC LIMIT 16", (project_id,),
+        ).fetchall()]
+        evidence_rows = [dict(row) for row in db.execute(
+            "SELECT evidence_id,source_type,locator,source_reference_id,source_revision,content_hash,privacy_class,parser_status,index_status,captured_at "
+            "FROM prime_core.evidence_records WHERE project_id=%s AND retracted_at IS NULL AND purged_at IS NULL ORDER BY captured_at DESC LIMIT 16", (project_id,),
+        ).fetchall()]
+        notion_sources = [dict(row) for row in db.execute(
+            "SELECT page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at,metadata FROM prime_core.notion_knowledge_sources WHERE project_id=%s ORDER BY observed_at DESC NULLS LAST LIMIT 12", (project_id,),
+        ).fetchall()]
+        ai_runs = [dict(row) for row in db.execute(
+            "SELECT run_id,function,provider,model,profile_revision,prompt_revision,schema_revision,privacy_mode,source_revision_set,status,error_class,created_at "
+            "FROM prime_core.ai_runs WHERE project_id=%s ORDER BY created_at DESC LIMIT 8", (project_id,),
+        ).fetchall()]
+        grants = [dict(row) for row in db.execute(
+            "SELECT grant_id,client_id,capabilities,created_at,expires_at,revoked_at FROM prime_core.mcp_grants WHERE project_id=%s ORDER BY created_at DESC LIMIT 8", (project_id,),
+        ).fetchall()]
+        checkpoints = [dict(row) for row in db.execute(
+            "SELECT checkpoint_id,commit_id,coverage_status,content_hash,captured_at,metadata FROM prime_core.git_history_checkpoints WHERE project_id=%s ORDER BY captured_at DESC LIMIT 8", (project_id,),
+        ).fetchall()]
+    authority_files: dict[str, dict[str, str]] = {}
+    try:
+        root, _ = _safe_repository_path(project_id)
+        for name in ("PROJECT_GOAL.md", ".agent/CURRENT.md", ".agent/DIRECTIVES.md", ".agent/OUTCOMES.md", ".agent/LEARNINGS.md", ".agent/RECORD.md"):
+            path = root / name
+            if path.is_file() and path.stat().st_size <= 40_000:
+                content = path.read_text(encoding="utf-8", errors="replace")
+                authority_files[name] = {"sha256": hashlib.sha256(content.encode()).hexdigest(), "content": content}
+    except (KeyError, OSError, ValueError):
+        pass
+    return {
+        "schema": "prime.project-context.v1",
+        "generated_at": time.time(),
+        "project": snapshot["project"],
+        "repository": {**binding, "git": git_state, "checkpoint_history": checkpoints},
+        "goal": {"revision": dict(goal) if goal else None, "items": snapshot.get("goal_items", []), "history": progress_history},
+        "current_work": {"authority": authority_files.get(".agent/CURRENT.md"), "directives": authority_files.get(".agent/DIRECTIVES.md")},
+        "authority": {"latest": snapshot.get("authority"), "history": authority_history, "files": authority_files},
+        "status": {"progress": snapshot.get("progress"), "progress_history": progress_history, "attention": snapshot.get("attention", []), "alignment": "UNKNOWN", "milestones": "UNKNOWN"},
+        "continuity": {"notion": snapshot.get("notion"), "memory": snapshot.get("memory"), "evidence": snapshot.get("evidence"), "ai_runs": ai_runs, "mcp_grants": grants},
+        "memory": memory_rows,
+        "evidence": evidence_rows,
+        "activity": snapshot.get("events", []),
+        "sources": {"authority": authority_files, "notion": notion_sources},
+        "freshness": {"project": snapshot["project"].get("freshness_state", "UNKNOWN"), "repository": git_state.get("canonical_revision", "UNKNOWN"), "generated_at": time.time()},
+        "redaction": {"credentials": "OMITTED", "session_tokens": "OMITTED", "authorization_headers": "OMITTED", "chain_of_thought": "OMITTED"},
+    }
+
+
+def _context_markdown(context: dict[str, Any]) -> str:
+    project = context.get("project") or {}
+    repository = context.get("repository") or {}
+    git = repository.get("git") or {}
+    goal = (context.get("goal") or {}).get("revision") or {}
+    status = context.get("status") or {}
+    attention = status.get("attention") or []
+    lines = [
+        "# PRIME Project Context Export", "", "## PROJECT",
+        f"- Name: {project.get('name', 'UNKNOWN')}", f"- Project ID: {project.get('project_id', 'UNKNOWN')}",
+        f"- Node: {repository.get('node_name', 'UNKNOWN')}", f"- Repository: {repository.get('canonical_path', 'UNKNOWN')}",
+        f"- Canonical revision: {git.get('canonical_revision', 'UNKNOWN')}", f"- Branch: {git.get('branch', 'UNKNOWN')}",
+        "", "## GOAL", f"- Revision: {goal.get('revision_number', 'UNKNOWN')} ({goal.get('status', 'UNKNOWN')})",
+        f"- Source hash: {goal.get('content_hash', 'UNKNOWN')}", f"- Approved goal: {goal.get('content', 'UNKNOWN')}",
+        "", "## CURRENT STATUS", f"- Progress: {(status.get('progress') or {}).get('progress_percent', 'UNKNOWN')}",
+        f"- Confidence: {(status.get('progress') or {}).get('confidence', 'UNKNOWN')}", f"- Alignment: {status.get('alignment', 'UNKNOWN')}",
+        f"- Attention: {len(attention)} item(s)", "", "## BLOCKERS / ATTENTION",
+    ]
+    lines.extend([f"- {item.get('severity', 'UNKNOWN')}: {item.get('code', 'UNKNOWN')} - {item.get('message', 'UNKNOWN')}" for item in attention] or ["- NONE REPORTED"])
+    lines.extend(["", "## AUTHORITY", f"- Validation: {(context.get('authority') or {}).get('latest', {}).get('validation_status', 'UNKNOWN') if (context.get('authority') or {}).get('latest') else 'UNKNOWN'}", "- Credential material: OMITTED", "", "## MEMORY / EVIDENCE / ACTIVITY", f"- Durable memory entries exported: {len(context.get('memory') or [])}", f"- Evidence references exported: {len(context.get('evidence') or [])}", f"- Meaningful activity events exported: {len(context.get('activity') or [])}", "", "## FRESHNESS", f"- Generated at: {context.get('generated_at', 'UNKNOWN')}", f"- Project freshness: {(context.get('freshness') or {}).get('project', 'UNKNOWN')}", f"- Redaction: credentials, tokens, authorization headers, and chain of thought omitted."])
+    return "\n".join(lines) + "\n"
+
+
+@app.get("/v1/projects/{project_id}/context-export")
+def context_export(project_id: str, request: Request, format: str = "json", prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        context = _project_context(project_id)
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    if format.lower() in {"md", "markdown"}:
+        return Response(content=_context_markdown(context), media_type="text/markdown", headers={"Cache-Control": "no-store", "Content-Disposition": f'attachment; filename="prime-{project_id}-context.md"'})
+    if format.lower() != "json":
+        return error("EXPORT_FORMAT_UNSUPPORTED", "format must be json or markdown", request_id(request), status_code=400)
+    return Response(content=json.dumps(context, default=str, ensure_ascii=False, indent=2), media_type="application/json", headers={"Cache-Control": "no-store", "Content-Disposition": f'attachment; filename="prime-{project_id}-context.json"'})
+
+
+@app.get("/v1/projects/{project_id}/repository/state")
+def repository_state(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return _git_state(project_id)
+
+
+@app.get("/v1/projects/{project_id}/repository/tree")
+def repository_tree(project_id: str, request: Request, path: str = "", prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        root, candidate = _safe_repository_path(project_id, path)
+        if not candidate.is_dir():
+            return error("REPOSITORY_PATH_NOT_DIRECTORY", "requested repository path is not a directory", request_id(request), status_code=400)
+        entries = []
+        for entry in sorted(candidate.iterdir(), key=lambda item: (not item.is_dir(), item.name.lower()))[:200]:
+            if entry.name == ".git":
+                continue
+            relative = entry.relative_to(root).as_posix()
+            item = {"name": entry.name, "path": relative, "kind": "directory" if entry.is_dir() else "file"}
+            if entry.is_file():
+                item["size_bytes"] = entry.stat().st_size
+            entries.append(item)
+        return {"project_id": project_id, "path": candidate.relative_to(root).as_posix() if candidate != root else "", "root": str(root), "entries": entries, "source_revision": _git(root, "rev-parse", "HEAD")}
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found or repository is unbound", request_id(request), status_code=404)
+    except (OSError, ValueError) as exc:
+        return error("REPOSITORY_PATH_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/repository/file")
+def repository_file(project_id: str, path: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        root, candidate = _safe_repository_path(project_id, path)
+        if not candidate.is_file():
+            return error("REPOSITORY_FILE_NOT_FOUND", "requested repository file was not found", request_id(request), status_code=404)
+        size = candidate.stat().st_size
+        if size > 120_000:
+            return {"project_id": project_id, "path": candidate.relative_to(root).as_posix(), "availability": "UNAVAILABLE", "reason": "file exceeds bounded viewer limit", "size_bytes": size, "source_revision": _git(root, "rev-parse", "HEAD")}
+        data = candidate.read_bytes()
+        if b"\x00" in data[:8192]:
+            return {"project_id": project_id, "path": candidate.relative_to(root).as_posix(), "availability": "UNAVAILABLE", "reason": "binary file", "size_bytes": size, "source_revision": _git(root, "rev-parse", "HEAD")}
+        content = data.decode("utf-8", errors="replace")
+        return {"project_id": project_id, "path": candidate.relative_to(root).as_posix(), "availability": "EXACT", "content": content, "content_hash": hashlib.sha256(data).hexdigest(), "size_bytes": size, "source_revision": _git(root, "rev-parse", "HEAD")}
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found or repository is unbound", request_id(request), status_code=404)
+    except (OSError, ValueError) as exc:
+        return error("REPOSITORY_FILE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/authority")
+def authority_view(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        context = _project_context(project_id)
+    except KeyError:
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    authority = context.get("authority") or {}
+    return {"project_id": project_id, "health": (authority.get("latest") or {}).get("validation_status", "UNKNOWN"), "contract": (authority.get("latest") or {}).get("contract_version", "UNKNOWN"), "latest": authority.get("latest"), "history": authority.get("history", []), "files": {name: {"sha256": value.get("sha256"), "content": value.get("content")} for name, value in (authority.get("files") or {}).items()}}
+
+
 def _project_snapshot(project_id: str) -> dict[str, Any]:
     """Return the bounded, read-only product snapshot used by the operator UI."""
     with connect(settings) as db:
@@ -574,7 +818,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
             "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE b.project_id=%s",
             (project_id,),
         ).fetchone()
-        goal = db.execute("SELECT goal_revision_id,revision_number,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
+        goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
         goal_items = db.execute("SELECT goal_item_id,title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY goal_item_id", (project_id, goal["goal_revision_id"] if goal else "")).fetchall()
         progress = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
         authority = db.execute("SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
@@ -592,6 +836,10 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         attention.append({"code": "GOAL_NOT_APPROVED", "severity": "HIGH", "message": "An approved PROJECT_GOAL.md revision is not visible in Core."})
     if project_dict.get("freshness_state") in {"STALE", "UNKNOWN"}:
         attention.append({"code": "PROJECT_STALE", "severity": "MEDIUM", "message": f"Project freshness is {project_dict.get('freshness_state')}."})
+    if project_dict.get("work_condition") in {"BLOCKED", "CONFLICT", "INVALID_AUTHORITY", "REVIEW_REQUIRED"}:
+        attention.append({"code": "WORK_CONDITION", "severity": "HIGH", "message": f"Project work condition is {project_dict.get('work_condition')}; inspect the owning source before continuing."})
+    if binding and binding.get("node_status") in {"OFFLINE", "DEGRADED"}:
+        attention.append({"code": "NODE_DEGRADED", "severity": "HIGH", "message": f"Bound repository node is {binding.get('node_status')}."})
     if evidence and int(evidence["failed"] or 0):
         attention.append({"code": "EVIDENCE_DEGRADED", "severity": "MEDIUM", "message": "One or more Evidence parser/index operations failed."})
     return {

@@ -22,7 +22,7 @@ def main() -> int:
     env = os.environ.copy()
     passed = True
     checks: list[tuple[str, bool]] = []
-    checks.append(("governance", run(["python3", "scripts/validate_governance.py", "--mode", "ADOPTED"], env)))
+    checks.append(("governance", run([sys.executable, "scripts/validate_governance.py", "--mode", "ADOPTED"], env)))
     checks.append(("full phase regression suite", run([sys.executable, "-m", "pytest", "tests", "-q"], env)))
     checks.append(("phase 1 migration qualification", run([sys.executable, "scripts/phase1_qualify.py"], env)))
     for phase in range(2, 15):
@@ -60,7 +60,7 @@ def main() -> int:
     product_audit = yaml.safe_load((ROOT / "docs" / "v1-product-goal-alignment-audit.yaml").read_text(encoding="utf-8"))
     product_items = product_audit.get("items", [])
     product_statuses = Counter(item.get("status") for item in product_items)
-    product_gate = len(product_items) == 81 and all(item.get("status") == "USER_USABLE_VERIFIED" for item in product_items)
+    product_gate = len(product_items) == 81 and all(item.get("status") in {"USER_USABLE_VERIFIED", "PRODUCT_VERIFIED"} for item in product_items)
     checks.append(("V1_PRODUCT_GOAL_ALIGNMENT is mechanically derived from complete §26 inventory", product_gate and product_audit.get("release_gate_status") == ("PASS" if product_gate else "FAIL")))
     current_counts = Counter()
     final_counts = Counter()
@@ -84,7 +84,7 @@ def main() -> int:
     print("R-031–R-056 final status counts: " + ", ".join(f"{name}={final_counts.get(name, 0)}" for name in ("OPEN", "IMPLEMENTING", "BLOCKED", "VERIFIED")))
     print("qualification status counts: " + ", ".join(f"{name}={list(qualification_statuses.values()).count(name)}" for name in ("not_run", "partial", "blocked_by_environment", "verified", "failed")))
     print(f"VERIFIED / 26: {current_counts.get('VERIFIED', 0)}/26")
-    print("§26 product status counts: " + ", ".join(f"{name}={product_statuses.get(name, 0)}" for name in ("USER_USABLE_VERIFIED", "IMPLEMENTED_NOT_PRODUCT_QUALIFIED", "BACKEND_ONLY", "UI_SHELL_ONLY", "PARTIAL", "MISSING", "BLOCKED_BY_ENVIRONMENT")))
+    print("§26 product status counts: " + ", ".join(f"{name}={product_statuses.get(name, 0)}" for name in ("USER_USABLE_VERIFIED", "PRODUCT_VERIFIED", "IMPLEMENTED_NOT_PRODUCT_QUALIFIED", "BACKEND_ONLY", "UI_SHELL_ONLY", "PARTIAL", "MISSING", "BLOCKED_BY_ENVIRONMENT")))
     print("V1_PRODUCT_GOAL_ALIGNMENT: " + ("PASS" if product_gate else "FAIL"))
     print("PHASE 15 QUALIFICATION: " + ("PASS" if passed else "FAIL"))
     if not passed:

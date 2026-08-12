@@ -389,3 +389,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-027
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-029
+
+- Issued: 2026-08-12T18:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 029 V1 Product Completion Wave 1: Project Understandability + AI-Coder Handoff
+- Objective: Convert the existing PRIME backend into a real, source-grounded daily operator experience for opening a long-running project, understanding its current and historical state, and handing bounded context to a new coding agent without manual reconstruction.
+- Scope: Qualification-harness interpreter portability; a durable representative project fixture; real Overview, Goal, Progress, Alignment, Milestones, Integrity, Attention, Activity, Search, Ask, Repository, Authority, Memory, Git/worktree, AI Connections, Markdown/JSON Context Export, project isolation, and fresh-agent handoff qualification; audit-quality review of frozen §26 classifications; append-only evidence, `.agent`, GitHub, and Notion reconciliation.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; creating v1.0.1, a SpecChangeRecord, or Phase 16; fake `python3` shims or PATH hacks; arbitrary UI for architectural-only requirements; autonomous external coding-agent launch; fabricated native/Hindsight/assistive-technology/Tailscale evidence; R-056 closure; Fork/Clone or onboarding-first work unless the North Star slice completes early; deployment; and recursive SHA bookkeeping.
+- Acceptance: The full harness selects a deterministic active interpreter on supported hosts; the representative project uses production services and durable state; the primary project-understanding and context-handoff paths have real interactions, truthful degraded states, project isolation, source/evidence identity, and supported-browser evidence; touched §26 classifications are mechanically reconciled with exact frozen acceptance semantics; V1_PRODUCT_GOAL_ALIGNMENT remains FAIL unless genuinely complete; remediation rows are changed only from new evidence; GitHub and Notion are synchronized; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-ALIGNMENT-028
+- Status at issuance: ISSUED

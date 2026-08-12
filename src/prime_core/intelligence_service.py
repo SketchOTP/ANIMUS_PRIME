@@ -51,8 +51,22 @@ class IntelligenceService:
     def search(self, project_id: str, query: str, limit: int = 20) -> dict[str, Any]:
         repository = self.indexer.search(project_id, query, min(limit, 50))
         with connect(self.settings) as db:
-            activity = [dict(row) for row in db.execute("SELECT event_id,event_type,observed_at,source_revision FROM prime_core.events WHERE project_id=%s AND event_type ILIKE %s ORDER BY observed_at DESC LIMIT %s", (project_id, f"%{query}%", min(limit, 50))).fetchall()]
-            progress = [dict(row) for row in db.execute("SELECT assessment_id,progress_percent,confidence,freshness_state,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchall()]
+            needle = f"%{query}%"
+            authority = [dict(row) for row in db.execute(
+                "SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at,canonical_commit "
+                "FROM prime_core.authority_revisions WHERE project_id=%s AND (source_path ILIKE %s OR source_hash ILIKE %s OR validation_status ILIKE %s OR metadata::text ILIKE %s) ORDER BY observed_at DESC LIMIT %s",
+                (project_id, needle, needle, needle, needle, min(limit, 50)),
+            ).fetchall()]
+            git = [dict(row) for row in db.execute(
+                "SELECT checkpoint_id,commit_id,coverage_status,content_hash,captured_at FROM prime_core.git_history_checkpoints WHERE project_id=%s AND (commit_id ILIKE %s OR coverage_status ILIKE %s OR COALESCE(metadata::text,'') ILIKE %s) ORDER BY captured_at DESC LIMIT %s",
+                (project_id, needle, needle, needle, min(limit, 50)),
+            ).fetchall()]
+            notion = [dict(row) for row in db.execute(
+                "SELECT source_binding_id,page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at FROM prime_core.notion_knowledge_sources WHERE project_id=%s AND (page_id ILIKE %s OR COALESCE(page_url,'') ILIKE %s OR status ILIKE %s OR COALESCE(metadata::text,'') ILIKE %s) ORDER BY observed_at DESC NULLS LAST LIMIT %s",
+                (project_id, needle, needle, needle, needle, min(limit, 50)),
+            ).fetchall()]
+            activity = [dict(row) for row in db.execute("SELECT event_id,event_type,observed_at,source_revision,payload FROM prime_core.events WHERE project_id=%s AND (event_type ILIKE %s OR payload::text ILIKE %s) ORDER BY observed_at DESC LIMIT %s", (project_id, needle, needle, min(limit, 50))).fetchall()]
+            progress = [dict(row) for row in db.execute("SELECT assessment_id,progress_percent,confidence,freshness_state,created_at,summary,repository_revision FROM prime_core.progress_assessments WHERE project_id=%s AND (summary ILIKE %s OR item_results::text ILIKE %s) ORDER BY created_at DESC LIMIT %s", (project_id, needle, needle, min(limit, 50))).fetchall()]
             evidence = [dict(row) for row in db.execute(
                 "SELECT evidence_id,source_reference_id,locator,source_revision,content_hash,privacy_class,parser_status,index_status,extracted_text,captured_at "
                 "FROM prime_core.evidence_records WHERE project_id=%s AND retracted_at IS NULL AND purged_at IS NULL "
@@ -62,10 +76,19 @@ class IntelligenceService:
             ).fetchall()]
         for row in evidence:
             row["source_class"] = "Evidence"
+            row["source_group"] = "Evidence"
             row["source_id"] = row["evidence_id"]
             row["historical_authority"] = False
             row.pop("extracted_text", None)
-        return {"project_id": project_id, "groups": {"Repository": repository, "Activity": activity, "Progress": progress, "Memory": self.memory.recall(project_id, query, min(limit, 8)).get("results", []), "Evidence": evidence}}
+        for group, rows in (("Repository", repository), ("Authority", authority), ("Git", git), ("Notion Knowledge", notion), ("Activity", activity), ("Progress", progress)):
+            for row in rows:
+                row["source_group"] = group
+                row.setdefault("source_id", row.get("relative_path") or row.get("event_id") or row.get("authority_revision_id") or row.get("checkpoint_id") or row.get("source_binding_id") or row.get("assessment_id"))
+        memory = self.memory.recall(project_id, query, min(limit, 8)).get("results", [])
+        for row in memory:
+            row["source_group"] = "Memory"
+            row.setdefault("source_id", row.get("memory_id"))
+        return {"project_id": project_id, "groups": {"Repository": repository, "Authority": authority, "Git": git, "Notion Knowledge": notion, "Activity": activity, "Progress": progress, "Memory": memory, "Evidence": evidence}}
 
     def ask(self, project_id: str, question: str) -> dict[str, Any]:
         sources = self.search(project_id, question, 8)

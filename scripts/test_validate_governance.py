@@ -6,6 +6,7 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -20,7 +21,7 @@ def copy_repo(destination: Path) -> None:
 
 def run(root: Path, mode: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        ["python3", str(VALIDATOR), "--mode", mode, "--root", str(root)],
+        [sys.executable, str(VALIDATOR), "--mode", mode, "--root", str(root)],
         text=True,
         capture_output=True,
         check=False,
