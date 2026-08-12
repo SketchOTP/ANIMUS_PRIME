@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T12:10:00Z`
+- Last updated: `2026-08-12T20:00:00Z`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-TAKEOVER-VERIFY-021`
-- External directive ID: `NONE`
-- Objective: `Verify the inherited Continuation 020 implementation and qualification state against the authoritative Atlas checkout, GitHub main, .agent records, and Architect Notion record.`
-- Current status: `IN_PROGRESS`
-- Acceptance: `Final governed HEAD e7b70d26f1016bde2d5479cd3adeadda9ee4d725 is synchronized between Atlas and GitHub; inherited Continuation 020 qualification commit is e7f6099679a982d9708c3a4c96d87fa900a0e89d; R-046, R-047, R-049, R-054, and R-055 are VERIFIED from recorded evidence; R-037–R-041 remain partial on the archived live Notion parent; Phase 15/V1 remains FAIL at 5/26; R-056 remains OPEN; no source or qualification result is changed by takeover verification.`
+- Local directive ID: `D-PRIME-PHASE15-REMEDIATION-022`
+- External directive ID: `ANIMUS PRIME Takeover Accepted / Continuation 022 Authorization`
+- Objective: `Resume Phase-15 qualification beginning with the real PRIME Notion production adapter lifecycle for R-037–R-041, then close exact remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps where the actual environment supports it.`
+- Current status: `BLOCKED`
+- Acceptance: `Qualification implementation/evidence lineage remains 4531fb0; the prior governance/publication lineage remains b445631; current branch tip is reported separately. R-046, R-047, R-049, R-054, and R-055 remain VERIFIED; R-037–R-041 are not promoted without complete live adapter evidence; R-042 now records only its scheduled failure/recovery/retention gap; Phase 15/V1 remains FAIL at 5/26; R-056 remains OPEN; deployment remains NOT PERFORMED.`
 - Current phase: `15`
 - Expected or actual touched areas: `fresh PostgreSQL/pgvector qualification, environment-backed Paragon AI adapter/profile, PRIME Notion read capability, Evidence/product citations, Continuity-v2 restore identity, historical A/B/C/D fixture, capacity pressure, Chromium operator journey, environment reconciliation, and governed GitHub/Notion checkpoint`
-- Immediate next action: `Provision an operator-approved non-archived disposable Notion parent and rerun PRIME's live R-037–R-041 adapter lifecycle; continue exact R-042/R-043/R-045/R-048/R-050–R-053 gaps; preserve R-046/R-047/R-049/R-054/R-055 VERIFIED; keep R-056 OPEN.`
+- Immediate next action: `Make the existing PRIME runtime authorization (NOTION_READONLY_KEY) and approved disposable PostgreSQL/pgvector environment available; then run the production R-037–R-041 lifecycle against the fetched non-archived disposable sandbox. Preserve R-046/R-047/R-049/R-054/R-055 VERIFIED and keep R-056 OPEN.`
 
 ## Temporary task-relevant facts
 

@@ -291,3 +291,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-REMEDIATION-020
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-REMEDIATION-022
+
+- Issued: 2026-08-12T16:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME Takeover Accepted / Continuation 022 Authorization
+- Objective: Resume Phase-15 qualification, beginning with the real PRIME Notion production adapter lifecycle for R-037–R-041 against one operator-approved non-archived disposable parent, then close the exact remaining R-042/R-043/R-045/R-048/R-050–R-053 gaps where the actual environment supports it.
+- Scope: R-037–R-041 production NotionApiClient and lifecycle qualification; correction of stale R-042 remaining-gap wording using Continuation 017 off-machine evidence; fresh disposable PostgreSQL/pgvector regression; exact requirement promotion only from complete evidence; append-only evidence, ledger, matrix, `.agent`, GitHub, and Notion reconciliation.
+- Exclusions: canonical, frozen, MyAssistant, or unrelated user-authored Notion mutation; raw credential exposure or persistence; repeated off-machine classification without regression evidence; new architecture; reopened VERIFIED rows without genuine regression; R-056 closure before its own gate; deployment; and V1 PASS before 26/26 VERIFIED.
+- Acceptance: R-046, R-047, R-049, R-054, and R-055 remain VERIFIED unless genuine regression evidence reopens them; R-037–R-041 are promoted only if their full production lifecycle criteria pass; R-042 records only its remaining scheduled failure/recovery/retention gap; R-056 remains OPEN; Phase 15/V1 remain FAIL unless all 26 rows are VERIFIED; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-TAKEOVER-VERIFY-021
+- Status at issuance: ISSUED

@@ -1082,3 +1082,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: the fresh 86-pass qualification was not rerun during takeover; live Notion R-037–R-041 still require an operator-approved non-archived disposable parent; all other Continuation 020 gaps remain as recorded.
 - Blockers: a fresh disposable database rerun was not performed during takeover because the current database is populated and resetting it was outside this read/verify pass; live Notion R-037–R-041 still require an operator-approved non-archived disposable parent; all other Continuation 020 gaps remain as recorded.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-REMEDIATION-022 - BLOCKED
+
+- Outcome ID: OUT-PRIME-PHASE15-REMEDIATION-039
+- Supersedes outcome: none
+- Closed: 2026-08-12T20:00:00Z
+- Acceptance: PARTIAL
+- Summary: Continuation 022 accepted the takeover correction, found a current non-archived disposable Notion sandbox, corrected stale R-042 gap wording using the existing Continuation 017 off-machine evidence, and attempted the required environment preflight. The real R-037–R-041 PRIME production adapter qualification could not start because `NOTION_READONLY_KEY` was absent from the Atlas process and Docker was unavailable for the fresh disposable PostgreSQL/pgvector environment. No substitute connector evidence was claimed.
+- Changed areas: `docs/phase15-remediation-qualification-ledger.yaml`, `docs/phase15-remediation-matrix.yaml`, `.agent/DIRECTIVES.md`, `.agent/CURRENT.md`, `.agent/OUTCOMES.md`, `evidence/phase15/qualification-continuation-022.md`, and the Architect Notion execution record.
+- Validation:
+  - non-archived disposable Notion sandbox fetch - PASSED
+  - PRIME runtime authorization preflight - BLOCKED (`NOTION_READONLY_KEY` absent; no secret exposed)
+  - approved disposable PostgreSQL/pgvector preflight - BLOCKED (Docker unavailable)
+  - R-042 Continuation 017 evidence reconciliation - PASSED
+  - R-042 ledger/matrix correction - PASSED
+  - adopted governance validator - NOT RUN after final edits
+  - fresh authoritative regression - NOT RUN (required environment unavailable)
+  - deployment - NOT PERFORMED
+- Remaining risks: R-037–R-041 live adapter lifecycle remains unqualified; R-042 scheduled failure/recovery/retention remains open; R-043/R-045/R-048/R-050–R-053 remain as previously recorded; R-056 remains OPEN; Phase 15/V1 remains FAIL at 5/26.
+- Blockers: `NOTION_READONLY_KEY` is absent from the Atlas process; Docker is unavailable for the approved disposable PostgreSQL/pgvector environment.
+- Follow-up directive: resume D-PRIME-PHASE15-REMEDIATION-022 when both existing runtime prerequisites are available.

@@ -177,3 +177,9 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: the current failures are deterministic collisions from prior durable test state, while governance and compileall pass and the current ledgers, evidence, implementation diff, and Architect record agree on the same 5/26 qualification state. A fresh reset is required for a new authoritative regression and was intentionally not performed during this read/verify takeover pass.
 - Affected areas: `.agent/CURRENT.md`, `.agent/DIRECTIVES.md`, `.agent/OUTCOMES.md`, `.agent/LEARNINGS.md`, qualification execution records, and future fresh-database rerun procedure.
 - Supersedes record: none
+## DEC-PRIME-PHASE15-022
+
+- Date: 2026-08-12
+- Decision: Treat the existing `PRIME Qualification Sandbox — Continuation 019` as a current disposable-parent candidate only; do not mutate it until PRIME's own production adapter can execute with the existing runtime authorization. Correct R-042 to remove the already-satisfied off-machine-target criterion and retain only scheduled failure/recovery, retry, known-good preservation, subsequent success, and retention gaps.
+- Rationale: Notion workspace access is not equivalent to PRIME `NotionApiClient` authorization. Continuation 017 already proved `/mnt/storage1tb` on `/dev/sdb1`; repeating that criterion would misstate qualification progress.
+- Evidence: `evidence/phase15/qualification-continuation-022.md`; `evidence/phase15/qualification-continuation-017.md`; `docs/phase15-remediation-qualification-ledger.yaml`; `docs/phase15-remediation-matrix.yaml`.
