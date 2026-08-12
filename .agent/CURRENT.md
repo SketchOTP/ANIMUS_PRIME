@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T17:48:35-04:00`
+- Last updated: `2026-08-12T17:50:29-04:00`
 
 ## Active state after adoption
 
@@ -18,7 +18,7 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 final tip: `adaf0c0`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; Continuation 028 is auditing the 81 frozen §26 items; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 028 final published tip: `14b4aea119cb8406ae9f3e5f93e5772ee12ec091`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 product alignment remains `3 USER_USABLE_VERIFIED / 78 not yet user-usable`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
