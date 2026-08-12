@@ -120,7 +120,7 @@ def test_openai_compatible_provider_returns_structured_json_without_persisting_k
         return Response()
 
     monkeypatch.setattr(urllib.request, "urlopen", opener)
-    provider = OpenAICompatibleProvider("https://paragon.invalid/v1", "routerbot")
+    provider = OpenAICompatibleProvider("https://paragon.invalid/v1", "fixture-api-key")
     result = provider.generate({
         "function": "ASK_PRIME",
         "profile": {"model": "paragon"},
@@ -131,7 +131,7 @@ def test_openai_compatible_provider_returns_structured_json_without_persisting_k
     assert result.input_tokens == 3
     assert result.output_tokens == 4
     assert captured["request"].full_url == "https://paragon.invalid/v1/chat/completions"
-    assert captured["request"].get_header("Authorization") == "Bearer routerbot"
+    assert captured["request"].get_header("Authorization") == "Bearer fixture-api-key"
     body = captured["request"].data.decode()
-    assert "routerbot" not in body
+    assert "fixture-api-key" not in body
     assert "every citation source_id must exactly match an admitted source_id" in body
