@@ -64,7 +64,13 @@ def checkpoint_bundle_status(bundle_path: str, expected_hash: str | None = None)
     if expected_hash and hashlib.sha256(bundle.read_bytes()).hexdigest() != expected_hash:
         return "PARTIAL"
     try:
-        subprocess.run(["git", "bundle", "verify", str(bundle)], check=True, capture_output=True, text=True, timeout=30)
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        # `git bundle verify` needs a repository context to validate prerequisites.
+        # Core containers do not run from the source checkout, so create an
+        # isolated bare verifier instead of depending on the process cwd.
+        with tempfile.TemporaryDirectory(prefix="prime-bundle-verify-") as temp_dir:
+            verifier = Path(temp_dir) / "verify.git"
+            subprocess.run(["git", "init", "--bare", "-q", str(verifier)], check=True, capture_output=True, text=True, timeout=15)
+            subprocess.run(["git", "--git-dir", str(verifier), "bundle", "verify", str(bundle)], check=True, capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
         return "PARTIAL"
     return "EXACT"

@@ -4,6 +4,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app
 WORKDIR /app
 COPY requirements-phase1.txt .
 RUN pip install --no-cache-dir -r requirements-phase1.txt
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
 COPY apps ./apps
 COPY src ./src
 COPY migrations ./migrations

@@ -424,10 +424,12 @@ class HistoryService:
 
     def return_to_now(self, project_id: str) -> dict[str, Any]:
         with connect(self.settings) as db:
-            revision = db.execute("SELECT source_revision FROM prime_core.repository_files WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
-        if not revision:
+            latest = db.execute("SELECT observed_at FROM prime_core.repository_files WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
+        if not latest:
             return {"project_id": project_id, "mode": "CURRENT", "source_statuses": {}, "reconstruction_status": "UNAVAILABLE"}
-        current = self.historical_context(project_id, revision["source_revision"])
+        # Current state is a time boundary. Revision-only lookup cannot select
+        # durable Goal/Authority/Memory rows whose identity is not the Git SHA.
+        current = self.historical_context(project_id, latest["observed_at"].isoformat())
         return {**current, "mode": "CURRENT", "return_to_now": None}
 
     def backup_manifest(self, project_id: str) -> dict[str, Any]:
