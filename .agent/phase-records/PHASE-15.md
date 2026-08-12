@@ -204,6 +204,6 @@ result: FAIL
 - qualification_state: `14/26 VERIFIED`; `11 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
 - partial_rows: `R-031`–`R-036`, `R-043`, `R-044`, `R-045`, `R-048`, `R-053`.
 - R-056: `OPEN`.
-- governance_publication: `PENDING` until final governance commit and local/origin parity are confirmed.
-- notion_publication: `BLOCKED` if the authenticated write connector remains unavailable; no unsupported publication claim.
+- governance_publication: `PASS` — evidence/governance commit `d11bf98d`; local/origin parity confirmed at `d11bf98d58ea0cc13ab94c2539ca658dd9990f98`.
+- notion_publication: `PASS` — Continuation 026 execution record appended and refetched on the connected disposable qualification page.
 - result: `FAIL` — Phase 15/V1 remains below 26/26; deployment `NOT PERFORMED`.

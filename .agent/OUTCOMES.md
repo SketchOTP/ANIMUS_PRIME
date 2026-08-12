@@ -1188,8 +1188,8 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - fresh full regression - PASSED (`86 passed`, `--import-mode=importlib`)
   - Phases 1–14 qualification scripts - PASSED
   - tracked-secret scan and final diff checks - PASSED
-  - GitHub publication/parity - PENDING publication completion
-  - Notion publication - PENDING final publication record
+  - GitHub publication/parity - PASSED (`d11bf98d58ea0cc13ab94c2539ca658dd9990f98`)
+  - Notion execution-record append and refetch - PASSED (connected disposable qualification page)
   - deployment - NOT PERFORMED
 - Remaining risks: R-043 lacks the complete fresh-install destructive/interrupted restore drill; R-045 lacks sustained capacity/parser/index/stale-job/retention and bounded usage evidence; R-048 lacks the full independent source-class recovery matrix; R-053 lacks external assistive-technology evidence; R-044 retain remains unavailable; R-056 remains OPEN; Phase 15/V1 remains FAIL at 14/26.
 - Blockers: authenticated Notion write connector availability and the remaining environment-backed qualification criteria.
