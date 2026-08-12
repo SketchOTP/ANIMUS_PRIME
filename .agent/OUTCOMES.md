@@ -1210,7 +1210,9 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - full regression (`85 passed, 1 skipped`) - PASSED
   - Phases 1–14 qualification scripts - PASSED
   - governance and mechanical YAML/count checks (`26 rows; 16 verified, 9 partial, 1 blocked_by_environment`) - PASSED
-  - final diff/secret scan, GitHub publication/parity, and Notion append - NOT RUN
+  - final diff/secret scan - PASSED
+  - GitHub publication/parity (`46ae788`) - PASSED
+  - Notion execution-record append/refetch - PASSED
 - Remaining risks: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent; Phase 15/V1 remains FAIL at 16/26.
 - Blockers: Hindsight service/Docker unavailable; external assistive technology unavailable; R-045 missing normative observability/enforcement; R-031–R-036 and R-056 remain environment-dependent.
 - Follow-up directive: none

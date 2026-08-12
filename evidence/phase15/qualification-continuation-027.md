@@ -76,4 +76,5 @@ The frozen acceptance is the §16.4/§16A/§25.7 accessible responsive operator 
 - AST parse: `PASSED` for changed Python files.
 - Diff check: `PASSED` — `git diff --check` returned clean for the pending publication diff.
 - Tracked-secret scan: `PASSED` — no bearer/token/private-key candidates were found in tracked files outside the frozen baseline.
-- GitHub parity and Notion publication: `PENDING` until the evidence/governance commits are published.
+- GitHub publication/parity: `PASSED` — evidence/governance commit `46ae788` was pushed to `origin/main`; local and origin resolved to the same SHA.
+- Notion publication: `PASSED` — Continuation 027 execution record appended and refetched on the connected disposable qualification page.

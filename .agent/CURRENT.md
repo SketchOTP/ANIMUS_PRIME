@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T17:05:00-04:00`
+- Last updated: `2026-08-12T17:20:00-04:00`
 
 ## Active state after adoption
 
@@ -18,11 +18,11 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 qualification implementation commit: `23cd1fd`; R-043/R-048 are VERIFIED, R-045/R-044/R-053 remain partial, and R-056 remains blocked/open; Notion publication is pending; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 027 qualification implementation commit: `23cd1fd`; evidence/governance publication commit: `46ae788`; R-043/R-048 are VERIFIED, R-045/R-044/R-053 remain partial, and R-056 remains blocked/open; GitHub parity and Notion append/refetch: `PASSED`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Fresh disposable PostgreSQL Continuation 027 harness; focused tests; full regression; Phases 1–14; AST/YAML/count/governance checks`
+- Command or check: `Fresh disposable PostgreSQL Continuation 027 harness; focused tests; full regression; Phases 1–14; AST/YAML/count/governance/diff/secret checks; GitHub parity; Notion append/refetch`
 - Result: `PASSED`
 
 ## Risks
