@@ -182,5 +182,5 @@ result: FAIL
 - focused_regression: `PASS` — R-043, R-045, and R-048/R-050 tests, `3 passed`; no promotion claimed for those rows.
 - qualification_state: `13/26 VERIFIED`; `12 partial`; `1 blocked_by_environment` (`R-056`); `0 failed`.
 - R-056: `OPEN`.
-- governance_publication: `pending final Continuation 025 evidence/governance commit and parity check`
+- governance_publication: `governance/evidence commit d261c2b; final-tip parity pending`
 - result: `FAIL` — aggregate V1 gate remains truthful at 13/26; deployment `NOT PERFORMED`.
