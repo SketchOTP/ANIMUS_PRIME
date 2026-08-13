@@ -1562,3 +1562,12 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Core health text still reports Hindsight DEGRADED despite direct retain/recall evidence; PRIME Notion integration is disconnected/reauth-required; approved model and Hindsight Mental Models/reflect paths remain unavailable.
 - Blockers: DOD-016, DOD-021, DOD-022, DOD-030, DOD-068, R-045, and R-056 remain open or blocked.
 - Follow-up directive: Continue with the next explicitly authorized bounded qualification cycle; no automatic Phase 16 or deployment.
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-043 - PARTIAL
+
+- Outcome ID: O-PRIME-043
+- Closed: 2026-08-13
+- Summary: Recovered Atlas storage using only repository-local regeneration caches archived to /mnt/storage1tb, restarted existing PostgreSQL with 26 migrations and preserved state, classified three persistent collisions as fresh-state-only, removed the validator hardcoded vector, and added project-bound automatic authority-memory admission at repository observation. Progress browser refresh/challenge controls and Hindsight Core health mapping remain open.
+- Validation: persistent regression 102 passed / 3 skips; validator PASSED; PostgreSQL and Hindsight health PASSED; browser history/stale Progress visibility PASSED; automatic admission returned CURRENT with D-043 dedupe.
+- Storage: 214 cache files, 2615998 bytes, archived and checksum-verified; protected .venv, evidence, .agent, .git, PostgreSQL, and Hindsight retained.
+- Deployment: NOT PERFORMED

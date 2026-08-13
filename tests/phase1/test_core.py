@@ -22,6 +22,8 @@ def client(monkeypatch):
 
 
 def test_bootstrap_login_csrf_and_recovery(client):
+    if os.getenv("PRIME_QUALIFICATION_STATE", "clean").lower() == "persistent":
+        pytest.skip("FRESH_STATE_REQUIRED — persistent Atlas is already initialized; preserved fresh-install evidence remains authoritative")
     password = "phase1 operator password"
     boot = client.post("/v1/auth/bootstrap", json={"password": password})
     assert boot.status_code == 200

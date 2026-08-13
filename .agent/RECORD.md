@@ -385,3 +385,11 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Public MCP calls returned stored/durability-verified project-scoped memory with provenance; a real code change caused the prior progress assessment to become STALE and a current reassessment was recorded.
 - Affected areas: Native MCP, durable memory metadata, GoalModel/Progress, Phase 15 governance.
 - Supersedes record: R-PRIME-041-NATIVE-MCP-PROGRESS
+
+## DEC-PRIME-PHASE15-043
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-043
+- Status: PARTIAL
+- Decision or event: Direct native Atlas SSH and persistent services are the qualification authority. Archive only verified repository-local regeneration caches to the attached external filesystem when storage exhaustion blocks PostgreSQL; keep uncertain state, evidence, authority, .git, PostgreSQL, and Hindsight local.
+- Rationale: The root filesystem reached zero free bytes and PostgreSQL failed on WAL/checkpoint writes. Only 2.6 MB of clearly safe caches were archived and verified before removal; PostgreSQL recovered with 26 migrations.

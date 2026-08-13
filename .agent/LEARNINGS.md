@@ -535,3 +535,11 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: HIGH
 - Scope: ANIMUS PRIME native Atlas execution and governed Phase 15 qualification
 - Supersedes learning: None
+
+## L-PRIME-CONTINUATION-043
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-CONTINUATION-043
+- Fact or lesson: Repository-only emergency recovery is safe when regeneration caches are copied to a positively identified external filesystem, source/archive checksums match, and only then are bounded cache paths removed. PostgreSQL recovered automatically after the existing container restarted.
+- Evidence location: /mnt/storage1tb/project-archives/ANIMUS_PRIME/2026-08-13; evidence/phase15/qualification-continuation-043.md
+- Confidence: VERIFIED

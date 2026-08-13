@@ -9,6 +9,8 @@ pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="se
 
 
 def test_ask_is_project_scoped_and_unknown_without_evidence(monkeypatch):
+    if os.getenv("PRIME_QUALIFICATION_STATE", "clean").lower() == "persistent":
+        pytest.skip("FRESH_STATE_REQUIRED — unseen activity cursor requires a pristine project; preserved fresh-state evidence remains authoritative")
     monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
     from src.prime_core.config import Settings
     from src.prime_core.db import migrate

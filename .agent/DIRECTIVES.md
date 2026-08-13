@@ -578,3 +578,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 Date: 2026-08-13
 Objective: Execute Continuation 042 directly on Atlas; repair and qualify native MCP durability/provenance, establish real GoalModel/Progress freshness, reconcile governed records, and publish once.
 Exclusions: No disposable environments, no Phase 16, no deploy, no destructive database or Hindsight operations, no R-045 attempt.
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-043
+
+- Issued: 2026-08-13
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 043
+- Objective: Reconcile persistent qualification collisions, remove the validator's hardcoded audit vector, qualify remaining local Progress/Hindsight/authority-memory behavior, and publish truthful governed evidence directly from Atlas.
+- Scope: Direct SSH execution at `/home/sketch/Projects/ANIMUS_PRIME`; persistent Atlas PostgreSQL/Hindsight; no disposable environments; bounded browser qualification through a local tunnel; governed evidence and publication.
+- Exclusions: no Phase 16; no deployment; no destructive database or Hindsight operations; no Z:/SSHFS execution authority; no fabricated external, native Windows, Tailscale, assistive-technology, approved-model, Notion, Reflect/Mental-Models, sustained-capacity, or R-056 evidence.
+- Acceptance: Preserve exact open/blocked boundaries, classify persistent collisions explicitly, mechanically validate governance, archive only authorized repository caches when required, recover PostgreSQL without data loss, and publish only after local/origin parity is verified.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042
+- Status at issuance: ISSUED

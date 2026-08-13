@@ -17,6 +17,15 @@ audit_defaults: &audit_defaults
   environment_blocker: "NONE"
   reopen_required: false
   reopen_targets: []
+declared_status_counts:
+  BACKEND_ONLY: 25
+  BLOCKED_BY_ENVIRONMENT: 1
+  IMPLEMENTED_NOT_PRODUCT_QUALIFIED: 14
+  MISSING: 0
+  PARTIAL: 6
+  PRODUCT_VERIFIED: 14
+  UI_SHELL_ONLY: 9
+  USER_USABLE_VERIFIED: 12
 items:
   - {<<: *audit_defaults, dod_id: DOD-001, spec_section: "§26.1", exact_requirement_summary: "Immutable approved baseline and change-record traceability; fail closed on missing spec artifacts.", product_area: "governance", status: PRODUCT_VERIFIED, acceptance_kind: ARCHITECTURAL_INVARIANT, owner_phase: 0, mapped_requirements: ["R-056"], user_can_actually_use_it: false, user_path: "Architectural governance invariant qualified by approved baseline identity, governed change records, and fail-closed validation; no dedicated screen is required by the frozen criterion.", missing_behavior: "NONE", environment_blocker: "NONE", reopen_required: false, reopen_targets: [], qualification_evidence: ["baseline/implementation-baseline.yaml", "scripts/validate_governance.py", "scripts/phase15_qualify.py", "evidence/phase15/product-goal-alignment-continuation-035.md"], evidence_paths: ["baseline/PRIME-SPEC-V1.0.0.notion.md", "baseline/implementation-baseline.yaml", "scripts/validate_governance.py", "scripts/phase15_qualify.py", "evidence/phase15/product-goal-alignment-continuation-035.md"]}
   - {<<: *audit_defaults, dod_id: DOD-002, spec_section: "§26.2", exact_requirement_summary: "Exactly one primary non-bare Git repository per managed project; no duplicate active binding.", product_area: "repository", status: BACKEND_ONLY, acceptance_kind: ARCHITECTURAL_INVARIANT, owner_phase: 2, mapped_requirements: ["R-005"], user_can_actually_use_it: false, user_path: "No dedicated operator screen required; inspect the invariant through bounded qualification.", missing_behavior: "Direct invariant qualification must prove unique non-bare repository identity and duplicate active binding rejection; no dedicated UI is required.", environment_blocker: "NONE", reopen_required: false, reopen_targets: [], evidence_paths: ["baseline/PRIME-SPEC-V1.0.0.notion.md", "apps/web/index.html", "apps/core/main.py"]}

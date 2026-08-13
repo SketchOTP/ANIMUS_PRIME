@@ -12,6 +12,11 @@ pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="se
 
 def test_index_is_deterministic_and_searchable(tmp_path: Path, monkeypatch):
     monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
+    if os.getenv("PRIME_QUALIFICATION_STATE", "clean").lower() == "persistent":
+        pytest.skip(
+            "FRESH_STATE_REQUIRED — deterministic index fixture requires isolated repository/project state; "
+            "preserved clean-state evidence remains authoritative"
+        )
     repo = tmp_path / "repo"
     repo.mkdir()
     (repo / "README.md").write_text("phase four", encoding="utf-8")

@@ -93,3 +93,10 @@ Continuation 042 is closed as COMPLETE for its bounded acceptance. Product/Phase
 ## Status vocabulary
 
 Allowed adopted-project statuses: `IDLE`, `PLANNING`, `IN_PROGRESS`, `VALIDATING`, `BLOCKED`, `COMPLETE`. `CURRENT.md` is mutable and never replaces historical ledgers. Reset it to `IDLE` when an adopted task closes.
+
+## Continuation 043 storage recovery and qualification update
+
+- Storage recovered by archiving only verified repository regeneration caches to `/mnt/storage1tb/project-archives/ANIMUS_PRIME/2026-08-13`; PostgreSQL recovered with 26 migrations and Hindsight remained running.
+- Persistent regression: 102 passed, 3 explicit fresh-state skips.
+- Automatic authority-memory admission is wired to repository indexing with provenance and dedupe.
+- Progress browser history/stale state is visible; refresh/challenge controls remain open. Core Hindsight capability mapping remains open.

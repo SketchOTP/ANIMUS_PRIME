@@ -56,7 +56,10 @@ class RepositoryIndexer:
                 "UPDATE prime_core.projects SET lifecycle_state='ACTIVE', connectivity_state='ONLINE', freshness_state='CURRENT', onboarding_step='BASELINE', onboarding_state='AWAITING_BASELINE', updated_at=%s WHERE project_id=%s",
                 (observed, project_id),
             )
-            return {"project_id": project_id, "source_revision": source_revision, "files_indexed": count, "freshness_state": "CURRENT"}
+            result = {"project_id": project_id, "source_revision": source_revision, "files_indexed": count, "freshness_state": "CURRENT"}
+        from .authority_memory_admission import AuthorityMemoryAdmission
+        result["memory_admission"] = AuthorityMemoryAdmission(self.service.settings, self.service).admit(project_id, root, source_revision)
+        return result
 
     def search(self, project_id: str, query: str, limit: int = 50) -> list[dict[str, Any]]:
         from .db import connect
