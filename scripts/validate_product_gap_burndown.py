@@ -9,6 +9,7 @@ REQUIRED = {"dod_id", "current_status", "acceptance_kind", "product_area", "owne
 ACCEPTANCE_KINDS = {"ARCHITECTURAL_INVARIANT", "OPERATOR_WORKFLOW", "MIXED", "EXTERNAL_DEPENDENCY", "AGGREGATE_RELEASE_GATE"}
 WORK_CLASSES = {"LOCAL_CODE", "LOCAL_BROWSER_QUALIFICATION", "LOCAL_NATIVE_QUALIFICATION", "EVIDENCE_RECONCILIATION", "EXTERNAL_ENVIRONMENT", "AGGREGATE_RELEASE_GATE"}
 COMPLETE_STATUSES = {"USER_USABLE_VERIFIED", "PRODUCT_VERIFIED"}
+EXPECTED_AUDIT_STATUS_COUNTS = {"USER_USABLE_VERIFIED": 12, "PRODUCT_VERIFIED": 12, "IMPLEMENTED_NOT_PRODUCT_QUALIFIED": 14, "BACKEND_ONLY": 27, "UI_SHELL_ONLY": 9, "PARTIAL": 6, "MISSING": 0, "BLOCKED_BY_ENVIRONMENT": 1}
 
 
 def validate_documents(audit_path: Path = AUDIT, burndown_path: Path = BURNDOWN) -> dict[str, object]:
@@ -35,6 +36,7 @@ def validate_documents(audit_path: Path = AUDIT, burndown_path: Path = BURNDOWN)
     architectural_ui_gap_ids = [item["dod_id"] for item in open_items if item["acceptance_kind"] == "ARCHITECTURAL_INVARIANT" and any(token in (item["exact_missing_behavior"] + " " + item["next_action"] + " " + item["qualification_needed"]).lower() for token in ("operator screen", "dedicated screen", "operator workflow"))]
     architectural_semantics_ok = not architectural_ui_gap_ids
     status_counts = Counter(item.get("status") for item in audit_items)
+    status_counts_ok = {status: status_counts.get(status, 0) for status in EXPECTED_AUDIT_STATUS_COUNTS} == EXPECTED_AUDIT_STATUS_COUNTS
     audit_total_ok = len(audit_items) == 81
     status_sum_ok = sum(status_counts.values()) == len(audit_items)
     burndown_count_ok = len(open_items) == sum(item["status"] not in COMPLETE_STATUSES for item in audit_items)
@@ -64,6 +66,7 @@ def main() -> int:
     architectural_semantics_ok = result["architectural_semantics_ok"]
     audit_total_ok = result["audit_total_ok"]
     status_sum_ok = result["status_sum_ok"]
+    status_counts_ok = result["status_counts_ok"]
     burndown_count_ok = result["burndown_count_ok"]
     complete_absent_ok = result["complete_absent_ok"]
     work_class_totals_ok = result["work_class_totals_ok"]
@@ -75,6 +78,8 @@ def main() -> int:
     print(f"complete_plus_burndown={len(complete) + len(open_items)}")
     print(f"audit_total_ok={audit_total_ok}")
     print(f"status_sum_ok={status_sum_ok}")
+    print(f"status_counts_ok={status_counts_ok}")
+    print("status_counts=" + str({status: result["status_counts"].get(status, 0) for status in EXPECTED_AUDIT_STATUS_COUNTS}))
     print(f"burndown_count_ok={burndown_count_ok}")
     print(f"ids_match={ids_ok}")
     print(f"open_missing={','.join(result['open_missing']) or 'NONE'}")
@@ -94,6 +99,6 @@ def main() -> int:
     if result["architectural_ui_gap_ids"]:
         print("architectural_ui_gap_ids=" + ",".join(result["architectural_ui_gap_ids"]))
     print("work_class_totals=" + str(dict(Counter(item["work_class"] for item in open_items))))
-    return 0 if all((audit_total_ok, status_sum_ok, burndown_count_ok, ids_ok, fields_ok, statuses_ok, audit_kinds_ok, acceptance_kinds_ok, classes_ok, concrete_ok, architectural_semantics_ok, complete_absent_ok, work_class_totals_ok, work_class_sum_ok, total_ok)) else 1
+    return 0 if all((audit_total_ok, status_sum_ok, status_counts_ok, burndown_count_ok, ids_ok, fields_ok, statuses_ok, audit_kinds_ok, acceptance_kinds_ok, classes_ok, concrete_ok, architectural_semantics_ok, complete_absent_ok, work_class_totals_ok, work_class_sum_ok, total_ok)) else 1
 if __name__ == "__main__":
     raise SystemExit(main())

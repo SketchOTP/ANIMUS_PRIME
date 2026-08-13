@@ -20,7 +20,8 @@ class MemoryService:
         self.adapter_factory = adapter_factory or (lambda project_id: PrimeMemoryAdapter(self.settings.hindsight_base_url, project_id, timeout_seconds=self.settings.hindsight_timeout_seconds))
     def store(self, project_id: str, content: str, content_class: str, source_revision: str | None = None,
               source_reference_id: str | None = None, branch_context: str | None = None,
-              supersedes_memory_id: str | None = None, correction_reason: str | None = None) -> dict[str, Any]:
+              supersedes_memory_id: str | None = None, correction_reason: str | None = None,
+              metadata: dict[str, Any] | None = None) -> dict[str, Any]:
         if SECRET_PATTERN.search(content):
             return {"status": "REJECTED", "reason": "secret-sensitive content rejected"}
         content_hash = hashlib.sha256(content.encode()).hexdigest()
@@ -34,9 +35,12 @@ class MemoryService:
             result: AdapterResult = adapter.retain_verified(content, memory_id)
             status = "STORED" if result.status == "CURRENT" else ("DEGRADED" if result.status in {"DEGRADED", "UNAVAILABLE"} else "QUEUED")
             created = now()
+            record_metadata = {"adapter_status": result.status, "adapter_reason": result.reason, "correction_reason": correction_reason}
+            if metadata:
+                record_metadata.update(metadata)
             db.execute(
                 "INSERT INTO prime_core.memory_records(memory_id,project_id,source_reference_id,document_id,content_hash,content_class,content,status,bank_id,branch_context,source_revision,created_at,supersedes_memory_id,metadata) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-                (memory_id, project_id, source_reference_id, memory_id, content_hash, content_class, content, status, bank_id, branch_context, source_revision, created, supersedes_memory_id, json.dumps({"adapter_status": result.status, "adapter_reason": result.reason, "correction_reason": correction_reason})),
+                (memory_id, project_id, source_reference_id, memory_id, content_hash, content_class, content, status, bank_id, branch_context, source_revision, created, supersedes_memory_id, json.dumps(record_metadata)),
             )
             if supersedes_memory_id:
                 old = db.execute("UPDATE prime_core.memory_records SET status='SUPERSEDED' WHERE project_id=%s AND memory_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') RETURNING memory_id", (project_id, supersedes_memory_id)).fetchone()
@@ -50,12 +54,12 @@ class MemoryService:
         adapter = self.adapter_factory(project_id)
         result: AdapterResult = adapter.recall(query)
         with connect(self.settings) as db:
-            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT memory_id, document_id, source_revision, content_class, status FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchall()}
+            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT memory_id, document_id, source_revision, source_reference_id, content_class, status FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchall()}
         results = []
         for item in result.payload.get("results", []) if isinstance(result.payload, dict) else []:
             document_id = item.get("document_id") if isinstance(item, dict) else None
             if document_id in allowed:
-                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "result": item})
+                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "result": item})
             if len(results) >= limit:
                 break
         return {"status": result.status, "results": results, "project_id": project_id}
