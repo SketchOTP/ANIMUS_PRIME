@@ -445,3 +445,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-031
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-033
+
+- Issued: 2026-08-12T20:45:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 033 V1 Product Closure Cycle
+- Objective: Run the mandatory full regression gate, then convert existing Wave-3 backend boundaries into complete, truthfully qualified operator workflows without changing PRIME-SPEC-V1.0.0.
+- Scope: Fresh PostgreSQL/pgvector startup and 26 migrations; full pytest and Phases 1–14; native, governance, audit, YAML and secret checks; Progress required-evidence enforcement/correction/freshness; AI Connections lifecycle UI; AGENTS semantics; Activity source drill-down; Repository/Authority/Git mutation-proof browser qualification; real interactive 3D Brain and live update; Fork/Clone browser workflow and A/B isolation; Time Lens/Search/Ask reconciliation; derived §26 gap burndown and governed publication.
+- Exclusions: changing PRIME-SPEC-V1.0.0; creating v1.0.1, a SpecChangeRecord, or Phase 16; fabricated native Node, Tailscale, Hindsight, Notion, assistive-technology, or second-device evidence; R-056 closure before its gate; deployment; new subsystems or visual redesign; silent authority overwrite or hidden source mutation.
+- Acceptance: Do not promote before the full regression result is known. Repair only demonstrated defects, promote only complete frozen workflows with direct evidence, separate local product gaps from external blockers, mechanically reconcile governed views and the 81-item audit, publish exact local/origin parity and Notion status, and keep deployment NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-032
+- Status at issuance: ISSUED

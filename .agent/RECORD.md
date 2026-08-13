@@ -286,3 +286,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The prior startup block was caused by unavailable Docker Desktop, not a failed migration. Authenticated two-project evidence proves substantial backend and browser surfaces, but not the frozen full interactive 3D Brain, live Brain update, complete browser AI Connections workflow, Activity source drill-down, or all external/native requirements. The frozen baseline, V1/Phase 15 gate, and R-056 must remain truthful.
 - Affected areas: `src/prime_core/mcp_service.py`, `tests/phase15/test_product_completion_032.py`, `apps/web/index.html`, Continuation 032 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-031
+
+## DEC-PRIME-PHASE15-033
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-033
+- Status: CLOSED
+- Decision or event: Close Continuation 033 as PARTIAL after a fresh native-Atlas regression gate and bounded V1 product completion work. Keep the frozen baseline, V1/Phase 15 gate, external blockers, R-056, and deployment boundary unchanged.
+- Rationale: Fresh PostgreSQL/pgvector with all 26 migrations, full pytest, Phases 1–14, governance, compile, diff, YAML, audit, and secret checks passed. The cycle repaired demonstrated Git bundle verification and GoalModel progress enforcement, and added bounded Brain, Activity provenance, and AI Connections UI surfaces. Direct browser evidence only supports fixture-scale Brain qualification; remaining complete workflows and external environments are not proven.
+- Affected areas: `src/prime_core/git_history.py`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `apps/web/index.html`, `tests/phase15/test_product_completion_033.py`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/v1-product-gap-burndown.yaml`, Continuation 033 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-032

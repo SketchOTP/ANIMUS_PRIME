@@ -409,10 +409,11 @@ class CoreService:
             with connect(self.settings) as db:
                 binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
             if binding:
-                goal_path = Path(binding["canonical_path"]).resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
-                if not goal_path.parent.is_dir():
-                    raise ValueError("authority package is missing .agent/PROJECT_GOAL.md parent")
-                goal_path.write_text(content, encoding="utf-8")
+                canonical_path = Path(binding["canonical_path"])
+                if canonical_path.exists():
+                    goal_path = canonical_path.resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
+                    if goal_path.parent.is_dir():
+                        goal_path.write_text(content, encoding="utf-8")
         with transaction(self.settings) as db:
             last = db.execute("SELECT COALESCE(MAX(revision_number),0) AS number FROM prime_core.goal_revisions WHERE project_id=%s", (project_id,)).fetchone()["number"]
             status = "APPROVED" if approve else "DRAFT"
@@ -480,7 +481,8 @@ class CoreService:
             )
 
     def emit_event(self, event_type: str, payload: dict[str, Any], project_id: str | None = None,
-                   dedupe_key: str | None = None, occurred_at: datetime | None = None) -> dict[str, Any]:
+                   dedupe_key: str | None = None, occurred_at: datetime | None = None,
+                   source_revision: str | None = None, source_ref: str | None = None) -> dict[str, Any]:
         timestamp = now()
         with transaction(self.settings) as db:
             if dedupe_key:
@@ -495,9 +497,9 @@ class CoreService:
                     (project_id,),
                 ).fetchone()["next_sequence"]
             row = db.execute(
-                "INSERT INTO prime_core.events(event_id, project_id, event_type, occurred_at, observed_at, project_sequence, payload, dedupe_key) "
-                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *",
-                (_id("evt"), project_id, event_type, occurred_at or timestamp, timestamp, sequence, json.dumps(payload), dedupe_key),
+                "INSERT INTO prime_core.events(event_id, project_id, event_type, occurred_at, observed_at, project_sequence, source_revision, source_ref, payload, dedupe_key) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *",
+                (_id("evt"), project_id, event_type, occurred_at or timestamp, timestamp, sequence, source_revision, source_ref, json.dumps(payload), dedupe_key),
             ).fetchone()
             return dict(row)
 

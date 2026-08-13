@@ -53,7 +53,25 @@ def create_checkpoint_bundle(repository_path: str, commit_id: str, output_path: 
             text=True,
             timeout=30,
         )
-    subprocess.run(["git", "bundle", "verify", str(output)], check=True, capture_output=True, text=True, timeout=30)
+    # `git bundle verify` needs a repository context to validate prerequisites.
+    # The bundle is intentionally independent of the source checkout, so use a
+    # disposable bare verifier rather than depending on the caller's cwd.
+    with tempfile.TemporaryDirectory(prefix="prime-bundle-verify-") as temp_dir:
+        verifier = Path(temp_dir) / "verify.git"
+        subprocess.run(
+            ["git", "init", "--bare", "-q", str(verifier)],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        subprocess.run(
+            ["git", "--git-dir", str(verifier), "bundle", "verify", str(output)],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
     return {"commit_id": verified, "bundle_locator": str(output), "content_hash": hashlib.sha256(output.read_bytes()).hexdigest()}
 
 

@@ -1319,3 +1319,27 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016/017/040/041/043/050/051/062/063 and Time Lens/Search remain unpromoted where exact frozen completion criteria were not fully demonstrated; R-044, R-045, R-053, R-031–R-036, and R-056 remain open or environment-bound as previously recorded.
 - Blockers: external/native qualification and complete frozen product acceptance remain unavailable or incomplete.
 - Follow-up directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-032
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-033 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-033
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-032
+- Closed: 2026-08-12T23:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 033 completed the mandatory fresh native-Atlas regression gate and all Phases 1–14, repaired the demonstrated Git bundle verification and GoalModel progress evidence defects, added bounded Brain/Activity/AI Connections product surfaces, and created the derived §26 gap burndown. The V1/Phase 15 gate remains FAIL; no requirement promotion, specification change, deployment, or R-056 closure occurred.
+- Changed areas: `src/prime_core/git_history.py`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `apps/web/index.html`, `tests/phase15/test_product_completion_033.py`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/v1-product-gap-burndown.yaml`, Continuation 033 evidence, and append-only `.agent` records.
+- Validation:
+  - fresh PostgreSQL/pgvector and all 26 migrations - PASSED
+  - full pytest - PASSED (`90 passed, 1 skipped`)
+  - Phases 1–14 - PASSED
+  - adopted governance validation - PASSED
+  - product alignment structural audit - PASSED; V1 product gate - FAILED truthfully
+  - native Python compileall and web JavaScript parse - PASSED
+  - gap burndown/YAML and governed-view reconciliation - PASSED
+  - focused GoalModel evidence enforcement test - PASSED (`1 passed`)
+  - Brain browser canvas/control/accessibility check - PASSED at fixture scale; representative scale/live update/isolation - NOT RUN
+  - precise tracked secret scan and `git diff --check` - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: complete Progress correction/freshness workflow, AI Connections browser lifecycle, AGENTS semantics, Activity source drill-down, Repository/Authority/Git mutation-proof qualification, representative/live/isolation Brain qualification, Fork/Clone UI/isolation, Time Lens/Search reconciliation, native Node, Tailscale/second device, Hindsight, assistive technology, and R-056 remain open or unqualified.
+- Blockers: the normal `nobody` Core image path cannot read the user’s uncommitted mode-660 migration files on a native bind mount; qualification used a root-owned disposable process and did not modify those files. External qualification environments remain unavailable or incomplete.
+- Follow-up directive: none

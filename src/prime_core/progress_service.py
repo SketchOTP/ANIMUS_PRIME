@@ -42,11 +42,27 @@ class ProgressService:
             approved = db.execute("SELECT 1 FROM prime_core.progress_baseline_reviews WHERE project_id=%s AND goal_revision_id=%s AND status='APPROVED'", (project_id, goal_revision_id)).fetchone()
             if not approved:
                 raise ValueError("progress baseline is pending")
-            total = sum(float(item.get("weight", 0)) * max(0.0, min(1.0, float(item.get("completion", 0)))) for item in results)
+            goal_items = db.execute(
+                "SELECT title, weight, required, acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s",
+                (project_id, goal_revision_id),
+            ).fetchall()
+            refs = list(evidence_refs or [])
+            by_title = {str(item.get("title", "")): item for item in results}
+            weights = {str(item["title"]): float(item["weight"]) for item in goal_items}
+            for goal_item in goal_items:
+                expectations = goal_item["acceptance_expectations"]
+                if isinstance(expectations, str):
+                    expectations = json.loads(expectations)
+                requires_evidence = bool(goal_item["required"]) and any("evidence" in str(expectation).lower() for expectation in (expectations or []))
+                result = by_title.get(str(goal_item["title"])) or {}
+                item_refs = result.get("evidence_refs") or []
+                completion = float(result.get("completion", 0))
+                if requires_evidence and completion > 0 and not (refs or item_refs):
+                    raise ValueError(f"required evidence missing for goal item: {goal_item['title']}")
+            total = sum(float(item.get("weight", weights.get(str(item.get("title", "")), 0))) * max(0.0, min(1.0, float(item.get("completion", 0)))) for item in results)
             confidence = sum(float(item.get("confidence", 0)) for item in results) / len(results) if results else 0.0
             assessment_id = _id("assessment")
             created = now()
-            refs = evidence_refs or []
             db.execute("INSERT INTO prime_core.progress_assessments(assessment_id,project_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,item_results,evidence_refs,created_at) VALUES (%s,%s,%s,%s,%s,%s,'CURRENT',%s,%s,%s,%s)", (assessment_id, project_id, goal_revision_id, repository_revision, total * 100, confidence, summary, json.dumps(results), json.dumps(refs), created))
             record_historical_snapshot(db, project_id, "PROGRESS", assessment_id, repository_revision, {"assessment_id": assessment_id, "goal_revision_id": goal_revision_id, "repository_revision": repository_revision, "progress_percent": total * 100, "confidence": confidence, "summary": summary, "item_results": results}, created)
             return {"assessment_id": assessment_id, "project_id": project_id, "goal_revision_id": goal_revision_id, "progress_percent": total * 100, "confidence": confidence, "freshness_state": "CURRENT", "goal_items": results, "evidence_refs": refs}

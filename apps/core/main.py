@@ -77,6 +77,9 @@ class JobRequest(BaseModel):
 class EventRequest(BaseModel):
     event_type: str = Field(min_length=1, max_length=160)
     payload: dict[str, Any] = Field(default_factory=dict)
+    project_id: str | None = None
+    source_revision: str | None = Field(default=None, max_length=240)
+    source_ref: str | None = Field(default=None, max_length=240)
     dedupe_key: str | None = Field(default=None, max_length=240)
 
 
@@ -551,7 +554,7 @@ def create_job(body: JobRequest, request: Request, prime_session: str | None = C
 @app.post("/v1/events")
 def emit_event(body: EventRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
-    return service.emit_event(body.event_type, body.payload, dedupe_key=body.dedupe_key)
+    return service.emit_event(body.event_type, body.payload, project_id=body.project_id, dedupe_key=body.dedupe_key, source_revision=body.source_revision, source_ref=body.source_ref)
 
 
 @app.post("/v1/projects")

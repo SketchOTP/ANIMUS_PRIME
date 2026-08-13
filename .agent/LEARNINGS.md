@@ -385,3 +385,7 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 032 selected-revision fork and A/B isolation qualification.
 - Supersedes learning: none
+
+- 2026-08-12 — Atlas-native qualification: direct SSH to `/home/sketch/Projects/ANIMUS_PRIME` avoids the malformed SSHFS/`Z:\` doubled path and avoids Z: bind mounts for Docker. A native bind mount still exposes worktree file modes; the existing uncommitted 660 migration files are unreadable to the image's `nobody` user, so the safe qualification workaround was a root-owned disposable process without changing the user's files.
+- 2026-08-12 — Git bundle verification requires repository context: verify a bundle through a disposable bare Git directory, not a context-free `git bundle verify` invocation.
+- 2026-08-12 — Progress qualification must enforce the approved GoalModel contract: required evidence-bearing items cannot claim non-zero completion without evidence, and approved item weights must be applied when result payloads omit weight.
