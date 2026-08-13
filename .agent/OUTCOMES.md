@@ -1343,3 +1343,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: complete Progress correction/freshness workflow, AI Connections browser lifecycle, AGENTS semantics, Activity source drill-down, Repository/Authority/Git mutation-proof qualification, representative/live/isolation Brain qualification, Fork/Clone UI/isolation, Time Lens/Search reconciliation, native Node, Tailscale/second device, Hindsight, assistive technology, and R-056 remain open or unqualified.
 - Blockers: the normal `nobody` Core image path cannot read the user’s uncommitted mode-660 migration files on a native bind mount; qualification used a root-owned disposable process and did not modify those files. External qualification environments remain unavailable or incomplete.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-034 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-034
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-033
+- Closed: 2026-08-13T02:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 034 proved the exact published tip builds and starts with the intended unprivileged Core image, classified the old mode-660 condition as development-worktree permission contamination, rebuilt the 70-row open §26 view into an actionable 81-row-derived burndown, inspected Atlas Linux/Tailscale/Hindsight boundaries, and ran a current authenticated browser regression without promoting unsupported DOD rows. The V1 product gate, Phase 15, V1, and R-056 remain open.
+- Validation:
+  - clean published checkout and normal `nobody` Core image - PASSED
+  - fresh PostgreSQL/pgvector, 26 migrations, Core restart/live health - PASSED
+  - full pytest with importlib collection - PASSED (`64 passed, 27 skipped`)
+  - Phases 1–14 - PASSED
+  - native compileall - PASSED
+  - adopted governance - PASSED
+  - product alignment audit - PASSED structurally; V1 gate FAIL
+  - actionable burndown validation - PASSED (`81 = 11 complete + 70 open`)
+  - browser fixture regression - PASSED for authenticated surfaces and truthful degraded states; complete DOD promotion NOT JUSTIFIED
+  - `git diff --check` - PASSED
+  - precise tracked secret scan - PASSED
+  - deployment - NOT PERFORMED
+- Changed areas: `docs/v1-product-gap-burndown.yaml`, `docs/v1-product-goal-alignment-audit.yaml`, `scripts/validate_product_gap_burndown.py`, Continuation 034 evidence, and append-only `.agent` records.
+- Remaining risks: Brain representative scale/live/isolation, Fork browser isolation/completeness, Time Lens/Search/Ask/AI Connections/Activity exact completion, Repository/Authority/Git mutation-proof, Progress correction/freshness, native Node lifecycle, Windows, Tailscale second device, live Notion, Hindsight retain, external AT, R-045, and R-056.
+- Blockers: the browser fixture needed a disposable read-only mount; current provider/Notion/Hindsight/native/external environments do not support complete promotion.
+- Follow-up directive: none

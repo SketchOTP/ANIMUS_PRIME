@@ -296,3 +296,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Fresh PostgreSQL/pgvector with all 26 migrations, full pytest, Phases 1–14, governance, compile, diff, YAML, audit, and secret checks passed. The cycle repaired demonstrated Git bundle verification and GoalModel progress enforcement, and added bounded Brain, Activity provenance, and AI Connections UI surfaces. Direct browser evidence only supports fixture-scale Brain qualification; remaining complete workflows and external environments are not proven.
 - Affected areas: `src/prime_core/git_history.py`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `apps/web/index.html`, `tests/phase15/test_product_completion_033.py`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/v1-product-gap-burndown.yaml`, Continuation 033 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-032
+
+## DEC-PRIME-PHASE15-034
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-034
+- Status: CLOSED
+- Decision or event: Close Continuation 034 as PARTIAL. Classify the published artifact as clean and unbroken under the normal unprivileged Core image, replace the generic 70-row gap view with a concrete execution queue, and keep all unproven product and external requirements open.
+- Rationale: Exact clean checkout `b325390f` built and started with `USER nobody`, 26 migrations applied, and Core restart/live health passed. The previous mode-660 condition is isolated to the long-lived development worktree. Current authenticated browser regression proved truthful setup, project, Goal/Progress, Brain fixture-scale, Search partial, degraded Ask, unavailable Time Lens, safe AI empty state, and Activity no-source behavior, but not complete frozen acceptance. Atlas has systemd and Tailscale, while native Node installer evidence, Windows, second device, approved PRIME Hindsight retain, live Notion, and external AT remain unavailable or incomplete.
+- Affected areas: `docs/v1-product-gap-burndown.yaml`, `docs/v1-product-goal-alignment-audit.yaml`, `scripts/validate_product_gap_burndown.py`, Continuation 034 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-033

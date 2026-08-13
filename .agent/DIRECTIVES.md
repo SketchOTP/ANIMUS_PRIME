@@ -459,3 +459,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-032
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-034
+
+- Issued: 2026-08-12T23:59:00-04:00
+- Issuer: User
+- External directive: `ANIMUS PRIME — CONTINUATION 034 V1 RELEASE CONVERGENCE`
+- Objective: Prove the exact published artifact starts as the normal unprivileged Core image, convert the 70 open §26 rows into an actionable burndown, close high-yield local product gaps using existing implementation, finish Brain and Fork isolation qualification, and separate local gaps from genuine external blockers.
+- Scope: clean native-Atlas checkout at `b325390f72d4ec0bd7f23f39ba75293fcc9b13f5`; normal `nobody` image build/start with fresh PostgreSQL/pgvector and 26 migrations; actionable 81-item burndown; DOD-014/015/017/021/022/040/043/051/059/060/062/063 reconciliation; Brain scale/live/isolation; Fork browser/isolation; native Linux and external-boundary inspection; governed evidence, GitHub, and Notion reconciliation.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; creating v1.0.1, SpecChangeRecord, or Phase 16; broad implementation waves; fabricated Windows, Tailscale, Hindsight, Notion, assistive-technology, or second-device evidence; R-056 closure before its gate; deployment; modifying unrelated worktree permissions or changes.
+- Acceptance: Clean published artifact passes intended unprivileged startup or the smallest packaging defect is repaired and requalified; every non-complete DOD row has concrete required fields and mechanically matches the authoritative audit; only complete frozen workflows are promoted; Brain/Fork boundaries are explicit; external blockers are exact; full required validation passes or is truthfully bounded; local/origin parity and Notion are reconciled; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-033
+- Status at issuance: ISSUED

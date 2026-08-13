@@ -1,89 +1,1700 @@
 baseline: PRIME-SPEC-V1.0.0
-derived_from: docs/v1-product-goal-alignment-audit.yaml
-purpose: release-management-view-only
-status_vocabulary: [BACKEND_ONLY, UI_SHELL_ONLY, IMPLEMENTED_NOT_PRODUCT_QUALIFIED, PARTIAL, BLOCKED_BY_ENVIRONMENT]
-defaults: &gap_defaults
-  exact_missing_behavior: "See the authoritative audit item with the same dod_id; this view does not duplicate normative text."
-  requires_code: "SEE_AUDIT"
-  requires_browser: "SEE_AUDIT"
-  requires_native_linux: "NO"
-  requires_windows: "NO"
-  requires_tailscale: "NO"
-  requires_hindsight: "NO"
-  requires_external_at: "NO"
-  requires_live_notion: "NO"
-  owner_phase: "SEE_AUDIT"
-  mapped_r_requirement: "SEE_AUDIT"
-  next_action: "Close the exact missing behavior in the authoritative audit row, then append direct qualification evidence."
+derived_from:
+  - docs/v1-product-goal-alignment-audit.yaml
+  - docs/requirements-traceability.yaml
+  - docs/phase15-remediation-matrix.yaml
+  - docs/phase15-remediation-qualification-ledger.yaml
+purpose: actionable release execution queue; derived view only
+required_fields: [dod_id, current_status, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
+totals_by_work_class:
+  LOCAL_CODE: 12
+  LOCAL_BROWSER_QUALIFICATION: 28
+  LOCAL_NATIVE_QUALIFICATION: 0
+  EVIDENCE_RECONCILIATION: 1
+  EXTERNAL_ENVIRONMENT: 29
+  AGGREGATE_RELEASE_GATE: 0
 items:
-  - {<<: *gap_defaults, dod_id: DOD-001, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-002, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-004, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-005, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-006, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-007, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-008, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-009, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-012, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-013, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-014, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-015, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-016, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-017, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-018, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-021, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-022, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-023, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-024, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-026, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-027, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-028, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-030, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-031, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-032, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-033, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-034, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-035, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-036, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-037, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-038, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-039, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-040, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-041, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-043, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-044, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-045, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-047, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-048, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-049, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-050, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-051, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-052, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-053, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-054, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-055, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-056, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-057, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-058, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-059, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-060, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-061, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-062, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-063, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-  - {<<: *gap_defaults, dod_id: DOD-064, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-065, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-066, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-067, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-068, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-069, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-070, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-071, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-073, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-074, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-075, current_status: BACKEND_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-076, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-077, current_status: UI_SHELL_ONLY}
-  - {<<: *gap_defaults, dod_id: DOD-079, current_status: BLOCKED_BY_ENVIRONMENT}
-  - {<<: *gap_defaults, dod_id: DOD-080, current_status: PARTIAL}
-  - {<<: *gap_defaults, dod_id: DOD-081, current_status: IMPLEMENTED_NOT_PRODUCT_QUALIFIED}
-reconciliation_rule: "items must equal all audit rows whose status is not USER_USABLE_VERIFIED or PRODUCT_VERIFIED"
+  - dod_id: DOD-001
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "governance"
+    owner_phase: 0
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The frozen criterion requires: Immutable approved baseline and change-record traceability; fail closed on missing spec artifacts.. Current evidence does not yet demonstrate the complete operator behavior at 'Open governance from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Immutable approved baseline and change-record traceability; fail closed on missing spec artifacts.. Current evidence does not yet demonstrate the complete operator behavior at 'Open governance from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-002
+    current_status: "BACKEND_ONLY"
+    product_area: "repository"
+    owner_phase: 2
+    mapped_r_requirements: ["R-005"]
+    exact_missing_behavior: "The frozen criterion requires: Exactly one primary non-bare Git repository per managed project; no duplicate active binding.. The missing operator behavior is a qualified path at 'Open repository from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Exactly one primary non-bare Git repository per managed project; no duplicate active binding.. The missing operator behavior is a qualified path at 'Open repository from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-005"
+  - dod_id: DOD-004
+    current_status: "BACKEND_ONLY"
+    product_area: "workflows"
+    owner_phase: 3
+    mapped_r_requirements: ["R-012"]
+    exact_missing_behavior: "The frozen criterion requires: Multi-system lifecycle workflows are durable and resumable without orphan resources.. The missing operator behavior is a qualified path at 'Open workflows from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Multi-system lifecycle workflows are durable and resumable without orphan resources.. The missing operator behavior is a qualified path at 'Open workflows from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-012"
+  - dod_id: DOD-005
+    current_status: "BACKEND_ONLY"
+    product_area: "source lifecycle"
+    owner_phase: 11
+    mapped_r_requirements: ["R-011"]
+    exact_missing_behavior: "The frozen criterion requires: Source removals propagate to current derived views while historical provenance remains unless purged.. The missing operator behavior is a qualified path at 'Open source lifecycle from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Source removals propagate to current derived views while historical provenance remains unless purged.. The missing operator behavior is a qualified path at 'Open source lifecycle from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-011"
+  - dod_id: DOD-006
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "network"
+    owner_phase: 12
+    mapped_r_requirements: ["R-032"]
+    exact_missing_behavior: "The frozen criterion requires: Web/UI, Node, MCP, and backend services use separate private network planes.. Current evidence does not yet demonstrate the complete operator behavior at 'Open network from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Web/UI, Node, MCP, and backend services use separate private network planes.. Current evidence does not yet demonstrate the complete operator behavior at 'Open network from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-032"
+  - dod_id: DOD-007
+    current_status: "BACKEND_ONLY"
+    product_area: "nodes"
+    owner_phase: 2
+    mapped_r_requirements: ["R-031"]
+    exact_missing_behavior: "The frozen criterion requires: Node enrollment, rotation, revocation, audit, and allowed-root constraints are explicit.. The missing operator behavior is a qualified path at 'Open nodes from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Node enrollment, rotation, revocation, audit, and allowed-root constraints are explicit.. The missing operator behavior is a qualified path at 'Open nodes from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-031"
+  - dod_id: DOD-008
+    current_status: "PARTIAL"
+    product_area: "recovery"
+    owner_phase: 1
+    mapped_r_requirements: ["R-001"]
+    exact_missing_behavior: "The frozen criterion requires: Single-operator break-glass recovery and step-up authentication are implemented and tested.. Current evidence does not yet demonstrate the complete operator behavior at 'Open recovery from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Single-operator break-glass recovery and step-up authentication are implemented and tested.. Current evidence does not yet demonstrate the complete operator behavior at 'Open recovery from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-001"
+  - dod_id: DOD-009
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "backup"
+    owner_phase: 13
+    mapped_r_requirements: ["R-042"]
+    exact_missing_behavior: "The frozen criterion requires: Protected payloads are not persistently browser cached; backups are encrypted and coherent.. Current evidence does not yet demonstrate the complete operator behavior at 'Open backup from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Protected payloads are not persistently browser cached; backups are encrypted and coherent.. Current evidence does not yet demonstrate the complete operator behavior at 'Open backup from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-042"
+  - dod_id: DOD-012
+    current_status: "PARTIAL"
+    product_area: "Notion"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Notion is the only supported external human-knowledge connector.. Current evidence does not yet demonstrate the complete operator behavior at 'Open Notion from PRIME.'."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Notion is the only supported external human-knowledge connector.. Current evidence does not yet demonstrate the complete operator behavior at 'Open Notion from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-013
+    current_status: "BACKEND_ONLY"
+    product_area: "remote access"
+    owner_phase: 12
+    mapped_r_requirements: ["R-035"]
+    exact_missing_behavior: "The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused.. The missing operator behavior is a qualified path at 'Open remote access from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused.. The missing operator behavior is a qualified path at 'Open remote access from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-035"
+  - dod_id: DOD-014
+    current_status: "PARTIAL"
+    product_area: "Time Lens"
+    owner_phase: 15
+    mapped_r_requirements: ["R-050"]
+    exact_missing_behavior: "Current product must show a historical selector, selected revision, EXACT/PARTIAL/UNAVAILABLE reconstruction, historical Brain state, and Return to Now."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the lightweight current Time Lens regression against the preserved R-050 evidence; promote only if all five states remain visible."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-050"
+  - dod_id: DOD-015
+    current_status: "BACKEND_ONLY"
+    product_area: "historical Ask"
+    owner_phase: 15
+    mapped_r_requirements: ["R-050"]
+    exact_missing_behavior: "Ask must bind to the selected historical as_of revision, expose historical citations, and never leak current/future state."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the current historical Ask binding and citation regression using the preserved R-050 evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-050"
+  - dod_id: DOD-016
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "fork/clone"
+    owner_phase: 11
+    mapped_r_requirements: ["R-048"]
+    exact_missing_behavior: "Fork must create a new project identity, repository, selected revision, mutable authority, independent Progress baseline, and new MCP credential; separate Notion Project Record and Hindsight bank remain independently verified or truthfully degraded."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Complete browser fork completeness; separate LOCAL_COMPLETE from live Notion/Hindsight external evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","migrations/prime/0026_product_completion_wave3.sql"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-048"
+  - dod_id: DOD-017
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "fork isolation"
+    owner_phase: 11
+    mapped_r_requirements: ["R-048"]
+    exact_missing_behavior: "After Fork A to B, independent authority, progress, memory/source-ledger, MCP grant, Search marker, and context-export mutations must not cross projects; grant rotation/revocation must remain project-scoped."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Complete the authenticated browser A/B mutation matrix, then promote independently of any remaining Hindsight gap."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-048"
+  - dod_id: DOD-018
+    current_status: "BACKEND_ONLY"
+    product_area: "repository boundary"
+    owner_phase: 2
+    mapped_r_requirements: ["R-005"]
+    exact_missing_behavior: "The frozen criterion requires: One primary Git repository remains the PRIME boundary; monorepos remain supported.. The missing operator behavior is a qualified path at 'Open repository boundary from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: One primary Git repository remains the PRIME boundary; monorepos remain supported.. The missing operator behavior is a qualified path at 'Open repository boundary from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-005"
+  - dod_id: DOD-021
+    current_status: "PARTIAL"
+    product_area: "Ask"
+    owner_phase: 9
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "Ask must show the answer, FACT/INTERPRETATION/UNKNOWN boundaries, citations, source class, revision identity, changed-source handling, and degraded behavior."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the missing current browser checks against the already qualified R-054/R-055 path."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-022
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Search"
+    owner_phase: 11
+    mapped_r_requirements: ["R-047"]
+    exact_missing_behavior: "Search must group Repository, .agent/Authority, Git, Notion, Memory, and Activity results with freshness/revision, drill-down, and Project A/B isolation."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Use populated A/B fixtures to run grouped-source, freshness, drill-down, and isolation checks."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py","src/prime_core/intelligence_service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-047"
+  - dod_id: DOD-023
+    current_status: "PARTIAL"
+    product_area: "state model"
+    owner_phase: 1
+    mapped_r_requirements: ["R-001"]
+    exact_missing_behavior: "The frozen criterion requires: Lifecycle, connectivity, freshness, and work/authority condition are independent.. Current evidence does not yet demonstrate the complete operator behavior at 'Open state model from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Lifecycle, connectivity, freshness, and work/authority condition are independent.. Current evidence does not yet demonstrate the complete operator behavior at 'Open state model from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-001"
+  - dod_id: DOD-024
+    current_status: "UI_SHELL_ONLY"
+    product_area: "lifecycle"
+    owner_phase: 13
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Projects support PAUSED, COMPLETION_REVIEW, and operator-confirmed COMPLETED.' still lacks data-backed behavior at 'Open lifecycle from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Projects support PAUSED, COMPLETION_REVIEW, and operator-confirmed COMPLETED.' still lacks data-backed behavior at 'Open lifecycle from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-026
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Progress/Alignment"
+    owner_phase: 8
+    mapped_r_requirements: ["R-055"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Progress history, Goal Alignment, milestones, and correction/challenge are visible and evidenced.' still lacks data-backed behavior at 'Open Progress/Alignment from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Progress history, Goal Alignment, milestones, and correction/challenge are visible and evidenced.' still lacks data-backed behavior at 'Open Progress/Alignment from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-055"
+  - dod_id: DOD-027
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Integrity"
+    owner_phase: 15
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Integrity surfaces structural continuity problems without rewriting authority.' still lacks data-backed behavior at 'Open Integrity from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Integrity surfaces structural continuity problems without rewriting authority.' still lacks data-backed behavior at 'Open Integrity from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-028
+    current_status: "BACKEND_ONLY"
+    product_area: "authority adoption"
+    owner_phase: 7
+    mapped_r_requirements: ["R-008"]
+    exact_missing_behavior: "The frozen criterion requires: Existing .agent authority follows explicit adopt/migrate/review paths without overwrite.. The missing operator behavior is a qualified path at 'Open authority adoption from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Existing .agent authority follows explicit adopt/migrate/review paths without overwrite.. The missing operator behavior is a qualified path at 'Open authority adoption from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-008"
+  - dod_id: DOD-030
+    current_status: "BACKEND_ONLY"
+    product_area: "memory admission"
+    owner_phase: 9
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Consequential authority events enter the correct Hindsight bank with provenance/deduplication.. The missing operator behavior is a qualified path at 'Open memory admission from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Consequential authority events enter the correct Hindsight bank with provenance/deduplication.. The missing operator behavior is a qualified path at 'Open memory admission from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-031
+    current_status: "BACKEND_ONLY"
+    product_area: "warm start"
+    owner_phase: 9
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Warm start seeds high-value .agent and selected Notion knowledge without bulk ingestion.. The missing operator behavior is a qualified path at 'Open warm start from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Warm start seeds high-value .agent and selected Notion knowledge without bulk ingestion.. The missing operator behavior is a qualified path at 'Open warm start from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-032
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Memory UI"
+    owner_phase: 9
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Memory Inspector, Timeline, and AI Memory Activity are usable and isolated.' still lacks data-backed behavior at 'Open Memory UI from PRIME.'."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Memory Inspector, Timeline, and AI Memory Activity are usable and isolated.' still lacks data-backed behavior at 'Open Memory UI from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-033
+    current_status: "BACKEND_ONLY"
+    product_area: "corrections"
+    owner_phase: 9
+    mapped_r_requirements: ["R-055"]
+    exact_missing_behavior: "The frozen criterion requires: Memory and derived-artifact corrections preserve provenance.. The missing operator behavior is a qualified path at 'Open corrections from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Memory and derived-artifact corrections preserve provenance.. The missing operator behavior is a qualified path at 'Open corrections from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-055"
+  - dod_id: DOD-034
+    current_status: "BACKEND_ONLY"
+    product_area: "Notion Record"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Each project has managed Notion Record plus read-only sources and managed history rollover.. The missing operator behavior is a qualified path at 'Open Notion Record from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Each project has managed Notion Record plus read-only sources and managed history rollover.. The missing operator behavior is a qualified path at 'Open Notion Record from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-035
+    current_status: "BACKEND_ONLY"
+    product_area: "Notion detach"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Notion detach/purge retracts current retrieval without claiming external deletion.. The missing operator behavior is a qualified path at 'Open Notion detach from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Notion detach/purge retracts current retrieval without claiming external deletion.. The missing operator behavior is a qualified path at 'Open Notion detach from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-036
+    current_status: "BACKEND_ONLY"
+    product_area: "Notion conflict"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Generated Notion changes do not recursively ingest; conflicts are surfaced.. The missing operator behavior is a qualified path at 'Open Notion conflict from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Generated Notion changes do not recursively ingest; conflicts are surfaced.. The missing operator behavior is a qualified path at 'Open Notion conflict from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-037
+    current_status: "BACKEND_ONLY"
+    product_area: "Git"
+    owner_phase: 11
+    mapped_r_requirements: ["R-049"]
+    exact_missing_behavior: "The frozen criterion requires: Canonical Git state is separated from experimental branches/worktrees.. The missing operator behavior is a qualified path at 'Open Git from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Canonical Git state is separated from experimental branches/worktrees.. The missing operator behavior is a qualified path at 'Open Git from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-049"
+  - dod_id: DOD-038
+    current_status: "BACKEND_ONLY"
+    product_area: "worktrees"
+    owner_phase: 11
+    mapped_r_requirements: ["R-049"]
+    exact_missing_behavior: "The frozen criterion requires: Branch/worktree memory retains context and canonical acceptance where determinable.. The missing operator behavior is a qualified path at 'Open worktrees from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Branch/worktree memory retains context and canonical acceptance where determinable.. The missing operator behavior is a qualified path at 'Open worktrees from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-049"
+  - dod_id: DOD-039
+    current_status: "BACKEND_ONLY"
+    product_area: "rebind"
+    owner_phase: 11
+    mapped_r_requirements: ["R-031"]
+    exact_missing_behavior: "The frozen criterion requires: Repository relocation/rebinding preserves identity and verifies before switching.. The missing operator behavior is a qualified path at 'Open rebind from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Repository relocation/rebinding preserves identity and verifies before switching.. The missing operator behavior is a qualified path at 'Open rebind from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-031"
+  - dod_id: DOD-040
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "AI Connections"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "AI Connections must issue, list, rotate, reject the old grant, accept the new grant, revoke, reject after revoke, and reissue; metadata is safe and Project A cannot access B."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the complete browser lifecycle and DOM/storage/log/evidence secret-retention checks."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-041
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "agent bridge"
+    owner_phase: 3
+    mapped_r_requirements: ["R-003"]
+    exact_missing_behavior: "Authority and project-bound MCP metadata are exportable; root/nested AGENTS chain inventory and visible precedence/conflict handling remain to be implemented and qualified."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'Authority and project-bound MCP metadata are exportable; root/nested AGENTS chain inventory and visible precedence/conflict handling remain to be implemented and qualified.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-003"
+  - dod_id: DOD-043
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Activity"
+    owner_phase: 9
+    mapped_r_requirements: ["R-055"]
+    exact_missing_behavior: "Activity must filter events and drill down to source-backed Git, Authority, Goal/Progress, Evidence, and AI artifacts; source-free events must display NO SOURCE ARTIFACT."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run source-backed Activity browser fixtures and verify the no-source truth state."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-055"
+  - dod_id: DOD-044
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "onboarding"
+    owner_phase: 14
+    mapped_r_requirements: ["R-051"]
+    exact_missing_behavior: "Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-051"
+  - dod_id: DOD-045
+    current_status: "PARTIAL"
+    product_area: "authentication"
+    owner_phase: 1
+    mapped_r_requirements: ["R-001"]
+    exact_missing_behavior: "The frozen criterion requires: Operator authentication and web-session protections guard management/destructive operations.. Current evidence does not yet demonstrate the complete operator behavior at 'Open authentication from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Operator authentication and web-session protections guard management/destructive operations.. Current evidence does not yet demonstrate the complete operator behavior at 'Open authentication from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-001"
+  - dod_id: DOD-047
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Usage"
+    owner_phase: 13
+    mapped_r_requirements: ["R-045"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Usage/cost is visible by model-backed PRIME function with configurable limits.' still lacks data-backed behavior at 'Open Usage from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Usage/cost is visible by model-backed PRIME function with configurable limits.' still lacks data-backed behavior at 'Open Usage from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-045"
+  - dod_id: DOD-048
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Notifications"
+    owner_phase: 14
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Notifications are high-signal and exclude routine noise.' still lacks data-backed behavior at 'Open Notifications from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Notifications are high-signal and exclude routine noise.' still lacks data-backed behavior at 'Open Notifications from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-049
+    current_status: "UI_SHELL_ONLY"
+    product_area: "Backup"
+    owner_phase: 13
+    mapped_r_requirements: ["R-042"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Backup/export/restore is user-visible, versioned, integrity-checked, and recovery-tested.' still lacks data-backed behavior at 'Open Backup from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Backup/export/restore is user-visible, versioned, integrity-checked, and recovery-tested.' still lacks data-backed behavior at 'Open Backup from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-042"
+  - dod_id: DOD-050
+    current_status: "BACKEND_ONLY"
+    product_area: "Upgrades"
+    owner_phase: 14
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The frozen criterion requires: Upgrade incompatibilities are visible and handled through preflight/migration/recovery.. The missing operator behavior is a qualified path at 'Open Upgrades from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Upgrade incompatibilities are visible and handled through preflight/migration/recovery.. The missing operator behavior is a qualified path at 'Open Upgrades from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-051
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Brain"
+    owner_phase: 10
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "Brain must remain usable at representative repository scale, advance live from revision A to B without page recreation or stale replacement, and isolate Project A/B graph/search state."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run representative-scale, live-update, and A/B isolation qualification; do not rewrite the existing canvas."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","evidence/phase15/product-goal-alignment-continuation-033.md","apps/web/index.html","apps/core/main.py","src/prime_core/brain_service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-052
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "future boundaries"
+    owner_phase: 15
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The frozen criterion requires: Dreaming Loop/Dream Inbox/Oracle boundaries are documented and non-authoritative.. Current evidence does not yet demonstrate the complete operator behavior at 'Open future boundaries from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Dreaming Loop/Dream Inbox/Oracle boundaries are documented and non-authoritative.. Current evidence does not yet demonstrate the complete operator behavior at 'Open future boundaries from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-053
+    current_status: "BACKEND_ONLY"
+    product_area: "LAN projects"
+    owner_phase: 12
+    mapped_r_requirements: ["R-036"]
+    exact_missing_behavior: "The frozen criterion requires: Projects can be added from any enrolled LAN machine.. The missing operator behavior is a qualified path at 'Open LAN projects from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Projects can be added from any enrolled LAN machine.. The missing operator behavior is a qualified path at 'Open LAN projects from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-036"
+  - dod_id: DOD-054
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "registration"
+    owner_phase: 3
+    mapped_r_requirements: ["R-046"]
+    exact_missing_behavior: "Node-constrained inspection/registration exists; complete browser negative matrix and live enrolled-Node lifecycle qualification remain."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'Node-constrained inspection/registration exists; complete browser negative matrix and live enrolled-Node lifecycle qualification remain.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-046"
+  - dod_id: DOD-055
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "creation"
+    owner_phase: 3
+    mapped_r_requirements: ["R-036"]
+    exact_missing_behavior: "Durable creation and repair-required failure state exist; interrupted creation/recovery and complete browser negative qualification remain."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "YES"
+    next_action: "Run the bounded qualification for 'Durable creation and repair-required failure state exist; interrupted creation/recovery and complete browser negative qualification remain.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-036"
+  - dod_id: DOD-056
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "project metadata"
+    owner_phase: 3
+    mapped_r_requirements: ["R-051"]
+    exact_missing_behavior: "Metadata columns and API persistence exist; restart/browser continuity and image/avatar qualification remain."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "YES"
+    next_action: "Run the bounded qualification for 'Metadata columns and API persistence exist; restart/browser continuity and image/avatar qualification remain.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","migrations/prime/0025_product_onboarding.sql"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-051"
+  - dod_id: DOD-057
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "authority provisioning"
+    owner_phase: 3
+    mapped_r_requirements: ["R-003"]
+    exact_missing_behavior: "Explicit bootstrap/adopt/review API boundaries exist; manifest/hash/idempotency and complete browser qualification remain."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'Explicit bootstrap/adopt/review API boundaries exist; manifest/hash/idempotency and complete browser qualification remain.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/authority.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-003"
+  - dod_id: DOD-058
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "guided goal"
+    owner_phase: 3
+    mapped_r_requirements: ["R-051"]
+    exact_missing_behavior: "Explicit goal review/approval writes the authority goal and creates a GoalRevision; frozen contract completeness, GoalModel approval, and browser qualification remain."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'Explicit goal review/approval writes the authority goal and creates a GoalRevision; frozen contract completeness, GoalModel approval, and browser qualification remain.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-051"
+  - dod_id: DOD-059
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Repository/Authority UI"
+    owner_phase: 14
+    mapped_r_requirements: ["R-051"]
+    exact_missing_behavior: "Repository and Authority browser views must be read-only and mutation-proof across tree, nested text, binary rejection, oversize handling, traversal rejection, authority files, hashes, and revisions."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the clean-fixture before/after hash and git-status mutation-proof browser matrix."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-051"
+  - dod_id: DOD-060
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Git UI"
+    owner_phase: 11
+    mapped_r_requirements: ["R-046"]
+    exact_missing_behavior: "Git browser view must expose branch, dirty state, canonical revision, commits, and worktrees without changing tracked hashes, .agent hashes, or repository state."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the clean-fixture Git metadata mutation-proof matrix."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-046"
+  - dod_id: DOD-061
+    current_status: "BACKEND_ONLY"
+    product_area: "observation"
+    owner_phase: 4
+    mapped_r_requirements: ["R-011"]
+    exact_missing_behavior: "The frozen criterion requires: Repository changes are observed incrementally.. The missing operator behavior is a qualified path at 'Open observation from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Repository changes are observed incrementally.. The missing operator behavior is a qualified path at 'Open observation from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-011"
+  - dod_id: DOD-062
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "Progress UI"
+    owner_phase: 8
+    mapped_r_requirements: ["R-011"]
+    exact_missing_behavior: "Progress must show weighted percentage, confidence, explanation, GoalItems, required flags, evidence, history, and correction/challenge; unsupported required items must not count."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the browser correction/challenge and required-evidence workflow, including append-only history."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-011"
+  - dod_id: DOD-063
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "freshness"
+    owner_phase: 8
+    mapped_r_requirements: ["R-052"]
+    exact_missing_behavior: "Progress must visibly move CURRENT at revision A to STALE after committed change B, then return CURRENT after refresh with source revision before/after."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the browser freshness transition with a real committed repository change."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-052"
+  - dod_id: DOD-064
+    current_status: "BACKEND_ONLY"
+    product_area: "Notion UI"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Each project automatically receives a human-readable Notion page.. The missing operator behavior is a qualified path at 'Open Notion UI from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Each project automatically receives a human-readable Notion page.. The missing operator behavior is a qualified path at 'Open Notion UI from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-065
+    current_status: "BACKEND_ONLY"
+    product_area: "managed Notion"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: Managed Notion sections update without overwriting user knowledge.. The missing operator behavior is a qualified path at 'Open managed Notion from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Managed Notion sections update without overwriting user knowledge.. The missing operator behavior is a qualified path at 'Open managed Notion from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-066
+    current_status: "BACKEND_ONLY"
+    product_area: "knowledge"
+    owner_phase: 7
+    mapped_r_requirements: ["R-037"]
+    exact_missing_behavior: "The frozen criterion requires: User Notion knowledge is retrieved with provenance without becoming authority/memory.. The missing operator behavior is a qualified path at 'Open knowledge from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: User Notion knowledge is retrieved with provenance without becoming authority/memory.. The missing operator behavior is a qualified path at 'Open knowledge from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    depends_on: "R-037"
+  - dod_id: DOD-067
+    current_status: "BACKEND_ONLY"
+    product_area: "Hindsight bank"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Each project maps to one hard-isolated Hindsight bank and PRIME source metadata.. The missing operator behavior is a qualified path at 'Open Hindsight bank from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Each project maps to one hard-isolated Hindsight bank and PRIME source metadata.. The missing operator behavior is a qualified path at 'Open Hindsight bank from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-068
+    current_status: "BACKEND_ONLY"
+    product_area: "Hindsight semantics"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Hindsight native memory/Mental Models and PRIME classifications are exposed correctly.. The missing operator behavior is a qualified path at 'Open Hindsight semantics from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Hindsight native memory/Mental Models and PRIME classifications are exposed correctly.. The missing operator behavior is a qualified path at 'Open Hindsight semantics from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-069
+    current_status: "BACKEND_ONLY"
+    product_area: "Hindsight contract"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Hindsight is behind PRIME contracts without a second custom memory backend.. The missing operator behavior is a qualified path at 'Open Hindsight contract from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Hindsight is behind PRIME contracts without a second custom memory backend.. The missing operator behavior is a qualified path at 'Open Hindsight contract from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-070
+    current_status: "BACKEND_ONLY"
+    product_area: "durable memory"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Durable memory preserves provenance, binding, correction/tombstone, supersession, and status.. The missing operator behavior is a qualified path at 'Open durable memory from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "YES"
+    requires_second_device: "YES"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Durable memory preserves provenance, binding, correction/tombstone, supersession, and status.. The missing operator behavior is a qualified path at 'Open durable memory from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Private Tailscale qualification requires an approved second device."
+    depends_on: "R-054"
+  - dod_id: DOD-071
+    current_status: "BACKEND_ONLY"
+    product_area: "MCP memory"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Coding agents access project-bound memory through MCP.. The missing operator behavior is a qualified path at 'Open MCP memory from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Coding agents access project-bound memory through MCP.. The missing operator behavior is a qualified path at 'Open MCP memory from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-073
+    current_status: "BACKEND_ONLY"
+    product_area: "MCP admission"
+    owner_phase: 6
+    mapped_r_requirements: ["R-054"]
+    exact_missing_behavior: "The frozen criterion requires: Codex can add high-value durable memories through MCP.. The missing operator behavior is a qualified path at 'Open MCP admission from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Codex can add high-value durable memories through MCP.. The missing operator behavior is a qualified path at 'Open MCP admission from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    depends_on: "R-054"
+  - dod_id: DOD-074
+    current_status: "BACKEND_ONLY"
+    product_area: "offline node"
+    owner_phase: 2
+    mapped_r_requirements: ["R-031"]
+    exact_missing_behavior: "The frozen criterion requires: PRIME remains usable while a repository node is offline.. The missing operator behavior is a qualified path at 'Open offline node from PRIME.'; backend capability alone is not sufficient."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: PRIME remains usable while a repository node is offline.. The missing operator behavior is a qualified path at 'Open offline node from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-031"
+  - dod_id: DOD-075
+    current_status: "BACKEND_ONLY"
+    product_area: "Core outage"
+    owner_phase: 1
+    mapped_r_requirements: ["R-001"]
+    exact_missing_behavior: "The frozen criterion requires: Repository remains usable while PRIME or memory is down.. The missing operator behavior is a qualified path at 'Open Core outage from PRIME.'; backend capability alone is not sufficient."
+    work_class: "EVIDENCE_RECONCILIATION"
+    requires_code: "NO"
+    requires_browser: "NO"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Repository remains usable while PRIME or memory is down.. The missing operator behavior is a qualified path at 'Open Core outage from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-001"
+  - dod_id: DOD-076
+    current_status: "UI_SHELL_ONLY"
+    product_area: "lifecycle safety"
+    owner_phase: 13
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Remove, archive, and delete are distinct and safe.' still lacks data-backed behavior at 'Open lifecycle safety from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Remove, archive, and delete are distinct and safe.' still lacks data-backed behavior at 'Open lifecycle safety from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-077
+    current_status: "UI_SHELL_ONLY"
+    product_area: "delete"
+    owner_phase: 13
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The named UI exists, but the criterion 'Destructive project deletion is protected and audited.' still lacks data-backed behavior at 'Open delete from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Destructive project deletion is protected and audited.' still lacks data-backed behavior at 'Open delete from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-079
+    current_status: "BLOCKED_BY_ENVIRONMENT"
+    product_area: "native nodes"
+    owner_phase: 2
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "Linux and Windows native node support must be separately qualified: Linux requires supported service/install/restart evidence with safe privilege; Windows requires an actual supported Windows host. Direct Atlas SSH proves Linux host availability but not service qualification."
+    work_class: "EXTERNAL_ENVIRONMENT"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "YES"
+    requires_windows: "YES"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "YES"
+    requires_packaging: "NO"
+    requires_clean_install: "YES"
+    next_action: "Inspect and qualify the Linux half if safe privilege/install capability exists; keep Windows separately blocked."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "Atlas Linux host and systemd are available, but no deterministic native service installer/unit is exposed for Linux qualification; Windows still requires a separate supported host."
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-080
+    current_status: "PARTIAL"
+    product_area: "polish"
+    owner_phase: 14
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The frozen criterion requires: UI is polished, modern, responsive, and avoids unnecessary subsystem complexity.. Current evidence does not yet demonstrate the complete operator behavior at 'Open polish from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: UI is polished, modern, responsive, and avoids unnecessary subsystem complexity.. Current evidence does not yet demonstrate the complete operator behavior at 'Open polish from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+  - dod_id: DOD-081
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    product_area: "release"
+    owner_phase: 15
+    mapped_r_requirements: ["R-056"]
+    exact_missing_behavior: "The frozen criterion requires: Required security, integration, recovery, and isolation tests pass.. Current evidence does not yet demonstrate the complete operator behavior at 'Open release from PRIME.'."
+    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    requires_code: "NO"
+    requires_browser: "YES"
+    requires_native_linux: "NO"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "NO"
+    requires_external_at: "NO"
+    requires_live_notion: "NO"
+    requires_privilege: "NO"
+    requires_packaging: "YES"
+    requires_clean_install: "NO"
+    next_action: "Run the bounded qualification for 'The frozen criterion requires: Required security, integration, recovery, and isolation tests pass.. Current evidence does not yet demonstrate the complete operator behavior at 'Open release from PRIME.'.'; promote only if every clause passes and append direct evidence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
+    blocked_by: "NONE"
+    depends_on: "R-056; aggregate R-056 gate"
+reconciliation:
+  complete_plus_items_must_equal: 81
+  item_status_must_equal_authoritative_audit: true
+  release_gate: V1_PRODUCT_GOAL_ALIGNMENT
