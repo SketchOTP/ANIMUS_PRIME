@@ -7,11 +7,11 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 12
-  LOCAL_BROWSER_QUALIFICATION: 25
+  LOCAL_CODE: 11
+  LOCAL_BROWSER_QUALIFICATION: 24
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 3
-  EXTERNAL_ENVIRONMENT: 29
+  EXTERNAL_ENVIRONMENT: 25
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-002

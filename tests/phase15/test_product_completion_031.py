@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from src.prime_core.service import CoreService
+from apps.core.main import ForkRequest
 
 
 def test_fork_archive_rejects_path_traversal(tmp_path: Path) -> None:
@@ -37,3 +38,39 @@ def test_wave3_routes_and_controls_are_present() -> None:
     assert "/v1/projects/{project_id}/time-lens/brain" in main
     assert "Historical Goal:" in web
     assert "renderBrainGraph(await api" in web
+
+
+@pytest.mark.parametrize(
+    "parent_path",
+    [
+        "/",
+        "/tmp/prime-fork",
+        "/home/sketch/Projects/example",
+        r"C:\Projects\Example",
+        r"D:\Prime\Repos\Example",
+    ],
+)
+def test_fork_request_keeps_node_paths_opaque(parent_path: str) -> None:
+    request = ForkRequest(
+        source_revision="a" * 40,
+        destination_node_id="atlas-node",
+        parent_path=parent_path,
+        repository_name="example",
+        confirm=True,
+    )
+
+    assert request.parent_path == parent_path
+    assert request.model_dump()["parent_path"] == parent_path
+
+
+def test_fork_boundary_rejects_escape_and_symlink_escape(tmp_path: Path) -> None:
+    allowed = tmp_path / "allowed"
+    outside = tmp_path / "outside"
+    allowed.mkdir()
+    outside.mkdir()
+    (allowed / "child").mkdir()
+    (allowed / "link").symlink_to(outside, target_is_directory=True)
+
+    assert CoreService._within_allowed_root(allowed / "child", [str(allowed)])
+    assert not CoreService._within_allowed_root(allowed / ".." / "outside", [str(allowed)])
+    assert not CoreService._within_allowed_root(allowed / "link" / "child", [str(allowed)])
