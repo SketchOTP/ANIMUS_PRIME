@@ -1464,3 +1464,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016/DOD-017 browser/external Fork, DOD-021/DOD-022/DOD-043/DOD-051/DOD-059/DOD-060/DOD-062/DOD-063, DOD-068 Mental Models/reflect, R-045, native Node/Windows/Tailscale/Notion/AT/provider boundaries, and R-056.
 - Blockers: approved Hindsight Mental Models/reflect and other external/native environments remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038
+- Supersedes outcome: OUT-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037
+- Closed: 2026-08-13T08:22:44-04:00
+- Acceptance: PARTIAL
+- Summary: Reconciled the derived burndown header and hardened its validator against stale totals, duplicate or complete rows, missing open rows, and mismatched governed fields. Native Atlas browser path tracing proved that the application preserves opaque Node paths when the browser harness is invoked with MSYS path conversion disabled; the earlier C:/ mutation was introduced by Git Bash before the browser. Authenticated disposable browser Fork A1/A2 selected-revision and destination checks passed, but the complete DOD-016/DOD-017 isolation criteria were not promoted. Brain browser availability/focus remains unqualified, and approved Hindsight reflect/Mental Models remained UNAVAILABLE. No other product or architectural rows were promoted.
+- Changed areas: docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15/test_product_gap_burndown.py; tests/phase15/test_product_completion_031.py; evidence/phase15/qualification-continuation-038.md; append-only .agent records.
+- Validation:
+  - burndown validator - PASSED
+  - ordinary pytest tests and scripts - PASSED (75 passed, 28 skipped)
+  - pytest collection - PASSED (103 collected)
+  - compileall - PASSED
+  - fresh disposable PostgreSQL/pgvector and all 26 migrations - PASSED
+  - cross-platform opaque path and allowed-root tests - PASSED (8 passed)
+  - browser path contract and Fork A1/A2 - PASSED for stated evidence; full isolation qualification - PARTIAL
+  - Brain browser focus/state - BLOCKED by disposable fixture availability
+  - Hindsight reflect/Mental Models - BLOCKED/UNAVAILABLE
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-016/DOD-017 complete resource-isolation matrix, DOD-021/DOD-022/DOD-043/DOD-051/DOD-059/DOD-060/DOD-062/DOD-063, DOD-068 Mental Models/reflect, R-045, native Node/Windows/Tailscale/Notion/AT/provider boundaries, and R-056.
+- Blockers: approved Hindsight reflect/provider completion and remaining external/native/browser environments are unavailable or unqualified.
+- Follow-up directive: none

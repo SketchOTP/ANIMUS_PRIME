@@ -336,3 +336,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Native Atlas qualification used fresh disposable PostgreSQL/pgvector and the live Hindsight service. Hindsight outage truthfulness, source-ledger rebuild labeling, exact managed Evidence/Git restoration, correction/tombstone/supersession, authenticated historical reconstruction, and negative component cases passed. Browser Fork exposed a client path-normalization defect, and the approved Hindsight Mental Models/reflect path remains unavailable. The frozen V1 gate remains FAIL.
 - Affected areas: src/prime_core/memory_service.py; apps/web/index.html; tests/phase5/test_memory_service.py; scripts/phase15_qualify_continuation_037.py; three governed views; Continuation 037 evidence; append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-036
+
+## DEC-PRIME-PHASE15-038
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-038
+- Status: CLOSED
+- Decision or event: Close Continuation 038 as PARTIAL. Reconcile the burndown derived view to 81 audit rows, 18 complete, and 63 open with mechanically enforced work-class totals. Record the native Atlas path boundary as a harness-level MSYS conversion issue, retain opaque path handling in PRIME, and record browser Fork A1/A2 as bounded evidence without promoting DOD-016/DOD-017. Keep Brain focus/state, Hindsight reflect/Mental Models, remaining local workflows, external environments, R-045, and R-056 open.
+- Rationale: Native SSH execution and disposable browser/Core qualification produced direct evidence. The correct MSYS-disabled invocation preserved `/tmp/prime038-source` through field, JavaScript, JSON, Core, and service boundaries; no product normalization patch was justified. Browser Fork selected revisions and real destinations passed, but the full resource-isolation matrix was not completed. Brain returned UNAVAILABLE in the disposable fixture and Hindsight reflect timed out/unavailable through the configured routerbot-local provider.
+- Affected areas: docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15; Continuation 038 evidence; append-only .agent records; GitHub and Notion publication.
+- Supersedes record: DEC-PRIME-PHASE15-037

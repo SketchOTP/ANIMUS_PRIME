@@ -516,3 +516,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038
+
+- Issued: 2026-08-13T08:22:44-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 038
+- Objective: Repair stale derived burndown totals and validate the native Atlas browser-to-Node path contract, then continue bounded local product qualification without overstating external or environment-dependent closure.
+- Scope: Native SSH execution at `/home/sketch/Projects/ANIMUS_PRIME`; burndown validator and tests; browser Fork/Clone A1/A2 and DOD-017 isolation; Brain browser state; Hindsight reflect/Mental Models diagnosis; remaining locally actionable product checks where evidence is available; governed evidence, `.agent`, GitHub, and Notion publication.
+- Exclusions: changing PRIME-SPEC-V1.0.0; Phase 16; deployment; Z:/SSHFS authoritative execution; R-056 closure; fabricated external, native, Notion, AT, provider, second-device, or Tailscale evidence; broad redesign.
+- Acceptance: Reconcile governed views mechanically, preserve truthful open/blocked states, publish direct-Atlas evidence and final parity, and leave deployment NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037
+- Status at issuance: ISSUED

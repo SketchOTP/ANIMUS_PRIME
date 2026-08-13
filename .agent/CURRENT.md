@@ -3,29 +3,29 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T08:20:00-04:00`
+- Last updated: `2026-08-13T08:22:44-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037`
-- External directive ID: `ANIMUS PRIME — CONTINUATION 037 V1 QUALIFICATION CONVERGENCE`
-- Objective: `HINDSIGHT RECOVERY + AUTHENTICATED HISTORICAL UX + BRAIN/FORK CLOSURE`
+- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038`
+- External directive ID: `ANIMUS PRIME — CONTINUATION 038`
+- Objective: `V1 LOCAL PRODUCT CLOSURE`
 - Current status: `COMPLETE`
 - Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
 - Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `src/prime_core/config.py; src/prime_core/memory_service.py; src/prime_memory_adapter.py; src/prime_core/history_service.py; apps/web/index.html; docs/v1-product-gap-burndown.yaml; docs/v1-product-goal-alignment-audit.yaml; scripts/validate_product_gap_burndown.py; tests/phase0; .agent; evidence/phase15`
-- Immediate next action: `Await next directive; this accepted cycle is closed and awaiting reset to IDLE; no deployment`
+- Expected or actual touched areas: `docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15; .agent; evidence/phase15`
+- Immediate next action: `Await next directive; this accepted cycle is closed PARTIAL and awaiting reset to IDLE; no deployment`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 037 evidence: `evidence/phase15/qualification-continuation-037.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit is `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; semantic validator rejects architectural UI-gap prose; Hindsight uses configured `PRIME_HINDSIGHT_BASE_URL` default `http://127.0.0.1:8888` and configurable timeout; endpoint and durable retain/recall qualified on live Atlas; historical Goal/Brain direct revision path repaired; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 038 evidence: `evidence/phase15/qualification-continuation-038.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; derived work classes: `LOCAL_CODE 11 / LOCAL_BROWSER_QUALIFICATION 24 / LOCAL_NATIVE_QUALIFICATION 0 / EVIDENCE_RECONCILIATION 3 / EXTERNAL_ENVIRONMENT 25 / AGGREGATE_RELEASE_GATE 0`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit is `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; browser native path is opaque when tested with `MSYS_NO_PATHCONV=1`; browser Fork A1/A2 passed bounded revision/destination checks but DOD-016/DOD-017 remain open; Brain browser is UNAVAILABLE in the disposable fixture; Hindsight reflect/Mental Models is UNAVAILABLE; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 037 fresh Atlas qualification, governance reconciliation, and publication preflight`
+- Command or check: `Continuation 038 Atlas burndown, path-contract, browser Fork, and governance qualification`
 - Result: `PASSED`
 
-Continuation 037 is closed PARTIAL. Fresh zero-state Atlas qualification passed 26 migrations, 93 tests, and Phases 1–14. Semantic audit consistency now passes; Hindsight endpoint and durable-retain/recall pass on the live service; historical Goal/Brain/Ask direct-boundary tests pass. Authenticated historical Time Lens/Ask and AI Connections passed; browser Fork exposed a native-path normalization defect, Brain focus-state remains unqualified, and external qualification is not complete; the V1 product gate remains FAIL.
+Continuation 038 is closed PARTIAL. Burndown totals and derived invariants pass mechanically. Native Atlas browser path tracing showed the earlier `C:/` mutation was introduced by Git Bash/MSYS before the browser; with `MSYS_NO_PATHCONV=1`, the exact `/tmp` path reached the field, JavaScript, JSON, Core, service, and real destination. Browser Fork A1/A2 bounded checks passed, but complete isolation, Brain focus/state, Hindsight reflect/Mental Models, external/native qualification, and R-056 remain open; the V1 product gate remains FAIL.
 
 ## Risks
 

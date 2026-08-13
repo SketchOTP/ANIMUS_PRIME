@@ -26,7 +26,6 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Scope: PRIME Hindsight adapter and all future memory writes.
 - Supersedes learning: none
 
-
 ## L-PRIME-PHASE15-010
 
 - Date: 2026-08-11
@@ -436,4 +435,34 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Evidence location: evidence/phase15/qualification-continuation-037.md; scripts/phase15_qualify_continuation_037.py
 - Confidence: VERIFIED
 - Scope: R-044 external-component failure and recovery contract.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-043
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-043
+- Fact or lesson: Git Bash/MSYS path conversion can mutate a native Atlas Linux path before the browser receives it. Browser CLI path tests must set `MSYS_NO_PATHCONV=1`; PRIME should preserve opaque Node paths and must not accept a client-local `C:/Users/...` mutation as an Atlas path.
+- Evidence location: evidence/phase15/qualification-continuation-038.md; tests/phase15/test_product_completion_031.py
+- Confidence: VERIFIED
+- Scope: DOD-016/DOD-017 native Atlas browser-to-Node path contract.
+- Supersedes learning: L-PRIME-PHASE15-041
+
+## L-PRIME-PHASE15-044
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-044
+- Fact or lesson: Burndown header totals are derived state and must be validator-enforced against the authoritative audit row set, including duplicate, complete-row, missing-row, status, acceptance-kind, and work-class invariants.
+- Evidence location: docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15/test_product_gap_burndown.py; evidence/phase15/qualification-continuation-038.md
+- Confidence: VERIFIED
+- Scope: V1 product-gap governance.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-045
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-045
+- Fact or lesson: The approved Hindsight reflect/Mental Models path currently starts through `openai/routerbot-local` but does not complete within the bounded adapter call, so PRIME must keep the result UNAVAILABLE and DOD-068 open.
+- Evidence location: evidence/phase15/qualification-continuation-038.md; Atlas Hindsight service logs observed during Continuation 038
+- Confidence: VERIFIED
+- Scope: DOD-068 approved Hindsight reflect/provider qualification.
 - Supersedes learning: none
