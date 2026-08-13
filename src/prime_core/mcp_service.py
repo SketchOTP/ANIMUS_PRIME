@@ -38,7 +38,10 @@ class MCPService:
 
     def revoke_grant(self, grant_id: str, project_id: str | None = None) -> None:
         with transaction(self.settings) as db:
-            row = db.execute("SELECT 1 FROM prime_core.mcp_grants WHERE grant_id=%s AND (%s IS NULL OR project_id=%s)", (grant_id, project_id, project_id)).fetchone()
+            if project_id is None:
+                row = db.execute("SELECT 1 FROM prime_core.mcp_grants WHERE grant_id=%s", (grant_id,)).fetchone()
+            else:
+                row = db.execute("SELECT 1 FROM prime_core.mcp_grants WHERE grant_id=%s AND project_id=%s", (grant_id, project_id)).fetchone()
             if not row:
                 raise KeyError("grant not found")
             db.execute("UPDATE prime_core.mcp_grants SET revoked_at=now() WHERE grant_id=%s", (grant_id,))
