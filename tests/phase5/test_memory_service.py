@@ -19,6 +19,13 @@ class FakeAdapter:
     def recall(self, query: str):
         return AdapterResult("CURRENT", {"results": self.documents})
 
+    def create_bank(self):
+        return AdapterResult("CURRENT", {})
+
+    def delete_bank(self):
+        self.documents.clear()
+        return AdapterResult("CURRENT", {})
+
 
 pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="set PRIME_PHASE1_DB_URL for memory integration")
 
@@ -44,3 +51,27 @@ def test_memory_project_isolation_secret_filter_and_tombstone(monkeypatch):
     assert service.recall(project["project_id"], "Decision")["results"]
     service.tombstone(project["project_id"], stored["memory_id"], "operator correction")
     assert service.recall(project["project_id"], "Decision")["results"] == []
+
+
+def test_source_ledger_rebuild_excludes_superseded_and_tombstoned(monkeypatch):
+    monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
+    from src.prime_core.config import Settings
+    from src.prime_core.db import migrate
+    from src.prime_core.memory_service import MemoryService
+    from src.prime_core.service import CoreService
+    settings = Settings()
+    migrate(settings)
+    project = CoreService(settings).create_project("Memory rebuild")
+    fake = FakeAdapter(project["project_id"])
+    service = MemoryService(settings, lambda _: fake)
+    current = service.store(project["project_id"], "retain this current fact", "FACT", source_revision="r1")
+    superseded = service.store(project["project_id"], "old correction", "FACT", source_revision="r1")
+    service.store(project["project_id"], "new correction", "FACT", source_revision="r2", supersedes_memory_id=superseded["memory_id"], correction_reason="verified")
+    service.tombstone(project["project_id"], superseded["memory_id"], "removed")
+    rebuilt = service.rebuild_from_source_ledger(project["project_id"])
+    assert rebuilt["status"] == "CURRENT"
+    assert rebuilt["mode"] == "SOURCE_LEDGER_REBUILD"
+    assert rebuilt["restored"] == 1
+    assert rebuilt["eligible"] == 1
+    assert rebuilt["superseded_and_tombstoned_excluded"] is True
+    assert fake.documents[0]["document_id"] == current["memory_id"]

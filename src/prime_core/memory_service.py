@@ -60,6 +60,47 @@ class MemoryService:
                 break
         return {"status": result.status, "results": results, "project_id": project_id}
 
+    def rebuild_from_source_ledger(self, project_id: str) -> dict[str, Any]:
+        """Recreate a project bank from PRIME's current, provenance-bearing ledger.
+
+        Hindsight observations and Mental Models are derived state. PRIME's
+        memory_records and correction status remain authoritative, so rebuild
+        deliberately reports SOURCE_LEDGER_REBUILD rather than pretending the
+        native backend was restored bit-for-bit.
+        """
+        adapter = self.adapter_factory(project_id)
+        deleted = adapter.delete_bank()
+        if deleted.status == "UNAVAILABLE":
+            return {"status": "UNAVAILABLE", "mode": "SOURCE_LEDGER_REBUILD", "project_id": project_id, "bank_id": f"prime-{project_id}", "restored": 0, "reason": deleted.reason}
+        created = adapter.create_bank()
+        if created.status == "UNAVAILABLE":
+            return {"status": "UNAVAILABLE", "mode": "SOURCE_LEDGER_REBUILD", "project_id": project_id, "bank_id": f"prime-{project_id}", "restored": 0, "reason": created.reason}
+        with connect(self.settings) as db:
+            rows = db.execute(
+                "SELECT memory_id,content,source_revision,content_class FROM prime_core.memory_records "
+                "WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') ORDER BY created_at,memory_id",
+                (project_id,),
+            ).fetchall()
+        restored = 0
+        unavailable: list[str] = []
+        for row in rows:
+            result = adapter.retain_verified(row["content"], row["memory_id"])
+            if result.status == "CURRENT":
+                restored += 1
+            else:
+                unavailable.append(row["memory_id"])
+        return {
+            "status": "CURRENT" if not unavailable else "DEGRADED",
+            "mode": "SOURCE_LEDGER_REBUILD",
+            "fidelity": "REBUILDABLE_NOT_BIT_IDENTICAL",
+            "project_id": project_id,
+            "bank_id": f"prime-{project_id}",
+            "restored": restored,
+            "eligible": len(rows),
+            "unavailable_memory_ids": unavailable,
+            "superseded_and_tombstoned_excluded": True,
+        }
+
     def tombstone(self, project_id: str, memory_id: str, reason: str, correction_type: str = "TOMBSTONE") -> None:
         with transaction(self.settings) as db:
             row = db.execute("SELECT 1 FROM prime_core.memory_records WHERE memory_id=%s AND project_id=%s", (memory_id, project_id)).fetchone()
