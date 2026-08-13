@@ -1296,3 +1296,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016, DOD-017, and DOD-051 moved to `IMPLEMENTED_NOT_PRODUCT_QUALIFIED`; counts are `4/7/22/31/9/7/0/1` in the documented order; authenticated restart/resume and GoalModel qualification; exact AGENTS conflict semantics; AI/browser rotation evidence; activity source drill-down; full Repository/Authority/Git mutation-proof evidence; interactive 3D Brain and live update; full Fork/Clone A/B isolation; external Hindsight, native Node, Tailscale, and assistive-technology evidence.
 - Blockers: fresh database lifespan migration blocked during this bounded browser attempt; external environment gaps remain explicit.
 - Follow-up directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-031
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-032 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-032
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-047
+- Closed: 2026-08-12T20:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Fresh zero-state PostgreSQL/pgvector/Core migration and restart qualification passed with all 26 migrations; no migration repair was required. The demonstrated PostgreSQL nullable-parameter defect in project-scoped MCP grant revocation was repaired narrowly and covered by a regression check. Authenticated two-project evidence qualified GoalModel/progress freshness transitions, AGENTS-chain inventory, project-scoped AI token behavior, Activity filtering, repository/authority/Git state, source-labelled Brain API/accessibility fallback, selected-revision Fork/Clone fidelity, and A/B isolation. The stale duplicate Fork UI claim was corrected. Continuation 031 publication closure occurred after its bounded evidence file was authored; its history remains unchanged. The V1 product gate remains FAIL, the frozen baseline is unchanged, R-056 remains OPEN, and unresolved interactive/external requirements remain explicit.
+- Changed areas: `src/prime_core/mcp_service.py`, `tests/phase15/test_product_completion_032.py`, `apps/web/index.html`, `evidence/phase15/product-goal-alignment-continuation-032.md`, and append-only `.agent` records.
+- Validation:
+  - fresh PostgreSQL 17.10/pgvector 0.8.2 migration-from-zero through migration 0026 - PASSED
+  - Core lifespan startup and restart/live health - PASSED
+  - project-scoped MCP revoke regression - PASSED
+  - authenticated two-project API qualification - PASSED
+  - authenticated browser setup/project/GoalModel/progress/repository/authority/activity/Brain/Fork control surfaces - PASSED
+  - browser console-error check after authenticated load - PASSED
+  - governed-view reconciliation and §26 count preservation - PASSED
+  - Python/Web static checks and `git diff --check` - PASSED
+  - full repository regression suite - NOT RUN
+  - native Node, Tailscale/second device, live Notion write, approved Hindsight, assistive technology, full interactive 3D Brain/live update, and deployment - NOT RUN
+- Remaining risks: DOD-016/017/040/041/043/050/051/062/063 and Time Lens/Search remain unpromoted where exact frozen completion criteria were not fully demonstrated; R-044, R-045, R-053, R-031–R-036, and R-056 remain open or environment-bound as previously recorded.
+- Blockers: external/native qualification and complete frozen product acceptance remain unavailable or incomplete.
+- Follow-up directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-032

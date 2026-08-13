@@ -276,3 +276,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The frozen product objective requires durable lifecycle state and independent project resources. The implementation now makes those boundaries explicit while the fresh database/browser journey, interactive 3D behavior, live Brain update, and A/B isolation remain unverified. Keeping the audit at implementation-open status preserves truthful release gating.
 - Affected areas: `apps/core/main.py`, `apps/web/index.html`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `src/prime_core/indexer.py`, `src/prime_core/mcp_service.py`, `src/prime_core/brain_service.py`, `migrations/prime/0026_product_completion_wave3.sql`, `docs/v1-product-goal-alignment-audit.yaml`, Continuation 031 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-030
+
+## DEC-PRIME-PHASE15-032
+
+- Date: 2026-08-12
+- Record or decision ID: DEC-PRIME-PHASE15-032
+- Status: ACTIVE
+- Decision or event: Continue Continuation 032 as a bounded qualification and repair cycle. Classify the fresh startup path before changing migrations; retain the migration set because fresh PostgreSQL/pgvector startup and restart passed; apply only the demonstrated project-scoped MCP revocation type-safety repair; keep Wave-3 product and external gaps unpromoted.
+- Rationale: The prior startup block was caused by unavailable Docker Desktop, not a failed migration. Authenticated two-project evidence proves substantial backend and browser surfaces, but not the frozen full interactive 3D Brain, live Brain update, complete browser AI Connections workflow, Activity source drill-down, or all external/native requirements. The frozen baseline, V1/Phase 15 gate, and R-056 must remain truthful.
+- Affected areas: `src/prime_core/mcp_service.py`, `tests/phase15/test_product_completion_032.py`, `apps/web/index.html`, Continuation 032 evidence, and append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-031

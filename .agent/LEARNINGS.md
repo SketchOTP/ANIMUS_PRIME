@@ -365,3 +365,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 031 Fork/Clone implementation slice.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-035
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-035
+- Fact or lesson: The fresh Continuation 032 startup block was environmental, not a migration defect: a zero-state PostgreSQL 17.10/pgvector 0.8.2 database applied all 26 migrations, Core lifespan startup completed, and Core restart remained healthy. Separately, PostgreSQL can reject a nullable project-scope parameter used in `%s IS NULL` with `IndeterminateDatatype`; branching the query for the nullable and non-null cases is the narrow type-safe repair.
+- Evidence location: `docker compose -p prime032 -f docker-compose.phase1.yml`; `src/prime_core/mcp_service.py`; `tests/phase15/test_product_completion_032.py`; `evidence/phase15/product-goal-alignment-continuation-032.md`
+- Confidence: VERIFIED
+- Scope: Continuation 032 fresh startup diagnosis and project-scoped AI grant revocation.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-036
+
+- Date: 2026-08-12
+- Learning ID: L-PRIME-PHASE15-036
+- Fact or lesson: Selected-revision Fork/Clone safety depends on both a clean committed source tree and the required authority package being present in the selected revision; later authority files do not retroactively make an earlier revision forkable. Successful fork evidence must also prove distinct project-scoped memory/progress/grant state and explicit non-copy provenance.
+- Evidence location: `src/prime_core/service.py`; `evidence/phase15/product-goal-alignment-continuation-032.md`
+- Confidence: VERIFIED
+- Scope: Continuation 032 selected-revision fork and A/B isolation qualification.
+- Supersedes learning: none

@@ -3,29 +3,29 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-12T23:55:00-04:00`
+- Last updated: `2026-08-12T20:23:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-PRODUCT-COMPLETION-031`
-- External directive ID: `ANIMUS PRIME — Continuation 031 V1 Product Completion Wave 3`
-- Objective: `Close Wave-2 lifecycle gaps, then deliver source-grounded Project Brain and isolated Fork/Clone without changing PRIME-SPEC-V1.0.0.`
-- Current status: `IN_PROGRESS`
-- Acceptance: `Wave-3 implementation is bounded and structurally validated; authenticated restart/resume, full GoalModel/browser qualification, 3D Brain, and A/B Fork/Clone evidence remain before closure; deployment remains NOT PERFORMED.`
-- Current phase: `15`
-- Expected or actual touched areas: `Wave-1 audit reconciliation, setup status/resume, Node-constrained repository registration/creation, project metadata, authority bootstrap/adopt/review, guided goal approval, initial index/baseline, handoff, evidence, and append-only governance records.`
-- Immediate next action: `Run a fresh disposable database qualification for restart/resume, GoalModel assessment/freshness, AI grant rotation, activity drill-down, Brain interaction/live update, and Fork/Clone isolation.`
+- Local directive ID: `NONE`
+- External directive ID: `NONE`
+- Objective: `NONE`
+- Current status: `IDLE`
+- Acceptance: `NONE`
+- Current phase: `NONE`
+- Expected or actual touched areas: `NONE`
+- Immediate next action: `NONE`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 030 published tip: `44cbc219968ae53ff88ab3cdb7e6fd0c46b5ebc0`; Continuation 031 bounded implementation tip is not yet published; governed remediation remains `16 VERIFIED / 9 implemented-open / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 22 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 031 publication tip: `2f9fcc3d55a61788bffb45a7d0555161fb3708c4`; Continuation 032 repair commit: `015dbeefecaddab8f9b953142975961e0bae1d0d`; fresh PostgreSQL/pgvector startup and Core restart passed with no migration repair required; governed remediation remains `16 VERIFIED / 9 implemented-open / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 22 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 031 bounded Wave-3 implementation; focused regression and structural audit`
+- Command or check: `Continuation 032 fresh PostgreSQL/pgvector startup, authenticated Wave-3 qualification, governance reconciliation, and browser console check`
 - Result: `PASSED`
 
-Continuation 031 remains IN_PROGRESS after a bounded implementation slice. The V1 product gate remains FAIL because authenticated product qualification and environment requirements remain.
+Continuation 032 closed as `PARTIAL`. Continuation 031 is accepted and published at `2f9fcc3d55a61788bffb45a7d0555161fb3708c4`; its bounded evidence file was authored before that publication closure, and the distinction is preserved in Continuation 032 evidence. Fresh startup passed, but the V1 product gate remains FAIL because complete frozen interactive and external qualification is not complete.
 
 ## Risks
 
@@ -59,7 +59,7 @@ Continuation 031 remains IN_PROGRESS after a bounded implementation slice. The V
 - Continuation 017 adds product Evidence admission to Intelligence Search/Ask, Progress citation retention, device-aware off-machine backup classification, durable interrupted-restore failure state, historical Evidence availability truth, and real R-046/R-047 qualification fixtures. Implementation remains 25/26; R-046/R-047/R-049 are VERIFIED; R-056 remains open.
 - Continuation 018 adds the minimum environment-backed OpenAI-compatible local provider adapter, real Paragon Ask/Progress/Documentation/memory-admission execution, provider outage/recovery and secret-redaction evidence, and PRIME Notion credential/read capability evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 are VERIFIED; R-037–R-041/R-055 are partial; R-056 remains open.
 - Continuation 019 adds the bounded per-function Paragon output contract, real Project A/B Goal/Progress/Ask/Documentation/Alignment/memory qualification, UNKNOWN/isolation/injection/outage/recovery evidence, a reusable qualification harness, and disposable connected-workspace Notion create/update/source-refresh evidence. Implementation remains 25/26; R-046/R-047/R-049/R-054 remain VERIFIED; R-037–R-041/R-055 remain partial; R-056 remains open.
-- Continuation 027 promotes R-043 and R-048 on fresh production-path recovery evidence; R-045 remains partial for missing normative observability/enforcement, R-044 remains partial because Hindsight is unavailable, R-053 remains partial because external AT is unavailable, and R-056 remains blocked/open. Final publication and Notion append remain to be completed.
+- Continuation 027 promotes R-043 and R-048 on fresh production-path recovery evidence; R-045 remains partial for missing normative observability/enforcement, R-044 remains partial because Hindsight is unavailable, R-053 remains partial because external AT is unavailable, and R-056 remains blocked/open. Continuation 032 publication and Notion append are the current closure records.
 
 ## Blockers
 

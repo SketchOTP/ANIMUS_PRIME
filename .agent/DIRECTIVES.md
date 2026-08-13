@@ -431,3 +431,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-030
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-032
+
+- Issued: 2026-08-12T19:52:00-04:00
+- Issuer: User
+- External directive: `ANIMUS PRIME — Continuation 032 V1 Product Completion Wave 3 Qualification + Distinctive Product Closure`
+- Objective: Classify and repair the fresh PostgreSQL/pgvector startup path, then qualify the existing Wave-3 GoalModel/progress, lifecycle, AGENTS, Activity, AI grant, Brain, and Fork/Clone workflows without changing PRIME-SPEC-V1.0.0.
+- Scope: Fresh migration-from-zero diagnosis and repair; authenticated two-project fixture; GoalModel/progress and stale-refresh qualification; setup restart/resume; AGENTS chain; Activity filter/drill-down; AI grant rotation/revocation; repository/authority/Git mutation-proof checks; interactive 3D Brain and live update; selected-revision Fork/Clone and isolation; Time Lens/Search reconciliation; governed evidence, audit, GitHub, and Notion publication.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; creating v1.0.1, a SpecChangeRecord, or Phase 16; fabricated Hindsight/native Node/Tailscale/assistive-technology evidence; R-056 closure; deployment; broad new product areas; silent authority overwrite or hidden source mutation.
+- Acceptance: Fresh-start failure is classified before repair; only the demonstrated defect is fixed if present; all migration/startup/restart checks are evidenced; complete workflows are promoted only with direct authenticated browser/API evidence; external gaps and V1/Phase 15/R-056 gates remain truthful; local/origin GitHub and Notion are reconciled.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-031
+- Status at issuance: ISSUED
