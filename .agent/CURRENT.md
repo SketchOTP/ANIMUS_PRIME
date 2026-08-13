@@ -3,29 +3,29 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T08:22:44-04:00`
+- Last updated: `2026-08-13T14:05:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038`
-- External directive ID: `ANIMUS PRIME — CONTINUATION 038`
-- Objective: `V1 LOCAL PRODUCT CLOSURE`
+- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039`
+- External directive ID: `ANIMUS PRIME — CONTINUATION 039`
+- Objective: `V1 LOCAL QUALIFICATION CLOSURE`
 - Current status: `COMPLETE`
 - Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
 - Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15; .agent; evidence/phase15`
+- Expected or actual touched areas: `apps/web/index.html; scripts/phase15_qualify_continuation_039.py; scripts/phase15_reflect_probe_039.py; evidence/phase15; .agent`
 - Immediate next action: `Await next directive; this accepted cycle is closed PARTIAL and awaiting reset to IDLE; no deployment`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 038 evidence: `evidence/phase15/qualification-continuation-038.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; derived work classes: `LOCAL_CODE 11 / LOCAL_BROWSER_QUALIFICATION 24 / LOCAL_NATIVE_QUALIFICATION 0 / EVIDENCE_RECONCILIATION 3 / EXTERNAL_ENVIRONMENT 25 / AGGREGATE_RELEASE_GATE 0`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit is `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; browser native path is opaque when tested with `MSYS_NO_PATHCONV=1`; browser Fork A1/A2 passed bounded revision/destination checks but DOD-016/DOD-017 remain open; Brain browser is UNAVAILABLE in the disposable fixture; Hindsight reflect/Mental Models is UNAVAILABLE; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 039 evidence: `evidence/phase15/qualification-continuation-039.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit remains `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; reusable A/B fixture Brain was `EXACT` at `17 nodes / 9 edges` per project; Browser Brain interaction and state-reset fixes passed; Fork A1/A2 and dirty-source refusal passed; complete DOD-016/DOD-017, exact DOD-051 query, Ask execution, Hindsight reflect, external/native environments, R-045, and R-056 remain open; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 038 Atlas burndown, path-contract, browser Fork, and governance qualification`
+- Command or check: `Continuation 039 Atlas fixture, browser, Fork, Hindsight, governance, and regression qualification`
 - Result: `PASSED`
 
-Continuation 038 is closed PARTIAL. Burndown totals and derived invariants pass mechanically. Native Atlas browser path tracing showed the earlier `C:/` mutation was introduced by Git Bash/MSYS before the browser; with `MSYS_NO_PATHCONV=1`, the exact `/tmp` path reached the field, JavaScript, JSON, Core, service, and real destination. Browser Fork A1/A2 bounded checks passed, but complete isolation, Brain focus/state, Hindsight reflect/Mental Models, external/native qualification, and R-056 remain open; the V1 product gate remains FAIL.
+Continuation 039 is closed PARTIAL. The native Atlas A/B fixture is reusable and browser-qualified for exact Brain topology, interactions, state reset, Activity, Repository, Search, Progress, Ask-safe UNKNOWN, Fork A1/A2, and dirty-source refusal. Hindsight reflect is bounded UNAVAILABLE; exact Brain literal search, complete isolation, approved Ask execution, external/native qualification, R-045, and R-056 remain open; the V1 product gate remains FAIL.
 
 ## Risks
 

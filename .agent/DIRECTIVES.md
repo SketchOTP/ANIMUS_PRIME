@@ -530,3 +530,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039
+
+- Issued: 2026-08-13T13:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 039
+- Objective: Build one reusable qualified production-path Project A/B fixture on native Atlas, run bounded Brain/Fork/Hindsight/Search/Activity/Repository/Progress/Ask qualification, and reconcile truthful governed evidence without deployment or external-environment overclaiming.
+- Scope: Direct SSH execution at `/home/sketch/Projects/ANIMUS_PRIME`; disposable Core/Node/PostgreSQL/Hindsight only; browser qualification through a localhost tunnel; minimal project-scoped browser-state fixes; evidence, `.agent`, GitHub, and Notion publication.
+- Exclusions: production Hindsight changes; `PRIME-SPEC-V1.0.0` changes; Phase 16; deployment; Z:/SSHFS authoritative execution; fabricated native Node/Windows, Tailscale, second-device, assistive-technology, Notion, approved-model, or R-056 evidence.
+- Acceptance: Preserve exact open/blocked boundaries, record fixture and browser evidence, mechanically validate governance and tests, publish direct-Atlas closure, and leave deployment `NOT PERFORMED`.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038
+- Status at issuance: ISSUED

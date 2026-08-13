@@ -346,3 +346,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Native SSH execution and disposable browser/Core qualification produced direct evidence. The correct MSYS-disabled invocation preserved `/tmp/prime038-source` through field, JavaScript, JSON, Core, and service boundaries; no product normalization patch was justified. Browser Fork selected revisions and real destinations passed, but the full resource-isolation matrix was not completed. Brain returned UNAVAILABLE in the disposable fixture and Hindsight reflect timed out/unavailable through the configured routerbot-local provider.
 - Affected areas: docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; tests/phase15; Continuation 038 evidence; append-only .agent records; GitHub and Notion publication.
 - Supersedes record: DEC-PRIME-PHASE15-037
+
+## DEC-PRIME-PHASE15-039
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-039
+- Status: CLOSED
+- Decision or event: Close Continuation 039 as PARTIAL. Retain the minimal browser fixes that clear project-scoped Brain/query/filter/detail state on project switch and when a filter removes the selected node. Record the reusable native-Atlas A/B fixture, exact Brain topology/interactions, Activity/Repository/Search/Progress/Ask-safe result, Fork A1/A2, and clean-source refusal as bounded evidence without promoting DOD-016, DOD-017, DOD-021, DOD-022, or DOD-051.
+- Rationale: The direct Atlas fixture produced real repositories, authority, goals, progress, evidence, activity, MCP grants, PRIME memory, retained checkpoints, and independently recallable Hindsight banks for A and B. Approved `PrimeMemoryAdapter.reflect()` remained `UNAVAILABLE` at the bounded timeout, and the exact Brain query contract, complete resource-isolation matrix, approved model execution, external/native environments, R-045, and R-056 remain unqualified.
+- Affected areas: `apps/web/index.html`; Continuation 039 fixture and reflect probe; Continuation 039 evidence; append-only `.agent` records.
+- Supersedes record: DEC-PRIME-PHASE15-038

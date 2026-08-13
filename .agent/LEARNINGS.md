@@ -466,3 +466,33 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: DOD-068 approved Hindsight reflect/provider qualification.
 - Supersedes learning: none
+
+## L-PRIME-PHASE15-046
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-046
+- Fact or lesson: A reusable qualification fixture must keep one current durable ledger fact while storing correction seeds and tombstoned corrections as separate rows; otherwise a correction test can accidentally leave recall with no current fact.
+- Evidence location: `scripts/phase15_qualify_continuation_039.py`; `evidence/phase15/qualification-continuation-039.md`
+- Confidence: VERIFIED
+- Scope: Continuation 039 fixture construction and PRIME/Hindsight qualification.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-047
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-047
+- Fact or lesson: Project-scoped browser state must clear query, filter, custom historical boundary, source selection, selected node, and detail panes when the active project changes or a filter removes the selected node.
+- Evidence location: `apps/web/index.html`; `evidence/phase15/qualification-continuation-039.md`
+- Confidence: VERIFIED
+- Scope: Wave 3 Brain and project-switch browser behavior.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-048
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-048
+- Fact or lesson: The approved local Hindsight provider can complete fixture retain/recall but the bounded `PrimeMemoryAdapter.reflect()` call still returns `UNAVAILABLE`; retain/recall success must not be generalized into reflect or Mental Models qualification.
+- Evidence location: `scripts/phase15_reflect_probe_039.py`; `evidence/phase15/qualification-continuation-039.md`
+- Confidence: VERIFIED
+- Scope: DOD-068 approved Hindsight reflect/provider qualification.
+- Supersedes learning: L-PRIME-PHASE15-045
