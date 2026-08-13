@@ -17,7 +17,7 @@ from .config import Settings
 from .db import connect, transaction
 from .security import new_token, password_hash, password_verify, token_digest
 from .history_primitives import record_historical_snapshot
-from .authority import provision_authority, validate_authority
+from .authority import REQUIRED_AUTHORITY_FILES, provision_authority, validate_authority
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -358,23 +358,27 @@ class CoreService:
         project = self.create_project(repository_name, source.get("description", ""), source.get("image_url"))
         workflow = self.create_workflow("FORK_PROJECT", f"fork:{source_project_id}:{source_revision}:{target}", project["project_id"])
         try:
-            archive = subprocess.run(["git", "-C", str(source_root), "archive", "--format=tar", source_revision], check=True, capture_output=True, timeout=60).stdout
-            target.mkdir()
-            self._safe_archive_extract(archive, target)
-            subprocess.run(["git", "-C", str(target), "init", "--initial-branch=main"], check=True, capture_output=True, text=True, timeout=10)
-            subprocess.run(["git", "-C", str(target), "add", "."], check=True, capture_output=True, text=True, timeout=30)
-            subprocess.run(["git", "-C", str(target), "-c", "user.name=ANIMUS PRIME", "-c", "user.email=prime@localhost", "commit", "--allow-empty", "-m", f"Fork from {source_revision}"], check=True, capture_output=True, text=True, timeout=30)
+            subprocess.run(["git", "clone", "--no-hardlinks", str(source_root), str(target)], check=True, capture_output=True, text=True, timeout=60)
+            subprocess.run(["git", "-C", str(target), "checkout", "--detach", source_revision], check=True, capture_output=True, text=True, timeout=30)
+            remotes = subprocess.run(["git", "-C", str(target), "remote"], check=True, capture_output=True, text=True, timeout=10).stdout.split()
+            for remote in remotes:
+                subprocess.run(["git", "-C", str(target), "remote", "remove", remote], check=True, capture_output=True, text=True, timeout=10)
+            for relative in REQUIRED_AUTHORITY_FILES:
+                candidate = target / relative
+                if candidate.is_file() or candidate.is_symlink():
+                    candidate.unlink()
+            provision_authority(Path("authority-template/v1").resolve(), target)
             inspection = self.inspect_repository_for_onboarding(project["project_id"], destination_node_id, str(target))
             binding = self.bind_verified_repository(inspection, confirm=True)
             if goal:
-                self.create_goal_revision(project["project_id"], goal["content"], approve=True)
+                self.create_goal_revision(project["project_id"], goal["content"], approve=False)
             indexed = __import__("src.prime_core.indexer", fromlist=["RepositoryIndexer"]).RepositoryIndexer(self).build(project["project_id"])
             grant = __import__("src.prime_core.mcp_service", fromlist=["MCPService"]).MCPService(self.settings).issue_grant(project["project_id"], "fork-initial-coder")
             destination_revision = indexed["source_revision"]
             with transaction(self.settings) as db:
                 fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], destination_revision, json.dumps({"source": "git archive", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NOT_COPIED", "hindsight": "DEGRADED_OR_UNAVAILABLE"}), now())).fetchone()
-                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED',current_step='INDEXED',completed_steps='[\"ARCHIVED\",\"BOUND\",\"GOAL\",\"INDEXED\"]'::jsonb,updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
-            return {"fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "DEGRADED_OR_UNAVAILABLE"}
+                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED',current_step='INDEXED',completed_steps='[\"CLONED\",\"REMOTES_CLEARED\",\"AUTHORITY_TEMPLATE\",\"BOUND\",\"GOAL_DRAFT\",\"INDEXED\"]'::jsonb,updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
+            return {"fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "DEGRADED_OR_UNAVAILABLE", "goal_status": "DRAFT", "authority_provenance": "CURRENT_TEMPLATE_NOT_PARENT_AUTHORITY", "remote_status": "CLEARED"}
         except Exception as exc:
             with transaction(self.settings) as db:
                 db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED',current_step='RECONCILIATION_REQUIRED',last_error=%s,updated_at=%s WHERE workflow_id=%s", (type(exc).__name__, now(), workflow["workflow_id"]))
