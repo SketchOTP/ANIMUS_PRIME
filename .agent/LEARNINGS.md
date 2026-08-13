@@ -496,3 +496,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: DOD-068 approved Hindsight reflect/provider qualification.
 - Supersedes learning: L-PRIME-PHASE15-045
+
+## L-PRIME-PHASE15-049
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-049
+- Fact or lesson: Fork authority must be provisioned from the current versioned template after cloning the selected committed revision; copying the parent's `.agent` and replacing Git history with one synthetic commit creates a false child boundary. The child goal is intentionally DRAFT until explicit approval.
+- Evidence location: `src/prime_core/service.py`; `scripts/phase15_fork_qualification_continuation_040.py`; `evidence/phase15/qualification-continuation-040.md`
+- Confidence: VERIFIED
+- Scope: DOD-016/DOD-017 Fork/Clone authority and history boundary.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-050
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-050
+- Fact or lesson: gstack browser qualification must run from a local Windows filesystem working directory when the app is served through an Atlas SSH tunnel; invoking it from the Z: SSHFS checkout causes the browser harness to attempt a nested malformed path and reproduces the original ENOENT/EPERM class of failure.
+- Evidence location: `evidence/phase15/qualification-continuation-040.md`; Atlas direct-SSH/browser qualification log
+- Confidence: VERIFIED
+- Scope: Atlas execution and browser qualification routing.
+- Supersedes learning: none

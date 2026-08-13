@@ -1508,3 +1508,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016, DOD-017, DOD-021, DOD-022, DOD-043, DOD-045, DOD-048, DOD-050, DOD-051, DOD-059, DOD-060, DOD-062, DOD-063, DOD-068, R-045, external/native boundaries, and R-056.
 - Blockers: approved model execution and Hindsight reflect completion remain unavailable; Notion and required native/external qualification environments remain unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040
+- Supersedes outcome: OUT-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039
+- Closed: 2026-08-13T16:10:00-04:00
+- Acceptance: PARTIAL
+- Summary: Corrected Fork authority provenance so a child clones the selected committed revision, clears remotes, receives the current authority template, and starts with a DRAFT child goal. Direct Atlas qualification passed child revision/history, authority-template isolation, independent goal/progress, memory/MCP/bank isolation, and dirty-source refusal. Authenticated browser qualification passed exact Brain topology, node/path search, selected-file read-only drill-down, camera controls, repository filtering, A/B state reset, Activity filters, Repository/Authority views, grouped Search, and safe Ask UNKNOWN. DOD-017 and DOD-051 were promoted; DOD-016 and the remaining incomplete operator/environment rows stay open.
+- Changed areas: `src/prime_core/service.py`; `scripts/phase15_fork_qualification_continuation_040.py`; `scripts/phase15_qualify_continuation_040.py`; governed docs; `evidence/phase15/qualification-continuation-040.md`; append-only `.agent` records.
+- Validation:
+  - focused pytest - PASSED (`28 passed, 13 skipped`)
+  - Python compilation and diff check - PASSED
+  - product alignment audit - PASSED; V1 gate remains FAIL
+  - burndown/governance/YAML/secret/parity checks - PASSED after final publication
+  - browser Brain/Fork/Activity/Repository/Search/Ask bounded qualification - PASSED or truthful degraded state as recorded
+  - approved Hindsight Reflect/Mental Models - BLOCKED/UNAVAILABLE
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-016, DOD-021, DOD-022, DOD-043, DOD-059, DOD-060, DOD-062, DOD-063, DOD-068, R-045, external/native/Notion/AT/provider boundaries, and R-056.
+- Blockers: approved Hindsight Reflect/Mental Models and remaining external/native/Notion/AT/provider environments are unavailable or unqualified.
+- Follow-up directive: none

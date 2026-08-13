@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 24
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 3
-  EXTERNAL_ENVIRONMENT: 25
+  EXTERNAL_ENVIRONMENT: 23
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-002
@@ -262,31 +262,6 @@ items:
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","migrations/prime/0026_product_completion_wave3.sql"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
-    depends_on: "R-048"
-    acceptance_kind: "MIXED"
-  - dod_id: DOD-017
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "fork isolation"
-    owner_phase: 11
-    mapped_r_requirements: ["R-048"]
-    exact_missing_behavior: "After Fork A to B, independent authority, progress, memory/source-ledger, MCP grant, Search marker, and context-export mutations must not cross projects; grant rotation/revocation must remain project-scoped."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Repair the browser path normalization that prepends the Windows client C: to native Atlas destination paths, then rerun the authenticated Fork A/B mutation matrix."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","evidence/phase15/qualification-continuation-037.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE for isolation; the current browser-to-native path normalization defect is the local remaining gap. Notion remains a separate DOD-016 dependency."
     depends_on: "R-048"
     acceptance_kind: "MIXED"
   - dod_id: DOD-018
@@ -938,31 +913,6 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "MIXED"
-  - dod_id: DOD-051
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Brain"
-    owner_phase: 10
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "Brain must remain usable at representative repository scale, advance live from revision A to B without page recreation or stale replacement, and isolate Project A/B graph/search state."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run representative-scale, live-update, and A/B isolation qualification; do not rewrite the existing canvas."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","evidence/phase15/product-goal-alignment-continuation-033.md","apps/web/index.html","apps/core/main.py","src/prime_core/brain_service.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
-    depends_on: "R-054"
     acceptance_kind: "MIXED"
   - dod_id: DOD-052
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"

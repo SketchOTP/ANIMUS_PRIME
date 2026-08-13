@@ -3,29 +3,31 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T14:05:00-04:00`
+- Last updated: `2026-08-13T16:10:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039`
-- External directive ID: `ANIMUS PRIME — CONTINUATION 039`
+- Local directive ID: `D-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040`
+- External directive ID: `ANIMUS PRIME — CONTINUATION 040`
 - Objective: `V1 LOCAL QUALIFICATION CLOSURE`
 - Current status: `COMPLETE`
-- Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
+- Acceptance: `Fork isolation and Brain qualification reconciled, exact open boundaries preserved, governed publication, deployment NOT PERFORMED`
 - Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `apps/web/index.html; scripts/phase15_qualify_continuation_039.py; scripts/phase15_reflect_probe_039.py; evidence/phase15; .agent`
+- Expected or actual touched areas: `src/prime_core/service.py; scripts/phase15_fork_qualification_continuation_040.py; scripts/phase15_qualify_continuation_040.py; docs; evidence/phase15; .agent`
 - Immediate next action: `Await next directive; this accepted cycle is closed PARTIAL and awaiting reset to IDLE; no deployment`
 
 ## Temporary task-relevant facts
 
 Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 039 evidence: `evidence/phase15/qualification-continuation-039.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit remains `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; reusable A/B fixture Brain was `EXACT` at `17 nodes / 9 edges` per project; Browser Brain interaction and state-reset fixes passed; Fork A1/A2 and dirty-source refusal passed; complete DOD-016/DOD-017, exact DOD-051 query, Ask execution, Hindsight reflect, external/native environments, R-045, and R-056 remain open; deployment remains `NOT PERFORMED`.
 
+Continuation 040 supersedes the stale local qualification snapshot above. Its evidence is `evidence/phase15/qualification-continuation-040.md`; the reconciled audit is 8 user-usable verified, 12 product verified, 18 implemented-not-product-qualified, 27 backend-only, 9 UI-shell-only, 6 partial, 0 missing, and 1 blocked-by-environment, with 20 complete and 61 open burndown items. DOD-017 and DOD-051 are promoted while DOD-016, DOD-021, DOD-022, DOD-043, DOD-059, DOD-060, DOD-062, DOD-063, DOD-068, R-045, and R-056 remain open or blocked. Production Hindsight was not touched and deployment was not performed.
+
 ## Last validation after adoption
 
-- Command or check: `Continuation 039 Atlas fixture, browser, Fork, Hindsight, governance, and regression qualification`
+- Command or check: `Continuation 040 Atlas fixture, browser, Fork, governance, and regression qualification`
 - Result: `PASSED`
 
-Continuation 039 is closed PARTIAL. The native Atlas A/B fixture is reusable and browser-qualified for exact Brain topology, interactions, state reset, Activity, Repository, Search, Progress, Ask-safe UNKNOWN, Fork A1/A2, and dirty-source refusal. Hindsight reflect is bounded UNAVAILABLE; exact Brain literal search, complete isolation, approved Ask execution, external/native qualification, R-045, and R-056 remain open; the V1 product gate remains FAIL.
+Continuation 040 is closed PARTIAL. The native Atlas A/B fixture is reusable and browser-qualified for exact Brain topology, interactions, selected-file drill-down, state reset, Activity, Repository/Authority, Search, Progress, Ask-safe UNKNOWN, and Fork isolation. Hindsight Reflect remains unavailable; Notion, approved model execution, external/native qualification, R-045, and R-056 remain open; the V1 product gate remains FAIL.
 
 ## Risks
 

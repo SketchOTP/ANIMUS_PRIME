@@ -356,3 +356,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The direct Atlas fixture produced real repositories, authority, goals, progress, evidence, activity, MCP grants, PRIME memory, retained checkpoints, and independently recallable Hindsight banks for A and B. Approved `PrimeMemoryAdapter.reflect()` remained `UNAVAILABLE` at the bounded timeout, and the exact Brain query contract, complete resource-isolation matrix, approved model execution, external/native environments, R-045, and R-056 remain unqualified.
 - Affected areas: `apps/web/index.html`; Continuation 039 fixture and reflect probe; Continuation 039 evidence; append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-038
+
+## DEC-PRIME-PHASE15-040
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-040
+- Status: CLOSED
+- Decision or event: Close Continuation 040 as PARTIAL. Promote DOD-017 after direct Fork resource-isolation qualification and DOD-051 after exact Brain/operator qualification; retain DOD-016, DOD-068, R-045, R-056, and all external/native/Notion/AT/provider boundaries as open or blocked.
+- Rationale: The stale DOD-017 Windows-path audit wording was replaced by the actual remaining governed boundary, and Fork now clones selected history, clears remotes, provisions current authority, and creates a DRAFT child goal. Native Atlas evidence proved independent authority, progress, memory, MCP grant, Hindsight bank, and dirty-source behavior. Browser evidence proved exact Brain topology, accessible node/file drill-down, camera/filter/search controls, A/B reset, Activity filters, read-only Repository/Authority, grouped Search, and safe Ask UNKNOWN. The disposable Hindsight provider remained degraded and Notion was not configured, so no external integration or release-gate overclaim was made.
+- Affected areas: `src/prime_core/service.py`; Continuation 040 qualification scripts/evidence; all three requirement/governance views; append-only `.agent` records; GitHub and Notion publication.
+- Supersedes record: DEC-PRIME-PHASE15-039

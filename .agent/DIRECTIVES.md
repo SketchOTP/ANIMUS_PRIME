@@ -544,3 +544,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-PRODUCT-CLOSURE-038
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040
+
+- Issued: 2026-08-13T15:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 040
+- Objective: Reconcile stale DOD-051 and DOD-017 audit claims, complete the bounded Brain and Fork isolation qualification, run the remaining local operator/invariant checks, and publish truthful governed evidence from native Atlas.
+- Scope: Direct SSH execution at `/home/sketch/Projects/ANIMUS_PRIME`; disposable Core/PostgreSQL/Hindsight only; browser through a localhost tunnel; Fork implementation correction; Brain, Activity, Repository/Authority/Git, Progress, Search, Ask, and cheap architecture checks; evidence, `.agent`, GitHub, and Notion publication.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; Phase 16; deployment; Z:/SSHFS authoritative execution; production Hindsight changes; fabricated Notion, native, external, AT, approved-provider, or R-056 evidence; new fixture design.
+- Acceptance: Promote only exact frozen criteria with direct evidence; reconcile traceability, matrix, ledger, audit, and burndown; preserve DOD-068 and R-056 boundaries; publish local/origin/GitHub and Notion parity; deployment remains `NOT PERFORMED`.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039
+- Status at issuance: ISSUED
