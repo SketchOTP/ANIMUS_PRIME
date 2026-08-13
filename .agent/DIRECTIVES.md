@@ -502,3 +502,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037
+
+- Issued: 2026-08-13T08:20:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — CONTINUATION 037 V1 QUALIFICATION CONVERGENCE
+- Objective: Qualify repaired Hindsight recovery and memory semantics, authenticated historical Time Lens, Brain scale/live/isolation, clean-source Fork/Clone fidelity/isolation, and already-built local operator workflows without changing PRIME-SPEC-V1.0.0.
+- Scope: Native Atlas execution at `/home/sketch/Projects/ANIMUS_PRIME`; R-044 production-path backup/recovery/rebuild and negatives; DOD-014/015/016/017/021/022/040/043/051/059/060/062/063/067/068/069/070; architectural evidence reconciliation; governed evidence, audit, GitHub, and Notion publication.
+- Exclusions: changing PRIME-SPEC-V1.0.0; Phase 16; deployment; Z:/SSHFS authoritative execution; fabricated external, native, AT, Notion, Tailscale, provider, or second-device evidence; R-056 closure; broad new implementation.
+- Acceptance: Promote only exact frozen criteria with direct evidence; keep separate §26 and remediation gates truthful; reconcile all governed views; publish local/origin/GitHub parity and Notion execution state; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036
+- Status at issuance: ISSUED

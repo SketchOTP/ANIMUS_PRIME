@@ -317,8 +317,22 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Fresh native Atlas database qualification passed 91 tests and Phases 1–14. The ordinary pytest collection collision is fixed. Browser qualification proved current project surfaces, fixture-scale Brain, truthful Time Lens PARTIAL/CURRENT behavior, repository/activity surfaces, and safe provider/integration degradation. It also exposed and fixed stale Brain state across project switching. Fork correctly refused a dirty source tree, historical Goal/Brain reconstruction is incomplete, representative/live Brain evidence is absent, Hindsight retain remains non-recallable, and Notion/AT/native/second-device boundaries remain external or unavailable.
 - Affected areas: pytest.ini; apps/web/index.html; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; evidence/phase15/product-goal-alignment-continuation-035.md; append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-034
+## DEC-PRIME-PHASE15-036
 
-- `DEC-PRIME-PHASE15-036` — Continue closure with semantic truth first. Architecture-only rows retain their exact invariant residuals and do not acquire invented UI requirements. Hindsight configuration is centralized in Settings and compose topology. Historical Time Lens explicitly loads historical Brain and Goal state. No Phase 16, deployment, or R-056 closure.
-- Publication event: Continuation 036 evidence and governed changes published to GitHub `main` at `de96e42ccde0d5294a9ab1c70a25690158f08397`; local/origin/advertised parity MATCHED; Notion publication record appended and confirmed; deployment NOT PERFORMED.
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-036
+- Status: CLOSED
+- Decision or event: Continue closure with semantic truth first. Architecture-only rows retain their exact invariant residuals and do not acquire invented UI requirements. Hindsight configuration is centralized in Settings and compose topology. Historical Time Lens explicitly loads historical Brain and Goal state. No Phase 16, deployment, or R-056 closure; the prior publication facts are retained as governed evidence.
+- Rationale: Continuation 036 corrected semantic audit claims and published its implementation/evidence parent at de96e42ccde0d5294a9ab1c70a25690158f08397, followed by the corrected governed tip 5fa9007d951e3a698233515506424e0be069c982 with local/origin/advertised parity MATCHED and Notion confirmation.
+- Affected areas: Hindsight configuration, historical Time Lens, §26 audit/burndown semantics, Continuation 036 evidence, GitHub publication, Notion execution record.
+- Supersedes record: DEC-PRIME-PHASE15-035
 
-- Publication correction: Continuation 036 final governed tip is `5fa9007d951e3a698233515506424e0be069c982`; implementation/evidence parent is `de96e42ccde0d5294a9ab1c70a25690158f08397`; local/origin/advertised parity MATCHED.
+## DEC-PRIME-PHASE15-037
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-037
+- Status: CLOSED
+- Decision or event: Close Continuation 037 as PARTIAL. Promote R-044, authenticated historical Time Lens/Ask, AI Connections grant lifecycle, and the qualified Hindsight bank/contract/durable-memory invariants; keep DOD-068, browser Fork completion, Brain focus-state, remaining local workflows, external environments, and R-056 open.
+- Rationale: Native Atlas qualification used fresh disposable PostgreSQL/pgvector and the live Hindsight service. Hindsight outage truthfulness, source-ledger rebuild labeling, exact managed Evidence/Git restoration, correction/tombstone/supersession, authenticated historical reconstruction, and negative component cases passed. Browser Fork exposed a client path-normalization defect, and the approved Hindsight Mental Models/reflect path remains unavailable. The frozen V1 gate remains FAIL.
+- Affected areas: src/prime_core/memory_service.py; apps/web/index.html; tests/phase5/test_memory_service.py; scripts/phase15_qualify_continuation_037.py; three governed views; Continuation 037 evidence; append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-036

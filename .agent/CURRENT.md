@@ -3,31 +3,33 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T05:00:00-04:00`
+- Last updated: `2026-08-13T08:20:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036`
-- External directive ID: `ANIMUS PRIME — CONTINUATION 036 V1 LOCAL CONVERGENCE`
-- Objective: `ARCHITECTURAL RECONCILIATION + HINDSIGHT + HISTORICAL PRODUCT + BRAIN/FORK CLOSURE`
+- Local directive ID: `D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037`
+- External directive ID: `ANIMUS PRIME — CONTINUATION 037 V1 QUALIFICATION CONVERGENCE`
+- Objective: `HINDSIGHT RECOVERY + AUTHENTICATED HISTORICAL UX + BRAIN/FORK CLOSURE`
 - Current status: `COMPLETE`
 - Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
 - Current phase: `CLOSED_PARTIAL`
 - Expected or actual touched areas: `src/prime_core/config.py; src/prime_core/memory_service.py; src/prime_memory_adapter.py; src/prime_core/history_service.py; apps/web/index.html; docs/v1-product-gap-burndown.yaml; docs/v1-product-goal-alignment-audit.yaml; scripts/validate_product_gap_burndown.py; tests/phase0; .agent; evidence/phase15`
-- Immediate next action: `Awaiting reset after Continuation 036 publication; remaining work is explicit in the governed burndown`
+- Immediate next action: `Await next directive; this accepted cycle is closed and awaiting reset to IDLE; no deployment`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 036 evidence: `evidence/phase15/product-goal-alignment-continuation-036.md`; native Atlas execution only; actionable burndown: `12 complete + 69 open = 81`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 audit remains `4 USER_USABLE_VERIFIED / 8 PRODUCT_VERIFIED / 21 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; semantic validator rejects architectural UI-gap prose; Hindsight uses configured `PRIME_HINDSIGHT_BASE_URL` default `http://127.0.0.1:8888` and configurable timeout; endpoint and durable retain/recall qualified on live Atlas; historical Goal/Brain direct revision path repaired; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 037 evidence: `evidence/phase15/qualification-continuation-037.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit is `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; semantic validator rejects architectural UI-gap prose; Hindsight uses configured `PRIME_HINDSIGHT_BASE_URL` default `http://127.0.0.1:8888` and configurable timeout; endpoint and durable retain/recall qualified on live Atlas; historical Goal/Brain direct revision path repaired; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 035 fresh qualification, semantic reconciliation, browser isolation repair, and governed closure`
+- Command or check: `Continuation 037 fresh Atlas qualification, governance reconciliation, and publication preflight`
 - Result: `PASSED`
 
-Continuation 036 is in progress. Fresh zero-state Atlas qualification passed 26 migrations, 93 tests, and Phases 1–14. Semantic audit consistency now passes; Hindsight endpoint and durable-retain/recall pass on the live service; historical Goal/Brain/Ask direct-boundary tests pass. Browser smoke is truthful but unauthenticated; complete frozen interactive and external qualification is not complete; the V1 product gate remains FAIL.
+Continuation 037 is closed PARTIAL. Fresh zero-state Atlas qualification passed 26 migrations, 93 tests, and Phases 1–14. Semantic audit consistency now passes; Hindsight endpoint and durable-retain/recall pass on the live service; historical Goal/Brain/Ask direct-boundary tests pass. Authenticated historical Time Lens/Ask and AI Connections passed; browser Fork exposed a native-path normalization defect, Brain focus-state remains unqualified, and external qualification is not complete; the V1 product gate remains FAIL.
 
 ## Risks
+
+- Continuation 037 verified R-044, authenticated historical Time Lens/Ask, AI Connections grant rotation/revocation, and Hindsight bank/source-ledger semantics; browser Fork exposed a native-path normalization defect and DOD-068 remains BACKEND_ONLY/open for Mental Models/reflect.
 
 - Continuation 036 has repaired the demonstrated Hindsight endpoint contract and qualified durable retain/recall on the live 8888 service. Historical Goal/Brain direct revision behavior is repaired and tested. Browser qualification was smoke-tested unauthenticated; representative/live Brain, clean-source Fork, Notion, native Node, Tailscale second-device, AT, and R-056 remain open.
 

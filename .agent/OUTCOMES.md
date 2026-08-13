@@ -1441,3 +1441,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: authenticated representative/live Brain, clean Fork/Clone revision fidelity and A/B isolation, complete Search/Activity/Repository/Progress browser qualification, full R-044 correction/supersession/tombstone/rebuild matrix, approved AI, native Node lifecycle, Tailscale second device, live Notion, external AT, R-045, and R-056.
 - Blockers: exact external environments and the remaining authenticated/local qualification boundaries.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-QUALIFICATION-CONVERGENCE-037
+- Supersedes outcome: OUT-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036
+- Closed: 2026-08-13T11:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: R-044 was reconciled to VERIFIED through live Hindsight outage/recovery/rebuild, exact managed Evidence/Git restoration, component negatives, and source-ledger fidelity evidence. Authenticated historical Time Lens/Ask and AI Connections grant lifecycle were promoted; Hindsight bank/contract/durable-memory invariants were promoted; DOD-068 remains BACKEND_ONLY/open, browser Fork remains open after a native-path normalization defect, Brain focus-state and remaining workflows/external environments remain open.
+- Changed areas: src/prime_core/memory_service.py; apps/web/index.html; tests/phase5/test_memory_service.py; scripts/phase15_qualify_continuation_037.py; docs/requirements-traceability.yaml; docs/phase15-remediation-matrix.yaml; docs/phase15-remediation-qualification-ledger.yaml; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; evidence/phase15/qualification-continuation-037.md; append-only .agent records.
+- Validation:
+  - ordinary pytest - PASSED (66 passed, 28 skipped)
+  - fresh database-backed pytest - PASSED (94 passed)
+  - all 26 migrations from zero - PASSED
+  - Phases 1-14 - PASSED
+  - compileall and inline web-script parse - PASSED
+  - adopted governance and burndown reconciliation - PASSED after publication edits
+  - authenticated historical Time Lens/Ask - PASSED
+  - Hindsight bank isolation, outage/recovery/rebuild, correction/tombstone/supersession, and component negatives - PASSED
+  - browser Fork complete qualification - FAILED at a demonstrated path-normalization boundary; promotion withheld
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-016/DOD-017 browser/external Fork, DOD-021/DOD-022/DOD-043/DOD-051/DOD-059/DOD-060/DOD-062/DOD-063, DOD-068 Mental Models/reflect, R-045, native Node/Windows/Tailscale/Notion/AT/provider boundaries, and R-056.
+- Blockers: approved Hindsight Mental Models/reflect and other external/native environments remain unavailable or unqualified.
+- Follow-up directive: none
