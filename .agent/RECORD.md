@@ -319,3 +319,4 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Supersedes record: DEC-PRIME-PHASE15-034
 
 - `DEC-PRIME-PHASE15-036` — Continue closure with semantic truth first. Architecture-only rows retain their exact invariant residuals and do not acquire invented UI requirements. Hindsight configuration is centralized in Settings and compose topology. Historical Time Lens explicitly loads historical Brain and Goal state. No Phase 16, deployment, or R-056 closure.
+- Publication event: Continuation 036 evidence and governed changes published to GitHub `main` at `de96e42ccde0d5294a9ab1c70a25690158f08397`; local/origin/advertised parity MATCHED; Notion publication record appended and confirmed; deployment NOT PERFORMED.

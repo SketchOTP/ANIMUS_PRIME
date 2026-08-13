@@ -10,11 +10,11 @@
 - Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036`
 - External directive ID: `ANIMUS PRIME — CONTINUATION 036 V1 LOCAL CONVERGENCE`
 - Objective: `ARCHITECTURAL RECONCILIATION + HINDSIGHT + HISTORICAL PRODUCT + BRAIN/FORK CLOSURE`
-- Current status: `IN_PROGRESS`
+- Current status: `COMPLETE`
 - Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
-- Current phase: `V1_LOCAL_CONVERGENCE_036`
+- Current phase: `CLOSED_PARTIAL`
 - Expected or actual touched areas: `src/prime_core/config.py; src/prime_core/memory_service.py; src/prime_memory_adapter.py; src/prime_core/history_service.py; apps/web/index.html; docs/v1-product-gap-burndown.yaml; docs/v1-product-goal-alignment-audit.yaml; scripts/validate_product_gap_burndown.py; tests/phase0; .agent; evidence/phase15`
-- Immediate next action: `Run fresh database and product qualification for Hindsight, historical Goal/Brain/Ask, then Brain/Fork closure and governed publication`
+- Immediate next action: `Awaiting reset after Continuation 036 publication; remaining work is explicit in the governed burndown`
 
 ## Temporary task-relevant facts
 
