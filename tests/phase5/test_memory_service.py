@@ -66,8 +66,8 @@ def test_source_ledger_rebuild_excludes_superseded_and_tombstoned(monkeypatch):
     service = MemoryService(settings, lambda _: fake)
     current = service.store(project["project_id"], "retain this current fact", "FACT", source_revision="r1")
     superseded = service.store(project["project_id"], "old correction", "FACT", source_revision="r1")
-    service.store(project["project_id"], "new correction", "FACT", source_revision="r2", supersedes_memory_id=superseded["memory_id"], correction_reason="verified")
-    service.tombstone(project["project_id"], superseded["memory_id"], "removed")
+    replacement = service.store(project["project_id"], "new correction", "FACT", source_revision="r2", supersedes_memory_id=superseded["memory_id"], correction_reason="verified")
+    service.tombstone(project["project_id"], replacement["memory_id"], "removed")
     rebuilt = service.rebuild_from_source_ledger(project["project_id"])
     assert rebuilt["status"] == "CURRENT"
     assert rebuilt["mode"] == "SOURCE_LEDGER_REBUILD"
