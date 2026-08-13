@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 20
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 3
-  EXTERNAL_ENVIRONMENT: 23
+  EXTERNAL_ENVIRONMENT: 21
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-002
@@ -1214,56 +1214,6 @@ items:
     blocked_by: "Approved Hindsight Mental Models/reflect path unavailable"
     depends_on: "R-054"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-071
-    current_status: "BACKEND_ONLY"
-    product_area: "MCP memory"
-    owner_phase: 6
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The frozen criterion requires: Coding agents access project-bound memory through MCP.. The missing operator behavior is a qualified path at 'Open MCP memory from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Coding agents access project-bound memory through MCP.. The missing operator behavior is a qualified path at 'Open MCP memory from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
-    depends_on: "R-054"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-073
-    current_status: "BACKEND_ONLY"
-    product_area: "MCP admission"
-    owner_phase: 6
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The frozen criterion requires: Codex can add high-value durable memories through MCP.. The missing operator behavior is a qualified path at 'Open MCP admission from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Codex can add high-value durable memories through MCP.. The missing operator behavior is a qualified path at 'Open MCP admission from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
-    depends_on: "R-054"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-074
     current_status: "BACKEND_ONLY"
     product_area: "offline node"

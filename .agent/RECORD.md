@@ -376,3 +376,12 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The prior Z:/disposable workflow obscured the authoritative repository and caused path/environment drift. The real Atlas repository and persistent Core state are directly reachable over SSH.
 - Affected areas: apps/web/index.html; Phase 15 governance; native Atlas qualification evidence.
 - Supersedes record: DEC-PRIME-PHASE15-040
+
+## 2026-08-13 — R-PRIME-042-NATIVE-MCP-PROGRESS
+
+- Record or decision ID: R-PRIME-042-NATIVE-MCP-PROGRESS
+- Status: CLOSED
+- Decision or event: Native Atlas MCP durability/provenance and real GoalModel/Progress stale-refresh were qualified, and DOD-071/DOD-073 were promoted to PRODUCT_VERIFIED.
+- Rationale: Public MCP calls returned stored/durability-verified project-scoped memory with provenance; a real code change caused the prior progress assessment to become STALE and a current reassessment was recorded.
+- Affected areas: Native MCP, durable memory metadata, GoalModel/Progress, Phase 15 governance.
+- Supersedes record: R-PRIME-041-NATIVE-MCP-PROGRESS

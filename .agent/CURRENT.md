@@ -7,27 +7,27 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-041`
-- External directive ID: `ANIMUS PRIME — Continuation 041`
-- Objective: `ATLAS-NATIVE QUALIFICATION AND LOCAL PRODUCT CLOSURE`
+- Local directive ID: `D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042`
+- External directive ID: `ANIMUS PRIME — Continuation 042`
+- Objective: `MCP DURABILITY, REAL PROGRESS, AND GOVERNED RECONCILIATION`
 - Current status: `COMPLETE`
-- Acceptance: `Activity, AGENTS bridge, Repository/Authority, and Git qualification reconciled; exact open boundaries preserved; deployment NOT PERFORMED`
+- Acceptance: `Direct-SSH native MCP durability/provenance repair and real project qualification; GoalModel baseline plus genuine code-change stale refresh; exact governed reconciliation; validation, Notion, and GitHub publication.`
 - Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `apps/web/index.html; governed docs; evidence/phase15/qualification-continuation-041.md; .agent`
-- Immediate next action: `Await next directive; this accepted cycle is closed PARTIAL and awaiting reset to IDLE; no deployment`
+- Expected or actual touched areas: `src/prime_core/mcp_service.py; src/prime_core/memory_service.py; tests/phase6/test_mcp.py; scripts/validate_product_gap_burndown.py; governed docs; evidence/phase15; .agent`
+- Immediate next action: `Publish the reconciled Continuation 042 record once, verify parity, then stop only temporary Core/tunnel helpers; no deployment`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 039 evidence: `evidence/phase15/qualification-continuation-039.md`; native Atlas execution only; actionable burndown: `18 complete + 63 open = 81`; governed remediation is `17 VERIFIED / 8 partial / 1 blocked-open / 0 failed`; §26 audit remains `7 USER_USABLE_VERIFIED / 11 PRODUCT_VERIFIED / 20 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 27 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; reusable A/B fixture Brain was `EXACT` at `17 nodes / 9 edges` per project; Browser Brain interaction and state-reset fixes passed; Fork A1/A2 and dirty-source refusal passed; complete DOD-016/DOD-017, exact DOD-051 query, Ask execution, Hindsight reflect, external/native environments, R-045, and R-056 remain open; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; current directive: `Continuation 042`; real Qualification Project and repository authority remain `/home/sketch/Projects/ANIMUS_PRIME`; current audit vector is `12 USER_USABLE_VERIFIED / 14 PRODUCT_VERIFIED / 14 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 25 BACKEND_ONLY / 9 UI_SHELL_ONLY / 6 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; total `81`, complete `26`, open `55`; burndown work classes are `LOCAL_CODE 11 / LOCAL_BROWSER_QUALIFICATION 20 / LOCAL_NATIVE_QUALIFICATION 0 / EVIDENCE_RECONCILIATION 3 / EXTERNAL_ENVIRONMENT 21 / AGGREGATE 0`; remediation is `17 VERIFIED / 8 partial / R-056 blocked-open / 0 failed`; deployment remains `NOT PERFORMED`.
 
-Continuation 041 supersedes the stale local qualification snapshot above. Its evidence is evidence/phase15/qualification-continuation-041.md; the reconciled audit is 12 user-usable verified, 12 product verified, 14 implemented-not-product-qualified, 23 backend-only, 9 UI-shell-only, 6 partial, 0 missing, and 1 blocked-by-environment, with 24 complete and 57 open burndown items. DOD-041, DOD-043, DOD-059, and DOD-060 are promoted while DOD-016, DOD-021, DOD-022, DOD-062, DOD-063, DOD-068, R-045, and R-056 remain open or blocked. Production Hindsight was not touched and deployment was not performed.
+Continuation 042 supersedes the stale local qualification snapshot above. Public native MCP store/recall/get/timeline/context passed on the real project with durability and provenance. GoalModel progress moved from 29.6296% to 32.0988%; the first assessment became STALE after real code change B and the reassessment is CURRENT. DOD-071 and DOD-073 are PRODUCT_VERIFIED; DOD-016, DOD-021, DOD-022, DOD-030, DOD-062, DOD-063, DOD-068, R-045, and R-056 remain open or blocked. Persistent PostgreSQL and Hindsight were preserved; deployment was not performed.
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 040 Atlas fixture, browser, Fork, governance, and regression qualification`
-- Result: `PASSED`
+- Command or check: `Continuation 042 native Atlas MCP, GoalModel/Progress, browser, governance, regression, and parity qualification`
+- Result: `Governance, focused MCP, compileall, diff, and collection checks PASSED; persistent-state full-suite rerun BLOCKED/FAILED with 100 passed and 3 state collisions; no destructive reset authorized.`
 
-Continuation 041 is closed PARTIAL. Direct Atlas qualification added Activity category/source handling, AGENTS bridge metadata, Repository/Authority read-only drill-down, and Git metadata. Native MCP durability is degraded; Notion, approved model execution, Hindsight Reflect, Progress/Freshness, R-045, and R-056 remain open; the V1 product gate remains FAIL.
+Continuation 042 is closed as COMPLETE for its bounded acceptance. Product/Phase15/V1 remains FAIL/PARTIAL because live Notion, approved model, approved Hindsight Mental Models/reflect, DOD-030 automatic admission, R-045, and R-056 remain open or blocked.
 
 ## Risks
 

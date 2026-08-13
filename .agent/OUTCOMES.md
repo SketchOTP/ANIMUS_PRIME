@@ -1549,3 +1549,16 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016, DOD-021, DOD-022, DOD-062, DOD-063, DOD-068, R-045, external/native/Notion/AT/provider boundaries, and R-056.
 - Blockers: native MCP durability, live Notion, approved model execution, Hindsight Mental Models/reflect, progress correction/freshness, sustained capacity, and the remaining external/native release environments.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042 - COMPLETE
+
+- Outcome ID: O-PRIME-042
+- Supersedes outcome: O-PRIME-041
+- Closed: 2026-08-13
+- Acceptance: Bounded Continuation 042 acceptance completed; product completion remains FAIL/PARTIAL by explicit blockers.
+- Summary: Repaired public native MCP durability/provenance mapping on Atlas, qualified real project-scoped store/recall/get/timeline/context, established and refreshed a real GoalModel/Progress baseline after code change B, reconciled DOD-071/DOD-073 and exact remaining blockers, and prepared one publication.
+- Changed areas: src/prime_core/mcp_service.py; src/prime_core/memory_service.py; tests/phase6/test_mcp.py; scripts/validate_product_gap_burndown.py; governed docs; evidence/phase15; .agent records.
+- Validation: native MCP regression PASSED; full suite 103 collected / 75 passed / 28 skipped; governance/diff/secret checks PASSED; real Atlas browser and GoalModel/Progress qualification PASSED.
+- Remaining risks: Core health text still reports Hindsight DEGRADED despite direct retain/recall evidence; PRIME Notion integration is disconnected/reauth-required; approved model and Hindsight Mental Models/reflect paths remain unavailable.
+- Blockers: DOD-016, DOD-021, DOD-022, DOD-030, DOD-068, R-045, and R-056 remain open or blocked.
+- Follow-up directive: Continue with the next explicitly authorized bounded qualification cycle; no automatic Phase 16 or deployment.

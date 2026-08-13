@@ -572,3 +572,9 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042
+
+Date: 2026-08-13
+Objective: Execute Continuation 042 directly on Atlas; repair and qualify native MCP durability/provenance, establish real GoalModel/Progress freshness, reconcile governed records, and publish once.
+Exclusions: No disposable environments, no Phase 16, no deploy, no destructive database or Hindsight operations, no R-045 attempt.

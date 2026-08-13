@@ -526,3 +526,12 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Atlas-native continuation qualification.
 - Supersedes learning: none
+
+## 2026-08-13 — L-PRIME-042-COUNT-AND-ATLAS-MCP
+
+- Learning ID: L-PRIME-042-COUNT-AND-ATLAS-MCP
+- Fact or lesson: Continuation 041 governed totals were 24 complete and 57 open; its §26 audit BACKEND_ONLY count was 27 and burndown EXTERNAL_ENVIRONMENT was 23. The discrepancy was summary-text confusion. Native MCP qualification requires preserving source/provenance and working-context metadata through the public mapping, with the real Atlas persistent database target explicitly configured.
+- Evidence location: evidence/phase15/qualification-continuation-042.md; 505ba76b05b0528f27d60c9bfb39da582778bc88; docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py
+- Confidence: HIGH
+- Scope: ANIMUS PRIME native Atlas execution and governed Phase 15 qualification
+- Supersedes learning: None
