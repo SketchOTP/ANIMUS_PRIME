@@ -1528,3 +1528,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016, DOD-021, DOD-022, DOD-043, DOD-059, DOD-060, DOD-062, DOD-063, DOD-068, R-045, external/native/Notion/AT/provider boundaries, and R-056.
 - Blockers: approved Hindsight Reflect/Mental Models and remaining external/native/Notion/AT/provider environments are unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-041 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-041
+- Supersedes outcome: OUT-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040
+- Closed: 2026-08-13T16:40:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continued directly on Atlas with no disposable qualification environment. Added Activity category filtering, source/no-source rendering, visible AGENTS bridge metadata, and Git metadata to the real operator surfaces. Promoted DOD-041, DOD-043, DOD-059, and DOD-060 on direct browser evidence. Native MCP durability, Notion, approved model execution, Hindsight Mental Models/reflect, Progress/Freshness, R-045 sustained capacity, and R-056 remain open or blocked.
+- Changed areas: apps/web/index.html; governed docs; evidence/phase15/qualification-continuation-041.md; append-only .agent records.
+- Validation:
+  - native regression - PASSED (75 passed, 28 skipped; 103 collected)
+  - persistent Atlas Phase 0–14 run - PASSED
+  - browser Activity/AGENTS/Repository/Authority/Git - PASSED
+  - native MCP durability - BLOCKED
+  - Notion capability - BLOCKED
+  - approved model execution - BLOCKED
+  - Hindsight Mental Models/reflect - BLOCKED
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-016, DOD-021, DOD-022, DOD-062, DOD-063, DOD-068, R-045, external/native/Notion/AT/provider boundaries, and R-056.
+- Blockers: native MCP durability, live Notion, approved model execution, Hindsight Mental Models/reflect, progress correction/freshness, sustained capacity, and the remaining external/native release environments.
+- Follow-up directive: none

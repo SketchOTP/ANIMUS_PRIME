@@ -366,3 +366,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The stale DOD-017 Windows-path audit wording was replaced by the actual remaining governed boundary, and Fork now clones selected history, clears remotes, provisions current authority, and creates a DRAFT child goal. Native Atlas evidence proved independent authority, progress, memory, MCP grant, Hindsight bank, and dirty-source behavior. Browser evidence proved exact Brain topology, accessible node/file drill-down, camera/filter/search controls, A/B reset, Activity filters, read-only Repository/Authority, grouped Search, and safe Ask UNKNOWN. The disposable Hindsight provider remained degraded and Notion was not configured, so no external integration or release-gate overclaim was made.
 - Affected areas: `src/prime_core/service.py`; Continuation 040 qualification scripts/evidence; all three requirement/governance views; append-only `.agent` records; GitHub and Notion publication.
 - Supersedes record: DEC-PRIME-PHASE15-039
+
+## DEC-PRIME-PHASE15-041
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-041
+- Status: CLOSED
+- Decision or event: Atlas-native qualification is the governing execution mode for Continuation 041. Activity category filters, source drill-down/no-source truth, AGENTS bridge metadata, and Git metadata are now visible in the operator surfaces.
+- Rationale: The prior Z:/disposable workflow obscured the authoritative repository and caused path/environment drift. The real Atlas repository and persistent Core state are directly reachable over SSH.
+- Affected areas: apps/web/index.html; Phase 15 governance; native Atlas qualification evidence.
+- Supersedes record: DEC-PRIME-PHASE15-040

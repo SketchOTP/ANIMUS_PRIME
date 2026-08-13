@@ -8,7 +8,7 @@ purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 11
-  LOCAL_BROWSER_QUALIFICATION: 24
+  LOCAL_BROWSER_QUALIFICATION: 20
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 3
   EXTERNAL_ENVIRONMENT: 23
@@ -714,56 +714,6 @@ items:
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-031"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
-  - dod_id: DOD-041
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "agent bridge"
-    owner_phase: 3
-    mapped_r_requirements: ["R-003"]
-    exact_missing_behavior: "Authority and project-bound MCP metadata are exportable; root/nested AGENTS chain inventory and visible precedence/conflict handling remain to be implemented and qualified."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'Authority and project-bound MCP metadata are exportable; root/nested AGENTS chain inventory and visible precedence/conflict handling remain to be implemented and qualified.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-003"
-    acceptance_kind: "MIXED"
-  - dod_id: DOD-043
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Activity"
-    owner_phase: 9
-    mapped_r_requirements: ["R-055"]
-    exact_missing_behavior: "Activity must filter events and drill down to source-backed Git, Authority, Goal/Progress, Evidence, and AI artifacts; source-free events must display NO SOURCE ARTIFACT."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run source-backed Activity browser fixtures and verify the no-source truth state."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-055"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-044
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "onboarding"
@@ -1089,56 +1039,6 @@ items:
     blocked_by: "NONE"
     depends_on: "R-051"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-059
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Repository/Authority UI"
-    owner_phase: 14
-    mapped_r_requirements: ["R-051"]
-    exact_missing_behavior: "Repository and Authority browser views must be read-only and mutation-proof across tree, nested text, binary rejection, oversize handling, traversal rejection, authority files, hashes, and revisions."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the clean-fixture before/after hash and git-status mutation-proof browser matrix."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-051"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-060
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Git UI"
-    owner_phase: 11
-    mapped_r_requirements: ["R-046"]
-    exact_missing_behavior: "Git browser view must expose branch, dirty state, canonical revision, commits, and worktrees without changing tracked hashes, .agent hashes, or repository state."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the clean-fixture Git metadata mutation-proof matrix."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-046"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-061
     current_status: "BACKEND_ONLY"
     product_area: "observation"

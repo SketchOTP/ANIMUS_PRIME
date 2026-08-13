@@ -516,3 +516,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Atlas execution and browser qualification routing.
 - Supersedes learning: none
+
+## L-PRIME-CONTINUATION-041
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-CONTINUATION-041
+- Fact or lesson: The authoritative ANIMUS PRIME qualification path is direct Atlas SSH at /home/sketch/Projects/ANIMUS_PRIME; browser access may use an SSH transport tunnel, but no disposable runtime or test environment is required for this path.
+- Evidence location: evidence/phase15/qualification-continuation-041.md; docs/v1-product-goal-alignment-audit.yaml.
+- Confidence: VERIFIED
+- Scope: Atlas-native continuation qualification.
+- Supersedes learning: none

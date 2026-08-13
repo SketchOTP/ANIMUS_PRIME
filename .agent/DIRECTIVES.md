@@ -558,3 +558,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-QUALIFICATION-CLOSURE-039
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-041
+
+- Issued: 2026-08-13T16:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 041
+- Objective: Continue qualification directly on Atlas, add the missing Activity category filters and AGENTS/Git operator surfaces, qualify remaining exact local browser paths, and reconcile governed records without disposable environments.
+- Scope: Native Atlas Core/PostgreSQL/Hindsight observation; Activity filters and source drill-down; AGENTS bridge; Repository/Authority read-only views; Git metadata; direct regression and Phase 0–14 checks; governed evidence and publication.
+- Exclusions: disposable environments or fixtures; production Hindsight changes; Phase 16; deployment; R-056 closure; fabricated Notion, approved-model, Hindsight-reflect, native Windows, Tailscale, assistive-technology, or sustained-capacity evidence.
+- Acceptance: Promote only exact criteria directly evidenced on Atlas, preserve explicit degraded/external blockers, reconcile requirements traceability, remediation matrix, qualification ledger, alignment audit, and burndown, and publish truthful local/origin parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-EVIDENCE-FIRST-LOCAL-CLOSURE-040
+- Status at issuance: ISSUED
