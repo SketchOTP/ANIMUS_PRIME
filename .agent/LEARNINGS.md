@@ -407,3 +407,33 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 
 - `L-PRIME-PHASE15-038` — The Hindsight service topology is a configuration contract, not an adapter constant. The Atlas service listens on 127.0.0.1:8888; PRIME now reads `PRIME_HINDSIGHT_BASE_URL` through Settings and uses a configurable timeout. A 10-second client timeout caused a false unavailable result while Hindsight was still extracting and storing a fact in about 13.7 seconds. Durable retain remains CURRENT only after recall returns a result.
 - `L-PRIME-PHASE15-039` — Historical repository revisions and Goal hashes are different identities. Direct historical revision selection must reconstruct the Goal revision observed before that repository revision; otherwise Time Lens reports a historical repository while silently losing the valid Goal.
+    
+## L-PRIME-PHASE15-040
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-040
+- Fact or lesson: Hindsight recovery is a PRIME source-ledger replay with explicit SOURCE_LEDGER_REBUILD and REBUILDABLE_NOT_BIT_IDENTICAL fidelity, not a backend bit-identical Hindsight restore. Superseded and tombstoned ledger rows must be excluded from the current rebuild.
+- Evidence location: evidence/phase15/qualification-continuation-037.md; src/prime_core/memory_service.py; scripts/phase15_qualify_continuation_037.py
+- Confidence: VERIFIED
+- Scope: R-044 and DOD-067/DOD-068/DOD-069/DOD-070 on native Atlas.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-041
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-041
+- Fact or lesson: Browser path fields can be client-normalized incorrectly when a Windows-origin path is submitted to native Atlas; the observed failure prepended C: to an Atlas destination path. Direct native/API qualification remains valid, but browser Fork cannot be promoted until the boundary is repaired.
+- Evidence location: evidence/phase15/qualification-continuation-037.md; authenticated browser Fork attempt during Continuation 037
+- Confidence: VERIFIED
+- Scope: DOD-016/DOD-017 and native Atlas browser tunnel.
+- Supersedes learning: none
+
+## L-PRIME-PHASE15-042
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-042
+- Fact or lesson: When the Hindsight provider is unavailable, PRIME must report UNAVAILABLE/degraded state while canonical PRIME PostgreSQL state remains queryable; recovery can rebuild from the source ledger without claiming exact Hindsight identity.
+- Evidence location: evidence/phase15/qualification-continuation-037.md; scripts/phase15_qualify_continuation_037.py
+- Confidence: VERIFIED
+- Scope: R-044 external-component failure and recovery contract.
+- Supersedes learning: none
