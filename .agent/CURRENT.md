@@ -18,7 +18,7 @@
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 033 native Atlas qualification and bounded repair evidence: `evidence/phase15/product-goal-alignment-continuation-033.md`; fresh PostgreSQL/pgvector startup and Core qualification passed after the file-mode condition was classified; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 22 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 033 native Atlas qualification and bounded repair evidence: `evidence/phase15/product-goal-alignment-continuation-033.md`; publication tip: `3c510ad02277e3cb9adda31437346e4d9a66db7f`; local/origin parity: `MATCH`; fresh PostgreSQL/pgvector startup and Core qualification passed after the file-mode condition was classified; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 7 PRODUCT_VERIFIED / 22 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 

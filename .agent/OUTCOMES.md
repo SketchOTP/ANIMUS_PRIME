@@ -1326,7 +1326,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-032
 - Closed: 2026-08-12T23:45:00-04:00
 - Acceptance: PARTIAL
-- Summary: Continuation 033 completed the mandatory fresh native-Atlas regression gate and all Phases 1–14, repaired the demonstrated Git bundle verification and GoalModel progress evidence defects, added bounded Brain/Activity/AI Connections product surfaces, and created the derived §26 gap burndown. The V1/Phase 15 gate remains FAIL; no requirement promotion, specification change, deployment, or R-056 closure occurred.
+- Summary: Continuation 033 completed the mandatory fresh native-Atlas regression gate and all Phases 1–14, repaired the demonstrated Git bundle verification and GoalModel progress evidence defects, added bounded Brain/Activity/AI Connections product surfaces, and created the derived §26 gap burndown. Publication tip is `3c510ad02277e3cb9adda31437346e4d9a66db7f` with local/origin parity `MATCH`. The V1/Phase 15 gate remains FAIL; no requirement promotion, specification change, deployment, or R-056 closure occurred.
 - Changed areas: `src/prime_core/git_history.py`, `src/prime_core/service.py`, `src/prime_core/progress_service.py`, `apps/core/main.py`, `apps/web/index.html`, `tests/phase15/test_product_completion_033.py`, `docs/v1-product-goal-alignment-audit.yaml`, `docs/v1-product-gap-burndown.yaml`, Continuation 033 evidence, and append-only `.agent` records.
 - Validation:
   - fresh PostgreSQL/pgvector and all 26 migrations - PASSED
