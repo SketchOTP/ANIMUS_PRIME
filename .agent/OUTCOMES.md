@@ -1414,3 +1414,30 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: representative/live Brain, complete Fork/Clone A/B isolation, historical Goal/Brain/Ask, complete Search/Activity/Progress correction, approved AI, Hindsight retain, native Node lifecycle, Tailscale second device, live Notion, external AT, R-045, and R-056.
 - Blockers: exact external environments and the demonstrated Hindsight adapter/provider boundary.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036
+- Supersedes outcome: OUT-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
+- Closed: 2026-08-13T08:10:00-04:00
+- Acceptance: PARTIAL
+- Summary: Architectural audit semantics were reconciled; Hindsight endpoint configuration and timeout were corrected and qualified through durable retain/recall; historical Goal/Brain/Ask direct-boundary behavior was repaired and tested; fresh database qualification and browser smoke completed. V1 and Phase 15 remain FAIL; R-056 remains blocked/open; no deployment occurred.
+- Validation:
+  - ordinary pytest collection and tests - PASSED (66 passed, 27 skipped)
+  - fresh database-backed pytest - PASSED (93 passed)
+  - all 26 migrations from zero - PASSED
+  - Phases 1–14 - PASSED
+  - compileall and inline web-script parse - PASSED
+  - adopted governance - PASSED
+  - product-alignment structural audit and architectural semantics - PASSED
+  - actionable burndown validation - PASSED (12 complete + 69 open = 81)
+  - Hindsight endpoint wrong-port/recovery matrix - PASSED
+  - Hindsight durable retain/recall - PASSED (one recallable controlled fact)
+  - historical Goal/Brain/Ask direct-boundary integration - PASSED
+  - browser smoke - PASSED with truthful unauthenticated state; full authenticated qualification NOT RUN
+  - tracked-secret scan and diff check - PASSED
+  - deployment - NOT PERFORMED
+- Changed areas: src/prime_core/config.py; src/prime_core/memory_service.py; src/prime_memory_adapter.py; src/prime_core/history_service.py; apps/web/index.html; docker-compose.phase0.yml; governed audit/burndown/validator; Continuation 036 evidence; append-only .agent records; focused tests.
+- Remaining risks: authenticated representative/live Brain, clean Fork/Clone revision fidelity and A/B isolation, complete Search/Activity/Repository/Progress browser qualification, full R-044 correction/supersession/tombstone/rebuild matrix, approved AI, native Node lifecycle, Tailscale second device, live Notion, external AT, R-045, and R-056.
+- Blockers: exact external environments and the remaining authenticated/local qualification boundaries.
+- Follow-up directive: none

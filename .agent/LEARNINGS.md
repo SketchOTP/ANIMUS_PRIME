@@ -404,3 +404,6 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 035 test contract, browser A/B state isolation, and Hindsight diagnosis.
 - Supersedes learning: none
+
+- `L-PRIME-PHASE15-038` — The Hindsight service topology is a configuration contract, not an adapter constant. The Atlas service listens on 127.0.0.1:8888; PRIME now reads `PRIME_HINDSIGHT_BASE_URL` through Settings and uses a configurable timeout. A 10-second client timeout caused a false unavailable result while Hindsight was still extracting and storing a fact in about 13.7 seconds. Durable retain remains CURRENT only after recall returns a result.
+- `L-PRIME-PHASE15-039` — Historical repository revisions and Goal hashes are different identities. Direct historical revision selection must reconstruct the Goal revision observed before that repository revision; otherwise Time Lens reports a historical repository while silently losing the valid Goal.

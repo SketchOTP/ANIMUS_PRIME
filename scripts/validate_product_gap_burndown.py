@@ -1,53 +1,13 @@
 from __future__ import annotations
-
 from collections import Counter
 from pathlib import Path
-
 import yaml
-
-
 ROOT = Path(__file__).parents[1]
 AUDIT = ROOT / "docs" / "v1-product-goal-alignment-audit.yaml"
 BURNDOWN = ROOT / "docs" / "v1-product-gap-burndown.yaml"
-REQUIRED = {
-    "dod_id",
-    "current_status",
-    "acceptance_kind",
-    "product_area",
-    "owner_phase",
-    "mapped_r_requirements",
-    "exact_missing_behavior",
-    "work_class",
-    "requires_code",
-    "requires_browser",
-    "requires_native_linux",
-    "requires_windows",
-    "requires_tailscale",
-    "requires_second_device",
-    "requires_hindsight",
-    "requires_external_at",
-    "requires_live_notion",
-    "requires_privilege",
-    "requires_packaging",
-    "requires_clean_install",
-    "next_action",
-    "evidence_already_available",
-    "qualification_needed",
-    "blocked_by",
-    "depends_on",
-}
+REQUIRED = {"dod_id", "current_status", "acceptance_kind", "product_area", "owner_phase", "mapped_r_requirements", "exact_missing_behavior", "work_class", "requires_code", "requires_browser", "requires_native_linux", "requires_windows", "requires_tailscale", "requires_second_device", "requires_hindsight", "requires_external_at", "requires_live_notion", "requires_privilege", "requires_packaging", "requires_clean_install", "next_action", "evidence_already_available", "qualification_needed", "blocked_by", "depends_on"}
 ACCEPTANCE_KINDS = {"ARCHITECTURAL_INVARIANT", "OPERATOR_WORKFLOW", "MIXED", "EXTERNAL_DEPENDENCY", "AGGREGATE_RELEASE_GATE"}
-
-WORK_CLASSES = {
-    "LOCAL_CODE",
-    "LOCAL_BROWSER_QUALIFICATION",
-    "LOCAL_NATIVE_QUALIFICATION",
-    "EVIDENCE_RECONCILIATION",
-    "EXTERNAL_ENVIRONMENT",
-    "AGGREGATE_RELEASE_GATE",
-}
-
-
+WORK_CLASSES = {"LOCAL_CODE", "LOCAL_BROWSER_QUALIFICATION", "LOCAL_NATIVE_QUALIFICATION", "EVIDENCE_RECONCILIATION", "EXTERNAL_ENVIRONMENT", "AGGREGATE_RELEASE_GATE"}
 def main() -> int:
     audit = yaml.safe_load(AUDIT.read_text(encoding="utf-8"))
     burndown = yaml.safe_load(BURNDOWN.read_text(encoding="utf-8"))
@@ -63,6 +23,8 @@ def main() -> int:
     acceptance_kinds_ok = all(item["acceptance_kind"] == audit_open[item["dod_id"]]["acceptance_kind"] for item in open_items if item["dod_id"] in audit_open)
     classes_ok = all(item["work_class"] in WORK_CLASSES for item in open_items)
     concrete_ok = all(item["exact_missing_behavior"] != "SEE_AUDIT" and item["next_action"] != "SEE_AUDIT" for item in open_items)
+    architectural_ui_gap_ids = [item["dod_id"] for item in open_items if item["acceptance_kind"] == "ARCHITECTURAL_INVARIANT" and any(token in (item["exact_missing_behavior"] + " " + item["next_action"] + " " + item["qualification_needed"]).lower() for token in ("operator screen", "dedicated screen", "operator workflow"))]
+    architectural_semantics_ok = not architectural_ui_gap_ids
     total_ok = len(complete) + len(open_items) == 81
     print(f"audit_total={len(audit_items)}")
     print(f"complete={len(complete)}")
@@ -75,9 +37,10 @@ def main() -> int:
     print(f"acceptance_kinds_match={acceptance_kinds_ok}")
     print(f"work_classes_valid={classes_ok}")
     print(f"concrete_actions={concrete_ok}")
+    print(f"architectural_semantics={architectural_semantics_ok}")
+    if architectural_ui_gap_ids:
+        print("architectural_ui_gap_ids=" + ",".join(architectural_ui_gap_ids))
     print("work_class_totals=" + str(dict(Counter(item["work_class"] for item in open_items))))
-    return 0 if all((ids_ok, fields_ok, statuses_ok, audit_kinds_ok, acceptance_kinds_ok, classes_ok, concrete_ok, total_ok)) else 1
-
-
+    return 0 if all((ids_ok, fields_ok, statuses_ok, audit_kinds_ok, acceptance_kinds_ok, classes_ok, concrete_ok, architectural_semantics_ok, total_ok)) else 1
 if __name__ == "__main__":
     raise SystemExit(main())

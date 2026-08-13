@@ -3,33 +3,33 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T04:10:00-04:00`
+- Last updated: `2026-08-13T05:00:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035`
-- External directive ID: `ANIMUS PRIME — CONTINUATION 035 V1 LOCAL CLOSURE SPRINT`
-- Objective: `TEST CONTRACT + SEMANTIC AUDIT RECONCILIATION + HIGH-YIELD PRODUCT QUALIFICATION`
-- Current status: `COMPLETE`
-- Acceptance: `Deterministic ordinary pytest, truthful semantic §26 reconciliation, bounded local product closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
-- Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `pytest.ini; apps/web/index.html; docs/v1-product-gap-burndown.yaml; docs/v1-product-goal-alignment-audit.yaml; scripts/validate_product_gap_burndown.py; evidence/phase15/product-goal-alignment-continuation-035.md; .agent`
-- Immediate next action: `Awaiting reset after publication; follow-up work remains in the governed burndown`
+- Local directive ID: `D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036`
+- External directive ID: `ANIMUS PRIME — CONTINUATION 036 V1 LOCAL CONVERGENCE`
+- Objective: `ARCHITECTURAL RECONCILIATION + HINDSIGHT + HISTORICAL PRODUCT + BRAIN/FORK CLOSURE`
+- Current status: `IN_PROGRESS`
+- Acceptance: `Semantic audit consistency, truthful local closure, exact external boundaries, governed publication, deployment NOT PERFORMED`
+- Current phase: `V1_LOCAL_CONVERGENCE_036`
+- Expected or actual touched areas: `src/prime_core/config.py; src/prime_core/memory_service.py; src/prime_memory_adapter.py; src/prime_core/history_service.py; apps/web/index.html; docs/v1-product-gap-burndown.yaml; docs/v1-product-goal-alignment-audit.yaml; scripts/validate_product_gap_burndown.py; tests/phase0; .agent; evidence/phase15`
+- Immediate next action: `Run fresh database and product qualification for Hindsight, historical Goal/Brain/Ask, then Brain/Fork closure and governed publication`
 
 ## Temporary task-relevant facts
 
-Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 035 evidence: `evidence/phase15/product-goal-alignment-continuation-035.md`; clean artifact classification: `DEVELOPMENT_WORKTREE_PERMISSION_CONTAMINATION`; actionable burndown: `12 complete + 69 open = 81`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 audit is `4 USER_USABLE_VERIFIED / 8 PRODUCT_VERIFIED / 21 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; browser project-state reset is repaired; Hindsight adapter/provider remains degraded; deployment remains `NOT PERFORMED`.
+Approved baseline: `PRIME-SPEC-V1.0.0`; handoff manifest: `48306047cbd84df583bca6530f25d3dd3c1674d490d11a6e621add0238f36ec9`; supplied credentials remain ephemeral and unrecorded; Continuation 036 evidence: `evidence/phase15/product-goal-alignment-continuation-036.md`; native Atlas execution only; actionable burndown: `12 complete + 69 open = 81`; governed remediation remains `16 VERIFIED / 9 partial / 1 blocked-open`; §26 audit remains `4 USER_USABLE_VERIFIED / 8 PRODUCT_VERIFIED / 21 IMPLEMENTED_NOT_PRODUCT_QUALIFIED / 31 BACKEND_ONLY / 9 UI_SHELL_ONLY / 7 PARTIAL / 0 MISSING / 1 BLOCKED_BY_ENVIRONMENT`; semantic validator rejects architectural UI-gap prose; Hindsight uses configured `PRIME_HINDSIGHT_BASE_URL` default `http://127.0.0.1:8888` and configurable timeout; endpoint and durable retain/recall qualified on live Atlas; historical Goal/Brain direct revision path repaired; deployment remains `NOT PERFORMED`.
 
 ## Last validation after adoption
 
 - Command or check: `Continuation 035 fresh qualification, semantic reconciliation, browser isolation repair, and governed closure`
 - Result: `PASSED`
 
-Continuation 035 closed as `PARTIAL`. Fresh native-Atlas startup qualification, 26 migrations, full pytest (91 passed), Phases 1–14, governance, audit, compile, YAML, diff, and secret gates passed. Browser qualification repaired stale project-scoped Brain state and preserved truthful incomplete/external boundaries. Complete frozen interactive and external qualification is not complete; the V1 product gate remains FAIL.
+Continuation 036 is in progress. Fresh zero-state Atlas qualification passed 26 migrations, 93 tests, and Phases 1–14. Semantic audit consistency now passes; Hindsight endpoint and durable-retain/recall pass on the live service; historical Goal/Brain/Ask direct-boundary tests pass. Browser smoke is truthful but unauthenticated; complete frozen interactive and external qualification is not complete; the V1 product gate remains FAIL.
 
 ## Risks
 
-- Continuation 035 closed PARTIAL: pytest collection is deterministic; DOD-001 is PRODUCT_VERIFIED; browser project-state reset is repaired; Hindsight is listening on 8888 while the PRIME default adapter targets 18888 and the local provider extracts zero facts; Fork, historical Goal/Brain, representative/live Brain, Notion, native Node, Tailscale second-device, AT, and R-056 remain open.
+- Continuation 036 has repaired the demonstrated Hindsight endpoint contract and qualified durable retain/recall on the live 8888 service. Historical Goal/Brain direct revision behavior is repaired and tested. Browser qualification was smoke-tested unauthenticated; representative/live Brain, clean-source Fork, Notion, native Node, Tailscale second-device, AT, and R-056 remain open.
 
 - Phase 15 V1 release gate failed on seven explicit normative gap categories in evidence/phase15/qualification-report.md.
 - R-037–R-041 live PRIME Notion adapter qualification is complete and independently VERIFIED; the replacement disposable sandbox is recorded in Continuation 023.

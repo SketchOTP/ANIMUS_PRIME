@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
@@ -12,6 +12,8 @@ class Settings:
     )
     session_ttl_seconds: int = int(os.getenv("PRIME_SESSION_TTL_SECONDS", "28800"))
     cookie_secure: bool = os.getenv("PRIME_COOKIE_SECURE", "0") == "1"
+    hindsight_base_url: str = field(default_factory=lambda: os.getenv("PRIME_HINDSIGHT_BASE_URL", "http://127.0.0.1:8888").rstrip("/"))
+    hindsight_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("PRIME_HINDSIGHT_TIMEOUT_SECONDS", "30")))
     allowed_origins: tuple[str, ...] = tuple(
         value.strip()
         for value in os.getenv(

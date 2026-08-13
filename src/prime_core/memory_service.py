@@ -17,8 +17,7 @@ SECRET_PATTERN = re.compile(r"(?i)(api[_-]?key|secret|password|token|private[_-]
 class MemoryService:
     def __init__(self, settings: Any, adapter_factory: Callable[[str], Any] | None = None):
         self.settings = settings
-        self.adapter_factory = adapter_factory or (lambda project_id: PrimeMemoryAdapter("http://127.0.0.1:18888", project_id))
-
+        self.adapter_factory = adapter_factory or (lambda project_id: PrimeMemoryAdapter(self.settings.hindsight_base_url, project_id, timeout_seconds=self.settings.hindsight_timeout_seconds))
     def store(self, project_id: str, content: str, content_class: str, source_revision: str | None = None,
               source_reference_id: str | None = None, branch_context: str | None = None,
               supersedes_memory_id: str | None = None, correction_reason: str | None = None) -> dict[str, Any]:

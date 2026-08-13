@@ -18,10 +18,13 @@ class AdapterResult:
 class PrimeMemoryAdapter:
     """Keep Hindsight behind a PRIME-owned, project-bound contract."""
 
-    def __init__(self, base_url: str, project_id: str) -> None:
+    def __init__(self, base_url: str, project_id: str, timeout_seconds: float = 30.0) -> None:
         if not project_id or "/" in project_id or project_id.startswith("."):
             raise ValueError("invalid project_id")
+        if timeout_seconds <= 0:
+            raise ValueError("timeout_seconds must be positive")
         self.base_url = base_url.rstrip("/")
+        self.timeout_seconds = timeout_seconds
         self.project_id = project_id
         self.bank_id = f"prime-{project_id}"
 
@@ -34,7 +37,7 @@ class PrimeMemoryAdapter:
             headers={"content-type": "application/json"},
         )
         try:
-            with urlopen(request, timeout=10) as response:
+            with urlopen(request, timeout=self.timeout_seconds) as response:
                 return json.loads(response.read() or b"{}")
         except (HTTPError, URLError, TimeoutError) as exc:
             raise RuntimeError("hindsight unavailable") from exc

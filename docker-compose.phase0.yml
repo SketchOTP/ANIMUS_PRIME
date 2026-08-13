@@ -30,4 +30,4 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "18888:8888"
+      - "8888:8888"

@@ -353,6 +353,10 @@ class HistoryService:
             pass
         with connect(self.settings) as db:
             selected_revision = as_of
+            revision_observed_at = None
+            if not cutoff:
+                observed = db.execute("SELECT MAX(observed_at) AS observed_at FROM prime_core.repository_files WHERE project_id=%s AND source_revision=%s", (project_id, as_of)).fetchone()
+                revision_observed_at = observed.get("observed_at") if observed else None
             if cutoff:
                 selected = db.execute("SELECT source_revision FROM prime_core.repository_files WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at DESC LIMIT 1", (project_id, cutoff)).fetchone()
                 selected_revision = selected["source_revision"] if selected else None
@@ -361,7 +365,7 @@ class HistoryService:
                 memories = db.execute("SELECT memory_id,source_revision,status,created_at FROM prime_core.memory_records WHERE project_id=%s AND created_at<=%s ORDER BY created_at", (project_id, cutoff)).fetchall()
                 notion = db.execute("SELECT projection_revision_id,content_hash,sync_status,observed_at FROM prime_core.notion_projection_revisions WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at", (project_id, cutoff)).fetchall()
                 authority = db.execute("SELECT authority_revision_id,source_path,source_hash,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at", (project_id, cutoff)).fetchall()
-                goal = db.execute("SELECT goal_revision_id,revision_number,content_hash,status,created_at FROM prime_core.goal_revisions WHERE project_id=%s AND created_at<=%s ORDER BY created_at", (project_id, cutoff)).fetchall()
+                goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at FROM prime_core.goal_revisions WHERE project_id=%s AND created_at<=%s ORDER BY created_at DESC LIMIT 1", (project_id, cutoff)).fetchall()
                 git = db.execute("SELECT checkpoint_id,commit_id,bundle_locator,content_hash,captured_at,retained FROM prime_core.git_history_checkpoints WHERE project_id=%s AND captured_at<=%s AND retained=TRUE ORDER BY captured_at", (project_id, cutoff)).fetchall()
                 historical = db.execute("SELECT artifact_type,artifact_id,source_revision,content_hash,snapshot,availability_status,observed_at FROM prime_core.historical_revisions WHERE project_id=%s AND observed_at<=%s ORDER BY observed_at", (project_id, cutoff)).fetchall()
             else:
@@ -370,7 +374,9 @@ class HistoryService:
                 memories = db.execute("SELECT memory_id,source_revision,status,created_at FROM prime_core.memory_records WHERE project_id=%s AND source_revision=%s", (project_id, as_of)).fetchall()
                 notion = db.execute("SELECT projection_revision_id,content_hash,sync_status,observed_at FROM prime_core.notion_projection_revisions WHERE project_id=%s AND metadata->>'source_revision'=%s", (project_id, as_of)).fetchall()
                 authority = db.execute("SELECT authority_revision_id,source_path,source_hash,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s AND source_hash=%s", (project_id, as_of)).fetchall()
-                goal = db.execute("SELECT goal_revision_id,revision_number,content_hash,status,created_at FROM prime_core.goal_revisions WHERE project_id=%s AND content_hash=%s", (project_id, as_of)).fetchall()
+                goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at FROM prime_core.goal_revisions WHERE project_id=%s AND content_hash=%s", (project_id, as_of)).fetchall()
+                if not goal and revision_observed_at:
+                    goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at FROM prime_core.goal_revisions WHERE project_id=%s AND created_at<=%s ORDER BY created_at DESC LIMIT 1", (project_id, revision_observed_at)).fetchall()
                 git = db.execute("SELECT checkpoint_id,commit_id,bundle_locator,content_hash,captured_at,retained FROM prime_core.git_history_checkpoints WHERE project_id=%s AND commit_id=%s AND retained=TRUE", (project_id, as_of)).fetchall()
                 historical = db.execute("SELECT artifact_type,artifact_id,source_revision,content_hash,snapshot,availability_status,observed_at FROM prime_core.historical_revisions WHERE project_id=%s AND source_revision=%s ORDER BY observed_at", (project_id, as_of)).fetchall()
             repository = db.execute("SELECT relative_path,content_hash,size_bytes,file_kind,source_revision,observed_at FROM prime_core.repository_files WHERE project_id=%s AND source_revision=%s ORDER BY relative_path", (project_id, selected_revision)).fetchall() if selected_revision else []

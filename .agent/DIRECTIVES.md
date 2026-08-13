@@ -488,3 +488,17 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-034
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-036
+
+- Issued: 2026-08-13T05:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — CONTINUATION 036 V1 LOCAL CONVERGENCE
+- Objective: Reconcile architecture-only §26 semantics, fix the demonstrated Hindsight endpoint contract, qualify truthful extraction behavior, repair historical Goal/Brain, and close remaining local Brain/Fork/operator workflows where exact evidence supports promotion.
+- Scope: Native Atlas execution at `/home/sketch/Projects/ANIMUS_PRIME`; semantic audit and burndown reconciliation; Hindsight configuration/provider qualification; historical Goal/Brain/Ask; Brain scale/live/A-B isolation; clean-source Fork fidelity/isolation; Search, Activity, Repository/Authority/Git, Progress/Freshness, AI Connections, and bounded R-045 work; governed evidence and publication.
+- Exclusions: changing `PRIME-SPEC-V1.0.0`; Phase 16; deployment; Z:/SSHFS authoritative execution; weakening retain verification; fabricated external, native, AT, Notion, Tailscale, or provider evidence; R-056 closure; broad Node lifecycle implementation.
+- Acceptance: Preserve deterministic pytest and all prior VERIFIED rows; remove false UI gaps from architectural rows without automatic promotion; promote only exact complete workflows; keep Hindsight durable-retain safety; reconcile audit/burndown/traceability/qualification; publish GitHub and Notion parity; deployment remains NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
+- Status at issuance: ISSUED

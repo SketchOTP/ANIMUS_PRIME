@@ -34,3 +34,6 @@ def test_wave3_routes_and_controls_are_present() -> None:
     assert "id=\"load-brain-wave3\"" in web
     assert "id=\"fork-form-wave3\"" in web
     assert "id=\"activity-view-wave3\"" in web
+    assert "/v1/projects/{project_id}/time-lens/brain" in main
+    assert "Historical Goal:" in web
+    assert "renderBrainGraph(await api" in web

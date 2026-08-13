@@ -539,6 +539,11 @@ def test_r048_r050_historical_abcd_ask_brain_and_return_to_now(
     Path(state_b_evidence["storage_path"]).write_bytes(removed_bytes)
     assert history.reindex_evidence(project["project_id"], state_b_evidence["evidence_id"])["index_status"] == "READY"
     assert history.historical_context(project["project_id"], cutoffs["B"])["source_statuses"]["evidence"] == "EXACT"
+    direct_revision_context = history.historical_context(project["project_id"], revisions["B"])
+    assert direct_revision_context["source_statuses"]["repository"] == "EXACT"
+    assert direct_revision_context["source_statuses"]["goal"] == "EXACT"
+    assert direct_revision_context["goal"][0]["content"] == "Goal v1"
+    assert BrainService(settings).build_historical(project["project_id"], revisions["B"])["source_revision"] == revisions["B"]
     for label, revision in revisions.items():
         context = history.historical_context(project["project_id"], cutoffs[label])
         assert context["selected_revision"] == revision
