@@ -1370,10 +1370,47 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Follow-up directive: none
 
 
-## D-PRIME-PHASE15-PRODUCT-COMPLETION-034-PUBLICATION - CLOSED
+## D-PRIME-PHASE15-PRODUCT-COMPLETION-034 - PARTIAL
 
-- Outcome ID: `OUT-PRIME-PHASE15-PRODUCT-COMPLETION-034-PUBLICATION`
-- Closed: `2026-08-13T02:18:00-04:00`
-- Acceptance: `CLOSED`
-- Summary: Continuation 034 evidence and governed burndown are published on `main`; Atlas local HEAD and `origin/main` are exactly `8d4419d668dc58a4a9917e0778910e0670f5e371`. Deployment was not performed.
-- Validation: final parity `PASSED`; final diff/secret/governance checks recorded in the run report.
+- Outcome ID: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-034-PUBLICATION
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-034
+- Closed: 2026-08-13T02:18:00-04:00
+- Acceptance: PARTIAL
+- Summary: Correction and supersession record for the Continuation 034 publication closure. Evidence and governed burndown were published on `main`; Atlas local HEAD and `origin/main` matched at `20af0fb1ba65d922d29795468689347d4568d832`. Deployment was not performed.
+- Changed areas: `.agent/CURRENT.md`, `.agent/OUTCOMES.md`
+- Validation:
+  - final branch parity - PASSED
+  - final diff and secret checks - PASSED
+  - Notion publication re-fetch - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: V1 and Phase 15 remain open; R-056 remains open.
+- Blockers: none for publication closure.
+- Follow-up directive: D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
+
+
+## D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035 - PARTIAL
+
+- Outcome ID: OUT-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
+- Supersedes outcome: OUT-PRIME-PHASE15-PRODUCT-COMPLETION-034-PUBLICATION
+- Closed: 2026-08-13T04:10:00-04:00
+- Acceptance: PARTIAL
+- Summary: Deterministic pytest collection, semantic acceptance-kind reconciliation, DOD-001 architectural promotion, stale project-scoped browser-state repair, fresh 26-migration/91-test qualification, and bounded browser/Brain/Time Lens/Fork/Hindsight evidence completed. V1 and Phase 15 remain FAIL; R-056 remains blocked/open; no deployment occurred.
+- Validation:
+  - ordinary pytest collection and tests - PASSED (64 passed, 27 skipped)
+  - fresh database-backed pytest - PASSED (91 passed)
+  - Phases 1–14 - PASSED
+  - compileall and inline web-script parse - PASSED
+  - adopted governance - PASSED
+  - product-alignment structural audit - PASSED; V1 gate FAIL
+  - actionable burndown validation - PASSED (12 complete + 69 open = 81)
+  - authenticated browser current surfaces - PASSED with truthful degraded states
+  - Brain fixture-scale and A/B stale-state reset - PASSED
+  - historical Goal/Brain/Ask completeness - NOT QUALIFIED
+  - Fork complete isolation - BLOCKED by dirty disposable source fixture
+  - Hindsight retain/recall - BLOCKED/DEGRADED by adapter port mismatch and zero-fact local provider behavior
+  - Notion append - BLOCKED if connector remains unavailable
+  - deployment - NOT PERFORMED
+- Changed areas: pytest.ini; apps/web/index.html; governed audit/burndown/validator; Continuation 035 evidence; append-only .agent records.
+- Remaining risks: representative/live Brain, complete Fork/Clone A/B isolation, historical Goal/Brain/Ask, complete Search/Activity/Progress correction, approved AI, Hindsight retain, native Node lifecycle, Tailscale second device, live Notion, external AT, R-045, and R-056.
+- Blockers: exact external environments and the demonstrated Hindsight adapter/provider boundary.
+- Follow-up directive: none

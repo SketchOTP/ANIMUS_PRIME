@@ -5,39 +5,15 @@ derived_from:
   - docs/phase15-remediation-matrix.yaml
   - docs/phase15-remediation-qualification-ledger.yaml
 purpose: actionable release execution queue; derived view only
-required_fields: [dod_id, current_status, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
+required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 12
-  LOCAL_BROWSER_QUALIFICATION: 28
+  LOCAL_BROWSER_QUALIFICATION: 27
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 1
   EXTERNAL_ENVIRONMENT: 29
   AGGREGATE_RELEASE_GATE: 0
 items:
-  - dod_id: DOD-001
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "governance"
-    owner_phase: 0
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "The frozen criterion requires: Immutable approved baseline and change-record traceability; fail closed on missing spec artifacts.. Current evidence does not yet demonstrate the complete operator behavior at 'Open governance from PRIME.'."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Immutable approved baseline and change-record traceability; fail closed on missing spec artifacts.. Current evidence does not yet demonstrate the complete operator behavior at 'Open governance from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-056; aggregate R-056 gate"
   - dod_id: DOD-002
     current_status: "BACKEND_ONLY"
     product_area: "repository"
@@ -62,6 +38,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-005"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-004
     current_status: "BACKEND_ONLY"
     product_area: "workflows"
@@ -86,6 +63,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-012"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-005
     current_status: "BACKEND_ONLY"
     product_area: "source lifecycle"
@@ -110,6 +88,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-011"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-006
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "network"
@@ -134,6 +113,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-032"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-007
     current_status: "BACKEND_ONLY"
     product_area: "nodes"
@@ -158,6 +138,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-031"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-008
     current_status: "PARTIAL"
     product_area: "recovery"
@@ -182,6 +163,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-001"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-009
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "backup"
@@ -206,6 +188,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-042"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-012
     current_status: "PARTIAL"
     product_area: "Notion"
@@ -230,6 +213,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-013
     current_status: "BACKEND_ONLY"
     product_area: "remote access"
@@ -254,6 +238,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-035"
+    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-014
     current_status: "PARTIAL"
     product_area: "Time Lens"
@@ -278,6 +263,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-050"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-015
     current_status: "BACKEND_ONLY"
     product_area: "historical Ask"
@@ -302,6 +288,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-050"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-016
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "fork/clone"
@@ -326,6 +313,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-048"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-017
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "fork isolation"
@@ -350,6 +338,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-048"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-018
     current_status: "BACKEND_ONLY"
     product_area: "repository boundary"
@@ -374,6 +363,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-005"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-021
     current_status: "PARTIAL"
     product_area: "Ask"
@@ -398,6 +388,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-022
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Search"
@@ -422,6 +413,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-047"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-023
     current_status: "PARTIAL"
     product_area: "state model"
@@ -446,6 +438,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-001"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-024
     current_status: "UI_SHELL_ONLY"
     product_area: "lifecycle"
@@ -470,6 +463,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-026
     current_status: "UI_SHELL_ONLY"
     product_area: "Progress/Alignment"
@@ -494,6 +488,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-055"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-027
     current_status: "UI_SHELL_ONLY"
     product_area: "Integrity"
@@ -518,6 +513,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-028
     current_status: "BACKEND_ONLY"
     product_area: "authority adoption"
@@ -542,6 +538,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-008"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-030
     current_status: "BACKEND_ONLY"
     product_area: "memory admission"
@@ -566,6 +563,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-031
     current_status: "BACKEND_ONLY"
     product_area: "warm start"
@@ -590,6 +588,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-032
     current_status: "UI_SHELL_ONLY"
     product_area: "Memory UI"
@@ -614,6 +613,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-033
     current_status: "BACKEND_ONLY"
     product_area: "corrections"
@@ -638,6 +638,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-055"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-034
     current_status: "BACKEND_ONLY"
     product_area: "Notion Record"
@@ -662,6 +663,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-035
     current_status: "BACKEND_ONLY"
     product_area: "Notion detach"
@@ -686,6 +688,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-036
     current_status: "BACKEND_ONLY"
     product_area: "Notion conflict"
@@ -710,6 +713,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-037
     current_status: "BACKEND_ONLY"
     product_area: "Git"
@@ -734,6 +738,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-049"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-038
     current_status: "BACKEND_ONLY"
     product_area: "worktrees"
@@ -758,6 +763,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-049"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-039
     current_status: "BACKEND_ONLY"
     product_area: "rebind"
@@ -782,6 +788,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-031"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-040
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "AI Connections"
@@ -806,6 +813,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-041
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "agent bridge"
@@ -830,6 +838,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-003"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-043
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Activity"
@@ -854,6 +863,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-055"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-044
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "onboarding"
@@ -878,6 +888,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-051"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-045
     current_status: "PARTIAL"
     product_area: "authentication"
@@ -902,6 +913,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-001"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-047
     current_status: "UI_SHELL_ONLY"
     product_area: "Usage"
@@ -926,6 +938,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-045"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-048
     current_status: "UI_SHELL_ONLY"
     product_area: "Notifications"
@@ -950,6 +963,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-049
     current_status: "UI_SHELL_ONLY"
     product_area: "Backup"
@@ -974,6 +988,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-042"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-050
     current_status: "BACKEND_ONLY"
     product_area: "Upgrades"
@@ -998,6 +1013,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-051
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Brain"
@@ -1022,6 +1038,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-052
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "future boundaries"
@@ -1046,6 +1063,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-053
     current_status: "BACKEND_ONLY"
     product_area: "LAN projects"
@@ -1070,6 +1088,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-036"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-054
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "registration"
@@ -1094,6 +1113,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-046"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-055
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "creation"
@@ -1118,6 +1138,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-036"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-056
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "project metadata"
@@ -1142,6 +1163,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-051"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-057
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "authority provisioning"
@@ -1166,6 +1188,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-003"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-058
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "guided goal"
@@ -1190,6 +1213,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-051"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-059
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Repository/Authority UI"
@@ -1214,6 +1238,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-051"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-060
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Git UI"
@@ -1238,6 +1263,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-046"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-061
     current_status: "BACKEND_ONLY"
     product_area: "observation"
@@ -1262,6 +1288,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-011"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-062
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Progress UI"
@@ -1286,6 +1313,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-011"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-063
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "freshness"
@@ -1310,6 +1338,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-052"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-064
     current_status: "BACKEND_ONLY"
     product_area: "Notion UI"
@@ -1334,6 +1363,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-065
     current_status: "BACKEND_ONLY"
     product_area: "managed Notion"
@@ -1358,6 +1388,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-066
     current_status: "BACKEND_ONLY"
     product_area: "knowledge"
@@ -1382,6 +1413,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-067
     current_status: "BACKEND_ONLY"
     product_area: "Hindsight bank"
@@ -1406,6 +1438,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-068
     current_status: "BACKEND_ONLY"
     product_area: "Hindsight semantics"
@@ -1430,6 +1463,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-069
     current_status: "BACKEND_ONLY"
     product_area: "Hindsight contract"
@@ -1454,6 +1488,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-070
     current_status: "BACKEND_ONLY"
     product_area: "durable memory"
@@ -1478,6 +1513,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-054"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-071
     current_status: "BACKEND_ONLY"
     product_area: "MCP memory"
@@ -1502,6 +1538,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-073
     current_status: "BACKEND_ONLY"
     product_area: "MCP admission"
@@ -1526,6 +1563,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-074
     current_status: "BACKEND_ONLY"
     product_area: "offline node"
@@ -1550,6 +1588,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-031"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-075
     current_status: "BACKEND_ONLY"
     product_area: "Core outage"
@@ -1574,6 +1613,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-001"
+    acceptance_kind: "MIXED"
   - dod_id: DOD-076
     current_status: "UI_SHELL_ONLY"
     product_area: "lifecycle safety"
@@ -1598,6 +1638,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-077
     current_status: "UI_SHELL_ONLY"
     product_area: "delete"
@@ -1622,6 +1663,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-079
     current_status: "BLOCKED_BY_ENVIRONMENT"
     product_area: "native nodes"
@@ -1646,6 +1688,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Atlas Linux host and systemd are available, but no deterministic native service installer/unit is exposed for Linux qualification; Windows still requires a separate supported host."
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-080
     current_status: "PARTIAL"
     product_area: "polish"
@@ -1670,6 +1713,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-081
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "release"
@@ -1694,6 +1738,7 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
+    acceptance_kind: "AGGREGATE_RELEASE_GATE"
 reconciliation:
   complete_plus_items_must_equal: 81
   item_status_must_equal_authoritative_audit: true

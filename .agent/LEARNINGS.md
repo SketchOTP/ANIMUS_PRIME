@@ -393,3 +393,14 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - 2026-08-13 — Direct SSH makes Atlas Linux reality inspectable, but a running systemd host and sudo membership do not prove PRIME native Node qualification. The repository must expose a deterministic installer/unit and lifecycle evidence; none was present in the current Node surfaces.
 - 2026-08-13 — Browser fixture qualification must mount the fixture path into the Core process with matching permissions. Indexed metadata can render while Repository/Git drill-down fails if the Core container cannot traverse the host-side fixture or cannot perform read-only Git inspection.
 - 2026-08-13 — A derived burndown is only actionable when every open DOD has exact residual behavior, explicit work class, environment flags, evidence already available, qualification needed, blocker, and dependency fields that mechanically match the authoritative audit.
+
+
+## L-PRIME-PHASE15-037
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-PHASE15-037
+- Fact or lesson: Native Atlas qualification exposed two distinct continuity boundaries: the ordinary pytest collision is deterministically repaired with importlib collection, and project-scoped browser state must be cleared when changing projects or stale Brain data remains visible. Hindsight is listening on port 8888, while PRIME's default adapter still targets 18888; correcting that endpoint alone is insufficient because the configured routerbot-local retain extractor acknowledges requests but currently extracts zero recallable facts.
+- Evidence location: pytest.ini; apps/web/index.html; src/prime_core/memory_service.py; evidence/phase15/product-goal-alignment-continuation-035.md
+- Confidence: VERIFIED
+- Scope: Continuation 035 test contract, browser A/B state isolation, and Hindsight diagnosis.
+- Supersedes learning: none

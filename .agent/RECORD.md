@@ -306,3 +306,14 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Exact clean checkout `b325390f` built and started with `USER nobody`, 26 migrations applied, and Core restart/live health passed. The previous mode-660 condition is isolated to the long-lived development worktree. Current authenticated browser regression proved truthful setup, project, Goal/Progress, Brain fixture-scale, Search partial, degraded Ask, unavailable Time Lens, safe AI empty state, and Activity no-source behavior, but not complete frozen acceptance. Atlas has systemd and Tailscale, while native Node installer evidence, Windows, second device, approved PRIME Hindsight retain, live Notion, and external AT remain unavailable or incomplete.
 - Affected areas: `docs/v1-product-gap-burndown.yaml`, `docs/v1-product-goal-alignment-audit.yaml`, `scripts/validate_product_gap_burndown.py`, Continuation 034 evidence, and append-only `.agent` records.
 - Supersedes record: DEC-PRIME-PHASE15-033
+
+
+## DEC-PRIME-PHASE15-035
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-035
+- Status: CLOSED
+- Decision or event: Close Continuation 035 as PARTIAL. Reconcile acceptance semantics across the audit and burndown, promote only DOD-001, repair stale project-scoped browser state, and preserve all unsupported product and external rows as open.
+- Rationale: Fresh native Atlas database qualification passed 91 tests and Phases 1–14. The ordinary pytest collection collision is fixed. Browser qualification proved current project surfaces, fixture-scale Brain, truthful Time Lens PARTIAL/CURRENT behavior, repository/activity surfaces, and safe provider/integration degradation. It also exposed and fixed stale Brain state across project switching. Fork correctly refused a dirty source tree, historical Goal/Brain reconstruction is incomplete, representative/live Brain evidence is absent, Hindsight retain remains non-recallable, and Notion/AT/native/second-device boundaries remain external or unavailable.
+- Affected areas: pytest.ini; apps/web/index.html; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; scripts/validate_product_gap_burndown.py; evidence/phase15/product-goal-alignment-continuation-035.md; append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-034

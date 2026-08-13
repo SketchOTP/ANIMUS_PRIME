@@ -473,3 +473,18 @@ Do not record execution results here. Do not rewrite historical entries after ad
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-033
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-V1-LOCAL-CLOSURE-035
+
+- Issued: 2026-08-13T02:35:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — CONTINUATION 035 V1 LOCAL CLOSURE SPRINT
+- Objective: Make ordinary pytest collection deterministic, semantically reconcile §26, qualify existing local product paths, close Brain scale/live/isolation and Fork isolation where proven, diagnose Hindsight, and leave precise local/external boundaries.
+- Scope: Native Atlas execution for the test contract, semantic audit/burndown, high-yield Time Lens/Ask/Search/AI Connections/Activity/Repository/Authority/Git/Progress/Freshness/Brain/Fork qualification, Hindsight diagnosis, and governed publication.
+- Exclusions: changing PRIME-SPEC-V1.0.0; Phase 16; deployment; Z:/SSHFS for authoritative work; unnecessary UI for architectural invariants; new providers; broad Node implementation; protected installer adoption; broad live Notion rerun; R-056 closure.
+- Acceptance: deterministic ordinary pytest, truthful semantic §26 reconciliation, complete supported local qualification where proven, exact external boundaries, governed publication, Notion update, and deployment NOT PERFORMED.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCT-COMPLETION-034
+- Status at issuance: ISSUED
