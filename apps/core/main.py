@@ -36,6 +36,7 @@ from src.prime_core.progress_service import ProgressService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
+from src.prime_memory_adapter import PrimeMemoryAdapter
 
 settings = Settings()
 configure()
@@ -191,6 +192,13 @@ class AssessmentRequest(BaseModel):
     repository_revision: str | None = Field(default=None, max_length=240)
     summary: str = Field(default="", max_length=4000)
     evidence_refs: list[str] = Field(default_factory=list, max_length=128)
+
+
+class ProgressCorrectionRequest(BaseModel):
+    assessment_id: str = Field(min_length=1, max_length=160)
+    category: str = Field(min_length=1, max_length=48)
+    reason: str = Field(min_length=1, max_length=4000)
+    source_refs: list[str] = Field(default_factory=list, max_length=128)
 
 
 class BackupRequest(BaseModel):
@@ -401,13 +409,14 @@ def setup_status(request: Request, prime_session: str | None = Cookie(default=No
     require_session(request, prime_session)
     nodes = service.list_nodes()
     notion = notion_credentials.public_status()
+    hindsight = hindsight_capabilities()
     return {
         "steps": {
             "operator_security": {"status": "READY", "detail": "Operator session is authenticated; credentials remain server-side."},
             "storage": {"status": "READY" if startup_state.get("database") == "CONNECTED" else "DEGRADED", "detail": "PostgreSQL/Core is the canonical persistence layer."},
             "ai_provider": {"status": "READY" if ai.default_provider != "unconfigured" else "DEGRADED", "detail": "Provider health is reported without exposing credential material."},
             "notion": {"status": notion.get("status", "NOT_CONFIGURED"), "detail": "Notion is optional and cannot block canonical project state."},
-            "hindsight": {"status": "DEGRADED", "detail": "PRIME source-ledger memory remains available; approved Hindsight retain is not qualified in this environment."},
+            "hindsight": {"status": "READY" if hindsight["overall"] == "CURRENT" else "DEGRADED", "detail": "; ".join(f"{key}={value}" for key, value in hindsight["capabilities"].items()), "capabilities": hindsight["capabilities"]},
             "nodes": {"status": "READY" if nodes else "REQUIRES_ACTION", "detail": f"{len(nodes)} enrolled Node record(s)."},
             "allowed_roots": {"status": "READY" if any(node.get("allowed_roots") for node in nodes) else "REQUIRES_ACTION", "detail": "Repository operations are constrained to enrolled Node roots."},
             "backup": {"status": "REQUIRES_ACTION", "detail": "Configure and verify a recovery destination before release."},
@@ -710,6 +719,26 @@ def assess_project_progress(project_id: str, body: AssessmentRequest, request: R
         return error("PROGRESS_REJECTED", str(exc), request_id(request), status_code=400)
 
 
+@app.post("/v1/projects/{project_id}/progress/refresh")
+def refresh_project_progress(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        root, _ = _safe_repository_path(project_id)
+        revision = _git(root, "rev-parse", "HEAD")
+        return progress.refresh(project_id, revision)
+    except (KeyError, ValueError) as exc:
+        return error("PROGRESS_REFRESH_REJECTED", str(exc), request_id(request), retryable=True, status_code=409)
+
+
+@app.post("/v1/projects/{project_id}/progress/challenge")
+def challenge_project_progress(project_id: str, body: ProgressCorrectionRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    session = require_session(request, prime_session)
+    try:
+        return progress.challenge(project_id, body.assessment_id, body.category, body.reason, session["operator_id"], body.source_refs)
+    except (KeyError, ValueError) as exc:
+        return error("PROGRESS_CHALLENGE_REJECTED", str(exc), request_id(request), status_code=400)
+
+
 @app.get("/v1/projects/{project_id}/progress")
 def project_progress(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -722,6 +751,25 @@ def project_progress(project_id: str, request: Request, prime_session: str | Non
 def record_authority(body: AuthorityRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata, body.content_snapshot, body.canonical_commit)
+
+
+def hindsight_capabilities() -> dict[str, Any]:
+    adapter = PrimeMemoryAdapter(settings.hindsight_base_url, "health-probe", timeout_seconds=settings.hindsight_timeout_seconds)
+    service_result = adapter.health()
+    service_status = service_result.status
+    retained = 0
+    if service_status == "CURRENT":
+        with connect(settings) as db:
+            retained = int(db.execute("SELECT COUNT(*) AS total FROM prime_core.memory_records WHERE status='STORED'").fetchone()["total"])
+    capabilities = {
+        "service_connectivity": service_status,
+        "retain": "CURRENT" if service_status == "CURRENT" and retained else ("DEGRADED" if service_status == "CURRENT" else "UNAVAILABLE"),
+        "recall": "CURRENT" if service_status == "CURRENT" and retained else ("DEGRADED" if service_status == "CURRENT" else "UNAVAILABLE"),
+        "reflect": "UNAVAILABLE",
+        "mental_models": "UNSUPPORTED",
+    }
+    overall = "CURRENT" if all(capabilities[key] == "CURRENT" for key in ("service_connectivity", "retain", "recall")) else "DEGRADED"
+    return {"overall": overall, "capabilities": capabilities, "stored_memory_records": retained}
 
 
 @app.post("/v1/projects/{project_id}/index")
@@ -1014,6 +1062,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
         goal_items = db.execute("SELECT goal_item_id,title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY goal_item_id", (project_id, goal["goal_revision_id"] if goal else "")).fetchall()
         progress = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
+        progress_corrections = [dict(row) for row in db.execute("SELECT correction_id,assessment_id,goal_revision_id,category,reason,operator_id,source_refs,status,created_at,reassessment_id FROM prime_core.progress_corrections WHERE project_id=%s ORDER BY created_at DESC LIMIT 12", (project_id,)).fetchall()]
         authority = db.execute("SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
         notion = db.execute("SELECT project_id,page_id,page_url,connection_status,managed_content_hash,last_synced_at FROM prime_core.notion_projects WHERE project_id=%s", (project_id,)).fetchone()
         evidence = db.execute("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE retracted_at IS NULL AND purged_at IS NULL) AS current, COUNT(*) FILTER (WHERE parser_status='FAILED' OR index_status='FAILED') AS failed FROM prime_core.evidence_records WHERE project_id=%s", (project_id,)).fetchone()
@@ -1041,10 +1090,11 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         "goal": dict(goal) if goal else None,
         "goal_items": [dict(row) for row in goal_items],
         "progress": dict(progress) if progress else None,
+        "progress_corrections": progress_corrections,
         "authority": dict(authority) if authority else None,
         "notion": dict(notion) if notion else {"connection_status": "DISCONNECTED"},
         "evidence": dict(evidence) if evidence else {"total": 0, "current": 0, "failed": 0},
-        "memory": dict(memory) if memory else {"total": 0},
+        "memory": {**(dict(memory) if memory else {"total": 0}), "health": hindsight_capabilities()},
         "files": dict(files) if files else {"total": 0},
         "events": events,
         "checkpoint": dict(checkpoint) if checkpoint else {"last_seen_event_sequence": 0},

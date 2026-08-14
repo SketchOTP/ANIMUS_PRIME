@@ -26,6 +26,8 @@ def test_wave3_routes_and_controls_are_present() -> None:
     for route in (
         "/v1/projects/{project_id}/progress/baseline",
         "/v1/projects/{project_id}/progress/assess",
+        "/v1/projects/{project_id}/progress/refresh",
+        "/v1/projects/{project_id}/progress/challenge",
         "/v1/projects/{project_id}/agent-chain",
         "/v1/projects/{project_id}/activity",
         "/v1/projects/{project_id}/fork",
@@ -38,6 +40,8 @@ def test_wave3_routes_and_controls_are_present() -> None:
     assert "/v1/projects/{project_id}/time-lens/brain" in main
     assert "Historical Goal:" in web
     assert "renderBrainGraph(await api" in web
+    assert "progress-refresh" in web
+    assert "progress-challenge-form" in web
 
 
 @pytest.mark.parametrize(

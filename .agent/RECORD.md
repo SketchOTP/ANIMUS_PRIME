@@ -393,3 +393,11 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Status: PARTIAL
 - Decision or event: Direct native Atlas SSH and persistent services are the qualification authority. Archive only verified repository-local regeneration caches to the attached external filesystem when storage exhaustion blocks PostgreSQL; keep uncertain state, evidence, authority, .git, PostgreSQL, and Hindsight local.
 - Rationale: The root filesystem reached zero free bytes and PostgreSQL failed on WAL/checkpoint writes. Only 2.6 MB of clearly safe caches were archived and verified before removal; PostgreSQL recovered with 26 migrations.
+
+## DEC-PRIME-PHASE15-044
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-044
+- Status: PARTIAL
+- Decision or event: Continuation 044 keeps native Atlas persistent services authoritative while completing record-complete authority admission, Progress operator controls, and capability-level Hindsight truth without disposable environments or sustained capacity qualification.
+- Rationale: The latest-record-only admission path was proven to lose earlier consequential records; Progress lacked production-backed refresh and challenge controls; direct Hindsight health was healthy while Core reported a blanket degraded state.

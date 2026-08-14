@@ -23,8 +23,6 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Fact or lesson: Hindsight 0.6.1 may return a successful retain response while provider extraction stores no memory; PRIME must verify a durable, recallable postcondition and expose DEGRADED when it is absent.
 - Evidence location: evidence/phase0/qualification-report.md; src/prime_memory_adapter.py
 - Confidence: VERIFIED
-- Scope: PRIME Hindsight adapter and all future memory writes.
-- Supersedes learning: none
 
 ## L-PRIME-PHASE15-010
 
@@ -543,3 +541,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Fact or lesson: Repository-only emergency recovery is safe when regeneration caches are copied to a positively identified external filesystem, source/archive checksums match, and only then are bounded cache paths removed. PostgreSQL recovered automatically after the existing container restarted.
 - Evidence location: /mnt/storage1tb/project-archives/ANIMUS_PRIME/2026-08-13; evidence/phase15/qualification-continuation-043.md
 - Confidence: VERIFIED
+
+## L-PRIME-CONTINUATION-044
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-CONTINUATION-044
+- Fact or lesson: Automatic authority admission must observe only the post-baseline ledger delta, parse every logical record in that delta, and reuse source references before emitting a deduplicated event. Otherwise persistent re-observation creates unique-key failures or turns DOD-030 into uncontrolled warm start.
+- Evidence location: src/prime_core/authority_memory_admission.py; tests/phase15/test_authority_memory_admission.py; persistent Atlas index response for project_d9a1a5b609394282b62fc12c0d04634d
+- Confidence: VERIFIED
+- Scope: PRIME Hindsight adapter and future authority memory writes.
+- Supersedes learning: none

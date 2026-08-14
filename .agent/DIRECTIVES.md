@@ -592,3 +592,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-PRODUCT-CONVERGENCE-044
+
+- Issued: 2026-08-13
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 044
+- Objective: Complete record-complete authority admission, Progress refresh/reassessment, Progress challenge persistence, capability-level Hindsight health truth, and safely applicable architecture reconciliation directly on persistent Atlas.
+- Scope: Direct SSH execution at `/home/sketch/Projects/ANIMUS_PRIME`; existing persistent PostgreSQL/Hindsight; bounded native Core and browser qualification; governed evidence and publication.
+- Exclusions: no disposable environments, databases, projects, repositories, worktrees, fixtures, Hindsight services, or browser profiles; no Phase 16; no deployment; no R-045 sustained-capacity qualification; no unchanged external-provider claims.
+- Acceptance: Preserve GoalModel structure, append-only assessment/correction history, stale-result protection, project-bound authority admission and dedupe, truthful Hindsight capability states, explicit blockers, required validation, and local/origin/GitHub parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-043
+- Status at issuance: ISSUED
