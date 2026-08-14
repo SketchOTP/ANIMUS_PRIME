@@ -4,6 +4,9 @@
 
 `PARTIAL` — the persistent private Core-to-Node product path is operational and the operator-visible offline Node boundary is qualified. DOD-005 generated Documentation/Notion projection, the remaining unavailable integrations, R-056, Phase 15 completion, V1 declaration, and deployment remain open.
 
+- Qualified implementation commit: `0a3c82f53d0c5c70a37db7f8c3a2dbdb6d76d42f`
+- Final governed publication commit: recorded after closeout publication
+
 ## Baseline
 
 - Specification: `PRIME-SPEC-V1.0.0`
