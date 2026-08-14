@@ -10,11 +10,11 @@
 - Local directive ID: `D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047`
 - External directive ID: ANIMUS PRIME - Continuation 047
 - Objective: `Reopen DOD-061 after independent runtime verification; repair source-truth and integration semantics; requalify directly against persistent Atlas; harvest only exact Core-independent closures.`
-- Current status: `IN_PROGRESS`
+- Current status: `COMPLETE`
 - Acceptance: `PARTIAL`
-- Current phase: `VALIDATING`
+- Current phase: `CLOSED_PARTIAL`
 - Expected or actual touched areas: `src/prime_core/indexer.py; apps/core/main.py; Progress and authority-memory integration; tests; Continuation 047 evidence; governed records; append-only .agent records`
-- Immediate next action: `Reproduce and repair DOD-061 before any promotion; no Core/browser, Phase 16, deployment, R-045 pressure, or R-056 closure.`
+- Immediate next action: `DOD-061 re-earned on persistent Atlas; no Core/browser, Phase 16, deployment, R-045 pressure, or R-056 closure. Awaiting reset for the next explicitly authorized continuation.`
 
 ## Temporary task-relevant facts
 
@@ -24,7 +24,7 @@
 
 ## Last validation after adoption
 
-- Command or check: `Continuation 045 persistent Atlas governance, frozen-spec, regression, storage, Hindsight, and publication checks`
+- Command or check: `Continuation 047 persistent incremental-observation repair, direct qualification, governance, regression, storage, Hindsight, and publication checks`
 - Result: `PASSED`
 
 ## Risks

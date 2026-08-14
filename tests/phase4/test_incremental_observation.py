@@ -92,3 +92,17 @@ def test_observe_incremental_preserves_dirty_same_head_provenance(monkeypatch):
     assert result["dirty_paths"] == ["README.md"]
     assert result["observation_revision"].startswith("WORKTREE:" + head + ":")
     assert service.events
+
+
+def test_observe_incremental_retracts_missing_changed_path(monkeypatch):
+    root = Path(__file__).parents[2].resolve()
+    head = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], check=True, capture_output=True, text=True).stdout.strip()
+    db = _DB({"repository_id": "repo-test", "canonical_revision": head, "canonical_path": str(root)})
+    service = _Service(db)
+    monkeypatch.setattr("src.prime_core.db.transaction", lambda _settings: _Transaction(db))
+    monkeypatch.setattr(RepositoryIndexer, "_worktree_status", staticmethod(lambda _root, _relative: " D"))
+    result = RepositoryIndexer(service).observe_incremental("project-test", ["evidence/phase15/qualification-continuation-047-missing.md"], head)
+    assert result["observation_basis"] == "WORKTREE_DIRTY"
+    assert result["files_indexed"] == 0
+    assert result["files_retracted"] == 1
+    assert result["observation_revision"].startswith("WORKTREE:" + head + ":")

@@ -430,3 +430,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The audit found a real full-rescan/incremental-observation product gap and a direct duplicate-binding API gap. Both were repaired and covered by persistent Atlas regression; the remaining open rows require their exact external, browser, workflow, or aggregate boundaries.
 - Affected areas: repository indexing and change intake; repository binding preflight; frozen section-26 audit/burndown; R-011 traceability; Continuation 046 evidence.
 - Supersedes record: DEC-PRIME-PHASE15-045
+
+## DEC-PRIME-PHASE15-047
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-047
+- Status: CLOSED
+- Decision or event: Reopen and re-earn DOD-061 after independent verification found the published incremental production path unexecutable and under-tested. Preserve DOD-061 as PRODUCT_VERIFIED only after direct persistent execution proves source-revision coherence, dirty worktree provenance, canonical commit advance, Progress staleness, and authority-memory admission.
+- Rationale: The real persistent project reproduced the missing-json defect. The bounded repair and direct qualification now prove canonical versus active worktree state without creating a second authority. Other Core-independent rows remain unchanged because their exact acceptance evidence was not completed in this continuation.
+- Affected areas: incremental repository observer; repository-file provenance migration; Progress freshness integration; automatic authority-memory admission; Continuation 047 evidence and governed records.
+- Supersedes record: DEC-PRIME-PHASE15-046

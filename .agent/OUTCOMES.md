@@ -1638,3 +1638,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-004, DOD-005, DOD-008, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-038, DOD-039, DOD-044, DOD-045, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open or blocked.
 - Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/Tailscale boundaries remain unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047 - PARTIAL
+
+- Outcome ID: O-PRIME-047
+- Supersedes outcome: O-PRIME-046
+- Closed: 2026-08-14T06:35:00-04:00
+- Acceptance: PARTIAL
+- Summary: Independently reopened DOD-061, reproduced the published production NameError on the persistent qualification project, repaired incremental observation with actual-HEAD coherence and explicit committed-versus-dirty worktree provenance, directly qualified same-HEAD dirty observation and real commit A-to-B projection, verified Progress staleness and automatic authority admission, and re-promoted DOD-061. No other Continuation 047 harvest row was promoted.
+- Changed areas: src/prime_core/indexer.py; migrations/prime/0028_incremental_observation_provenance.sql; tests/phase4/test_incremental_observation.py; evidence/phase15/qualification-continuation-047.md; DOD-061 governed references; append-only .agent records.
+- Validation:
+  - real pre-repair NameError reproduction - PASSED
+  - focused direct-method tests - PASSED (5)
+  - persistent commit-advance and dirty-worktree qualification - PASSED
+  - DOD-030 incremental admission regression - PASSED
+  - DOD-063 Progress staleness regression - PASSED
+  - persistent full regression - PASSED (109 passed, 3 explicit FRESH_STATE_REQUIRED skips)
+  - test collection - PASSED (112 tests collected)
+  - compileall, YAML, governance, product audit/burndown, diff, secret, PostgreSQL, Hindsight, and storage checks - PASSED
+  - Core/browser qualification - NOT RUN; no persistent Core listener existed
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-004, DOD-005, DOD-008, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-033, DOD-037, DOD-038, DOD-039, DOD-044, DOD-045, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open or blocked.
+- Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/Tailscale boundaries remain unqualified.
+- Follow-up directive: none

@@ -570,3 +570,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME repository observation/index projection and section-26.61 qualification.
 - Supersedes learning: none
+
+## L-PRIME-CONTINUATION-047
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONTINUATION-047
+- Fact or lesson: Incremental repository observation must validate caller revision against the actual checked-out HEAD, distinguish committed canonical bytes from dirty working-tree bytes, preserve branch/path/hash provenance, and avoid automatic authority admission for dirty bytes. Persistent Hindsight authority admission is real but can be slow because retain/recall/consolidation runs against large ledger content; qualification must capture completion rather than infer it from health alone.
+- Evidence location: src/prime_core/indexer.py; migrations/prime/0028_incremental_observation_provenance.sql; evidence/phase15/qualification-continuation-047.md; persistent project_d9a1a5b609394282b62fc12c0d04634d.
+- Confidence: VERIFIED
+- Scope: PRIME repository observation, Progress freshness, automatic authority admission, and persistent Atlas qualification.
+- Supersedes learning: none

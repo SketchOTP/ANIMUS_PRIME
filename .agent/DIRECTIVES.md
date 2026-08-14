@@ -636,7 +636,7 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 
 ## D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047
 
-- Issued: 2026-08-14
+- Issued: 2026-08-14T06:00:00-04:00
 - Issuer: User
 - External directive: ANIMUS PRIME - Continuation 047
 - Objective: Reopen DOD-061 after independent runtime verification, repair incremental observation source-truth and integration semantics, requalify it directly against the persistent Atlas project, and harvest only directly supported Core-independent rows.
