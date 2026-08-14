@@ -1084,7 +1084,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Run the browser correction/challenge and required-evidence workflow, including append-only history."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","evidence/phase15/qualification-continuation-044.md","apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-011"
@@ -1109,7 +1109,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Run the browser freshness transition with a real committed repository change."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py"]
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","evidence/phase15/qualification-continuation-044.md","apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-052"

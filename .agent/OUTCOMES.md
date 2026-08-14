@@ -1579,3 +1579,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Summary: Continuation 044 implemented record-complete authority observation with bounded non-warm-start admission, revision supersession, secret rejection, persistent Progress reassessment CAS, append-only Progress correction storage, and capability-level Hindsight health reporting. Final browser and governance closure remain pending.
 - Validation: authority focused tests PASSED; persistent migration 0027 applied; real Atlas indexing returned CURRENT with idempotent authority records; persistent-safe full regression and browser qualification remain in progress.
 - Deployment: NOT PERFORMED
+
+## D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-PRODUCT-CONVERGENCE-044 - PARTIAL
+
+- Outcome ID: O-PRIME-044-FINAL
+- Supersedes outcome: O-PRIME-043
+- Closed: 2026-08-13T21:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Native Atlas record-complete authority admission, production Progress refresh/reassessment, capability-level Hindsight health, and governed evidence reconciliation are complete for the bounded scope. Real persistent authority admission stored multiple consequential records in one normal cycle with project-bound bank/provenance/event metadata and idempotent repeat behavior. Browser refresh moved the real project from STALE to CURRENT at revision `5d2143f`; history remained visible and Challenge controls rendered without fabricating a correction. The governed §26 state remains 26 complete / 55 open.
+- Changed areas: authority admission; Progress service/API/UI; Hindsight capability health; migration 0027; governed audit/matrix/ledger; evidence/phase15/qualification-continuation-044.md; append-only .agent records.
+- Validation:
+  - persistent regression - PASSED (104 passed, 3 explicit FRESH_STATE_REQUIRED skips)
+  - authority, Progress, and web-shell focused tests - PASSED (11 passed)
+  - storage, PostgreSQL, Hindsight, compile, diff, and product-gap checks - PASSED
+  - browser Progress stale-to-current refresh and console check - PASSED
+  - truthful Progress challenge submission - NOT RUN (no legitimate correction available)
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-030, DOD-062, DOD-063, DOD-068, R-045, and R-056 remain open or blocked; approved Hindsight reflect/Mental Models and external/native boundaries remain unqualified.
+- Blockers: no truthful challenge record was available; private second-device/Tailscale and approved Hindsight reflect/Mental Models boundaries remain unavailable or unqualified.
+- Follow-up directive: none

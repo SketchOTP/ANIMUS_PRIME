@@ -401,3 +401,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Status: PARTIAL
 - Decision or event: Continuation 044 keeps native Atlas persistent services authoritative while completing record-complete authority admission, Progress operator controls, and capability-level Hindsight truth without disposable environments or sustained capacity qualification.
 - Rationale: The latest-record-only admission path was proven to lose earlier consequential records; Progress lacked production-backed refresh and challenge controls; direct Hindsight health was healthy while Core reported a blanket degraded state.
+
+## DEC-PRIME-PHASE15-044-CLOSEOUT
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-044-CLOSEOUT
+- Status: CLOSED
+- Decision or event: Close Continuation 044 for its bounded persistent-Atlas scope. Preserve the §26 26/55 counts and do not promote incomplete operator/environment rows.
+- Rationale: Record-complete authority admission and production Progress refresh are now evidenced on the real Atlas project. The truthful boundary is preserved: no fabricated Progress correction, no approved Hindsight reflect/Mental Models claim, no R-045 sustained-capacity qualification, no Phase 16, and no deployment. Evidence is `evidence/phase15/qualification-continuation-044.md`.
+- Affected areas: authority admission; Progress service/API/UI; Hindsight capability health; migration 0027; governed audit/matrix/ledger; native Atlas qualification evidence.
+- Supersedes record: DEC-PRIME-PHASE15-044
