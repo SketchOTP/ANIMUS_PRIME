@@ -411,3 +411,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Record-complete authority admission and production Progress refresh are now evidenced on the real Atlas project. The truthful boundary is preserved: no fabricated Progress correction, no approved Hindsight reflect/Mental Models claim, no R-045 sustained-capacity qualification, no Phase 16, and no deployment. Evidence is `evidence/phase15/qualification-continuation-044.md`.
 - Affected areas: authority admission; Progress service/API/UI; Hindsight capability health; migration 0027; governed audit/matrix/ledger; native Atlas qualification evidence.
 - Supersedes record: DEC-PRIME-PHASE15-044
+
+## DEC-PRIME-PHASE15-045
+
+- Date: 2026-08-13
+- Record or decision ID: DEC-PRIME-PHASE15-045
+- Status: CLOSED
+- Decision or event: Continuation 045 reconciles the frozen §26 semantics before implementation, adopts bounded historical governance schema support, and promotes only exact DOD-030, DOD-062, and DOD-063 evidence.
+- Rationale: The frozen specification places automatic authority admission in DOD-030, evidence-backed percentage/confidence/explanation in DOD-062, stale/refresh in DOD-063, and correction/challenge with history, Goal Alignment, and milestones in DOD-026. Continuation 044 directly evidenced the first three boundaries.
+- Affected areas: scripts/validate_governance.py; governed audit and burndown; Continuation 045 evidence; .agent ledgers.
+- Supersedes record: DEC-PRIME-PHASE15-044-CLOSEOUT

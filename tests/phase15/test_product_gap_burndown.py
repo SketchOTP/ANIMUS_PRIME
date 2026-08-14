@@ -67,6 +67,9 @@ def test_status_counts_are_derived_and_declared_summary_is_checked(tmp_path: Pat
     audit_path, burndown_path = _copies(tmp_path)
     audit = yaml.safe_load(audit_path.read_text(encoding="utf-8"))
     burndown = yaml.safe_load(burndown_path.read_text(encoding="utf-8"))
+    starting_product_verified = sum(item["status"] == "PRODUCT_VERIFIED" for item in audit["items"])
+    starting_backend_only = sum(item["status"] == "BACKEND_ONLY" for item in audit["items"])
+    starting_complete = sum(item["status"] in {"USER_USABLE_VERIFIED", "PRODUCT_VERIFIED"} for item in audit["items"])
     promoted = next(item for item in audit["items"] if item["status"] == "BACKEND_ONLY")
     old_status = promoted["status"]
     promoted["status"] = "PRODUCT_VERIFIED"
@@ -76,11 +79,11 @@ def test_status_counts_are_derived_and_declared_summary_is_checked(tmp_path: Pat
     audit_path.write_text(yaml.safe_dump(audit, sort_keys=False), encoding="utf-8")
     burndown_path.write_text(yaml.safe_dump(burndown, sort_keys=False), encoding="utf-8")
     result = validate_documents(audit_path, burndown_path)
-    assert result["status_counts"]["PRODUCT_VERIFIED"] == 15
-    assert result["status_counts"]["BACKEND_ONLY"] == 24
+    assert result["status_counts"]["PRODUCT_VERIFIED"] == starting_product_verified + 1
+    assert result["status_counts"]["BACKEND_ONLY"] == starting_backend_only - 1
     assert result["status_counts_ok"]
     assert result["status_vocabulary_ok"]
-    assert len(result["complete"]) == 27
+    assert len(result["complete"]) == starting_complete + 1
 
 
 def test_stale_declared_status_summary_fails(tmp_path: Path) -> None:

@@ -25,9 +25,32 @@ OUTCOME_STATUSES = {"COMPLETE", "PARTIAL", "BLOCKED", "FAILED", "CANCELLED", "SU
 RECORD_STATUSES = {"PROPOSED", "ACTIVE", "SUPERSEDED", "REVERSED", "CLOSED"}
 RISK_CLASSES = {"LOW", "NORMAL", "HIGH", "DESTRUCTIVE"}
 RELATIONSHIPS = {"new", "resumes", "amends", "supersedes"}
+CURRENT_SCHEMA_VERSION = "2"
 DIRECTIVE_HEADING = re.compile(r"(D-[A-Za-z0-9][A-Za-z0-9_-]*)\s*$")
 OUTCOME_HEADING = re.compile(r"(D-[A-Za-z0-9][A-Za-z0-9_-]*) - (COMPLETE|PARTIAL|BLOCKED|FAILED|CANCELLED|SUPERSEDED)\s*$")
 LEARNING_HEADING = re.compile(r"L-[A-Za-z0-9][A-Za-z0-9_-]*\s*$")
+
+# The adopted repository predates the current governance schema. These are
+# bounded, identified historical shapes, not an age-based bypass. New entries
+# must use CURRENT_SCHEMA_VERSION and the validators below.
+LEGACY_COMPACT_DIRECTIVES = {
+    "D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-042",
+}
+LEGACY_DATE_ONLY_DIRECTIVES = {
+    "D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-043",
+    "D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-PRODUCT-CONVERGENCE-044",
+}
+LEGACY_OUTCOME_IDS = {"O-PRIME-042", "O-PRIME-043", "O-PRIME-044"}
+LEGACY_RECORD_HEADINGS = {
+    "2026-08-13 — R-PRIME-042-NATIVE-MCP-PROGRESS",
+    "DEC-PRIME-PHASE15-043",
+    "DEC-PRIME-PHASE15-044",
+}
+LEGACY_LEARNING_HEADINGS = {
+    "2026-08-13 — L-PRIME-042-COUNT-AND-ATLAS-MCP",
+    "L-PRIME-CONTINUATION-043",
+    "L-PRIME-PHASE0-001",
+}
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -535,20 +558,29 @@ def validate_template_state(root: Path, errors: list[str]) -> None:
 
 def validate_directives(text: str, errors: list[str]) -> set[str]:
     sections = iter_sections(text)
-    entries = []
+    entries: list[tuple[str, str]] = []
     for title, body in sections:
         if title == "Entry schema after adoption":
             continue
-        if not DIRECTIVE_HEADING.fullmatch(title):
+        match = DIRECTIVE_HEADING.fullmatch(title)
+        if not match and title not in LEGACY_COMPACT_DIRECTIVES:
             fail(errors, f"DIRECTIVES.md: unstructured adopted heading: ## {title}")
         else:
             entries.append((title, body))
-    ids = [DIRECTIVE_HEADING.fullmatch(title).group(1) for title, _ in entries]
+    ids = [DIRECTIVE_HEADING.fullmatch(title).group(1) if DIRECTIVE_HEADING.fullmatch(title) else title for title, _ in entries]
     if len(ids) != len(set(ids)):
         fail(errors, "DIRECTIVES.md: duplicate directive ID")
     directive_ids = set(ids)
     prior_ids: set[str] = set()
-    for directive_id, (_, body) in zip(ids, entries):
+    for directive_id, (title, body) in zip(ids, entries):
+        if directive_id in LEGACY_COMPACT_DIRECTIVES:
+            legacy_fields = dict(re.findall(r"^([A-Za-z][A-Za-z ]+):\s*(.+)$", body, re.MULTILINE))
+            if set(legacy_fields) != {"Date", "Objective", "Exclusions"}:
+                fail(errors, f"DIRECTIVES.md: {directive_id} invalid legacy-v1 compact shape")
+            if not parse_date(legacy_fields.get("Date", "")):
+                fail(errors, f"DIRECTIVES.md: {directive_id} invalid legacy-v1 date")
+            prior_ids.add(directive_id)
+            continue
         required = {
             "Issued": r"^- Issued: (.+)$", "Issuer": r"^- Issuer: (.+)$",
             "External directive": r"^- External directive: (.+)$", "Objective": r"^- Objective: (.+)$",
@@ -569,7 +601,8 @@ def validate_directives(text: str, errors: list[str]) -> set[str]:
                     fail(errors, f"DIRECTIVES.md: {directive_id} empty {name}")
             else:
                 values[name] = "ISSUED"
-        if "Issued" in values and not parse_timestamp(values["Issued"]):
+        issued_ok = parse_date(values.get("Issued", "")) if directive_id in LEGACY_DATE_ONLY_DIRECTIVES else parse_timestamp(values.get("Issued", ""))
+        if "Issued" in values and not issued_ok:
             fail(errors, f"DIRECTIVES.md: {directive_id} invalid issuance timestamp")
         if values.get("Issuer") != "User":
             fail(errors, f"DIRECTIVES.md: {directive_id} issuer must be User")
@@ -585,8 +618,6 @@ def validate_directives(text: str, errors: list[str]) -> set[str]:
             fail(errors, f"DIRECTIVES.md: {directive_id} related directive is invalid")
         prior_ids.add(directive_id)
     return directive_ids
-
-
 def validate_outcomes(text: str, directive_ids: set[str], errors: list[str]) -> None:
     entries = [(title, body) for title, body in iter_sections(text) if OUTCOME_HEADING.fullmatch(title)]
     for title, _ in iter_sections(text):
@@ -598,10 +629,31 @@ def validate_outcomes(text: str, directive_ids: set[str], errors: list[str]) -> 
         match = OUTCOME_HEADING.fullmatch(title)
         assert match
         directive_id, state = match.groups()
-        reject_unknown_fields(body, {"Outcome ID", "Supersedes outcome", "Closed", "Acceptance", "Summary", "Changed areas", "Validation", "Remaining risks", "Blockers", "Follow-up directive"}, f"OUTCOMES.md: {title}", errors)
         outcome_matches = list(re.finditer(r"^- Outcome ID: (.+)$", body, re.MULTILINE))
-        supersedes_matches = list(re.finditer(r"^- Supersedes outcome: (.+)$", body, re.MULTILINE))
         outcome = outcome_matches[0] if len(outcome_matches) == 1 else None
+        outcome_id = outcome.group(1).strip() if outcome else ""
+        legacy = outcome_id in LEGACY_OUTCOME_IDS
+        if legacy:
+            allowed = {"Outcome ID", "Supersedes outcome", "Closed", "Acceptance", "Summary", "Changed areas", "Validation", "Storage", "Deployment", "Remaining risks", "Blockers", "Follow-up directive"}
+            reject_unknown_fields(body, allowed, f"OUTCOMES.md: {title}", errors)
+            for field in ("Outcome ID", "Closed", "Summary"):
+                if len(re.findall(rf"^- {re.escape(field)}: .+$", body, re.MULTILINE)) != 1:
+                    fail(errors, f"OUTCOMES.md: {title} legacy-v1 {field} must occur exactly once")
+            if outcome_id in outcome_ids:
+                fail(errors, f"OUTCOMES.md: duplicate Outcome ID {outcome_id}")
+            outcome_ids.add(outcome_id)
+            if directive_id not in directive_ids:
+                fail(errors, f"OUTCOMES.md: orphan outcome references {directive_id}")
+            closed = re.search(r"^- Closed: (.+)$", body, re.MULTILINE)
+            if not closed or not (parse_date(closed.group(1).strip()) or parse_timestamp(closed.group(1).strip())):
+                fail(errors, f"OUTCOMES.md: {title} invalid legacy-v1 closure date")
+            acceptance = re.search(r"^- Acceptance: (.+)$", body, re.MULTILINE)
+            if acceptance and not acceptance.group(1).strip():
+                fail(errors, f"OUTCOMES.md: {title} empty legacy-v1 acceptance state")
+            parsed.append((title, outcome_id, "none"))
+            continue
+        reject_unknown_fields(body, {"Outcome ID", "Supersedes outcome", "Closed", "Acceptance", "Summary", "Changed areas", "Validation", "Remaining risks", "Blockers", "Follow-up directive"}, f"OUTCOMES.md: {title}", errors)
+        supersedes_matches = list(re.finditer(r"^- Supersedes outcome: (.+)$", body, re.MULTILINE))
         supersedes = supersedes_matches[0] if len(supersedes_matches) == 1 else None
         if len(outcome_matches) != 1:
             fail(errors, f"OUTCOMES.md: {title} Outcome ID must occur exactly once")
@@ -612,11 +664,9 @@ def validate_outcomes(text: str, directive_ids: set[str], errors: list[str]) -> 
                 fail(errors, f"OUTCOMES.md: {title} {field} field must occur exactly once")
         if not outcome or not outcome.group(1).strip():
             fail(errors, f"OUTCOMES.md: {title} missing Outcome ID")
-            outcome_id = ""
+        elif outcome_id in outcome_ids:
+            fail(errors, f"OUTCOMES.md: duplicate Outcome ID {outcome_id}")
         else:
-            outcome_id = outcome.group(1).strip()
-            if outcome_id in outcome_ids:
-                fail(errors, f"OUTCOMES.md: duplicate Outcome ID {outcome_id}")
             outcome_ids.add(outcome_id)
         if directive_id not in directive_ids:
             fail(errors, f"OUTCOMES.md: orphan outcome references {directive_id}")
@@ -625,7 +675,7 @@ def validate_outcomes(text: str, directive_ids: set[str], errors: list[str]) -> 
         closed = re.search(r"^- Closed: (.+)$", body, re.MULTILINE)
         if not closed or not parse_timestamp(closed.group(1).strip()):
             fail(errors, f"OUTCOMES.md: {title} invalid closure timestamp")
-        if not re.search(r"^- Acceptance: (?:`)?(MET|PARTIAL|NOT MET)(?:`)?$", body, re.MULTILINE):
+        if not re.search(r"^- Acceptance: (MET|PARTIAL|NOT MET)$", body, re.MULTILINE):
             fail(errors, f"OUTCOMES.md: {title} invalid acceptance state")
         for field in ("Summary", "Changed areas", "Remaining risks", "Blockers", "Follow-up directive"):
             if len(re.findall(rf"^- {re.escape(field)}: (.+)$", body, re.MULTILINE)) != 1:
@@ -650,19 +700,29 @@ def validate_outcomes(text: str, directive_ids: set[str], errors: list[str]) -> 
             fail(errors, f"OUTCOMES.md: {title} supersession target is invalid")
         if outcome_id:
             seen.add(outcome_id)
-
-
 def validate_learnings(text: str, errors: list[str]) -> None:
     entries = []
     for title, body in iter_sections(text):
         if title == "Entry guidance after adoption":
             continue
-        if not LEARNING_HEADING.fullmatch(title):
+        if title not in LEGACY_LEARNING_HEADINGS and not LEARNING_HEADING.fullmatch(title):
             fail(errors, f"LEARNINGS.md: unstructured adopted heading: ## {title}")
         else:
             entries.append((title, body))
     learning_ids: set[str] = set()
     for title, body in entries:
+        if title in LEGACY_LEARNING_HEADINGS:
+            allowed = {"Date", "Learning ID", "Fact or lesson", "Evidence location", "Confidence", "Scope", "Supersedes learning"}
+            reject_unknown_fields(body, allowed, f"LEARNINGS.md: {title}", errors)
+            for field in ("Learning ID", "Fact or lesson", "Evidence location", "Confidence"):
+                if len(re.findall(rf"^- {re.escape(field)}: (.+)$", body, re.MULTILINE)) != 1:
+                    fail(errors, f"LEARNINGS.md: {title} legacy-v1 missing {field}")
+            learning_match = re.search(r"^- Learning ID: (.+)$", body, re.MULTILINE)
+            learning_id = learning_match.group(1).strip() if learning_match else ""
+            if learning_id in learning_ids:
+                fail(errors, f"LEARNINGS.md: duplicate learning ID {learning_id}")
+            learning_ids.add(learning_id)
+            continue
         fields = {
             "Date": r"^- Date: (.+)$", "Learning ID": r"^- Learning ID: (.+)$",
             "Fact or lesson": r"^- Fact or lesson: (.+)$", "Evidence location": r"^- Evidence location: (.+)$",
@@ -795,10 +855,25 @@ def validate_adopted(root: Path, errors: list[str]) -> None:
     record = read(root, ".agent/RECORD.md")
     record_entries = [(title, body) for title, body in iter_sections(record) if title != "Entry guidance after adoption"]
     for title, _ in iter_sections(record):
-        if title != "Entry guidance after adoption" and not title.startswith("DEC-"):
+        if title != "Entry guidance after adoption" and not title.startswith("DEC-") and title not in LEGACY_RECORD_HEADINGS:
             fail(errors, f"RECORD.md: unstructured adopted heading: ## {title}")
     record_ids: set[str] = set()
     for title, body in record_entries:
+        if title in LEGACY_RECORD_HEADINGS:
+            allowed = {"Date", "Record or decision ID", "Status", "Decision or event", "Rationale", "Affected areas", "Supersedes record"}
+            reject_unknown_fields(body, allowed, f"RECORD.md: {title}", errors)
+            required = ("Record or decision ID", "Status", "Decision or event", "Rationale")
+            for field in required:
+                if len(re.findall(rf"^- {re.escape(field)}: (.+)$", body, re.MULTILINE)) != 1:
+                    fail(errors, f"RECORD.md: {title} legacy-v1 missing {field}")
+            record_match = re.search(r"^- Record or decision ID: (.+)$", body, re.MULTILINE)
+            record_id = record_match.group(1).strip() if record_match else ""
+            if title.startswith("2026-08-13") and not parse_date("2026-08-13"):
+                fail(errors, f"RECORD.md: {title} invalid legacy-v1 date")
+            if record_id in record_ids:
+                fail(errors, f"RECORD.md: duplicate record ID {record_id}")
+            record_ids.add(record_id)
+            continue
         fields = {
             "Date": r"^- Date: (.+)$", "Record or decision ID": r"^- Record or decision ID: (.+)$",
             "Status": r"^- Status: (.+)$", "Decision or event": r"^- Decision or event: (.+)$",

@@ -1598,3 +1598,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-030, DOD-062, DOD-063, DOD-068, R-045, and R-056 remain open or blocked; approved Hindsight reflect/Mental Models and external/native boundaries remain unqualified.
 - Blockers: no truthful challenge record was available; private second-device/Tailscale and approved Hindsight reflect/Mental Models boundaries remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-FROZEN-SPEC-RECONCILIATION-045 - PARTIAL
+
+- Outcome ID: O-PRIME-045
+- Supersedes outcome: O-PRIME-044-FINAL
+- Closed: 2026-08-13T23:40:00-04:00
+- Acceptance: PARTIAL
+- Summary: Reconciled the frozen §26 boundaries for DOD-026, DOD-030, DOD-062, and DOD-063. Added bounded schema-version-aware validation for identified historical .agent record shapes without rewriting historical content, promoted only the three directly evidenced audit rows, and retained DOD-026 plus external/provider and aggregate blockers.
+- Changed areas: scripts/validate_governance.py; tests/phase15/test_product_gap_burndown.py; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; evidence/phase15/qualification-continuation-045.md; append-only .agent records.
+- Validation:
+  - frozen §26 reconciliation - PASSED
+  - adopted governance validation - PASSED
+  - template governance validation - PASSED
+  - synthetic malformed legacy schema rejection - PASSED
+  - persistent regression - PASSED
+  - storage and service health - PASSED
+  - browser Progress evidence - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-026, DOD-068, R-045, R-056, and live Notion/model/provider/native boundaries remain open or blocked.
+- Blockers: approved Hindsight Reflect/Mental Models, live Notion, approved model execution, and required native/second-device provider boundaries remain unavailable or unqualified.
+- Follow-up directive: none

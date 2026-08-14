@@ -606,3 +606,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-NATIVE-ATLAS-CLOSURE-043
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-FROZEN-SPEC-RECONCILIATION-045
+
+- Issued: 2026-08-13T22:20:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME — Continuation 045
+- Objective: Reconcile frozen §26 requirement boundaries, repair adopted governance schema validation with bounded historical schemas, and close only directly evidenced local architecture gaps on persistent Atlas.
+- Scope: Direct SSH/native Atlas execution; frozen DOD-026/DOD-030/DOD-062/DOD-063 reconciliation; adopted .agent schema repair; Hindsight capability regression; safe architecture evidence review; persistent validation and publication.
+- Exclusions: No disposable environments; no Phase 16; no deployment; no R-045 sustained pressure unless all higher-priority work is complete and storage is safe; no rewriting append-only history; no fabricated challenge, Reflect, Mental Models, Notion, model, native, or second-device evidence.
+- Acceptance: Exact frozen rows reconciled; DOD-030/062/063 promoted only on direct evidence; DOD-026 correction/challenge boundary retained; known historical governance schemas validate while malformed synthetic legacy structures fail; governed counts are mechanically consistent; persistent services, storage, tests, Notion, and GitHub parity are recorded.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-PRODUCT-CONVERGENCE-044
+- Status at issuance: ISSUED

@@ -8,10 +8,10 @@ purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 11
-  LOCAL_BROWSER_QUALIFICATION: 20
+  LOCAL_BROWSER_QUALIFICATION: 19
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 3
-  EXTERNAL_ENVIRONMENT: 21
+  EXTERNAL_ENVIRONMENT: 19
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-002
@@ -394,7 +394,7 @@ items:
     product_area: "Progress/Alignment"
     owner_phase: 8
     mapped_r_requirements: ["R-055"]
-    exact_missing_behavior: "The named UI exists, but the criterion 'Progress history, Goal Alignment, milestones, and correction/challenge are visible and evidenced.' still lacks data-backed behavior at 'Open Progress/Alignment from PRIME.'."
+    exact_missing_behavior: "Goal Alignment, milestones, and the complete correction/challenge workflow remain jointly unqualified; DOD-062 owns only evidence-backed percentage, confidence, and explanation."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -408,8 +408,8 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Progress history, Goal Alignment, milestones, and correction/challenge are visible and evidenced.' still lacks data-backed behavior at 'Open Progress/Alignment from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    next_action: "Qualify the complete Progress/Alignment workflow, including history, Goal Alignment, milestones, and a truthful append-only correction/challenge event; promote only if every frozen clause passes."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-044.md","evidence/phase15/qualification-continuation-045.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-055"
@@ -464,31 +464,6 @@ items:
     blocked_by: "NONE"
     depends_on: "R-008"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
-  - dod_id: DOD-030
-    current_status: "BACKEND_ONLY"
-    product_area: "memory admission"
-    owner_phase: 9
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The frozen criterion requires: Consequential authority events enter the correct Hindsight bank with provenance/deduplication.. The missing operator behavior is a qualified path at 'Open memory admission from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Consequential authority events enter the correct Hindsight bank with provenance/deduplication.. The missing operator behavior is a qualified path at 'Open memory admission from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
-    depends_on: "R-054"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-031
     current_status: "BACKEND_ONLY"
     product_area: "warm start"
@@ -1064,56 +1039,6 @@ items:
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-011"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
-  - dod_id: DOD-062
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Progress UI"
-    owner_phase: 8
-    mapped_r_requirements: ["R-011"]
-    exact_missing_behavior: "Progress must show weighted percentage, confidence, explanation, GoalItems, required flags, evidence, history, and correction/challenge; unsupported required items must not count."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the browser correction/challenge and required-evidence workflow, including append-only history."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","evidence/phase15/qualification-continuation-044.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-011"
-    acceptance_kind: "MIXED"
-  - dod_id: DOD-063
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "freshness"
-    owner_phase: 8
-    mapped_r_requirements: ["R-052"]
-    exact_missing_behavior: "Progress must visibly move CURRENT at revision A to STALE after committed change B, then return CURRENT after refresh with source revision before/after."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "YES"
-    requires_second_device: "YES"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the browser freshness transition with a real committed repository change."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","evidence/phase15/qualification-continuation-044.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Private Tailscale qualification requires an approved second device."
-    depends_on: "R-052"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-064
     current_status: "BACKEND_ONLY"
     product_area: "Notion UI"

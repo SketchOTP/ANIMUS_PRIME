@@ -551,3 +551,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME Hindsight adapter and future authority memory writes.
 - Supersedes learning: none
+
+## L-PRIME-CONTINUATION-045
+
+- Date: 2026-08-13
+- Learning ID: L-PRIME-CONTINUATION-045
+- Fact or lesson: Frozen §26 reconciliation must precede score changes. Historical .agent records are validated by identified legacy schema signatures, while new entries use the current schema; no historical text rewrite is needed.
+- Evidence location: scripts/validate_governance.py; evidence/phase15/qualification-continuation-045.md; GitHub publication.
+- Confidence: VERIFIED
+- Scope: ANIMUS PRIME governance and requirement qualification.
+- Supersedes learning: none
