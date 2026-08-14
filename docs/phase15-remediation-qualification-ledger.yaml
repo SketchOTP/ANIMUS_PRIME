@@ -4,8 +4,10 @@ product_alignment_status: FAIL
 product_alignment_item_count: 81
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 qualification_status_vocabulary: [not_run, partial, blocked_by_environment, verified, failed]
-latest_qualification_evidence: evidence/phase15/qualification-continuation-056.md
-latest_qualification_commit: 0a3c82f0c606fb80f914eb59116dd5f46b9d5ec5
+latest_qualification_evidence: evidence/phase15/qualification-continuation-057.md
+continuation_055_qualified_implementation: 0a3c82f0c606fb80f914eb59116dd5f46b9d5ec5
+continuation_056_governed_qualification: 066bec5fb8041734cf28314090344bd7bb777f14
+latest_qualification_commit: 066bec5fb8041734cf28314090344bd7bb777f14
 qualification_status:
   R-031: partial
   R-032: partial

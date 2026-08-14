@@ -661,3 +661,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Core/UI recovery, backup privacy, source lifecycle, and local V1 convergence.
 - Supersedes learning: L-PRIME-NODE-TRUST-LIFECYCLE-055
+
+## L-PRIME-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+- Fact or lesson: The persistent PRIME database can contain historical regression rows that must not be mistaken for the real managed project. Identify the governed project by its canonical repository binding first. For DOD-005, authority-only source references do not satisfy the safe retraction/restoration candidate contract when no evidence record or Documentation projection is present; the correct result is a truthful hard stop without SQL mutation or synthetic evidence.
+- Evidence location: evidence/phase15/qualification-continuation-057.md; docs/requirements-traceability.yaml; docs/phase15-remediation-qualification-ledger.yaml.
+- Confidence: VERIFIED
+- Scope: PRIME persistent Atlas project identity, DOD-005 preflight, and local browser qualification boundary.
+- Supersedes learning: L-PRIME-LOCAL-CONVERGENCE-056

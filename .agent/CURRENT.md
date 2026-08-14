@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-14T21:30:00-04:00
+- Last updated: 2026-08-14T22:10:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-056
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 056
-- Objective: Correct the 055 SHA metadata, converge local operator recovery/step-up and backup/privacy behavior, re-evaluate DOD-005 truthfully, and continue the local V1 queue.
-- Current status: `IN_PROGRESS`
-- Acceptance: PARTIAL; DOD-008 bounded recovery/step-up is USER_USABLE_VERIFIED, DOD-009 backup/privacy is PRODUCT_VERIFIED, DOD-005 remains BACKEND_ONLY pending safe direct qualification, and R-056 remains gated.
-- Current phase: LOCAL_V1_CONVERGENCE_056
+- Local directive ID: D-PRIME-PHASE15-V1-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 057
+- Objective: Correct qualification provenance, preflight DOD-005 against the real Qualification Project without unsafe mutation, and harvest safe local product qualification evidence.
+- Current status: `PARTIAL`
+- Acceptance: PARTIAL; DOD-005 preflight hard-stopped truthfully with no safe reversible candidate, browser wave is limited by unavailable current operator credentials, and R-056 remains gated.
+- Current phase: RESTORATION_BOUNDED_LOCAL_QUALIFICATION_057
 - Expected or actual touched areas: Core/Node trust lifecycle; persistent Atlas Node service; private Core/UI runtime; browser operator journey; recovery-secret guard; evidence and governed records
-- Immediate next action: continue the 5 LOCAL_CODE and 15 LOCAL_BROWSER_QUALIFICATION items with restoration-bounded qualification; keep DOD-004/DOD-039/DOD-050/DOD-053 parked and do not start R-056 prematurely.
+- Immediate next action: use the approved secure operator credential path to resume authenticated local browser qualification, or keep those clauses open; keep DOD-004/DOD-039/DOD-050/DOD-053 parked and do not start R-056 prematurely.
 
 ## Temporary task-relevant facts
 
@@ -47,7 +47,7 @@
 
 ## Pending decisions
 
-- Continuation 056: persistent Core/UI and the canonical mTLS Node remain authorized, running, and browser-qualified within the private Atlas boundary; DOD-008/DOD-009 advanced, DOD-005 remains local BACKEND_ONLY, and lower-priority DOD-039/DOD-050/DOD-053 work remains parked.
+- Continuation 057: the real Qualification Project is bound to `/home/sketch/Projects/ANIMUS_PRIME` and `node-041-atlas-native`; its current sources are authority records only. No safe existing non-authority source with a supported reversible retraction/restoration path was found, so DOD-005 remains BACKEND_ONLY without mutation. The live UI exposes protected entry, but the prior operator credential is not available in this run and no credential rotation was performed.
 
 - DOD-005 now propagates evidence retraction to current source references, linked memory, evidence-backed Progress views, and current Documentation projection state while preserving historical projection provenance; direct qualification remains open.
 - DOD-074 persisted project/history/Progress reads remain available with the canonical Node offline, while Node-required repository inspection fails closed and returns after service recovery; the exercised operator boundary is now qualified.

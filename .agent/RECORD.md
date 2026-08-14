@@ -511,3 +511,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: GitHub independently resolves the actual qualified implementation commit, while the prior transcription does not. The real persistent Core/UI now proves recent step-up enforcement and secret-safe recovery controls, and source retraction preserves historical projection provenance while staling current documentation. No disposable replacement state or live Notion dependency was used to make local claims.
 - Affected areas: recovery/step-up migration/service/API/UI; backup restore security boundary; source-lifecycle projection; governed qualification records; Continuation 056 evidence; persistent Atlas service state.
 - Supersedes record: DEC-PRIME-PHASE15-055
+
+## DEC-PRIME-PHASE15-057
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-057
+- Status: CLOSED
+- Decision or event: Treat `0a3c82f0c606fb80f914eb59116dd5f46b9d5ec5` as Continuation 055 implementation provenance and `066bec5fb8041734cf28314090344bd7bb777f14` as Continuation 056 governed qualification. Keep DOD-005 BACKEND_ONLY because the real Qualification Project has no safe non-authority source with a supported reversible retraction/restoration path. Do not rotate operator credentials or mutate canonical state merely to force browser evidence.
+- Rationale: The project is bound to the canonical Atlas repository and must be distinguished from persistent regression residue. The directive requires a hard stop when safe restoration cannot be guaranteed. Protected-entry UI behavior can be observed without making an unapproved credential change; authenticated clauses remain truthful and open.
+- Affected areas: qualification provenance; DOD-005 evidence; browser qualification boundary; Continuation 057 governance records.
+- Supersedes record: DEC-PRIME-PHASE15-056

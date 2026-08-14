@@ -774,3 +774,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-NODE-TRUST-LIFECYCLE-055
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+
+- Issued: 2026-08-14T21:45:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 057
+- Objective: Correct qualification provenance, preflight DOD-005 against the real Qualification Project without unsafe mutation, and harvest safe local product qualification evidence.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; restoration-bounded DOD-005 preflight; safe local browser qualification; governed evidence, .agent records, GitHub, and continuously maintained Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable environments or synthetic state; no public exposure/Funnel changes; no unapproved credential rotation; no Phase 16; no deployment; no R-056 closure; DOD-004 generic expansion, DOD-039 relocation, DOD-050 upgrade expansion, and DOD-053 second-machine expansion remain parked unless directly required by a real operator path.
+- Acceptance: Distinguish 055 implementation provenance from 056 governed qualification; qualify DOD-005 only if a safe reversible existing source is proven; preserve truthful local browser gaps; validate and publish exact parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-056
+- Status at issuance: ISSUED
