@@ -1764,3 +1764,26 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: authenticated Home/project journey, DOD-005 operator-visible source lifecycle, DOD-074 operator-visible offline Node, live Notion, approved model, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open or unqualified.
 - Blockers: existing operator password is required for protected browser qualification; no approved PRIME Node mTLS installation exists on Atlas.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-OPERATOR-RECOVERY-NODE-ACTIVATION-054 - PARTIAL
+
+- Outcome ID: O-PRIME-054
+- Supersedes outcome: O-PRIME-053
+- Closed: 2026-08-14T19:15:00-04:00
+- Acceptance: PARTIAL
+- Summary: Recovered the existing permanent operator through a new loopback-only platform-local recovery path because the original one-time recovery reference was absent. The same operator identity was retained; recovery rotated the password, normal recovery credential, and local recovery credential; revoked prior sessions; and audit logged the action. The authenticated real Core-served UI qualified the existing Qualification Project across the available product surfaces, with truthful UNKNOWN/DEGRADED/DISCONNECTED states for unavailable model, Notion, Hindsight Reflect/Mental Models, and remote access. Core restart preserved authenticated session access. The existing Atlas Node was not started because no governed mTLS certificate/enrollment service material or live Core Node wiring exists; insecure HTTP and fabricated trust material were refused.
+- Changed areas: migrations/prime/0031_local_recovery.sql; src/prime_core/service.py; apps/core/main.py; tests/phase1/test_local_recovery.py; packaging/core/local-recovery.sh; packaging/core/README.md; docs/v1-product-goal-alignment-audit.yaml; evidence/phase15/qualification-continuation-054.md; append-only .agent records.
+- Validation:
+  - local recovery route/security tests - PASSED
+  - migration/readiness and persistent Core health - PASSED
+  - authenticated browser journey, wrong-password rejection, logout/re-login, and project refresh continuity - PASSED
+  - invalid Origin refusal, recovery session revocation, and Core restart/session persistence - PASSED
+  - Node TLS-required negative boundary - PASSED; governed mTLS activation remains blocked
+  - full regression - PASSED (92 passed, 28 skipped; two new local recovery tests explain the pass-count increase)
+  - governance and burndown validation - PASSED
+  - product alignment audit - PASSED; broader V1 product-goal alignment remains FAIL by design
+  - compileall, shell syntax, diff, and secret checks - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-008 remains PARTIAL pending full browser recovery/step-up qualification; DOD-005 and DOD-074 remain backend/operator-boundary partial; DOD-006 and R-031 remain open without live Node mTLS; live Notion write, approved model, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open.
+- Blockers: governed Atlas Node certificate/enrollment lifecycle and Core live Node integration are absent from the current repository/runtime; no insecure or fabricated substitute is permitted.
+- Follow-up directive: none

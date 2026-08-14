@@ -732,3 +732,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-CONVERGENCE-RESET-052
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-OPERATOR-RECOVERY-NODE-ACTIVATION-054
+
+- Issued: 2026-08-14T14:34:08-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 054
+- Objective: Restore legitimate access to the existing single operator, establish the existing Atlas repository Node only through its approved secure mTLS lifecycle, and execute the authenticated persistent operator journey.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight; minimum spec-compliant local recovery repair; persistent Core/UI; authenticated browser qualification; Node enrollment/rotation/service checks where governed material exists; DOD-005/DOD-074 evidence; new append-only evidence, governed records, GitHub, and Notion checkpoint.
+- Exclusions: No second operator; no direct password/recovery hash replacement; no fabricated session; no insecure Node HTTP; no fabricated certificates or trust material; no disposable databases, projects, repositories, worktrees, Hindsight banks, browser profiles, or synthetic state; no public exposure/Funnel changes; no Phase 16; no deployment; no R-056 closure; parked DOD-039/DOD-050/DOD-053/generic qualification-edge work remains parked.
+- Acceptance: Use an existing approved credential or recovery reference; if absent, implement the minimum loopback/platform-local break-glass path required by §18.8 with session revocation, rotation, audit, and no second identity; qualify the real authenticated operator journey; activate Node only through governed mTLS enrollment; reconcile evidence and publication with exact parity and a new Notion child checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-CORE-UI-053
+- Status at issuance: ISSUED

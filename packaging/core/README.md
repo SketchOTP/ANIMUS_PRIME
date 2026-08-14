@@ -20,3 +20,10 @@ The container must use the approved existing PostgreSQL and Hindsight targets,
 must not publish a host port, and must not enable Tailscale Funnel or other
 public ingress. The unit owns only the PRIME Core container named
 `animus-prime-core`.
+
+`local-recovery.sh` is the supported Atlas break-glass path when the original
+one-time recovery credential is unavailable. It stores the local recovery
+secret and replacement recovery credential outside the repository with mode
+`0600`; the API accepts the path only from loopback, rotates both recovery
+credentials, revokes sessions, and records an audit event. It does not create
+another operator identity.

@@ -631,3 +631,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Core/UI runtime, Atlas service ownership, Docker packaging, and Node security boundary.
 - Supersedes learning: L-PRIME-CONVERGENCE-RESET-052
+
+## L-PRIME-OPERATOR-RECOVERY-054
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-OPERATOR-RECOVERY-054
+- Fact or lesson: When the original one-time recovery reference is absent, a single-operator installation can regain access without an SQL credential edit by adding a nullable local-recovery digest, restricting recovery endpoints to loopback, requiring a high-entropy host-held secret, rotating both recovery references, revoking sessions, and recording audit metadata. This does not replace the need for a complete operator-facing recovery and step-up qualification. A database Node enrollment row and a packaged Node client are not a governed mTLS lifecycle; without approved CA/certificate material and Core wiring, Node startup must remain blocked.
+- Evidence location: migrations/prime/0031_local_recovery.sql; src/prime_core/service.py; apps/core/main.py; packaging/core/local-recovery.sh; tests/phase1/test_local_recovery.py; evidence/phase15/qualification-continuation-054.md.
+- Confidence: VERIFIED
+- Scope: PRIME single-operator recovery, session security, Atlas persistent runtime, and Node activation boundary.
+- Supersedes learning: L-PRIME-PERSISTENT-RUNTIME-053

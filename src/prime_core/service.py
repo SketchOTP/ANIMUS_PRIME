@@ -106,6 +106,38 @@ class CoreService:
             self._audit(db, "operator", row["operator_id"], "operator.recovery_reset")
         return replacement
 
+    def provision_local_recovery(self, credential: str) -> None:
+        if len(credential) < 32:
+            raise ValueError("local recovery credential is too short")
+        with transaction(self.settings) as db:
+            row = db.execute("SELECT operator_id, local_recovery_hash FROM prime_core.operators LIMIT 1").fetchone()
+            if not row:
+                raise ValueError("operator is not initialized")
+            if row["local_recovery_hash"]:
+                raise ValueError("local recovery is already provisioned")
+            db.execute(
+                "UPDATE prime_core.operators SET local_recovery_hash=%s, updated_at=now() WHERE operator_id=%s",
+                (token_digest(credential), row["operator_id"]),
+            )
+            self._audit(db, "operator", row["operator_id"], "operator.local_recovery_provisioned", metadata={"secret_storage": "platform-secured-local-reference"})
+
+    def recover_local(self, credential: str, new_password: str) -> tuple[str, str]:
+        if len(new_password) < 12:
+            raise ValueError("password must contain at least 12 characters")
+        replacement = new_token()
+        local_replacement = new_token()
+        with transaction(self.settings) as db:
+            row = db.execute("SELECT operator_id, local_recovery_hash FROM prime_core.operators LIMIT 1").fetchone()
+            if not row or not row["local_recovery_hash"] or token_digest(credential) != row["local_recovery_hash"]:
+                raise PermissionError("invalid local recovery credential")
+            db.execute(
+                "UPDATE prime_core.operators SET password_hash=%s, recovery_hash=%s, local_recovery_hash=%s, updated_at=now() WHERE operator_id=%s",
+                (password_hash(new_password), token_digest(replacement), token_digest(local_replacement), row["operator_id"]),
+            )
+            db.execute("UPDATE prime_core.sessions SET revoked_at=now() WHERE revoked_at IS NULL")
+            self._audit(db, "operator", row["operator_id"], "operator.local_recovery_reset", metadata={"recovery_issued": True, "local_recovery_rotated": True})
+        return replacement, local_replacement
+
     def create_job(self, job_type: str, payload: dict[str, Any], idempotency_key: str, project_id: str | None = None) -> dict[str, Any]:
         timestamp = now()
         with transaction(self.settings) as db:

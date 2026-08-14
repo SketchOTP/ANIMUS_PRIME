@@ -70,6 +70,10 @@ class Recovery(BaseModel):
     new_password: str = Field(min_length=12, max_length=256)
 
 
+class LocalRecovery(BaseModel):
+    new_password: str = Field(min_length=12, max_length=256)
+
+
 class JobRequest(BaseModel):
     job_type: str = Field(min_length=1, max_length=120)
     idempotency_key: str = Field(min_length=1, max_length=200)
@@ -295,6 +299,11 @@ def client_allowed(client: str) -> bool:
     return len(recent) < 10
 
 
+def local_recovery_client(request: Request) -> bool:
+    client = request.client.host if request.client else ""
+    return client in {"127.0.0.1", "::1", "testclient"}
+
+
 def require_session(request: Request, token: str | None) -> dict[str, Any]:
     session = service.session(token) if token else None
     if not session:
@@ -417,6 +426,36 @@ def recover(body: Recovery, request: Request):
         return error("INVALID_RECOVERY_CREDENTIAL", "invalid recovery credential", request_id(request), status_code=401)
     except ValueError as exc:
         return error("RECOVERY_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/auth/local-recovery/provision")
+def provision_local_recovery(request: Request):
+    if not local_recovery_client(request):
+        return error("LOCAL_RECOVERY_LOCAL_ONLY", "local recovery is loopback-only", request_id(request), status_code=403)
+    credential = request.headers.get("X-PRIME-Local-Recovery", "")
+    try:
+        service.provision_local_recovery(credential)
+        return {"provisioned": True, "storage": "platform-secured-local-reference"}
+    except ValueError as exc:
+        return error("LOCAL_RECOVERY_PROVISION_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/auth/local-recovery")
+def local_recover(body: LocalRecovery, request: Request):
+    if not local_recovery_client(request):
+        return error("LOCAL_RECOVERY_LOCAL_ONLY", "local recovery is loopback-only", request_id(request), status_code=403)
+    credential = request.headers.get("X-PRIME-Local-Recovery", "")
+    try:
+        recovery_credential, local_recovery_credential = service.recover_local(credential, body.new_password)
+        return {
+            "recovery_credential": recovery_credential,
+            "local_recovery_credential": local_recovery_credential,
+            "warning": "store both credentials in the approved platform-secure local reference; each is shown once",
+        }
+    except PermissionError:
+        return error("INVALID_LOCAL_RECOVERY_CREDENTIAL", "invalid local recovery credential", request_id(request), status_code=401)
+    except ValueError as exc:
+        return error("LOCAL_RECOVERY_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.get("/v1/core/status")

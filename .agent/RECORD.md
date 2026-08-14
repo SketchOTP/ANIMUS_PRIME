@@ -481,3 +481,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Core health, readiness, listener ownership, real UI serving, clean stop/start recovery, and bounded browser behavior are directly proven. The existing operator credential is not available through approved references, and no approved Node mTLS installation exists; neither gap may be hidden with a password reset, synthetic session, insecure Node override, or disposable replacement environment.
 - Affected areas: Dockerfile.core; packaging/core/prime-core.service; persistent Atlas runtime; DOD-006/DOD-005/DOD-074 evidence references; Continuation 053 evidence; append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-050
+
+## DEC-PRIME-PHASE15-054
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-054
+- Status: CLOSED
+- Decision or event: Establish a spec-compliant loopback/platform-local break-glass path for the existing single operator when the original one-time recovery reference is unavailable; qualify the real authenticated private Core/UI; keep Node activation blocked without governed mTLS enrollment material.
+- Rationale: The permanent operator already exists, so bootstrap and direct password/recovery hash replacement are forbidden. The new recovery digest and service path preserve that identity, rotate secrets, revoke sessions, and audit recovery. The existing Node row cannot prove a live control-plane identity; the repository lacks a governed certificate lifecycle and the directive forbids insecure HTTP or fabricated trust material.
+- Affected areas: local recovery migration/service/API; Atlas Core environment and persistent image; authenticated browser qualification; Node activation boundary; Continuation 054 evidence and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-053
