@@ -647,3 +647,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-V1-CORE-INDEPENDENT-SECURITY-PROVENANCE-CONVERGENCE-048
+
+- Issued: 2026-08-14T06:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 048
+- Objective: Consume remaining Core-independent security, provenance, and project-boundary evidence debt in frozen priority order.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; persistent PostgreSQL and Hindsight; DOD-033, DOD-045, DOD-007, DOD-028, DOD-018, DOD-037, and DOD-006 evaluation; governed evidence and publication.
+- Exclusions: No Z:/SSHFS execution authority; no temporary Core or browser qualification; no disposable environments, databases, projects, repositories, worktrees, fixtures, banks, or browser profiles; no Phase 16; no deployment; no R-045 pressure; no R-056 closure; no fabricated provider/native evidence; preserve pre-existing .codebase-memory/, .prime-evidence/, and .vscode/.
+- Acceptance: Promote only exact frozen rows with direct evidence; reconcile governed views; run focused and full persistent validation; publish truthful GitHub and Notion state with local/origin parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047
+- Status at issuance: ISSUED

@@ -2,8 +2,8 @@ baseline: PRIME-SPEC-V1.0.0
 product_alignment_audit: docs/v1-product-goal-alignment-audit.yaml
 product_alignment_status: FAIL
 product_alignment_item_count: 81
-latest_product_alignment_evidence: evidence/phase15/qualification-continuation-047.md
-latest_product_alignment_commit: 0038ebb
+latest_product_alignment_evidence: evidence/phase15/qualification-continuation-048.md
+latest_product_alignment_commit: 46c932a
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 unassigned_allowed: false
 requirements:
@@ -11,7 +11,7 @@ requirements:
   - {id: R-002, section: "§2", summary: "Architecture rules, isolation, authority map, evidence before inference, source lock", owner: 0, validate: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: PLANNED}
   - {id: R-003, section: "§3-§4", summary: "Core, UI, Node, bootstrapper, progress, documentation, memory, MCP component boundaries", owner: 1, validate: [2,3,4,5,6,7,8,9,10,11,12,13,14,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
   - {id: R-004, section: "§5", summary: "Project lifecycle and explicit lifecycle state semantics", owner: 1, validate: [3,12,13,15], status: IMPLEMENTED, phase_status: {1: VERIFIED}}
-  - {id: R-005, section: "§6", summary: "Repository and Node identity/read-only/path model", owner: 2, validate: [4,11,12,15], status: IMPLEMENTING, phase_status: {2: VERIFIED, 15: REOPENED}, historical_qualification: "Phase 2 PASS retained; Phase-15 release-gap discovery supersedes its release verification for native/control-plane requirements."}
+  - {id: R-005, section: "§6", summary: "Repository and Node identity/read-only/path model", owner: 2, validate: [4,11,12,15], status: IMPLEMENTING, phase_status: {2: VERIFIED, 15: REOPENED}, historical_qualification: "Phase 2 PASS retained; Phase-15 release-gap discovery supersedes its release verification for native/control-plane requirements; Continuation 048 directly requalified one-primary repository identity and corrected subdirectory Git-common-dir resolution, while native service-host qualification remains open."}
   - {id: R-006, section: "§7", summary: ".agent authority and PROJECT_GOAL contract", owner: 0, validate: [3,7,9,15], status: IMPLEMENTED, phase_status: {3: VERIFIED}}
   - {id: R-007, section: "§8", summary: "Evidence-backed progress assessment", owner: 8, validate: [9,11,15], status: IMPLEMENTED, phase_status: {8: VERIFIED}}
   - {id: R-008, section: "§9", summary: "Notion project record and managed/user ownership", owner: 7, validate: [9,11,13,15], status: IMPLEMENTING, phase_status: {7: VERIFIED, 15: REOPENED}, historical_qualification: "Phase 7 PASS retained; live-provider and complete lifecycle evidence is still missing."}

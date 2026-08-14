@@ -1661,3 +1661,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-004, DOD-005, DOD-008, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-033, DOD-037, DOD-038, DOD-039, DOD-044, DOD-045, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open or blocked.
 - Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/Tailscale boundaries remain unqualified.
 - Follow-up directive: none
+
+
+## D-PRIME-PHASE15-V1-CORE-INDEPENDENT-SECURITY-PROVENANCE-CONVERGENCE-048 - PARTIAL
+
+- Outcome ID: O-PRIME-048
+- Supersedes outcome: O-PRIME-047
+- Closed: 2026-08-14T06:35:00-04:00
+- Acceptance: PARTIAL
+- Summary: Continuation 048 directly qualified and promoted DOD-033 correction provenance, DOD-007 Node enrollment/security boundary, and DOD-018 permanent repository boundary. It repaired correction source-reference validation, Node audit-state provenance, and candidate-relative Git common-directory identity. DOD-045, DOD-028, DOD-037, and DOD-006 remain conservatively open for exact residuals.
+- Changed areas: src/prime_core/progress_service.py; src/prime_core/service.py; src/prime_node/service.py; DOD audit/burndown; Continuation 048 evidence; append-only .agent records; implementation commit e8805f8948d47dcccf45ab31ec32fe797a6b2768.
+- Validation:
+  - focused regression - PASSED (8 passed)
+  - compileall - PASSED
+  - full persistent regression and publication checks - PASSED
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-045, DOD-028, DOD-037, DOD-006, DOD-038, DOD-039, DOD-004, R-045, and R-056 remain open or blocked.
+- Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
+- Follow-up directive: none

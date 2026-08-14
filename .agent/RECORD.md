@@ -440,3 +440,14 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The real persistent project reproduced the missing-json defect. The bounded repair and direct qualification now prove canonical versus active worktree state without creating a second authority. Other Core-independent rows remain unchanged because their exact acceptance evidence was not completed in this continuation.
 - Affected areas: incremental repository observer; repository-file provenance migration; Progress freshness integration; automatic authority-memory admission; Continuation 047 evidence and governed records.
 - Supersedes record: DEC-PRIME-PHASE15-046
+
+
+## DEC-PRIME-PHASE15-048
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-048
+- Status: CLOSED
+- Decision or event: Promote only DOD-033, DOD-007, and DOD-018 after exact direct evidence; keep recovery, legacy authority migration, canonical-ref acceptance, and current topology rows open.
+- Rationale: The three promoted rows have direct persistent or in-process evidence, while withheld rows retain concrete unreconciled acceptance clauses. Continuation 048 therefore closes only its bounded scope and preserves the remaining blockers.
+- Affected areas: progress correction provenance, Node state audit and repository identity, governed DOD audit/burndown, Continuation 048 evidence, and append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-047

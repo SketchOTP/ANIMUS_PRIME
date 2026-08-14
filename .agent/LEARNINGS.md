@@ -580,3 +580,14 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME repository observation, Progress freshness, automatic authority admission, and persistent Atlas qualification.
 - Supersedes learning: none
+
+
+## L-PRIME-CONTINUATION-048
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONTINUATION-048
+- Fact or lesson: Direct Atlas qualification found that Git --git-common-dir can be relative to the inspected candidate path. Resolving it against the reported repository top-level creates a false identity for subdirectory inspection; Core and Node now resolve it against the candidate. Progress correction source references must be project-bound before a correction is durable. Node lifecycle security events are durable only when the state ledger retains non-secret event metadata; credential digests remain the only credential representation. DOD-037 cannot be promoted from branch name/main alone; canonical acceptance needs an explicit configured ref/event relationship.
+- Evidence location: src/prime_core/progress_service.py; src/prime_core/service.py; src/prime_node/service.py; evidence/phase15/qualification-continuation-048.md; persistent Atlas qualification project.
+- Confidence: VERIFIED
+- Scope: PRIME provenance, Node security lifecycle, repository identity, and Continuation 048 qualification.
+- Supersedes learning: none
