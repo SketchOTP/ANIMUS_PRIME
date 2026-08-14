@@ -9,13 +9,14 @@ import hashlib
 import os
 import subprocess
 import tarfile
+import secrets
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 from .config import Settings
 from .db import connect, transaction
-from .security import new_token, password_hash, password_verify, token_digest
+from .security import constant_time_equal, new_token, password_hash, password_verify, token_digest
 from .history_primitives import record_historical_snapshot
 from .authority import REQUIRED_AUTHORITY_FILES, authority_migration_plan, classify_authority_snapshot, migrate_authority, provision_authority, validate_authority
 from .git_provenance import GitProvenanceError, inspect_repository_candidate, resolve_canonical_ref
@@ -74,6 +75,161 @@ class CoreService:
             )
             self._audit(db, "operator", row["operator_id"], "operator.login")
             return session, csrf
+
+    def provision_local_identity(self, local_recovery: str, identity_credential: str) -> None:
+        """Provision the separate trusted-host factor through local recovery only."""
+        if len(identity_credential) < 32:
+            raise ValueError("local identity credential is too short")
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "SELECT operator_id, local_recovery_hash, local_identity_hash "
+                "FROM prime_core.operators WHERE username='operator'"
+            ).fetchone()
+            if not row or not row["local_recovery_hash"] or not constant_time_equal(token_digest(local_recovery), row["local_recovery_hash"]):
+                raise PermissionError("invalid local recovery credential")
+            if row["local_identity_hash"]:
+                raise ValueError("local identity is already provisioned")
+            db.execute(
+                "UPDATE prime_core.operators SET local_identity_hash=%s, updated_at=now() WHERE operator_id=%s",
+                (token_digest(identity_credential), row["operator_id"]),
+            )
+            self._audit(
+                db, "operator", row["operator_id"], "operator.local_identity_provisioned",
+                metadata={"auth_method": "LOCAL_IDENTITY", "provisioning": "LOCAL_RECOVERY"},
+            )
+
+    @staticmethod
+    def _approval_code() -> str:
+        alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+        return "".join(secrets.choice(alphabet) for _ in range(8))
+
+    def create_local_identity_challenge(self, purpose: str, operator_id: str | None = None) -> dict[str, Any]:
+        if purpose not in {"SIGN_IN", "STEP_UP"}:
+            raise ValueError("invalid local identity challenge purpose")
+        browser_nonce = new_token()
+        approval_code = self._approval_code()
+        challenge_id = _id("authch")
+        timestamp = now()
+        expires_at = timestamp + timedelta(seconds=120)
+        with transaction(self.settings) as db:
+            if operator_id:
+                row = db.execute(
+                    "SELECT operator_id, local_identity_hash FROM prime_core.operators "
+                    "WHERE operator_id=%s AND username='operator'",
+                    (operator_id,),
+                ).fetchone()
+            else:
+                row = db.execute(
+                    "SELECT operator_id, local_identity_hash FROM prime_core.operators WHERE username='operator'"
+                ).fetchone()
+            if not row or not row["local_identity_hash"]:
+                raise ValueError("local identity is not provisioned")
+            db.execute(
+                "INSERT INTO prime_core.auth_challenges "
+                "(challenge_id, operator_id, purpose, approval_code_hash, browser_nonce_hash, created_at, expires_at) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                (challenge_id, row["operator_id"], purpose, token_digest(approval_code),
+                 token_digest(browser_nonce), timestamp, expires_at),
+            )
+            self._audit(
+                db, "operator", row["operator_id"], "operator.local_identity_challenge_created",
+                metadata={"auth_method": "LOCAL_IDENTITY", "purpose": purpose, "ttl_seconds": 120},
+            )
+        return {
+            "challenge_id": challenge_id,
+            "approval_code": approval_code,
+            "purpose": purpose,
+            "expires_in_seconds": 120,
+            "browser_nonce": browser_nonce,
+        }
+
+    def approve_local_identity(self, approval_code: str, purpose: str, identity_credential: str) -> dict[str, Any]:
+        if purpose not in {"SIGN_IN", "STEP_UP"}:
+            raise ValueError("invalid local identity challenge purpose")
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "SELECT c.challenge_id, c.operator_id, c.expires_at, c.approved_at, c.consumed_at, "
+                "o.local_identity_hash FROM prime_core.auth_challenges c "
+                "JOIN prime_core.operators o ON o.operator_id=c.operator_id "
+                "WHERE c.approval_code_hash=%s AND c.purpose=%s FOR UPDATE",
+                (token_digest(approval_code), purpose),
+            ).fetchone()
+            if not row or not row["local_identity_hash"] or not constant_time_equal(token_digest(identity_credential), row["local_identity_hash"]):
+                raise PermissionError("invalid local identity credential")
+            if row["consumed_at"] or row["approved_at"] or row["expires_at"] <= now():
+                raise PermissionError("local identity challenge is unavailable")
+            db.execute(
+                "UPDATE prime_core.auth_challenges SET approved_at=now() WHERE challenge_id=%s",
+                (row["challenge_id"],),
+            )
+            self._audit(
+                db, "operator", row["operator_id"], "operator.local_identity_approved",
+                target_id=row["challenge_id"],
+                metadata={"auth_method": "LOCAL_IDENTITY", "purpose": purpose},
+            )
+            return {"approved": True, "purpose": purpose}
+
+    def redeem_local_identity(self, challenge_id: str, purpose: str, browser_nonce: str,
+                              session_token: str | None = None) -> dict[str, Any]:
+        if purpose not in {"SIGN_IN", "STEP_UP"}:
+            raise ValueError("invalid local identity challenge purpose")
+        timestamp = now()
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "SELECT c.challenge_id, c.operator_id, c.purpose, c.browser_nonce_hash, c.expires_at, "
+                "c.approved_at, c.consumed_at FROM prime_core.auth_challenges c "
+                "WHERE c.challenge_id=%s FOR UPDATE",
+                (challenge_id,),
+            ).fetchone()
+            if (
+                not row or row["purpose"] != purpose or row["consumed_at"] or not row["approved_at"]
+                or row["expires_at"] <= timestamp
+                or not constant_time_equal(token_digest(browser_nonce), row["browser_nonce_hash"])
+            ):
+                raise PermissionError("local identity challenge cannot be redeemed")
+            if purpose == "STEP_UP":
+                session = db.execute(
+                    "SELECT session_id FROM prime_core.sessions "
+                    "WHERE token_hash=%s AND operator_id=%s AND revoked_at IS NULL AND expires_at > now() FOR UPDATE",
+                    (token_digest(session_token or ""), row["operator_id"]),
+                ).fetchone()
+                if not session:
+                    raise PermissionError("authenticated operator session required for step-up")
+                db.execute(
+                    "UPDATE prime_core.sessions SET step_up_at=%s,last_seen_at=%s WHERE session_id=%s",
+                    (timestamp, timestamp, session["session_id"]),
+                )
+                db.execute(
+                    "UPDATE prime_core.auth_challenges SET consumed_at=%s WHERE challenge_id=%s",
+                    (timestamp, challenge_id),
+                )
+                self._audit(
+                    db, "operator", row["operator_id"], "operator.step_up",
+                    target_id=challenge_id,
+                    metadata={"auth_method": "LOCAL_IDENTITY", "purpose": "STEP_UP"},
+                )
+                return {"authenticated": True, "purpose": purpose, "auth_method": "LOCAL_IDENTITY",
+                        "step_up_at": timestamp.isoformat(), "valid_for_seconds": 300}
+
+            session = new_token()
+            csrf = new_token()
+            db.execute(
+                "INSERT INTO prime_core.sessions(session_id, operator_id, token_hash, csrf_hash, created_at, expires_at, last_seen_at) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                (_id("sess"), row["operator_id"], token_digest(session), token_digest(csrf), timestamp,
+                 timestamp + timedelta(seconds=self.settings.session_ttl_seconds), timestamp),
+            )
+            db.execute(
+                "UPDATE prime_core.auth_challenges SET consumed_at=%s WHERE challenge_id=%s",
+                (timestamp, challenge_id),
+            )
+            self._audit(
+                db, "operator", row["operator_id"], "operator.login",
+                target_id=challenge_id,
+                metadata={"auth_method": "LOCAL_IDENTITY", "purpose": "SIGN_IN"},
+            )
+            return {"authenticated": True, "actor_type": "operator", "auth_method": "LOCAL_IDENTITY",
+                    "session_token": session, "csrf_token": csrf}
 
     def session(self, token: str) -> dict[str, Any] | None:
         with connect(self.settings) as db:

@@ -10,7 +10,7 @@ import time
 import uuid
 from collections import defaultdict
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import Cookie, FastAPI, Header, HTTPException, Request, Response, status
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -77,6 +77,20 @@ class Recovery(BaseModel):
 
 class LocalRecovery(BaseModel):
     new_password: str = Field(min_length=12, max_length=256)
+
+
+class LocalIdentityChallengeRequest(BaseModel):
+    purpose: Literal["SIGN_IN", "STEP_UP"] = "SIGN_IN"
+
+
+class LocalIdentityApproval(BaseModel):
+    approval_code: str = Field(min_length=8, max_length=16)
+    purpose: Literal["SIGN_IN", "STEP_UP"]
+
+
+class LocalIdentityRedeem(BaseModel):
+    challenge_id: str = Field(min_length=8, max_length=160)
+    purpose: Literal["SIGN_IN", "STEP_UP"]
 
 
 class JobRequest(BaseModel):
@@ -321,6 +335,11 @@ def local_recovery_client(request: Request) -> bool:
     return client in {"127.0.0.1", "::1", "testclient"}
 
 
+def set_auth_cookies(response: Response, token: str, csrf: str) -> None:
+    response.set_cookie("prime_session", token, httponly=True, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
+    response.set_cookie("prime_csrf", csrf, httponly=False, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
+
+
 def require_session(request: Request, token: str | None) -> dict[str, Any]:
     session = service.session(token) if token else None
     if not session:
@@ -420,8 +439,7 @@ def login(body: Credentials, request: Request, response: Response):
     except PermissionError:
         auth_failures[client].append(time.time())
         return error("INVALID_CREDENTIALS", "invalid credentials", request_id(request), status_code=401)
-    response.set_cookie("prime_session", token, httponly=True, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
-    response.set_cookie("prime_csrf", csrf, httponly=False, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
+    set_auth_cookies(response, token, csrf)
     return {"authenticated": True, "actor_type": "operator", "csrf_token": csrf}
 
 
@@ -482,6 +500,76 @@ def local_recover(body: LocalRecovery, request: Request):
         return error("INVALID_LOCAL_RECOVERY_CREDENTIAL", "invalid local recovery credential", request_id(request), status_code=401)
     except ValueError as exc:
         return error("LOCAL_RECOVERY_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/auth/local-identity/provision")
+def provision_local_identity(request: Request):
+    if not local_recovery_client(request):
+        return error("LOCAL_IDENTITY_LOCAL_ONLY", "local identity provisioning is loopback-only", request_id(request), status_code=403)
+    recovery = request.headers.get("X-PRIME-Local-Recovery", "")
+    identity = request.headers.get("X-PRIME-Local-Identity", "")
+    try:
+        service.provision_local_identity(recovery, identity)
+        return {"provisioned": True, "storage": "platform-secured-local-reference"}
+    except PermissionError:
+        return error("LOCAL_IDENTITY_PROVISION_UNAUTHORIZED", "local recovery authorization failed", request_id(request), status_code=401)
+    except ValueError as exc:
+        return error("LOCAL_IDENTITY_PROVISION_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/auth/local-identity/challenge")
+def local_identity_challenge(body: LocalIdentityChallengeRequest, request: Request, response: Response,
+                             prime_session: str | None = Cookie(default=None)):
+    operator_id = None
+    if body.purpose == "STEP_UP":
+        operator_id = require_session(request, prime_session)["operator_id"]
+    try:
+        result = service.create_local_identity_challenge(body.purpose, operator_id)
+        response.set_cookie(
+            "prime_local_identity_nonce", result.pop("browser_nonce"), httponly=True,
+            secure=settings.cookie_secure, samesite="lax", max_age=120, path="/",
+        )
+        return result
+    except ValueError as exc:
+        return error("LOCAL_IDENTITY_CHALLENGE_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/auth/local-identity/approve")
+def approve_local_identity(body: LocalIdentityApproval, request: Request):
+    if not local_recovery_client(request):
+        return error("LOCAL_IDENTITY_LOCAL_ONLY", "local identity approval is loopback-only", request_id(request), status_code=403)
+    client = request.client.host if request.client else "unknown"
+    rate_key = f"local-identity:{client}"
+    if not client_allowed(rate_key):
+        return error("AUTH_RATE_LIMITED", "too many local identity approval attempts", request_id(request), retryable=True, status_code=429)
+    identity = request.headers.get("X-PRIME-Local-Identity", "")
+    try:
+        return service.approve_local_identity(body.approval_code, body.purpose, identity)
+    except PermissionError:
+        auth_failures[rate_key].append(time.time())
+        return error("LOCAL_IDENTITY_APPROVAL_REJECTED", "local identity approval failed", request_id(request), status_code=401)
+    except ValueError as exc:
+        return error("LOCAL_IDENTITY_APPROVAL_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/auth/local-identity/redeem")
+def redeem_local_identity(body: LocalIdentityRedeem, request: Request, response: Response,
+                          prime_session: str | None = Cookie(default=None)):
+    session_token = None
+    if body.purpose == "STEP_UP":
+        session_token = prime_session
+        require_session(request, prime_session)
+    browser_nonce = request.cookies.get("prime_local_identity_nonce", "")
+    try:
+        result = service.redeem_local_identity(body.challenge_id, body.purpose, browser_nonce, session_token)
+        if body.purpose == "SIGN_IN":
+            set_auth_cookies(response, result.pop("session_token"), result.pop("csrf_token"))
+        response.delete_cookie("prime_local_identity_nonce", path="/")
+        return result
+    except PermissionError:
+        return error("LOCAL_IDENTITY_REDEEM_REJECTED", "local identity challenge cannot be redeemed", request_id(request), status_code=401)
+    except ValueError as exc:
+        return error("LOCAL_IDENTITY_REDEEM_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.get("/v1/core/status")

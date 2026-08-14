@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+umask 077
+STATE_DIR="${PRIME_STATE_DIR:-/home/sketch/.config/animus-prime}"
+IDENTITY_FILE="$STATE_DIR/local-identity.secret"
+RECOVERY_FILE="$STATE_DIR/local-recovery.secret"
+CORE_URL="${PRIME_CORE_URL:-http://127.0.0.1:18000}"
+
+usage() {
+  echo "Usage: prime-local-auth provision | approve <approval-code> [sign_in|step_up]" >&2
+  exit 2
+}
+
+mkdir -p "$STATE_DIR"
+chmod 700 "$STATE_DIR"
+
+case "${1:-}" in
+  provision)
+    [[ -s "$RECOVERY_FILE" ]] || { echo "Existing local recovery reference is required." >&2; exit 1; }
+    [[ ! -e "$IDENTITY_FILE" ]] || { echo "Local identity is already provisioned or has a preserved reference." >&2; exit 1; }
+    temp_file="$(mktemp "$STATE_DIR/local-identity.secret.XXXXXX")"
+    chmod 600 "$temp_file"
+    trap 'rm -f "$temp_file"' EXIT
+    openssl rand -hex 48 >"$temp_file"
+    recovery="$(<"$RECOVERY_FILE")"
+    identity="$(<"$temp_file")"
+    curl --fail --silent --show-error --request POST \
+      --header "X-PRIME-Local-Recovery: $recovery" \
+      --header "X-PRIME-Local-Identity: $identity" \
+      "$CORE_URL/v1/auth/local-identity/provision" >/dev/null
+    unset recovery identity
+    mv "$temp_file" "$IDENTITY_FILE"
+    chmod 600 "$IDENTITY_FILE"
+    trap - EXIT
+    echo "Trusted PRIME local identity provisioned in the platform-secured local reference."
+    ;;
+  approve)
+    [[ -n "${2:-}" ]] || usage
+    [[ -s "$IDENTITY_FILE" ]] || { echo "Trusted PRIME local identity is not provisioned." >&2; exit 1; }
+    purpose="${3:-sign_in}"
+    case "$purpose" in
+      sign_in) purpose_api="SIGN_IN" ;;
+      step_up) purpose_api="STEP_UP" ;;
+      *) usage ;;
+    esac
+    identity="$(<"$IDENTITY_FILE")"
+    jq -n --arg approval_code "$2" --arg purpose "$purpose_api" '{approval_code:$approval_code,purpose:$purpose}' |
+      curl --fail --silent --show-error --request POST \
+        --header "Content-Type: application/json" \
+        --header "X-PRIME-Local-Identity: $identity" \
+        --data-binary @- "$CORE_URL/v1/auth/local-identity/approve"
+    unset identity
+    ;;
+  *) usage ;;
+esac
