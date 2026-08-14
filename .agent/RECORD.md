@@ -461,3 +461,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The four promoted rows have exact product-boundary evidence and reconciled governed records. The remaining rows retain concrete unavailable recovery, topology, external-provider, browser/Core, sustained-capacity, or aggregate acceptance clauses and must not be papered over.
 - Affected areas: canonical Git provenance and authority migration controls; memory provenance; DOD audit/burndown/traceability; Continuation 049 evidence; append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-048
+
+## DEC-PRIME-PHASE15-050
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-050
+- Status: CLOSED
+- Decision or event: Keep DOD-006 topology-unqualified, implement bounded stable-ID repository continuity and fail-closed rebind controls for DOD-039, and add durable workflow step/resource/replay/resume primitives with CREATE_REPOSITORY checkpointing for DOD-004 without claiming exactly-once or a real relocation cutover.
+- Rationale: Direct persistent Atlas evidence confirms the existing canonical repository and logical identity, but no legitimate alternate repository candidate or current persistent Core/Node topology is available. The implementation therefore records what can be proven, refuses unsafe or stale transitions, and leaves provider/fork/restore/archive and full interruption qualification open.
+- Affected areas: repository candidate/provenance inspection; repository rebind service/API and migration 0030; durable workflow primitives and CREATE_REPOSITORY path; Continuation 050 qualification/evidence; governed DOD audit/burndown/traceability; append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-049

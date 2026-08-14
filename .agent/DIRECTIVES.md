@@ -676,3 +676,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-CORE-INDEPENDENT-SECURITY-PROVENANCE-CONVERGENCE-048
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-REPOSITORY-REBIND-DURABLE-WORKFLOW-050
+
+- Issued: 2026-08-14T10:41:39-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 050
+- Objective: Reconcile DOD-006 evidence-equivalence and topology state, implement bounded logical repository rebind/relocation controls under the stable project_id/repository_id contract, and make durable workflow interruption/resume behavior explicit on persistent Atlas.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; persistent PostgreSQL and approved Hindsight; DOD-006, DOD-039, DOD-004, and capacity-aware DOD-005/DOD-009/DOD-008 evaluation; governed evidence and publication.
+- Exclusions: No Z:/SSHFS execution authority; no PRIME Core or browser qualification; no disposable PostgreSQL, containers, projects, repositories, worktrees, fixtures, browser profiles, Hindsight banks, or synthetic A/B environments; no Git UUID or .git mutation; no Phase 16; no deployment; no R-045 pressure; no R-056 closure; preserve pre-existing untracked directories.
+- Acceptance: Treat Continuation 041 as the DOD-006 baseline; classify unchanged runtime topology conservatively; verify stable logical IDs, canonical Git continuity, fail-closed rebind preflight/confirmation/stale protection, and rollback history; add durable per-step/resource/replay/resume controls with REPAIR_REQUIRED for ambiguous non-idempotent effects and convert CREATE_REPOSITORY; reconcile all governed views; run persistent validation; publish implementation and evidence/governance with local/origin/GitHub and Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-FROZEN-AUTH-PROVENANCE-049
+- Status at issuance: ISSUED

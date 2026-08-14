@@ -1704,3 +1704,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-008, DOD-006, DOD-039, DOD-004, R-045, R-056, approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain open, bounded, or unqualified.
 - Blockers: no persistent Core listener and no approved disposable state for the remaining fresh-state/recovery boundaries.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-REPOSITORY-REBIND-DURABLE-WORKFLOW-050 - PARTIAL
+
+- Outcome ID: O-PRIME-050
+- Supersedes outcome: O-PRIME-049
+- Closed: 2026-08-14T10:41:39-04:00
+- Acceptance: PARTIAL
+- Summary: On persistent Atlas, reconciled DOD-006 against the Continuation 041 baseline and kept it IMPLEMENTED_NOT_PRODUCT_QUALIFIED because no current persistent Core/Node topology was available. Added stable-ID logical repository continuity inspection, fail-closed rebind preflight/confirmation/stale protection/history, and durable workflow step/resource/replay/resume primitives with REPAIR_REQUIRED for ambiguous non-idempotent effects; CREATE_REPOSITORY now checkpoints through the model. No alternate repository candidate existed, so no real relocation cutover was claimed. FORK_PROJECT and provider/restore/archive conversions, full interruption qualification, DOD-005, DOD-009, DOD-008, R-045, and R-056 remain bounded or open.
+- Changed areas: migrations/prime/0030_rebind_and_workflow_steps.sql; src/prime_core/git_provenance.py; src/prime_core/service.py; src/prime_core/workflow_primitives.py; apps/core/main.py; tests/phase15/test_continuation050.py; scripts/phase15_qualify_continuation_050.py; Continuation 050 evidence; governed DOD audit/burndown/traceability; append-only .agent records; implementation commit b6c94b7378966d42912277e6c861c3cd75f4846c.
+- Validation:
+  - direct persistent qualification - PASSED
+  - focused tests - PASSED (6 passed)
+  - full persistent tests - PASSED (115 passed, 3 explicit FRESH_STATE_REQUIRED skips)
+  - compileall - PASSED
+  - governance, storage, health, parity, final publication - PASSED
+- Remaining risks: DOD-006 current topology, real DOD-039 relocation candidate, DOD-004 provider/fork/restore/archive and full interruption evidence, DOD-005/DOD-009/DOD-008, R-045, and R-056 remain open or bounded; no persistent Core listener exists.
+- Blockers: no legitimate alternate repository candidate and no persistent Core/browser qualification topology; external approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
+- Follow-up directive: none

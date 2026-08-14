@@ -601,3 +601,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME authentication boundary, canonical Git provenance, memory provenance, authority migration, and direct Atlas qualification.
 - Supersedes learning: none
+
+## L-PRIME-CONTINUATION-050
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONTINUATION-050
+- Fact or lesson: Repository relocation must preserve logical continuity through stable project_id and repository_id, explicit canonical ref/commit/tree and authority evidence, and a location fingerprint that is only candidate evidence rather than identity. A non-mutating preflight plus explicit confirmation, stale detection, transactionally recorded history, and fail-closed refusal is safer than inventing a cutover when no legitimate alternate exists. Durable workflows need per-step replay policy, resource references, resume decisions, and REPAIR_REQUIRED for ambiguous non-idempotent effects; this supports resumability but does not prove exactly-once execution. CREATE_REPOSITORY is checkpointed; fork/provider/restore/archive paths remain to be converted and qualified.
+- Evidence location: src/prime_core/git_provenance.py; src/prime_core/service.py; src/prime_core/workflow_primitives.py; migrations/prime/0030_rebind_and_workflow_steps.sql; tests/phase15/test_continuation050.py; scripts/phase15_qualify_continuation_050.py; evidence/phase15/qualification-continuation-050.md; persistent project_d9a1a5b609394282b62fc12c0d04634d.
+- Confidence: VERIFIED
+- Scope: PRIME repository continuity, relocation safety, durable workflow checkpoints, replay/resume policy, and direct Atlas qualification.
+- Supersedes learning: none

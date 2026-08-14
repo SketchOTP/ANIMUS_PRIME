@@ -19,7 +19,7 @@ items:
     product_area: "workflows"
     owner_phase: 3
     mapped_r_requirements: ["R-012"]
-    exact_missing_behavior: "WorkflowRun persistence exists for selected lifecycle operations, but generic step/retry/resume, compensation/orphan detection, crash recovery, and direct qualification remain."
+    exact_missing_behavior: "Generic workflow_steps and workflow_resources now cover bounded step checkpointing, resource references, resume planning, retry policy, and REPAIR_REQUIRED handling; Fork, Notion, Hindsight, restore, archive, and full interruption/orphan qualification remain."
     work_class: "LOCAL_CODE"
     requires_code: "YES"
     requires_browser: "NO"
@@ -33,9 +33,9 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Add bounded WorkflowRun step/retry/resume and orphan/repair qualification; promote only when durable restart and compensation evidence proves the exact frozen criterion."
-    evidence_already_available: ["src/prime_core/service.py","migrations/prime/0001_core.sql","evidence/phase15/qualification-continuation-046.md"]
-    qualification_needed: "Direct implementation and evidence qualification of durable step/retry/resume, crash recovery, compensation, and orphan detection; no dedicated UI is required."
+    next_action: "Convert the remaining multi-system lifecycle paths and qualify durable interruption, reconciliation, compensation, orphan visibility, and restart behavior before promotion."
+    evidence_already_available: ["src/prime_core/service.py","src/prime_core/workflow_primitives.py","migrations/prime/0001_core.sql","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md"]
+    qualification_needed: "Direct qualification of Fork, Notion, Hindsight, restore, archive, and full interruption/orphan boundaries; no dedicated UI is required."
     blocked_by: "NONE"
     depends_on: "R-012"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
@@ -444,7 +444,7 @@ items:
     product_area: "rebind"
     owner_phase: 11
     mapped_r_requirements: ["R-031"]
-    exact_missing_behavior: "Direct rebind qualification must prove repository relocation preserves identity and verifies the new repository before switching; no dedicated UI is required."
+    exact_missing_behavior: "Logical continuity, stable project_id/repository_id, non-mutating preflight, stale-token protection, rollback safety, and audit/history recording are implemented; no legitimate alternate repository exists for real relocation cutover qualification."
     work_class: "LOCAL_CODE"
     requires_code: "YES"
     requires_browser: "NO"
@@ -458,10 +458,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-039 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
+    next_action: "Use a naturally existing alternate Atlas location if one becomes available; otherwise preserve IMPLEMENTED_NOT_PRODUCT_QUALIFIED without fabricating a relocation."
+    evidence_already_available: ["src/prime_core/service.py","src/prime_core/git_provenance.py","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md"]
+    qualification_needed: "Real relocation/rebind cutover against a legitimate alternate repository location; no disposable repository or clone may be created."
+    blocked_by: "REAL_RELOCATION_CUTOVER_NOT_AVAILABLE_UNDER_CURRENT_NONDISPOSABLE_CONSTRAINT"
     depends_on: "R-031"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-044
