@@ -96,6 +96,53 @@ def inspect_git_state(root: Path, canonical_ref: str | None = None, canonical_co
     }
 
 
+def inspect_repository_candidate(root: Path, canonical_ref: str, expected_commit: str) -> dict[str, Any]:
+    """Inspect a possible rebind target without changing Git administrative state."""
+    root = root.expanduser().resolve(strict=True)
+    if not root.is_dir():
+        raise GitProvenanceError("candidate repository path is not a directory")
+    values = _git(root, "rev-parse", "--show-toplevel", "--git-common-dir", "--is-bare-repository").splitlines()
+    if len(values) < 3:
+        raise GitProvenanceError("candidate Git inspection is incomplete")
+    top = Path(values[0]).resolve(strict=True)
+    common = Path(values[1])
+    if not common.is_absolute():
+        common = (root / common).resolve()
+    if values[2].strip().lower() == "true":
+        raise GitProvenanceError("bare repositories are not supported")
+    resolved_commit = resolve_canonical_ref(top, canonical_ref)
+    if resolved_commit != expected_commit:
+        raise GitProvenanceError("canonical ref resolves to an unexpected commit")
+    head = _git(top, "rev-parse", "HEAD", check=False) or "UNBORN"
+    tree = _git(top, "rev-parse", f"{canonical_ref}^{{tree}}")
+    head_tree = _git(top, "rev-parse", "HEAD^{tree}", check=False) or "UNKNOWN"
+    dirty_text = _git(top, "status", "--porcelain=v1", "--untracked-files=all", check=False)
+    admin = subprocess.run(
+        ["git", "-C", str(top), "worktree", "list", "--porcelain"],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=8,
+    )
+    if admin.returncode != 0:
+        raise GitProvenanceError("Git worktree administrative health is ambiguous")
+    import hashlib
+    return {
+        "candidate_path": str(top),
+        "candidate_top_level": str(top),
+        "candidate_common_dir": str(common),
+        "candidate_location_fingerprint": hashlib.sha256(str(common).encode("utf-8")).hexdigest(),
+        "non_bare": True,
+        "canonical_ref": canonical_ref,
+        "canonical_ref_commit": resolved_commit,
+        "canonical_tree": tree,
+        "candidate_head": head,
+        "candidate_head_tree": head_tree,
+        "dirty": bool(dirty_text and dirty_text not in {"UNKNOWN", "UNAVAILABLE"}),
+        "worktree_admin_health": "HEALTHY",
+    }
+
+
 def capture_provenance(settings: Any, project_id: str, source_revision: str | None) -> dict[str, Any]:
     from .db import connect
 

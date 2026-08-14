@@ -18,7 +18,8 @@ from .db import connect, transaction
 from .security import new_token, password_hash, password_verify, token_digest
 from .history_primitives import record_historical_snapshot
 from .authority import REQUIRED_AUTHORITY_FILES, authority_migration_plan, classify_authority_snapshot, migrate_authority, provision_authority, validate_authority
-from .git_provenance import GitProvenanceError, resolve_canonical_ref
+from .git_provenance import GitProvenanceError, inspect_repository_candidate, resolve_canonical_ref
+from .workflow_primitives import REPLAY_POLICIES, resume_plan_payload, step_resume_decision
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -207,6 +208,185 @@ class CoreService:
             db.execute("UPDATE prime_core.projects SET onboarding_step='AUTHORITY', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), inspection["project_id"]))
         return {**result, "authority_state": inspection.get("authority_state", "UNKNOWN")}
 
+    @staticmethod
+    def _authority_project_hash(root: Path) -> str | None:
+        digest = hashlib.sha256()
+        for relative in REQUIRED_AUTHORITY_FILES:
+            path = root / relative
+            if not path.is_file():
+                return None
+            digest.update(relative.encode("utf-8"))
+            digest.update(b"\0")
+            digest.update(path.read_bytes())
+        return digest.hexdigest()
+
+    @staticmethod
+    def _rebind_refusal(project_id: str, reason: str, **details: Any) -> dict[str, Any]:
+        return {
+            "project_id": project_id,
+            "continuity_verdict": "REFUSED",
+            "refusal_reason": reason,
+            "preflight_token": None,
+            **details,
+        }
+
+    def inspect_repository_rebind(self, project_id: str, destination_node_id: str, destination_path: str) -> dict[str, Any]:
+        """Return a non-mutating, fail-closed rebind preflight."""
+        with connect(self.settings) as db:
+            binding = db.execute(
+                "SELECT p.project_id,b.repository_id,b.node_id,b.binding_status,b.canonical_revision,b.canonical_ref,b.canonical_ref_commit,b.binding_revision,"
+                "r.canonical_path,r.identity_fingerprint,r.is_bare,n.status AS current_node_status,n.name AS current_node_name "
+                "FROM prime_core.projects p JOIN prime_core.project_bindings b ON b.project_id=p.project_id "
+                "JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
+                "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE p.project_id=%s",
+                (project_id,),
+            ).fetchone()
+            node = db.execute("SELECT node_id,name,status,allowed_roots FROM prime_core.nodes WHERE node_id=%s", (destination_node_id,)).fetchone()
+        if not binding:
+            raise KeyError("project has no repository binding")
+        if not node:
+            return self._rebind_refusal(project_id, "DESTINATION_NODE_NOT_FOUND", current_repository_id=binding["repository_id"])
+        if node["status"] in {"OFFLINE", "REVOKED"}:
+            return self._rebind_refusal(project_id, "DESTINATION_NODE_UNAVAILABLE", destination_node_status=node["status"])
+        canonical_ref = binding["canonical_ref"]
+        canonical_commit = binding["canonical_ref_commit"]
+        if not canonical_ref or not canonical_commit:
+            return self._rebind_refusal(project_id, "CANONICAL_REF_CONTINUITY_UNAVAILABLE")
+        roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
+        candidate_input = Path(destination_path).expanduser()
+        if not candidate_input.exists():
+            return self._rebind_refusal(project_id, "DESTINATION_ABSENT", destination_path=str(candidate_input))
+        if not self._within_allowed_root(candidate_input, roots):
+            return self._rebind_refusal(project_id, "DESTINATION_OUTSIDE_ALLOWED_ROOT", destination_path=str(candidate_input))
+        try:
+            candidate = inspect_repository_candidate(candidate_input, canonical_ref, canonical_commit)
+        except (OSError, GitProvenanceError) as exc:
+            reason = str(exc)
+            if "bare" in reason:
+                reason = "BARE_REPOSITORY"
+            elif "unexpected commit" in reason:
+                reason = "CANONICAL_REF_MISMATCH"
+            elif "worktree administrative" in reason:
+                reason = "GIT_WORKTREE_REPAIR_REQUIRED"
+            else:
+                reason = "CANDIDATE_NOT_GIT"
+            return self._rebind_refusal(project_id, reason, detail=str(exc))
+        if not self._within_allowed_root(Path(candidate["candidate_top_level"]), roots):
+            return self._rebind_refusal(project_id, "CANDIDATE_OUTSIDE_ALLOWED_ROOT", candidate=candidate)
+        duplicate = None
+        with connect(self.settings) as db:
+            duplicate = db.execute(
+                "SELECT project_id FROM prime_core.repositories WHERE identity_fingerprint=%s AND project_id<>%s",
+                (candidate["candidate_location_fingerprint"], project_id),
+            ).fetchone()
+        if duplicate:
+            return self._rebind_refusal(project_id, "DESTINATION_ALREADY_BOUND", duplicate_project_id=duplicate["project_id"], candidate=candidate)
+        current_root = Path(binding["canonical_path"]).resolve(strict=True)
+        try:
+            current = inspect_repository_candidate(current_root, canonical_ref, canonical_commit)
+        except (OSError, GitProvenanceError) as exc:
+            return self._rebind_refusal(project_id, "CURRENT_BINDING_CONTINUITY_UNAVAILABLE", detail=str(exc))
+        current_authority_hash = self._authority_project_hash(current_root)
+        candidate_authority_hash = self._authority_project_hash(Path(candidate["candidate_top_level"]))
+        if not current_authority_hash or not candidate_authority_hash or current_authority_hash != candidate_authority_hash:
+            return self._rebind_refusal(project_id, "AUTHORITY_PROJECT_CONTINUITY_UNPROVEN", candidate=candidate)
+        if candidate["dirty"] and (
+            candidate["candidate_top_level"] != current["candidate_top_level"]
+            or candidate["candidate_common_dir"] != current["candidate_common_dir"]
+        ):
+            return self._rebind_refusal(project_id, "DIRTY_REBIND_REQUIRES_VERIFIABLE_WORKTREE_CONTINUITY", candidate=candidate)
+        known_objects = sorted({current["canonical_ref_commit"], current["canonical_tree"], current["candidate_head"], current["candidate_head_tree"]})
+        anchor_id = _id("anchor")
+        preflight_token = _id("rebind")
+        snapshot = {
+            "project_id": project_id,
+            "repository_id": binding["repository_id"],
+            "binding_revision": binding["binding_revision"],
+            "destination_node_id": destination_node_id,
+            "destination_path": candidate["candidate_top_level"],
+            "candidate_fingerprint": candidate["candidate_location_fingerprint"],
+            "candidate_head": candidate["candidate_head"],
+            "canonical_ref": canonical_ref,
+            "canonical_ref_commit": canonical_commit,
+            "canonical_tree": candidate["canonical_tree"],
+            "authority_project_hash": current_authority_hash,
+            "dirty": candidate["dirty"],
+            "worktree_admin_health": candidate["worktree_admin_health"],
+        }
+        with transaction(self.settings) as db:
+            db.execute(
+                "INSERT INTO prime_core.repository_continuity_anchors(anchor_id,project_id,repository_id,canonical_ref,canonical_ref_commit,canonical_revision,canonical_tree,known_objects,authority_project_hash,worktree_path,identity_fingerprint,created_at,metadata) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,now(),%s) ON CONFLICT (project_id,repository_id,canonical_ref,canonical_ref_commit) DO UPDATE SET canonical_tree=EXCLUDED.canonical_tree,known_objects=EXCLUDED.known_objects,authority_project_hash=EXCLUDED.authority_project_hash,worktree_path=EXCLUDED.worktree_path,identity_fingerprint=EXCLUDED.identity_fingerprint,metadata=EXCLUDED.metadata",
+                (anchor_id, project_id, binding["repository_id"], canonical_ref, canonical_commit, binding["canonical_revision"], current["canonical_tree"], json.dumps(known_objects), current_authority_hash, current["candidate_top_level"], current["candidate_location_fingerprint"], json.dumps({"source": "repository_rebind_preflight", "logical_continuity": True})),
+            )
+            db.execute(
+                "INSERT INTO prime_core.repository_rebind_preflights(preflight_token,project_id,repository_id,destination_node_id,destination_path,candidate_fingerprint,candidate_head,binding_revision,snapshot,status,created_at,expires_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'OPEN',now(),now()+interval '15 minutes')",
+                (preflight_token, project_id, binding["repository_id"], destination_node_id, candidate["candidate_top_level"], candidate["candidate_location_fingerprint"], candidate["candidate_head"], binding["binding_revision"], json.dumps(snapshot)),
+            )
+        return {
+            "project_id": project_id,
+            "repository_id": binding["repository_id"],
+            "current_path": binding["canonical_path"],
+            "current_node_id": binding["node_id"],
+            "current_location_fingerprint": binding["identity_fingerprint"],
+            "candidate": candidate,
+            "canonical_ref_continuity": "VERIFIED",
+            "canonical_commit_continuity": "VERIFIED",
+            "known_history_object_continuity": "VERIFIED",
+            "authority_project_continuity": "VERIFIED",
+            "duplicate_active_binding": "NONE",
+            "dirty_worktree": "VERIFIED" if not candidate["dirty"] or candidate["candidate_top_level"] == current["candidate_top_level"] else "REQUIRES_REVIEW",
+            "worktree_administrative_health": candidate["worktree_admin_health"],
+            "continuity_verdict": "LOGICAL_REPOSITORY_CONTINUITY_VERIFIED",
+            "refusal_reason": None,
+            "preflight_token": preflight_token,
+            "binding_revision": binding["binding_revision"],
+            "real_relocation_candidate": candidate["candidate_top_level"] != current["candidate_top_level"],
+        }
+
+    def confirm_repository_rebind(self, project_id: str, preflight_token: str, confirm: bool = False) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before repository rebind")
+        with connect(self.settings) as db:
+            preflight = db.execute("SELECT * FROM prime_core.repository_rebind_preflights WHERE preflight_token=%s", (preflight_token,)).fetchone()
+        if not preflight or preflight["project_id"] != project_id:
+            raise ValueError("rebind preflight not found")
+        if preflight["status"] != "OPEN" or preflight["expires_at"] <= now():
+            raise ValueError("STALE_REBIND_PREFLIGHT")
+        with transaction(self.settings) as db:
+            binding = db.execute(
+                "SELECT b.*,r.canonical_path,r.identity_fingerprint,r.is_bare FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id WHERE b.project_id=%s FOR UPDATE",
+                (project_id,),
+            ).fetchone()
+            node = db.execute("SELECT node_id,status FROM prime_core.nodes WHERE node_id=%s", (preflight["destination_node_id"],)).fetchone()
+            if not binding or binding["binding_revision"] != preflight["binding_revision"] or not node or node["status"] in {"OFFLINE", "REVOKED"}:
+                db.execute("UPDATE prime_core.repository_rebind_preflights SET status='STALE' WHERE preflight_token=%s", (preflight_token,))
+                raise ValueError("STALE_REBIND_PREFLIGHT")
+            snapshot = preflight["snapshot"] if isinstance(preflight["snapshot"], dict) else json.loads(preflight["snapshot"])
+            try:
+                candidate = inspect_repository_candidate(Path(preflight["destination_path"]), binding["canonical_ref"], binding["canonical_ref_commit"])
+            except (OSError, GitProvenanceError) as exc:
+                db.execute("UPDATE prime_core.repository_rebind_preflights SET status='STALE' WHERE preflight_token=%s", (preflight_token,))
+                raise ValueError("STALE_REBIND_PREFLIGHT") from exc
+            if any(candidate.get(key) != snapshot.get(key) for key in ("candidate_path", "candidate_location_fingerprint", "candidate_head", "canonical_ref_commit", "canonical_tree", "dirty")):
+                db.execute("UPDATE prime_core.repository_rebind_preflights SET status='STALE' WHERE preflight_token=%s", (preflight_token,))
+                raise ValueError("STALE_REBIND_PREFLIGHT")
+            old = {"node_id": binding["node_id"], "path": binding["canonical_path"], "fingerprint": binding["identity_fingerprint"]}
+            updated = db.execute(
+                "UPDATE prime_core.repositories SET node_id=%s,canonical_path=%s,identity_fingerprint=%s,last_observed_at=now() WHERE repository_id=%s RETURNING *",
+                (preflight["destination_node_id"], candidate["candidate_top_level"], candidate["candidate_location_fingerprint"], binding["repository_id"]),
+            ).fetchone()
+            db.execute("UPDATE prime_core.project_bindings SET node_id=%s,binding_status='REBOUND',binding_revision=binding_revision+1,updated_at=now() WHERE project_id=%s", (preflight["destination_node_id"], project_id))
+            db.execute(
+                "INSERT INTO prime_core.repository_rebind_history(rebind_id,project_id,repository_id,previous_node_id,previous_path,previous_fingerprint,new_node_id,new_path,new_fingerprint,continuity_verdict,evidence,occurred_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,now())",
+                (_id("rebind"), project_id, binding["repository_id"], old["node_id"], old["path"], old["fingerprint"], preflight["destination_node_id"], candidate["candidate_top_level"], candidate["candidate_location_fingerprint"], "LOGICAL_REPOSITORY_CONTINUITY_VERIFIED", json.dumps({"preflight_token": preflight_token, "canonical_ref": binding["canonical_ref"], "canonical_commit": binding["canonical_ref_commit"], "authority_project_hash": snapshot.get("authority_project_hash")})),
+            )
+            db.execute("UPDATE prime_core.repository_rebind_preflights SET status='CONSUMED',consumed_at=now() WHERE preflight_token=%s", (preflight_token,))
+            self._audit(db, "operator", "operator", "repository.rebound", project_id=project_id, target_id=binding["repository_id"], metadata={"previous_path": old["path"], "new_path": candidate["candidate_top_level"], "preflight_token": preflight_token})
+            sequence = db.execute("SELECT COALESCE(MAX(project_sequence),0)+1 AS next_sequence FROM prime_core.events WHERE project_id=%s", (project_id,)).fetchone()["next_sequence"]
+            db.execute("INSERT INTO prime_core.events(event_id,project_id,event_type,occurred_at,observed_at,project_sequence,source_revision,source_ref,payload,dedupe_key) VALUES (%s,%s,'REPOSITORY_REBOUND',now(),now(),%s,%s,%s,%s,%s)", (_id("evt"), project_id, sequence, binding["canonical_ref_commit"], candidate["candidate_top_level"], json.dumps({"repository_id": binding["repository_id"], "previous_path": old["path"], "new_path": candidate["candidate_top_level"], "continuity": "LOGICAL_REPOSITORY_CONTINUITY_VERIFIED"}), f"repository-rebound:{preflight_token}"))
+            return {"project_id": project_id, "repository_id": binding["repository_id"], "binding_status": "REBOUND", "binding_revision": binding["binding_revision"] + 1, "previous": old, "current": dict(updated), "continuity_verdict": "LOGICAL_REPOSITORY_CONTINUITY_VERIFIED", "history_recorded": True, "preflight_token": preflight_token}
+
     def configure_canonical_ref(self, project_id: str, canonical_ref: str, confirm: bool = False) -> dict[str, Any]:
         """Persist an explicit canonical ref; active worktree state never changes it implicitly."""
         if not confirm:
@@ -253,20 +433,53 @@ class CoreService:
         if not parent.is_dir() or not self._within_allowed_root(parent, roots):
             raise PermissionError("repository parent is outside the enrolled Node allowed roots")
         target = parent / repository_name
-        if target.exists() or target.is_symlink():
+        idempotency_key = f"create-repository:{project_id}:{target}"
+        with connect(self.settings) as db:
+            existing_workflow = db.execute("SELECT workflow_id FROM prime_core.workflows WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
+        if (target.exists() or target.is_symlink()) and not existing_workflow:
             raise FileExistsError("repository target already exists")
-        workflow = self.create_workflow("CREATE_REPOSITORY", f"create-repository:{project_id}:{target}", project_id)
+        workflow = self.start_or_get_workflow("CREATE_REPOSITORY", idempotency_key, project_id, [
+            {"step_key": "DIRECTORY_CREATED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "GIT_INITIALIZED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "BOUND", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ])
+        current_step = "DIRECTORY_CREATED"
         try:
-            target.mkdir()
-            subprocess.run(["git", "-C", str(target), "init", "--initial-branch=main"], check=True, capture_output=True, text=True, timeout=10)
-            inspection = self.inspect_repository_for_onboarding(project_id, node_id, str(target))
-            bound = self.bind_verified_repository(inspection, confirm=True)
+            started = self.begin_step(workflow["workflow_id"], "DIRECTORY_CREATED")
+            if started.get("decision") != "SKIP_COMPLETED":
+                if not target.exists():
+                    target.mkdir()
+                if not target.is_dir():
+                    raise ValueError("repository resource is not a directory")
+                self.complete_step(workflow["workflow_id"], "DIRECTORY_CREATED", side_effect_state={"path": str(target)})
+            current_step = "GIT_INITIALIZED"
+            started = self.begin_step(workflow["workflow_id"], "GIT_INITIALIZED")
+            if started.get("decision") != "SKIP_COMPLETED":
+                if not (target / ".git").exists():
+                    subprocess.run(["git", "-C", str(target), "init", "--initial-branch=main"], check=True, capture_output=True, text=True, timeout=10)
+                else:
+                    subprocess.run(["git", "-C", str(target), "rev-parse", "--is-inside-work-tree"], check=True, capture_output=True, text=True, timeout=10)
+                self.complete_step(workflow["workflow_id"], "GIT_INITIALIZED", side_effect_state={"path": str(target), "git": "verified"})
+            current_step = "BOUND"
+            started = self.begin_step(workflow["workflow_id"], "BOUND")
+            if started.get("decision") == "SKIP_COMPLETED":
+                with connect(self.settings) as db:
+                    bound = dict(db.execute("SELECT * FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone())
+                inspection = self.inspect_repository_for_onboarding(project_id, node_id, str(target))
+            else:
+                inspection = self.inspect_repository_for_onboarding(project_id, node_id, str(target))
+                bound = self.bind_verified_repository(inspection, confirm=True)
+                self.complete_step(workflow["workflow_id"], "BOUND", result_metadata={"repository_id": bound.get("repository_id")})
             with transaction(self.settings) as db:
-                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED', current_step='BOUND', completed_steps='[\"DIRECTORY_CREATED\",\"GIT_INITIALIZED\",\"BOUND\"]'::jsonb, updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
+                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED', current_step='BOUND', updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
             return {"workflow": workflow["workflow_id"], "repository": bound, "inspection": inspection}
         except Exception as exc:
+            try:
+                self.fail_step(workflow["workflow_id"], current_step, str(exc), retryable=False, ambiguous_external_effect=True)
+            except Exception:
+                pass
             with transaction(self.settings) as db:
-                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED', current_step='RECONCILIATION_REQUIRED', last_error=%s, updated_at=%s WHERE workflow_id=%s", (type(exc).__name__, now(), workflow["workflow_id"]))
+                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED', current_step=%s, last_error=%s, updated_at=%s WHERE workflow_id=%s", (current_step, type(exc).__name__, now(), workflow["workflow_id"]))
                 db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING', work_condition='REVIEW_REQUIRED', onboarding_state='REPAIR_REQUIRED', updated_at=%s WHERE project_id=%s", (now(), project_id))
             raise
 
@@ -555,6 +768,91 @@ class CoreService:
             ).fetchone()
             self._audit(db, "operator", "operator", "workflow.created", project_id=project_id, target_id=row["workflow_id"])
             return dict(row)
+
+    def start_or_get_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None, steps: list[dict[str, Any]]) -> dict[str, Any]:
+        workflow = self.create_workflow(workflow_type, idempotency_key, project_id)
+        with transaction(self.settings) as db:
+            if project_id and workflow.get("project_id") is None:
+                db.execute("UPDATE prime_core.workflows SET project_id=%s,updated_at=now() WHERE workflow_id=%s", (project_id, workflow["workflow_id"]))
+            for index, specification in enumerate(steps):
+                policy = specification.get("replay_policy", "PURE_OR_DB_TRANSACTION")
+                if policy not in REPLAY_POLICIES:
+                    raise ValueError("invalid workflow replay policy")
+                db.execute(
+                    "INSERT INTO prime_core.workflow_steps(workflow_id,step_key,step_order,status,replay_policy,input_metadata) VALUES (%s,%s,%s,'PENDING',%s,%s) ON CONFLICT (workflow_id,step_key) DO NOTHING",
+                    (workflow["workflow_id"], specification["step_key"], specification.get("step_order", index), policy, json.dumps(specification.get("input_metadata", {}))),
+                )
+            row = db.execute("SELECT * FROM prime_core.workflows WHERE workflow_id=%s", (workflow["workflow_id"],)).fetchone()
+            return dict(row)
+
+    def begin_step(self, workflow_id: str, step_key: str) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            step = db.execute("SELECT * FROM prime_core.workflow_steps WHERE workflow_id=%s AND step_key=%s FOR UPDATE", (workflow_id, step_key)).fetchone()
+            if not step:
+                raise KeyError("workflow step not found")
+            decision = step_resume_decision(step["status"], step["replay_policy"])
+            if decision == "SKIP_COMPLETED":
+                return {**dict(step), "decision": decision}
+            if decision == "REPAIR_REQUIRED":
+                db.execute("UPDATE prime_core.workflow_steps SET status='REPAIR_REQUIRED',last_error=COALESCE(last_error,'ambiguous external outcome') WHERE workflow_id=%s AND step_key=%s", (workflow_id, step_key))
+                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED',current_step=%s,updated_at=now() WHERE workflow_id=%s", (step_key, workflow_id))
+                return {**dict(step), "status": "REPAIR_REQUIRED", "decision": decision}
+            updated = db.execute("UPDATE prime_core.workflow_steps SET status='RUNNING',attempt_count=attempt_count+1,started_at=COALESCE(started_at,now()),last_error=NULL WHERE workflow_id=%s AND step_key=%s RETURNING *", (workflow_id, step_key)).fetchone()
+            db.execute("UPDATE prime_core.workflows SET status='RUNNING',current_step=%s,updated_at=now() WHERE workflow_id=%s", (step_key, workflow_id))
+            return {**dict(updated), "decision": decision}
+
+    def complete_step(self, workflow_id: str, step_key: str, result_metadata: dict[str, Any] | None = None, side_effect_state: dict[str, Any] | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            step = db.execute("SELECT * FROM prime_core.workflow_steps WHERE workflow_id=%s AND step_key=%s FOR UPDATE", (workflow_id, step_key)).fetchone()
+            if not step:
+                raise KeyError("workflow step not found")
+            if step["status"] in {"SUCCEEDED", "COMPENSATED"}:
+                return dict(step)
+            if step["status"] != "RUNNING":
+                raise ValueError("workflow step is not running")
+            updated = db.execute("UPDATE prime_core.workflow_steps SET status='SUCCEEDED',completed_at=now(),result_metadata=%s,side_effect_state=%s WHERE workflow_id=%s AND step_key=%s RETURNING *", (json.dumps(result_metadata or {}), json.dumps(side_effect_state or {}), workflow_id, step_key)).fetchone()
+            workflow = db.execute("SELECT completed_steps FROM prime_core.workflows WHERE workflow_id=%s FOR UPDATE", (workflow_id,)).fetchone()
+            completed = workflow["completed_steps"] if isinstance(workflow["completed_steps"], list) else json.loads(workflow["completed_steps"] or "[]")
+            if step_key not in completed:
+                completed.append(step_key)
+            db.execute("UPDATE prime_core.workflows SET completed_steps=%s,current_step=%s,status='RUNNING',updated_at=now() WHERE workflow_id=%s", (json.dumps(completed), step_key, workflow_id))
+            return dict(updated)
+
+    def fail_step(self, workflow_id: str, step_key: str, error_message: str, retryable: bool = True, ambiguous_external_effect: bool = False) -> dict[str, Any]:
+        status = "REPAIR_REQUIRED" if ambiguous_external_effect else ("FAILED_RETRYABLE" if retryable else "FAILED_FINAL")
+        with transaction(self.settings) as db:
+            updated = db.execute("UPDATE prime_core.workflow_steps SET status=%s,last_error=%s WHERE workflow_id=%s AND step_key=%s RETURNING *", (status, error_message[:500], workflow_id, step_key)).fetchone()
+            if not updated:
+                raise KeyError("workflow step not found")
+            db.execute("UPDATE prime_core.workflows SET status=%s,current_step=%s,retry_count=retry_count+1,last_error=%s,updated_at=now() WHERE workflow_id=%s", ("REPAIR_REQUIRED" if ambiguous_external_effect else "RUNNING", step_key, error_message[:500], workflow_id))
+            return dict(updated)
+
+    def record_workflow_resource(self, workflow_id: str, resource_type: str, resource_key: str, resource_locator: str | None, metadata: dict[str, Any] | None = None, status: str = "CREATED") -> dict[str, Any]:
+        if status not in {"EXPECTED", "CREATED", "RECONCILIATION_REQUIRED", "RELEASED"}:
+            raise ValueError("invalid workflow resource status")
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "INSERT INTO prime_core.workflow_resources(resource_id,workflow_id,resource_type,resource_key,resource_locator,status,metadata,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,now(),now()) ON CONFLICT (workflow_id,resource_type,resource_key) DO UPDATE SET resource_locator=COALESCE(EXCLUDED.resource_locator,prime_core.workflow_resources.resource_locator),status=EXCLUDED.status,metadata=EXCLUDED.metadata,updated_at=now() RETURNING *",
+                (_id("resource"), workflow_id, resource_type, resource_key, resource_locator, status, json.dumps(metadata or {})),
+            ).fetchone()
+            return dict(row)
+
+    def workflow_resume_plan(self, workflow_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            workflow = db.execute("SELECT * FROM prime_core.workflows WHERE workflow_id=%s", (workflow_id,)).fetchone()
+            if not workflow:
+                raise KeyError("workflow not found")
+            steps = [dict(row) for row in db.execute("SELECT * FROM prime_core.workflow_steps WHERE workflow_id=%s ORDER BY step_order", (workflow_id,)).fetchall()]
+            resources = [dict(row) for row in db.execute("SELECT resource_type,resource_key,resource_locator,status,metadata FROM prime_core.workflow_resources WHERE workflow_id=%s ORDER BY created_at", (workflow_id,)).fetchall()]
+        return resume_plan_payload(dict(workflow), steps, resources)
+
+    def mark_workflow_repaired(self, workflow_id: str, step_key: str, resolution: dict[str, Any] | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            updated = db.execute("UPDATE prime_core.workflow_steps SET status='PENDING',last_error=NULL,result_metadata=%s WHERE workflow_id=%s AND step_key=%s AND status='REPAIR_REQUIRED' RETURNING *", (json.dumps(resolution or {}), workflow_id, step_key)).fetchone()
+            if not updated:
+                raise ValueError("workflow step is not awaiting repair")
+            db.execute("UPDATE prime_core.workflows SET status='RUNNING',last_error=NULL,current_step=%s,updated_at=now() WHERE workflow_id=%s", (step_key, workflow_id))
+            return dict(updated)
 
     def claim_job(self) -> dict[str, Any] | None:
         with transaction(self.settings) as db:

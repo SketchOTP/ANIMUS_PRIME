@@ -128,6 +128,16 @@ class CanonicalRefRequest(BaseModel):
     confirm: bool = False
 
 
+class RepositoryRebindRequest(BaseModel):
+    destination_node_id: str = Field(min_length=1, max_length=160)
+    destination_path: str = Field(min_length=1, max_length=4096)
+
+
+class RepositoryRebindConfirmRequest(BaseModel):
+    preflight_token: str = Field(min_length=1, max_length=160)
+    confirm: bool = False
+
+
 class RepositoryInspectRequest(BaseModel):
     node_id: str = Field(min_length=1, max_length=160)
     path: str = Field(min_length=1, max_length=4096)
@@ -635,6 +645,25 @@ def configure_canonical_ref(project_id: str, body: CanonicalRefRequest, request:
         return service.configure_canonical_ref(project_id, body.canonical_ref, body.confirm)
     except (KeyError, ValueError) as exc:
         return error("CANONICAL_REF_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/repository/rebind/preflight")
+def inspect_repository_rebind(project_id: str, body: RepositoryRebindRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.inspect_repository_rebind(project_id, body.destination_node_id, body.destination_path)
+    except KeyError as exc:
+        return error("REBIND_REJECTED", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/projects/{project_id}/repository/rebind/confirm")
+def confirm_repository_rebind(project_id: str, body: RepositoryRebindConfirmRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.confirm_repository_rebind(project_id, body.preflight_token, body.confirm)
+    except (KeyError, ValueError) as exc:
+        status_code = 409 if "STALE_REBIND_PREFLIGHT" in str(exc) else 400
+        return error("REBIND_REJECTED", str(exc), request_id(request), status_code=status_code)
 
 
 @app.post("/v1/projects/{project_id}/repositories/inspect")
