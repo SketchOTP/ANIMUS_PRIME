@@ -10,6 +10,7 @@ from src.prime_memory_adapter import AdapterResult, PrimeMemoryAdapter
 from .db import connect, transaction
 from .service import _id, now
 from .history_primitives import record_historical_snapshot
+from .git_provenance import capture_provenance
 
 SECRET_PATTERN = re.compile(r"(?i)(api[_-]?key|secret|password|token|private[_-]?key)\s*[:=]\s*[^\s]+")
 
@@ -36,6 +37,7 @@ class MemoryService:
             status = "STORED" if result.status == "CURRENT" else ("DEGRADED" if result.status in {"DEGRADED", "UNAVAILABLE"} else "QUEUED")
             created = now()
             record_metadata = {"adapter_status": result.status, "adapter_reason": result.reason, "correction_reason": correction_reason}
+            record_metadata["git_provenance"] = capture_provenance(self.settings, project_id, source_revision)
             if metadata:
                 record_metadata.update(metadata)
             db.execute(
@@ -54,12 +56,12 @@ class MemoryService:
         adapter = self.adapter_factory(project_id)
         result: AdapterResult = adapter.recall(query)
         with connect(self.settings) as db:
-            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT memory_id, document_id, source_revision, source_reference_id, content_class, status FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchall()}
+            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT memory_id, document_id, source_revision, source_reference_id, content_class, status, branch_context, metadata FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchall()}
         results = []
         for item in result.payload.get("results", []) if isinstance(result.payload, dict) else []:
             document_id = item.get("document_id") if isinstance(item, dict) else None
             if document_id in allowed:
-                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "result": item})
+                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "branch_context": allowed[document_id]["branch_context"], "metadata": allowed[document_id]["metadata"], "result": item})
             if len(results) >= limit:
                 break
         return {"status": result.status, "results": results, "project_id": project_id}

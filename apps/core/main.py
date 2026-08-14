@@ -26,6 +26,7 @@ from src.prime_core.mcp_service import MCPService
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
+from src.prime_core.git_provenance import GitProvenanceError, inspect_git_state
 from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
 from src.prime_core.backup_service import BackupCoordinator, BackupError
 from src.prime_core.reliability_service import ReliabilityService
@@ -120,6 +121,11 @@ class RepositoryBindingRequest(BaseModel):
     identity_fingerprint: str
     canonical_path: str
     is_bare: bool = False
+
+
+class CanonicalRefRequest(BaseModel):
+    canonical_ref: str = Field(min_length=11, max_length=512)
+    confirm: bool = False
 
 
 class RepositoryInspectRequest(BaseModel):
@@ -622,6 +628,15 @@ def bind_repository(body: RepositoryBindingRequest, request: Request, prime_sess
         return error("BINDING_REJECTED", str(exc), request_id(request), status_code=400)
 
 
+@app.post("/v1/projects/{project_id}/repository/canonical-ref")
+def configure_canonical_ref(project_id: str, body: CanonicalRefRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.configure_canonical_ref(project_id, body.canonical_ref, body.confirm)
+    except (KeyError, ValueError) as exc:
+        return error("CANONICAL_REF_REJECTED", str(exc), request_id(request), status_code=400)
+
+
 @app.post("/v1/projects/{project_id}/repositories/inspect")
 def inspect_repository_for_onboarding(project_id: str, body: RepositoryInspectRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -663,6 +678,24 @@ def bootstrap_project_authority(project_id: str, body: AuthorityBootstrapRequest
         return service.bootstrap_project_authority(project_id, body.confirm)
     except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError) as exc:
         return error("AUTHORITY_BOOTSTRAP_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/authority/migration-plan")
+def authority_migration_plan(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.inspect_project_authority_migration(project_id)
+    except (KeyError, OSError, ValueError) as exc:
+        return error("AUTHORITY_MIGRATION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/authority/migrate")
+def migrate_project_authority(project_id: str, body: AuthorityBootstrapRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.migrate_project_authority(project_id, body.confirm)
+    except (KeyError, OSError, ValueError) as exc:
+        return error("AUTHORITY_MIGRATION_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/projects/{project_id}/authority/{decision}")
@@ -810,7 +843,7 @@ def search_project(project_id: str, q: str, request: Request, prime_session: str
 def _repository_binding(project_id: str) -> dict[str, Any] | None:
     with connect(settings) as db:
         row = db.execute(
-            "SELECT b.repository_id,b.canonical_revision,r.canonical_path,r.identity_fingerprint,n.node_id,n.name AS node_name,n.status AS node_status "
+            "SELECT b.repository_id,b.canonical_revision,b.canonical_ref,b.canonical_ref_commit,r.canonical_path,r.identity_fingerprint,n.node_id,n.name AS node_name,n.status AS node_status "
             "FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
             "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE b.project_id=%s",
             (project_id,),
@@ -844,6 +877,11 @@ def _git_state(project_id: str) -> dict[str, Any]:
         root, _ = _safe_repository_path(project_id)
     except (KeyError, OSError, ValueError):
         return {"status": "UNAVAILABLE", "repository_path": "UNKNOWN"}
+    binding = _repository_binding(project_id) or {}
+    try:
+        state = inspect_git_state(root, binding.get("canonical_ref"), binding.get("canonical_ref_commit"))
+    except GitProvenanceError:
+        return {"status": "UNAVAILABLE", "repository_path": str(root)}
     worktree_lines = _git(root, "worktree", "list", "--porcelain")
     worktrees: list[dict[str, str]] = []
     current: dict[str, str] = {}
@@ -870,18 +908,7 @@ def _git_state(project_id: str) -> dict[str, Any]:
         parts = line.split("\x1f", 3)
         if len(parts) == 4:
             recent.append({"revision": parts[0], "short_revision": parts[1], "timestamp": parts[2], "summary": parts[3]})
-    canonical_revision = _git(root, "rev-parse", "HEAD")
-    if canonical_revision == "UNAVAILABLE" and _git(root, "rev-parse", "--is-inside-work-tree") == "true":
-        canonical_revision = "UNBORN"
-    return {
-        "status": "CURRENT" if _git(root, "status", "--porcelain") == "UNKNOWN" else "AVAILABLE",
-        "repository_path": str(root),
-        "canonical_revision": canonical_revision,
-        "branch": _git(root, "branch", "--show-current") or "DETACHED",
-        "dirty": bool(_git(root, "status", "--porcelain") not in {"", "UNKNOWN", "UNAVAILABLE"}),
-        "worktrees": worktrees,
-        "recent_commits": recent,
-    }
+    return {**state, "worktrees": worktrees, "recent_commits": recent}
 
 
 def _project_context(project_id: str) -> dict[str, Any]:

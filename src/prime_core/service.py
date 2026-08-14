@@ -17,7 +17,8 @@ from .config import Settings
 from .db import connect, transaction
 from .security import new_token, password_hash, password_verify, token_digest
 from .history_primitives import record_historical_snapshot
-from .authority import REQUIRED_AUTHORITY_FILES, provision_authority, validate_authority
+from .authority import REQUIRED_AUTHORITY_FILES, authority_migration_plan, classify_authority_snapshot, migrate_authority, provision_authority, validate_authority
+from .git_provenance import GitProvenanceError, resolve_canonical_ref
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -206,6 +207,36 @@ class CoreService:
             db.execute("UPDATE prime_core.projects SET onboarding_step='AUTHORITY', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), inspection["project_id"]))
         return {**result, "authority_state": inspection.get("authority_state", "UNKNOWN")}
 
+    def configure_canonical_ref(self, project_id: str, canonical_ref: str, confirm: bool = False) -> dict[str, Any]:
+        """Persist an explicit canonical ref; active worktree state never changes it implicitly."""
+        if not confirm:
+            raise ValueError("operator confirmation is required before changing the canonical ref")
+        with connect(self.settings) as db:
+            row = db.execute(
+                "SELECT r.canonical_path FROM prime_core.project_bindings b "
+                "JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
+                "WHERE b.project_id=%s",
+                (project_id,),
+            ).fetchone()
+        if not row:
+            raise KeyError("project has no repository binding")
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        try:
+            commit = resolve_canonical_ref(root, canonical_ref)
+        except GitProvenanceError as exc:
+            raise ValueError(str(exc)) from exc
+        timestamp = now()
+        with transaction(self.settings) as db:
+            updated = db.execute(
+                "UPDATE prime_core.project_bindings SET canonical_ref=%s,canonical_ref_commit=%s,canonical_ref_updated_at=%s,updated_at=%s "
+                "WHERE project_id=%s RETURNING project_id,canonical_ref,canonical_ref_commit,canonical_ref_updated_at",
+                (canonical_ref, commit, timestamp, timestamp, project_id),
+            ).fetchone()
+            if not updated:
+                raise KeyError("project has no repository binding")
+            self._audit(db, "operator", "operator", "repository.canonical_ref_configured", project_id=project_id, target_id=canonical_ref, metadata={"canonical_commit": commit})
+        return {**dict(updated), "repository_path": str(root), "change": "EXPLICIT_OPERATOR_CONFIGURATION"}
+
     def create_repository_for_onboarding(self, project_id: str, node_id: str, parent_path: str, repository_name: str, confirm: bool = False) -> dict[str, Any]:
         if not confirm:
             raise ValueError("operator confirmation is required before creating a repository")
@@ -295,6 +326,42 @@ class CoreService:
             with transaction(self.settings) as db:
                 db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
         return {"project_id": project_id, "decision": decision, "state": state, "valid": validation["valid"], "missing": validation["missing"], "files": validation["files"], "rewrite": "NONE"}
+
+    def inspect_project_authority_migration(self, project_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            row = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+        if not row:
+            raise KeyError("project has no repository binding")
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        files = {
+            relative: (root / relative).read_text(encoding="utf-8", errors="replace")
+            for relative in REQUIRED_AUTHORITY_FILES
+            if (root / relative).is_file()
+        }
+        plan = authority_migration_plan(files)
+        return {"project_id": project_id, "repository_path": str(root), "source_state": classify_authority_snapshot(files), "plan": plan, "source_hashes": {relative: hashlib.sha256(content.encode()).hexdigest() for relative, content in files.items()}}
+
+    def migrate_project_authority(self, project_id: str, confirm: bool = False) -> dict[str, Any]:
+        plan = self.inspect_project_authority_migration(project_id)
+        if plan["source_state"] != "LEGACY":
+            if plan["source_state"] == "CURRENT":
+                return {**plan, "migration": "NOOP"}
+            raise ValueError("authority is not a recognized legacy package; review is required")
+        if not confirm:
+            raise ValueError("explicit MIGRATE confirmation is required")
+        with connect(self.settings) as db:
+            row = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+        root = Path(row["canonical_path"]).resolve(strict=True)
+        result = migrate_authority(Path("authority-template/v1").resolve(), root, {
+            relative: (root / relative).read_text(encoding="utf-8", errors="replace")
+            for relative in REQUIRED_AUTHORITY_FILES
+            if (root / relative).is_file()
+        }, confirm=True)
+        validation = validate_authority(root)
+        if not validation["valid"]:
+            raise ValueError("authority migration did not produce a valid package")
+        self.record_authority_revision(project_id, ".agent", hashlib.sha256(json.dumps(validation, sort_keys=True).encode()).hexdigest(), "VALID", {"decision": "MIGRATE", "preserved_source_hashes": plan["source_hashes"], "provenance": "explicit operator migration"})
+        return {**plan, "migration": "APPLIED", "authority": result}
 
     def list_projects(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:

@@ -137,7 +137,7 @@ class MCPService:
 
     def _timeline(self, project_id: str, limit: int) -> dict[str, Any]:
         with connect(self.settings) as db:
-            rows = db.execute("SELECT memory_id,content_class,status,created_at,source_revision,source_reference_id FROM prime_core.memory_records WHERE project_id=%s ORDER BY created_at DESC LIMIT %s", (project_id, limit)).fetchall()
+            rows = db.execute("SELECT memory_id,content_class,status,created_at,source_revision,source_reference_id,branch_context,metadata FROM prime_core.memory_records WHERE project_id=%s ORDER BY created_at DESC LIMIT %s", (project_id, limit)).fetchall()
             return {"project_id": project_id, "results": [dict(row) for row in rows]}
 
     def _get(self, project_id: str, memory_id: str) -> dict[str, Any]:
