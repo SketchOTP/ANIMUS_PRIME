@@ -1722,3 +1722,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-006 current topology, real DOD-039 relocation candidate, DOD-004 provider/fork/restore/archive and full interruption evidence, DOD-005/DOD-009/DOD-008, R-045, and R-056 remain open or bounded; no persistent Core listener exists.
 - Blockers: no legitimate alternate repository candidate and no persistent Core/browser qualification topology; external approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-CONVERGENCE-RESET-052 - PARTIAL
+
+- Outcome ID: O-PRIME-052
+- Supersedes outcome: O-PRIME-050
+- Closed: 2026-08-14T11:13:51-04:00
+- Acceptance: PARTIAL
+- Summary: Adopted the strategic convergence reset toward the actual PRIME product and a persistent Atlas runtime. Repaired the narrow DOD-005 source-lifecycle propagation gap so evidence retraction stales linked source references and evidence-backed Progress, tombstones linked current memory with historical correction records, and current Search excludes stale Progress, stale linked Memory, and detached/retracted Notion bindings. Directly qualified the existing persistent qualification project while its enrolled Node was temporarily OFFLINE: persisted project/history/Progress reads remained available, Node-required repository inspection refused with `Node is OFFLINE`, and the exact original `ENROLLED` status was restored. No Core, uvicorn, browser, disposable resource, new project, DOD-039 rebind, DOD-050 upgrade, DOD-053 LAN-machine, R-045, or R-056 work was performed.
+- Changed areas: src/prime_core/history_service.py; src/prime_core/memory_service.py; src/prime_core/progress_service.py; src/prime_core/intelligence_service.py; tests/phase15/test_requirement_qualification.py; evidence/phase15/qualification-continuation-052.md; DOD-005/DOD-074 governed evidence paths; append-only .agent records.
+- Validation:
+  - full code-only regression - PASSED (90 passed, 28 integration skips)
+  - focused code-only regression - PASSED (10 passed, 3 integration skips)
+  - compileall and git diff check - PASSED
+  - read-only PostgreSQL EXPLAIN validation of new filters - PASSED
+  - reversible offline-Node persisted-state qualification and status restoration - PASSED
+  - adopted governance, product alignment, and burndown validation - PASSED; V1 product-goal alignment remains FAIL by design
+  - PRIME Core/browser qualification - NOT RUN; no persistent PRIME Core listener and explicit runtime authorization gate remains
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-005 exact full Documentation/Notion projection qualification, DOD-074 operator workflow qualification, DOD-004, DOD-006, DOD-008, DOD-009, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-033, DOD-037, DOD-038, DOD-039, DOD-044, DOD-045, DOD-050, DOD-053, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open, bounded, or unqualified.
+- Blockers: no persistent PRIME Core/UI runtime has been explicitly authorized/configured for this run; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
+- Follow-up directive: none

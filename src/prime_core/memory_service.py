@@ -56,7 +56,7 @@ class MemoryService:
         adapter = self.adapter_factory(project_id)
         result: AdapterResult = adapter.recall(query)
         with connect(self.settings) as db:
-            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT memory_id, document_id, source_revision, source_reference_id, content_class, status, branch_context, metadata FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchall()}
+            allowed = {row["document_id"]: dict(row) for row in db.execute("SELECT m.memory_id, m.document_id, m.source_revision, m.source_reference_id, m.content_class, m.status, m.branch_context, m.metadata FROM prime_core.memory_records m LEFT JOIN prime_core.source_references sr ON sr.project_id=m.project_id AND sr.source_reference_id=m.source_reference_id WHERE m.project_id=%s AND m.status NOT IN ('TOMBSTONED','SUPERSEDED') AND (m.source_reference_id IS NULL OR sr.freshness_state='CURRENT')", (project_id,)).fetchall()}
         results = []
         for item in result.payload.get("results", []) if isinstance(result.payload, dict) else []:
             document_id = item.get("document_id") if isinstance(item, dict) else None
@@ -84,8 +84,8 @@ class MemoryService:
         with connect(self.settings) as db:
             rows = db.execute(
                 "SELECT memory_id,content,source_revision,content_class FROM prime_core.memory_records "
-                "WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') ORDER BY created_at,memory_id",
-                (project_id,),
+                "WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') AND (source_reference_id IS NULL OR source_reference_id IN (SELECT source_reference_id FROM prime_core.source_references WHERE project_id=%s AND freshness_state='CURRENT')) ORDER BY created_at,memory_id",
+                (project_id, project_id),
             ).fetchall()
         restored = 0
         unavailable: list[str] = []

@@ -427,14 +427,51 @@ class HistoryService:
         if not reason.strip():
             raise ValueError("Evidence retraction reason is required")
         with transaction(self.settings) as db:
+            retracted_at = now()
             row = db.execute(
                 "UPDATE prime_core.evidence_records SET retracted_at=%s,retraction_reason=%s,parser_status='RETRACTED',index_status='UNAVAILABLE' WHERE project_id=%s AND evidence_id=%s AND retracted_at IS NULL RETURNING *",
-                (now(), reason.strip()[:500], project_id, evidence_id),
+                (retracted_at, reason.strip()[:500], project_id, evidence_id),
             ).fetchone()
             if not row:
                 raise KeyError("Evidence record not found or already retracted")
-            self._record_historical(db, project_id, "EVIDENCE", evidence_id, row.get("source_revision"), {"evidence_id": evidence_id, "retracted_at": row["retracted_at"].isoformat(), "retraction_reason": row["retraction_reason"]}, row["retracted_at"], row.get("content_hash"))
-            return dict(row)
+            source_reference_id = row.get("source_reference_id")
+            derived = {"source_reference_staled": 0, "memory_records_tombstoned": 0, "progress_assessments_staled": 0}
+            if source_reference_id:
+                source_metadata = json.dumps({"retracted_at": retracted_at.isoformat(), "retraction_reason": reason.strip()[:500]})
+                source = db.execute(
+                    "UPDATE prime_core.source_references SET freshness_state='STALE',metadata=COALESCE(metadata,'{}'::jsonb) || %s::jsonb WHERE project_id=%s AND source_reference_id=%s RETURNING source_reference_id",
+                    (source_metadata, project_id, source_reference_id),
+                ).fetchone()
+                derived["source_reference_staled"] = 1 if source else 0
+                memories = db.execute(
+                    "UPDATE prime_core.memory_records SET status='TOMBSTONED' WHERE project_id=%s AND source_reference_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED') RETURNING memory_id,source_revision,content_hash,content_class",
+                    (project_id, source_reference_id),
+                ).fetchall()
+                for memory in memories:
+                    db.execute(
+                        "INSERT INTO prime_core.memory_corrections(correction_id,project_id,memory_id,correction_type,reason,created_at,actor_type,actor_id) VALUES (%s,%s,%s,'RETRACT',%s,%s,'system','source-lifecycle')",
+                        (_id("correction"), project_id, memory["memory_id"], reason.strip()[:4000], retracted_at),
+                    )
+                    self._record_historical(
+                        db,
+                        project_id,
+                        "MEMORY_RETRACTION",
+                        memory["memory_id"],
+                        memory.get("source_revision"),
+                        {"memory_id": memory["memory_id"], "content_hash": memory.get("content_hash"), "content_class": memory.get("content_class"), "status": "TOMBSTONED", "reason": reason.strip()[:500]},
+                        retracted_at,
+                        memory.get("content_hash"),
+                    )
+                derived["memory_records_tombstoned"] = len(memories)
+                progress = db.execute(
+                    "UPDATE prime_core.progress_assessments SET freshness_state='STALE' WHERE project_id=%s AND freshness_state='CURRENT' AND evidence_refs @> %s::jsonb RETURNING assessment_id",
+                    (project_id, json.dumps([source_reference_id])),
+                ).fetchall()
+                derived["progress_assessments_staled"] = len(progress)
+            self._record_historical(db, project_id, "EVIDENCE", evidence_id, row.get("source_revision"), {"evidence_id": evidence_id, "retracted_at": row["retracted_at"].isoformat(), "retraction_reason": row["retraction_reason"], "derived_views": derived}, row["retracted_at"], row.get("content_hash"))
+            result = dict(row)
+            result["derived_views"] = derived
+            return result
 
     def time_lens(self, project_id: str, as_of: str) -> dict[str, Any]:
         context = self.historical_context(project_id, as_of)

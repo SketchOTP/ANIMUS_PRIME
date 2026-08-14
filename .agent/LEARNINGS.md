@@ -611,3 +611,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME repository continuity, relocation safety, durable workflow checkpoints, replay/resume policy, and direct Atlas qualification.
 - Supersedes learning: none
+
+## L-PRIME-CONVERGENCE-RESET-052
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONVERGENCE-RESET-052
+- Fact or lesson: A persistent PostgreSQL/Hindsight substrate and backend continuity checks do not constitute a running PRIME product. Other Atlas listeners must not be mistaken for PRIME Core/UI. When Core is unavailable, keep source lifecycle and offline-node continuity bounded, park qualification-edge architecture, and require explicit authorization before starting the persistent PRIME runtime.
+- Evidence location: evidence/phase15/qualification-continuation-052.md; .agent/CURRENT.md; direct Atlas listener/container inspection.
+- Confidence: VERIFIED
+- Scope: PRIME Phase 15 prioritization, persistent Atlas runtime readiness, source lifecycle, and offline Node qualification.
+- Supersedes learning: none

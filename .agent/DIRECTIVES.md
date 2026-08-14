@@ -690,3 +690,31 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-FROZEN-AUTH-PROVENANCE-049
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-SOURCE-LIFECYCLE-OFFLINE-NODE-UPGRADE-051
+
+- Issued: 2026-08-14T11:07:31-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 051
+- Objective: Close the source-removal truth contract, qualify persisted PRIME continuity while a repository Node is offline, reconcile DOD-053's real-LAN-machine boundary, convert remaining safe DOD-004 workflow families, and add a read-only DOD-050 upgrade preflight foundation.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; persistent PostgreSQL and approved Hindsight; DOD-005, DOD-074, DOD-053, DOD-004, DOD-050, and exact DOD-009 evidence reconciliation; governed evidence and publication.
+- Exclusions: No Z:/SSHFS execution authority; no PRIME Core, uvicorn, or browser qualification; no disposable databases, stacks, projects, repositories, worktrees, Fork children, Hindsight banks, browser profiles, or synthetic A/B projects; no destructive Notion, restore, archive, delete, purge, R-045 pressure, R-056 aggregate, Phase 16, or deployment; DOD-039 is parked pending a naturally available alternate repository; preserve pre-existing untracked directories.
+- Acceptance: Inventory existing DOD-005 evidence before code; prove or truthfully retain current Search, Documentation, Progress, Memory, and historical source behavior; qualify offline-Node persisted state with truthful Node-required degradation and restored state; classify DOD-053 before implementation; preserve DOD-039 and Continuation 050 primitives; convert only legitimate DOD-004 families with durable resources/replay/repair semantics; add read-only DOD-050 migration/integrity/compatibility/recovery preflight without Alembic; reconcile governed views; run persistent validation; publish implementation and evidence/governance with local/origin/GitHub and Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-REPOSITORY-REBIND-DURABLE-WORKFLOW-050
+- Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-CONVERGENCE-RESET-052
+
+- Issued: 2026-08-14T11:13:51-04:00
+- Issuer: User
+- External directive: User-provided strategic assessment, "strategically aligned, tactically drifting"
+- Objective: Correct Phase 15 priority toward the actual PRIME product and a persistent Atlas runtime. Retain only the central source-lifecycle and offline-Node continuity work from Continuation 051, limit durable-workflow expansion to real V1 paths, and stop investing in qualification-edge architecture while the operator experience and runtime remain unavailable.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL and approved Hindsight; bounded DOD-005 and DOD-074 work; persistent-runtime readiness inspection; original operator-journey planning and evidence; governed records and Notion publication.
+- Exclusions: No temporary Core, uvicorn, browser qualification, disposable environments/projects/repos/worktrees/fixtures/banks/profiles, fabricated provider/model/native/second-device evidence, further DOD-039 rebind work, DOD-050 upgrade implementation, DOD-053 LAN-machine implementation without the real environment, generic durable-execution expansion, Phase 16, deployment, R-045 pressure, or R-056 aggregate closure. Starting a persistent PRIME runtime requires explicit authorization and a verified service topology.
+- Acceptance: Supersede the tactical priority of Continuation 051 without rewriting its history; preserve and close only directly supported DOD-005/DOD-074 work; park lower-priority edges truthfully; document the persistent runtime authorization gate and current Atlas topology; reconcile governed state and publish truthful evidence with local/origin/GitHub and Notion parity.
+- Risk class: HIGH
+- Relationship: supersedes
+- Related directive: D-PRIME-PHASE15-V1-SOURCE-LIFECYCLE-OFFLINE-NODE-UPGRADE-051
+- Status at issuance: ISSUED

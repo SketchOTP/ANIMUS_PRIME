@@ -299,6 +299,8 @@ def test_r047_product_search_ask_and_documentation_preserve_evidence_citation(
     )
     assert citation["source_reference_id"] in rendered["content"]
     service.retract_evidence(project["project_id"], evidence["evidence_id"], "source superseded")
+    assert intelligence.search(project["project_id"], "Cited progress")["groups"]["Progress"] == []
+    assert progress.snapshot(project["project_id"])["assessment"] is None
     assert intelligence.search(project["project_id"], "durable source")["groups"]["Evidence"] == []
     restored = service.store_uploaded_evidence(
         project["project_id"], "restored.txt", b"E1 durable source content", "text/plain", source_revision="commit-A"

@@ -62,11 +62,11 @@ class IntelligenceService:
                 (project_id, needle, needle, needle, min(limit, 50)),
             ).fetchall()]
             notion = [dict(row) for row in db.execute(
-                "SELECT source_binding_id,page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at FROM prime_core.notion_knowledge_sources WHERE project_id=%s AND (page_id ILIKE %s OR COALESCE(page_url,'') ILIKE %s OR status ILIKE %s OR COALESCE(metadata::text,'') ILIKE %s) ORDER BY observed_at DESC NULLS LAST LIMIT %s",
+                "SELECT source_binding_id,page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at FROM prime_core.notion_knowledge_sources WHERE project_id=%s AND COALESCE(status,'') NOT IN ('DETACHED','RETRACTED') AND (page_id ILIKE %s OR COALESCE(page_url,'') ILIKE %s OR status ILIKE %s OR COALESCE(metadata::text,'') ILIKE %s) ORDER BY observed_at DESC NULLS LAST LIMIT %s",
                 (project_id, needle, needle, needle, needle, min(limit, 50)),
             ).fetchall()]
             activity = [dict(row) for row in db.execute("SELECT event_id,event_type,observed_at,source_revision,payload FROM prime_core.events WHERE project_id=%s AND (event_type ILIKE %s OR payload::text ILIKE %s) ORDER BY observed_at DESC LIMIT %s", (project_id, needle, needle, min(limit, 50))).fetchall()]
-            progress = [dict(row) for row in db.execute("SELECT assessment_id,progress_percent,confidence,freshness_state,created_at,summary,repository_revision FROM prime_core.progress_assessments WHERE project_id=%s AND (summary ILIKE %s OR item_results::text ILIKE %s) ORDER BY created_at DESC LIMIT %s", (project_id, needle, needle, min(limit, 50))).fetchall()]
+            progress = [dict(row) for row in db.execute("SELECT pa.assessment_id,pa.progress_percent,pa.confidence,pa.freshness_state,pa.created_at,pa.summary,pa.repository_revision FROM prime_core.progress_assessments pa WHERE pa.project_id=%s AND pa.freshness_state='CURRENT' AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements_text(COALESCE(pa.evidence_refs,'[]'::jsonb)) AS ref(value) WHERE NOT EXISTS (SELECT 1 FROM prime_core.source_references sr WHERE sr.project_id=pa.project_id AND sr.source_reference_id=ref.value AND sr.freshness_state='CURRENT')) AND (pa.summary ILIKE %s OR pa.item_results::text ILIKE %s) ORDER BY pa.created_at DESC LIMIT %s", (project_id, needle, needle, min(limit, 50))).fetchall()]
             evidence = [dict(row) for row in db.execute(
                 "SELECT evidence_id,source_reference_id,locator,source_revision,content_hash,privacy_class,parser_status,index_status,extracted_text,captured_at "
                 "FROM prime_core.evidence_records WHERE project_id=%s AND retracted_at IS NULL AND purged_at IS NULL "
