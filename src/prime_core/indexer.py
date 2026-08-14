@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import mimetypes
 from pathlib import Path
 from pathlib import PurePosixPath
@@ -27,6 +28,7 @@ class RepositoryIndexer:
             if not (root / ".git").exists():
                 raise ValueError("bound path is not a working repository")
             source_revision = self._revision(root)
+            branch = self._branch(root)
             observed = now()
             previous_revision = db.execute("SELECT canonical_revision FROM prime_core.project_bindings WHERE project_id=%s", (project_id,)).fetchone()["canonical_revision"]
             db.execute(
@@ -44,13 +46,13 @@ class RepositoryIndexer:
                 data = path.read_bytes()
                 kind = mimetypes.guess_type(path.name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
                 db.execute(
-                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
-                    (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, source_revision, observed),
+                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,'COMMITTED_CANONICAL',%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,observation_basis='COMMITTED_CANONICAL',canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
+                    (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, source_revision, source_revision, branch, str(root), observed),
                 )
                 count += 1
             db.execute(
                 "INSERT INTO prime_core.source_snapshots(source_snapshot_id,project_id,source_class,source_revision,source_hash,freshness_state,observed_at,metadata) VALUES (%s,%s,'REPOSITORY',%s,%s,'CURRENT',%s,%s) ON CONFLICT (project_id,source_class,source_revision) DO UPDATE SET freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
-                (_id("snapshot"), project_id, source_revision, source_revision, observed, "{}"),
+                (_id("snapshot"), project_id, source_revision, source_revision, observed, json.dumps({"mode": "FULL", "observation_basis": "COMMITTED_CANONICAL", "canonical_revision": source_revision, "worktree_branch": branch, "worktree_path": str(root)})),
             )
             db.execute(
                 "UPDATE prime_core.source_snapshots SET freshness_state='STALE' WHERE project_id=%s AND source_class='REPOSITORY' AND source_revision<>%s AND freshness_state='CURRENT'",
@@ -86,54 +88,95 @@ class RepositoryIndexer:
             root = Path(binding["canonical_path"]).resolve(strict=True)
             if not (root / ".git").exists():
                 raise ValueError("bound path is not a working repository")
-            relation = self._revision_relation(root, binding["canonical_revision"], source_revision)
-            if relation == "SAME":
-                return {"status": "NOOP", "project_id": project_id, "source_revision": source_revision, "changed_paths": []}
+            actual_head = self._revision(root)
+            if source_revision != actual_head:
+                raise ValueError("OBSERVATION_REVISION_MISMATCH")
             normalized = self._normalize_changed_paths(root, changed_paths)
+            relation = self._revision_relation(root, binding["canonical_revision"], source_revision)
+            dirty_by_path = {relative: self._worktree_status(root, relative) for relative, _candidate in normalized}
+            dirty_paths = [relative for relative, status in dirty_by_path.items() if status]
+            if relation == "SAME" and not dirty_paths:
+                return {"status": "NOOP", "project_id": project_id, "source_revision": source_revision, "changed_paths": []}
+            if relation == "NEWER" and dirty_paths:
+                raise ValueError("DIRTY_WORKTREE_REQUIRES_CANONICAL_CLEAN")
+            observation_basis = "WORKTREE_DIRTY" if dirty_paths else "COMMITTED_CANONICAL"
             observed = now()
-            indexed = 0
-            retracted = 0
+            branch = self._branch(root)
+            observations: list[tuple[str, Path, bytes | None, str, str]] = []
             for relative, candidate in normalized:
-                db.execute(
-                    "UPDATE prime_core.repository_files SET freshness_state='STALE' WHERE project_id=%s AND repository_id=%s AND relative_path=%s AND freshness_state='CURRENT'",
-                    (project_id, binding["repository_id"], relative),
-                )
+                status = dirty_by_path[relative]
                 if not candidate.exists():
-                    retracted += 1
+                    observations.append((relative, candidate, None, hashlib.sha256(b"<MISSING>").hexdigest(), status))
                     continue
                 if not candidate.is_file():
                     raise ValueError(f"changed path is not a regular file: {relative}")
                 data = candidate.read_bytes()
+                observations.append((relative, candidate, data, hashlib.sha256(data).hexdigest(), status))
+            if observation_basis == "WORKTREE_DIRTY":
+                snapshot_key = hashlib.sha256(json.dumps([(relative, digest, status) for relative, _candidate, _data, digest, status in observations], sort_keys=True).encode("utf-8")).hexdigest()
+                observation_revision = f"WORKTREE:{actual_head}:{snapshot_key}"
+            else:
+                snapshot_key = source_revision
+                observation_revision = source_revision
+            indexed = 0
+            retracted = 0
+            for relative, candidate, data, content_hash, _status in observations:
+                db.execute(
+                    "UPDATE prime_core.repository_files SET freshness_state='STALE' WHERE project_id=%s AND repository_id=%s AND relative_path=%s AND freshness_state='CURRENT'",
+                    (project_id, binding["repository_id"], relative),
+                )
+                if data is None:
+                    retracted += 1
+                    continue
                 kind = mimetypes.guess_type(candidate.name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
                 db.execute(
-                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
-                    (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, source_revision, observed),
+                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,observation_basis=EXCLUDED.observation_basis,canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
+                    (_id("file"), project_id, binding["repository_id"], relative, content_hash, len(data), kind, observation_revision, observation_basis, actual_head, branch, str(root), observed),
                 )
                 indexed += 1
             paths = [item[0] for item in normalized]
             db.execute(
-                "INSERT INTO prime_core.source_snapshots(source_snapshot_id,project_id,source_class,source_revision,source_hash,freshness_state,observed_at,metadata) VALUES (%s,%s,'REPOSITORY',%s,%s,'CURRENT',%s,%s,%s) ON CONFLICT (project_id,source_class,source_revision) DO UPDATE SET freshness_state='CURRENT',observed_at=EXCLUDED.observed_at,metadata=EXCLUDED.metadata",
-                (_id("snapshot"), project_id, source_revision, source_revision, observed, json.dumps({"mode": "INCREMENTAL", "changed_paths": paths})),
+                "INSERT INTO prime_core.source_snapshots(source_snapshot_id,project_id,source_class,source_revision,source_hash,freshness_state,observed_at,metadata) VALUES (%s,%s,'REPOSITORY',%s,%s,'CURRENT',%s,%s) ON CONFLICT (project_id,source_class,source_revision) DO UPDATE SET freshness_state='CURRENT',observed_at=EXCLUDED.observed_at,metadata=EXCLUDED.metadata",
+                (_id("snapshot"), project_id, observation_revision, snapshot_key, observed, json.dumps({"mode": "INCREMENTAL", "observation_basis": observation_basis, "changed_paths": paths, "canonical_revision": actual_head, "worktree_branch": branch, "worktree_path": str(root), "dirty_paths": dirty_paths})),
             )
-            db.execute(
-                "UPDATE prime_core.source_snapshots SET freshness_state='STALE' WHERE project_id=%s AND source_class='REPOSITORY' AND source_revision<>%s AND freshness_state='CURRENT'",
-                (project_id, source_revision),
-            )
-            db.execute(
-                "UPDATE prime_core.project_bindings SET canonical_revision=%s,updated_at=%s WHERE project_id=%s",
-                (source_revision, observed, project_id),
-            )
-            db.execute(
-                "UPDATE prime_core.projects SET connectivity_state='ONLINE',freshness_state='CURRENT',updated_at=%s WHERE project_id=%s",
-                (observed, project_id),
-            )
+            if observation_basis == "COMMITTED_CANONICAL":
+                db.execute(
+                    "UPDATE prime_core.source_snapshots SET freshness_state='STALE' WHERE project_id=%s AND source_class='REPOSITORY' AND source_revision<>%s AND source_revision NOT LIKE 'WORKTREE:%%' AND freshness_state='CURRENT'",
+                    (project_id, observation_revision),
+                )
+                db.execute(
+                    "UPDATE prime_core.project_bindings SET canonical_revision=%s,updated_at=%s WHERE project_id=%s",
+                    (actual_head, observed, project_id),
+                )
+                db.execute(
+                    "UPDATE prime_core.progress_assessments SET freshness_state='STALE' WHERE project_id=%s AND repository_revision<>%s AND freshness_state='CURRENT'",
+                    (project_id, actual_head),
+                )
+                db.execute(
+                    "UPDATE prime_core.projects SET connectivity_state='ONLINE',freshness_state='CURRENT',updated_at=%s WHERE project_id=%s",
+                    (observed, project_id),
+                )
+            else:
+                db.execute(
+                    "UPDATE prime_core.source_snapshots SET freshness_state='STALE' WHERE project_id=%s AND source_class='REPOSITORY' AND source_revision LIKE 'WORKTREE:%%' AND source_revision<>%s AND freshness_state='CURRENT'",
+                    (project_id, observation_revision),
+                )
+                db.execute(
+                    "UPDATE prime_core.projects SET connectivity_state='ONLINE',freshness_state='STALE',updated_at=%s WHERE project_id=%s",
+                    (observed, project_id),
+                )
         event = self.service.emit_coalesced_event(
             "REPOSITORY_CHANGED",
-            {"mode": "INCREMENTAL", "source_revision": source_revision, "changed_paths": paths},
+            {"mode": "INCREMENTAL", "observation_basis": observation_basis, "source_revision": source_revision, "canonical_revision": actual_head, "worktree_branch": branch, "changed_paths": paths, "dirty_paths": dirty_paths, "observation_revision": observation_revision},
             project_id,
-            source_revision,
+            observation_revision,
         )
-        return {"status": "OBSERVED_INCREMENTALLY", "project_id": project_id, "source_revision": source_revision, "changed_paths": paths, "files_indexed": indexed, "files_retracted": retracted, "event_id": event["event_id"]}
+        if observation_basis == "COMMITTED_CANONICAL" and any(path in {".agent/DIRECTIVES.md", ".agent/OUTCOMES.md", ".agent/LEARNINGS.md", ".agent/RECORD.md"} for path in paths):
+            from .authority_memory_admission import AuthorityMemoryAdmission
+            memory_admission = AuthorityMemoryAdmission(self.service.settings, self.service).admit(project_id, root, actual_head)
+        else:
+            memory_admission = {"status": "NOT_RUN", "reason": "WORKTREE_DIRTY" if observation_basis == "WORKTREE_DIRTY" else "NO_AUTHORITY_LEDGER_PATH", "records": []}
+        return {"status": "OBSERVED_INCREMENTALLY", "project_id": project_id, "source_revision": source_revision, "observation_revision": observation_revision, "observation_basis": observation_basis, "canonical_revision": actual_head, "worktree_branch": branch, "changed_paths": paths, "dirty_paths": dirty_paths, "files_indexed": indexed, "files_retracted": retracted, "event_id": event["event_id"], "memory_admission": memory_admission}
 
     @staticmethod
     def _normalize_changed_paths(root: Path, changed_paths: list[str]) -> list[tuple[str, Path]]:
@@ -187,3 +230,25 @@ class RepositoryIndexer:
             return subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], check=True, capture_output=True, text=True, timeout=5).stdout.strip() or "UNBORN"
         except subprocess.CalledProcessError:
             return "UNBORN"
+
+    @staticmethod
+    def _worktree_status(root: Path, relative: str) -> str:
+        import subprocess
+        try:
+            return subprocess.run(
+                ["git", "-C", str(root), "status", "--porcelain=v1", "--untracked-files=all", "--", relative],
+                check=True, capture_output=True, text=True, timeout=5,
+            ).stdout.strip()
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            raise ValueError("unable to determine working-tree status") from exc
+
+    @staticmethod
+    def _branch(root: Path) -> str:
+        import subprocess
+        try:
+            return subprocess.run(
+                ["git", "-C", str(root), "branch", "--show-current"],
+                check=True, capture_output=True, text=True, timeout=5,
+            ).stdout.strip() or "DETACHED"
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            raise ValueError("unable to determine repository branch") from exc

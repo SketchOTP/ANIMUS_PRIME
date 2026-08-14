@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046`
-- External directive ID: ANIMUS PRIME - Continuation 046
-- Objective: `Reconcile all 52 starting open section-26 rows, implement bounded incremental observation and binding fail-closed checks, and close only directly evidenced core-independent architecture rows.`
-- Current status: `COMPLETE`
+- Local directive ID: `D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047`
+- External directive ID: ANIMUS PRIME - Continuation 047
+- Objective: `Reopen DOD-061 after independent runtime verification; repair source-truth and integration semantics; requalify directly against persistent Atlas; harvest only exact Core-independent closures.`
+- Current status: `IN_PROGRESS`
 - Acceptance: `PARTIAL`
-- Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `src/prime_core/indexer.py; apps/core/main.py; src/prime_core/service.py; governed audit/burndown/traceability; Continuation 046 evidence; append-only .agent records`
-- Immediate next action: `Awaiting reset for the next explicitly authorized continuation; no Phase 16 or deployment.`
+- Current phase: `VALIDATING`
+- Expected or actual touched areas: `src/prime_core/indexer.py; apps/core/main.py; Progress and authority-memory integration; tests; Continuation 047 evidence; governed records; append-only .agent records`
+- Immediate next action: `Reproduce and repair DOD-061 before any promotion; no Core/browser, Phase 16, deployment, R-045 pressure, or R-056 closure.`
 
 ## Temporary task-relevant facts
 

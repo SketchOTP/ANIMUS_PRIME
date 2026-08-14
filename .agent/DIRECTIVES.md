@@ -633,3 +633,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-FROZEN-SPEC-RECONCILIATION-045
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047
+
+- Issued: 2026-08-14
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 047
+- Objective: Reopen DOD-061 after independent runtime verification, repair incremental observation source-truth and integration semantics, requalify it directly against the persistent Atlas project, and harvest only directly supported Core-independent rows.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight; incremental indexer, Progress freshness, authority-memory admission, security/provenance tests, governance, evidence, GitHub and Notion publication.
+- Exclusions: No Z:/SSHFS execution authority; no temporary Core or browser qualification; no disposable databases/containers/projects/repos/worktrees/fixtures/banks/profiles; no Phase 16; no deployment; no R-045 pressure; no R-056 closure; preserve pre-existing untracked state.
+- Acceptance: Reproduce and repair the published NameError; prove revision/worktree coherence, dirty same-HEAD handling, canonical A-to-B projection, changed-path-only processing, deletion/retraction, bounded rejection matrix, Progress staleness, DOD-030 regression behavior, required focused qualification, full validation, exact publication parity, and truthful remaining blockers.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046
+- Status at issuance: ISSUED
