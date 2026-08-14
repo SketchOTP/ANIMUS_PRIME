@@ -671,3 +671,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Atlas project identity, DOD-005 preflight, and local browser qualification boundary.
 - Supersedes learning: L-PRIME-LOCAL-CONVERGENCE-056
+
+## L-PRIME-TRUSTED-HOST-LOCAL-IDENTITY-058
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-TRUSTED-HOST-LOCAL-IDENTITY-058
+- Fact or lesson: A trusted Atlas host can provide a bounded local identity path without storing or transmitting an operator password when the browser only creates a short-lived challenge, the host command reads a separate mode-0600 secret, and Core redeems a browser nonce into ordinary session/CSRF state. SIGN_IN and STEP_UP must remain purpose-isolated, approval must require the dedicated host secret, and consumed or expired challenges must fail closed. Loopback transport is only a transport boundary; it is not sufficient identity proof without the separate secret.
+- Evidence location: migrations/prime/0034_local_identity_authentication.sql; src/prime_core/service.py; apps/core/main.py; apps/web/index.html; packaging/core/prime-local-auth; tests/phase15/test_local_identity_authentication.py; evidence/phase15/qualification-continuation-058.md.
+- Confidence: VERIFIED
+- Scope: PRIME persistent Atlas Core/UI trusted-host authentication and single-operator browser continuity.
+- Supersedes learning: L-PRIME-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057

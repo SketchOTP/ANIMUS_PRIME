@@ -59,7 +59,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Run bounded direct invariant qualification for DOD-005 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["src/prime_core/history_service.py","src/prime_core/memory_service.py","src/prime_core/progress_service.py","src/prime_core/intelligence_service.py","tests/phase15/test_requirement_qualification.py","evidence/phase15/qualification-continuation-052.md","evidence/phase15/qualification-continuation-053.md","evidence/phase15/qualification-continuation-056.md","evidence/phase15/qualification-continuation-057.md"]
+    evidence_already_available: ["src/prime_core/history_service.py","src/prime_core/memory_service.py","src/prime_core/progress_service.py","src/prime_core/intelligence_service.py","tests/phase15/test_requirement_qualification.py","evidence/phase15/qualification-continuation-052.md","evidence/phase15/qualification-continuation-053.md","evidence/phase15/qualification-continuation-056.md","evidence/phase15/qualification-continuation-057.md","evidence/phase15/qualification-continuation-058.md"]
     qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
     blocked_by: "NONE"
     depends_on: "R-011"

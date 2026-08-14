@@ -788,3 +788,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-056
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058
+
+- Issued: 2026-08-14T22:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 058
+- Objective: Establish the genuine persistent Atlas PRIME Core/UI trusted-host local identity authentication path for the existing single operator and qualify it through the real browser product.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing PostgreSQL/Hindsight/Core/UI/Node; separate host-held local identity secret; short-lived SIGN_IN and STEP_UP challenge/approval/redeem; browser/security/runtime qualification; evidence, .agent records, governed YAML, GitHub, and continuously maintained Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable environments; no public ingress or Funnel changes; no password or credential rotation; no raw secrets in Git/evidence/Notion/logs; no unrelated service replacement; no Phase 16; no deployment; no R-056 closure; DOD-005 remains parked; DOD-004/DOD-039/DOD-050/DOD-053 remain parked unless directly required by the real operator path.
+- Acceptance: Separate local identity provisioned through the approved existing recovery path; host-only approval and browser-bound redemption; purpose isolation and fail-closed negatives; real persistent Core/UI operator journey; restart recovery; validation and exact publication parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+- Status at issuance: ISSUED

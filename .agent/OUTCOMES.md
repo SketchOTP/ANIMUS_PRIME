@@ -1846,3 +1846,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005 complete positive/negative/restoration qualification; 5 local code items; 15 local browser items; 15 external-environment items; R-056, Phase 15 completion, and V1 declaration remain open.
 - Blockers: authenticated browser qualification requires the existing operator credential through the approved secure path; DOD-005 requires a naturally available supported source lifecycle.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058 - PARTIAL
+
+- Outcome ID: O-PRIME-058
+- Supersedes outcome: O-PRIME-057
+- Closed: 2026-08-14T23:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: Added and provisioned a separate host-held local identity for the existing single operator, without reading or changing the operator password. The real persistent Atlas Core/UI now supports short-lived browser-bound SIGN_IN and STEP_UP challenges approved only by the Atlas host helper; successful redemption creates ordinary PRIME session/CSRF state. Missing-secret, wrong-secret, and consumed-challenge replay negatives failed closed. The Qualification Project, persistent PostgreSQL/Hindsight, canonical Node, and private user-systemd runtime were preserved; Core restart recovered the same project and operator-visible state.
+- Changed areas: local identity migration/service/API/UI; host approval helper; focused security contract tests; Continuation 058 evidence; governed qualification/traceability/burndown/alignment records; append-only .agent records; living Notion journal.
+- Validation:
+  - focused local-identity/recovery checks (4 passed) - PASSED
+  - full regression (96 passed, 28 skipped) - PASSED
+  - compile, shell syntax, diff, secret, governance, burndown, alignment, persistent Core/Node, browser/security/restart checks - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: DOD-005 remains BACKEND_ONLY because no safe existing source lifecycle was available for direct mutation qualification; local browser/code queue and external environment boundaries remain open; R-056, Phase 15 completion, and V1 declaration remain gated.
+- Blockers: none for the bounded trusted-host local identity scope; DOD-005 still requires a safe restoration-bounded source exercise and external integrations remain unavailable or unqualified.
+- Follow-up directive: none

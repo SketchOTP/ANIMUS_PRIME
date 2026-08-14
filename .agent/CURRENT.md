@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-14T22:10:00-04:00
+- Last updated: 2026-08-14T23:35:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 057
-- Objective: Correct qualification provenance, preflight DOD-005 against the real Qualification Project without unsafe mutation, and harvest safe local product qualification evidence.
-- Current status: `PARTIAL`
-- Acceptance: PARTIAL; DOD-005 preflight hard-stopped truthfully with no safe reversible candidate, browser wave is limited by unavailable current operator credentials, and R-056 remains gated.
-- Current phase: RESTORATION_BOUNDED_LOCAL_QUALIFICATION_057
-- Expected or actual touched areas: Core/Node trust lifecycle; persistent Atlas Node service; private Core/UI runtime; browser operator journey; recovery-secret guard; evidence and governed records
-- Immediate next action: use the approved secure operator credential path to resume authenticated local browser qualification, or keep those clauses open; keep DOD-004/DOD-039/DOD-050/DOD-053 parked and do not start R-056 prematurely.
+- Local directive ID: D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 058
+- Objective: Establish spec-compliant trusted-host local identity sign-in and step-up authentication on the existing persistent Atlas PRIME installation, then resume the real browser operator journey.
+- Current status: `COMPLETE`
+- Acceptance: PARTIAL; trusted-host sign-in, step-up, negative security cases, persistent service restart, and the real protected browser journey passed, while DOD-005, the remaining local queue, external boundaries, and R-056 remain open.
+- Current phase: TRUSTED_HOST_LOCAL_IDENTITY_AUTHENTICATION_058
+- Expected or actual touched areas: local identity migration/service/API/UI; Atlas host approval helper; persistent Core image/service; browser operator journey; evidence and governed records
+- Immediate next action: continue the bounded local browser qualification queue without reopening DOD-005 or starting R-056; preserve private Atlas runtime and parked DOD-004/DOD-039/DOD-050/DOD-053 scope.
 
 ## Temporary task-relevant facts
 
@@ -28,6 +28,8 @@
 - Continuation 054 authenticated the Qualification Project through the real Core-served UI; Search, Ask, Goal, Progress, Repository, Authority, Memory, Knowledge, Evidence, Activity, Brain, Time Lens, AI Connections, and Settings states were inspected without promoting incomplete requirements.
 - Continuation 051 parks DOD-039 pending a naturally available alternate location; no further DOD-039 implementation is authorized by this directive.
 - Continuation 055 preserves the canonical Node identity `node-041-atlas-native`, uses persistent trust material outside Git, and keeps public ingress, deployment, Phase 16, and parked qualification work out of scope.
+- Continuation 058 implementation commit: `8c881256b6a0164cfef9ae411eb404107ac5c3c0`; the existing single operator now has a separate host-held local identity secret, stored only as a digest in Core state, with short-lived SIGN_IN and STEP_UP challenge/approval/redeem flows.
+- Continuation 058 qualified the real persistent Core/UI path: trusted-host sign-in and 300-second step-up succeeded; missing/wrong host-secret approval returned 401; consumed challenge replay returned 401; Core restart preserved authenticated project identity, Progress, repository binding, and Node state.
 
 ## Last validation after adoption
 
@@ -47,7 +49,9 @@
 
 ## Pending decisions
 
-- Continuation 057: the real Qualification Project is bound to `/home/sketch/Projects/ANIMUS_PRIME` and `node-041-atlas-native`; its current sources are authority records only. No safe existing non-authority source with a supported reversible retraction/restoration path was found, so DOD-005 remains BACKEND_ONLY without mutation. The live UI exposes protected entry, but the prior operator credential is not available in this run and no credential rotation was performed.
+- Continuation 057: the real Qualification Project is bound to `/home/sketch/Projects/ANIMUS_PRIME` and `node-041-atlas-native`; its current sources are authority records only. No safe existing non-authority source with a supported reversible retraction/restoration path was found, so DOD-005 remains BACKEND_ONLY without mutation.
+
+- Continuation 058: the approved recovery path provisioned a separate local identity without reading or changing the operator password. The browser never receives the host secret; Atlas-only approval redeems into ordinary PRIME session/CSRF state. External Notion, model, Hindsight Reflect/Mental Models, Windows, second-device, and provider boundaries remain truthful degraded/unavailable states.
 
 - DOD-005 now propagates evidence retraction to current source references, linked memory, evidence-backed Progress views, and current Documentation projection state while preserving historical projection provenance; direct qualification remains open.
 - DOD-074 persisted project/history/Progress reads remain available with the canonical Node offline, while Node-required repository inspection fails closed and returns after service recovery; the exercised operator boundary is now qualified.

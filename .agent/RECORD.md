@@ -521,3 +521,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The project is bound to the canonical Atlas repository and must be distinguished from persistent regression residue. The directive requires a hard stop when safe restoration cannot be guaranteed. Protected-entry UI behavior can be observed without making an unapproved credential change; authenticated clauses remain truthful and open.
 - Affected areas: qualification provenance; DOD-005 evidence; browser qualification boundary; Continuation 057 governance records.
 - Supersedes record: DEC-PRIME-PHASE15-056
+
+## DEC-PRIME-PHASE15-058
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-058
+- Status: CLOSED
+- Decision or event: Establish the spec-compliant trusted-host local identity flow on the existing persistent Atlas installation. Keep the browser secret-free: the browser creates a 120-second SIGN_IN or STEP_UP challenge, the Atlas host helper approves it with the separate local identity secret, and Core redeems the browser-bound nonce into ordinary session/CSRF state.
+- Rationale: The existing operator password must not be read, rotated, or replaced. A separate high-entropy host-held secret and purpose-isolated challenge lifecycle preserve the existing operator identity while keeping approval outside the browser. The flow was qualified through the real private Core/UI, including fail-closed negatives and Core restart recovery, without creating disposable state or changing public exposure.
+- Affected areas: local identity migration/service/API/UI; Atlas host approval helper; persistent Core image/service; browser authentication and step-up qualification; Continuation 058 evidence and governed records.
+- Supersedes record: DEC-PRIME-PHASE15-057
