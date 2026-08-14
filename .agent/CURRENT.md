@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-14T19:15:00-04:00
+- Last updated: 2026-08-14T20:30:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-OPERATOR-RECOVERY-NODE-ACTIVATION-054
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 054
-- Objective: Recover the existing single operator through a platform-local break-glass path, qualify the real authenticated product, and activate the existing Atlas Node only through an approved secure mTLS lifecycle.
+- Local directive ID: D-PRIME-PHASE15-V1-NODE-TRUST-LIFECYCLE-055
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 055
+- Objective: Implement and qualify the persistent Core-to-Node trust/enrollment lifecycle, activate the canonical Atlas Node through operator-approved mTLS, and qualify browser-visible offline continuity.
 - Current status: `IN_PROGRESS`
-- Acceptance: PARTIAL; authenticated product journey and recovery are qualified, live Node mTLS remains blocked by absent governed enrollment material.
-- Current phase: OPERATOR_RECOVERY_AUTHENTICATED_PRODUCT_054
-- Expected or actual touched areas: local recovery migration/service/API; Atlas persistent Core image and loopback origin configuration; authenticated browser journey; bounded evidence and governed records; append-only .agent records
-- Immediate next action: obtain or implement the governed Atlas Node certificate/enrollment lifecycle before attempting Node startup; keep the authenticated Core/UI running.
+- Acceptance: PARTIAL; persistent mTLS enrollment, rotation, revocation, re-enrollment, restart recovery, and DOD-074 offline boundary are qualified; DOD-005 projection and R-056 remain open.
+- Current phase: NODE_TRUST_LIFECYCLE_PERSISTENT_OPERATOR_055
+- Expected or actual touched areas: Core/Node trust lifecycle; persistent Atlas Node service; private Core/UI runtime; browser operator journey; recovery-secret guard; evidence and governed records
+- Immediate next action: publish Continuation 055 evidence and reconciled governed records; retain DOD-005, R-056, and unavailable integration boundaries as open.
 
 ## Temporary task-relevant facts
 
@@ -23,15 +23,15 @@
 - DOD-030, DOD-061, and DOD-063 regression guards passed and remain preserved.
 - DOD-008 recovery credential replay, DOD-006 current topology, DOD-039, DOD-004, DOD-005, DOD-050, DOD-053, DOD-074, R-045, and R-056 remain open or bounded; DOD-045, DOD-028, DOD-037, and DOD-038 remain PRODUCT_VERIFIED under Continuation 049.
 - Continuation 050 implementation commit: `b6c94b7378966d42912277e6c861c3cd75f4846c`; persistent project/repository IDs remain stable and no disposable or alternate repository was created.
-- Continuation 053 runtime image/service is private and restart-recovered; the repository Node remains an enrolled record without an approved mTLS service installation.
+- Continuation 053 runtime image/service is private and restart-recovered; Continuation 055 now runs the canonical Node through a user-systemd mTLS service at `127.0.0.1:18001`.
 - Continuation 054 added and exercised a loopback-only platform-local recovery secret path; the same operator identity was retained, credentials rotated, prior sessions revoked, and replacement references stored mode `0600` outside Git.
 - Continuation 054 authenticated the Qualification Project through the real Core-served UI; Search, Ask, Goal, Progress, Repository, Authority, Memory, Knowledge, Evidence, Activity, Brain, Time Lens, AI Connections, and Settings states were inspected without promoting incomplete requirements.
 - Continuation 051 parks DOD-039 pending a naturally available alternate location; no further DOD-039 implementation is authorized by this directive.
-- Convergence reset 052 parks DOD-050 and DOD-053 implementation, limits DOD-004 to already-built primitives and real V1 paths, and identifies persistent PRIME Core plus the genuine web UI as the next milestone requiring explicit authorization.
+- Continuation 055 preserves the canonical Node identity `node-041-atlas-native`, uses persistent trust material outside Git, and keeps public ingress, deployment, Phase 16, and parked qualification work out of scope.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 054 local recovery migration, authenticated browser journey, session revocation, Core restart/session persistence, origin refusal, Node negative boundary, regression, governance, alignment audit, and burndown validation
+- Command or check: Continuation 055 mTLS lifecycle, browser healthy/offline/recovery journey, trust-chain checks, focused regression, governance, and persistent runtime checks
 - Result: PASSED
 
 ## Risks
@@ -43,14 +43,14 @@
 
 ## Blockers
 
-- Live Node control-plane qualification remains blocked because no governed Atlas certificate/enrollment service material or Core live Node wiring exists; approved model, live Notion, Hindsight Reflect/Mental Models, native Windows, and required second-device/provider boundaries remain unavailable or unqualified.
+- DOD-005 generated Documentation/Notion projection, approved model, live Notion, Hindsight Reflect/Mental Models, native Windows, and required second-device/provider boundaries remain unavailable or unqualified; R-056 remains gated.
 
 ## Pending decisions
 
-- Continuation 053: persistent Core/UI is authorized and running; authenticated browser qualification remains pending the existing operator credential, while lower-priority DOD-039/DOD-050/DOD-053 work remains parked.
+- Continuation 055: persistent Core/UI and the canonical mTLS Node are authorized, running, and browser-qualified within the private Atlas boundary; lower-priority DOD-039/DOD-050/DOD-053 work remains parked.
 
 - DOD-005 now propagates evidence retraction to current source references, linked memory, and evidence-backed Progress views; generated Documentation/Notion projection qualification remains open.
-- DOD-074 persisted project/history/Progress reads remain available with the existing Node offline, while Node-required repository inspection fails closed; the operator path remains unqualified pending the existing operator credential and approved live Node service.
+- DOD-074 persisted project/history/Progress reads remain available with the canonical Node offline, while Node-required repository inspection fails closed and returns after service recovery; the exercised operator boundary is now qualified.
 
 
 ## Status vocabulary

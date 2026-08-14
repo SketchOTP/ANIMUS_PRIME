@@ -1787,3 +1787,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-008 remains PARTIAL pending full browser recovery/step-up qualification; DOD-005 and DOD-074 remain backend/operator-boundary partial; DOD-006 and R-031 remain open without live Node mTLS; live Notion write, approved model, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open.
 - Blockers: governed Atlas Node certificate/enrollment lifecycle and Core live Node integration are absent from the current repository/runtime; no insecure or fabricated substitute is permitted.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-NODE-TRUST-LIFECYCLE-055 - PARTIAL
+
+- Outcome ID: O-PRIME-055
+- Supersedes outcome: O-PRIME-054
+- Closed: 2026-08-14T20:35:00-04:00
+- Acceptance: PARTIAL
+- Summary: Implemented and operated the persistent Core-owned trust lifecycle for canonical Node `node-041-atlas-native` on Atlas. A short-lived signed bootstrap proof was submitted by the real Node, approved through the authenticated PRIME UI, and converted to an operator-approved CA-signed mTLS certificate. Credential rotation, explicit revocation, re-enrollment, second approval, restart recovery, and browser-visible healthy/offline/recovery behavior were exercised against the existing persistent topology. The browser kept project/Progress/history usable while Node was offline and returned truthful NODE_UNAVAILABLE for Node-required repository reads. The generated Documentation/Notion projection boundary and R-056 remain open.
+- Changed areas: Core/Node trust lifecycle; Node enrollment migration; persistent Node packaging/service; Core-to-Node client; browser enrollment panel and recovery-secret guard; focused tests; Continuation 055 evidence.
+- Validation:
+  - focused Node/client/trust and recovery-secret regression - PASSED (7 passed)
+  - direct Core-to-Node mTLS heartbeat and certificate-chain checks - PASSED
+  - authenticated browser healthy/offline/restart recovery journey - PASSED
+  - rotation, revocation, re-enrollment, operator approval, and canonical identity continuity - PASSED
+  - persistent Core and Node service health/startup policy - PASSED
+  - full regression - PASSED (93 passed, 28 skipped; skip count unchanged from the established integration boundary)
+  - governance, burndown, product alignment, compile, shell, diff, secret, and persistent service checks - PASSED
+  - publication parity - PENDING final governed commit/push closeout
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-005 generated Documentation/Notion projection remains unqualified; approved model, live Notion, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open or unqualified.
+- Blockers: full regression/publication closeout and Notion child checkpoint remain pending; no public exposure or deployment was performed.
+- Follow-up directive: none

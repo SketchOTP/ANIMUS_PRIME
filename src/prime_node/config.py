@@ -7,7 +7,8 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class NodeSettings:
-    bootstrap_credential: str = field(default_factory=lambda: os.getenv("PRIME_NODE_BOOTSTRAP_CREDENTIAL", "phase2-bootstrap-change-me"))
+    bootstrap_public_key_file: Path | None = field(default_factory=lambda: Path(os.environ["PRIME_NODE_BOOTSTRAP_PUBLIC_KEY_FILE"]).resolve() if os.getenv("PRIME_NODE_BOOTSTRAP_PUBLIC_KEY_FILE") else None)
+    node_id: str = field(default_factory=lambda: os.getenv("PRIME_NODE_ID", ""))
     state_file: Path = field(default_factory=lambda: Path(os.getenv("PRIME_NODE_STATE_FILE", ".prime-node-state.json")))
     allowed_roots: tuple[Path, ...] = field(default_factory=lambda: tuple(Path(item).resolve() for item in os.getenv("PRIME_NODE_ALLOWED_ROOTS", "").split(os.pathsep) if item))
     max_read_bytes: int = field(default_factory=lambda: int(os.getenv("PRIME_NODE_MAX_READ_BYTES", str(5 * 1024 * 1024))))
@@ -32,6 +33,10 @@ class NodeSettings:
             raise ValueError("configured Node protocol is not in the supported protocol set")
         if self.max_read_bytes <= 0 or self.max_request_bytes <= 0:
             raise ValueError("Node request limits must be positive")
+        if not self.node_id:
+            raise ValueError("Node identity must be explicitly configured")
+        if not self.bootstrap_public_key_file or not self.bootstrap_public_key_file.is_file():
+            raise ValueError("Node requires the Core bootstrap verification key")
 
     def uvicorn_kwargs(self) -> dict[str, object]:
         tls_files = (self.tls_cert_file, self.tls_key_file, self.tls_ca_file)

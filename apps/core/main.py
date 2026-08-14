@@ -26,6 +26,7 @@ from src.prime_core.mcp_service import MCPService
 from pathlib import Path
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
+from src.prime_core.node_client import NodeClientError
 from src.prime_core.git_provenance import GitProvenanceError, inspect_git_state
 from src.prime_core.remote_access_service import RemoteAccessSettings, TailscaleService
 from src.prime_core.backup_service import BackupCoordinator, BackupError
@@ -117,6 +118,18 @@ class NodeRequest(BaseModel):
     identity_fingerprint: str = Field(min_length=32, max_length=128)
     allowed_roots: list[str] = Field(default_factory=list)
     capabilities: dict[str, Any] = Field(default_factory=dict)
+
+
+class NodeBootstrapRequest(BaseModel):
+    node_id: str = Field(min_length=1, max_length=160)
+    endpoint: str = Field(min_length=8, max_length=512)
+    requested_metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class NodeProofRequest(BaseModel):
+    node_id: str = Field(min_length=1, max_length=160)
+    csr_pem: str = Field(min_length=100, max_length=20000)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class RepositoryBindingRequest(BaseModel):
@@ -668,6 +681,74 @@ def list_nodes(request: Request, prime_session: str | None = Cookie(default=None
     return {"nodes": service.list_nodes()}
 
 
+@app.post("/v1/nodes/enrollment")
+def issue_node_bootstrap(body: NodeBootstrapRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.issue_node_bootstrap(body.node_id, body.endpoint, body.requested_metadata)
+    except (KeyError, ValueError) as exc:
+        return error("NODE_BOOTSTRAP_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.get("/v1/nodes/enrollment/pending")
+def pending_node_enrollments(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {"enrollments": service.list_pending_node_enrollments()}
+
+
+@app.post("/v1/nodes/enrollment/{challenge_id}/proof")
+def sync_node_proof(challenge_id: str, body: NodeProofRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.sync_node_proof(challenge_id, body.node_id, body.csr_pem, body.metadata)
+    except KeyError as exc:
+        return error("NODE_ENROLLMENT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except ValueError as exc:
+        return error("NODE_PROOF_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/nodes/enrollment/{challenge_id}/approve")
+def approve_node_enrollment(challenge_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.approve_node_enrollment(challenge_id)
+    except KeyError as exc:
+        return error("NODE_ENROLLMENT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (ValueError, NodeClientError) as exc:
+        return error("NODE_APPROVAL_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/nodes/enrollment/{challenge_id}/reject")
+def reject_node_enrollment(challenge_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.reject_node_enrollment(challenge_id)
+    except KeyError as exc:
+        return error("NODE_ENROLLMENT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+
+
+@app.post("/v1/nodes/{node_id}/revoke")
+def revoke_node(node_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.revoke_node(node_id)
+    except KeyError as exc:
+        return error("NODE_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (ValueError, NodeClientError) as exc:
+        return error("NODE_REVOCATION_REJECTED", str(exc), request_id(request), status_code=409)
+
+
+@app.post("/v1/nodes/{node_id}/rotate")
+def rotate_node(node_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.rotate_node_credential(node_id)
+    except KeyError as exc:
+        return error("NODE_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (ValueError, NodeClientError) as exc:
+        return error("NODE_ROTATION_REJECTED", str(exc), request_id(request), status_code=409)
+
+
 @app.post("/v1/repositories/bind")
 def bind_repository(body: RepositoryBindingRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -946,6 +1027,14 @@ def _git_state(project_id: str) -> dict[str, Any]:
     except (KeyError, OSError, ValueError):
         return {"status": "UNAVAILABLE", "repository_path": "UNKNOWN"}
     binding = _repository_binding(project_id) or {}
+    live_node = service.node_client_for_project(project_id)
+    if live_node:
+        node, client = live_node
+        try:
+            snapshot = client.repository_snapshot(binding["canonical_path"])
+            return {"status": "AVAILABLE", "repository_path": snapshot.get("canonical_path", binding["canonical_path"]), "canonical_revision": snapshot.get("head", "UNKNOWN"), "branch": snapshot.get("branch", "UNKNOWN"), "identity_fingerprint": snapshot.get("identity_fingerprint", binding.get("identity_fingerprint")), "dirty": bool(snapshot.get("status")), "worktrees": [], "recent_commits": [], "node_id": node["node_id"], "source": "LIVE_NODE"}
+        except NodeClientError:
+            return {"status": "NODE_UNAVAILABLE", "repository_path": str(root), "node_id": node["node_id"], "source": "LIVE_NODE"}
     try:
         state = inspect_git_state(root, binding.get("canonical_ref"), binding.get("canonical_ref_commit"))
     except GitProvenanceError:
@@ -1106,6 +1195,15 @@ def repository_tree(project_id: str, request: Request, path: str = "", prime_ses
     require_session(request, prime_session)
     try:
         root, candidate = _safe_repository_path(project_id, path)
+        live_node = service.node_client_for_project(project_id)
+        if live_node:
+            node, client = live_node
+            try:
+                listed = client.list_directory(str(candidate))
+            except NodeClientError as exc:
+                return error("NODE_UNAVAILABLE", str(exc), request_id(request), status_code=503)
+            entries = [{**entry, "path": str(Path(entry.get("path", "")).relative_to(root))} for entry in listed.get("entries", [])]
+            return {"project_id": project_id, "path": candidate.relative_to(root).as_posix() if candidate != root else "", "root": str(root), "entries": entries, "source_revision": _git(root, "rev-parse", "HEAD"), "source": "LIVE_NODE", "node_id": node["node_id"]}
         if not candidate.is_dir():
             return error("REPOSITORY_PATH_NOT_DIRECTORY", "requested repository path is not a directory", request_id(request), status_code=400)
         entries = []
@@ -1129,6 +1227,14 @@ def repository_file(project_id: str, path: str, request: Request, prime_session:
     require_session(request, prime_session)
     try:
         root, candidate = _safe_repository_path(project_id, path)
+        live_node = service.node_client_for_project(project_id)
+        if live_node:
+            node, client = live_node
+            try:
+                result = client.read_file(str(candidate))
+            except NodeClientError as exc:
+                return error("NODE_UNAVAILABLE", str(exc), request_id(request), status_code=503)
+            return {"project_id": project_id, "path": path, "availability": "EXACT", "content": result.get("content", ""), "content_hash": result.get("content_hash", "UNKNOWN"), "size_bytes": len(result.get("content", "").encode("utf-8")), "source_revision": _git(root, "rev-parse", "HEAD"), "source": "LIVE_NODE", "node_id": node["node_id"]}
         if not candidate.is_file():
             return error("REPOSITORY_FILE_NOT_FOUND", "requested repository file was not found", request_id(request), status_code=404)
         size = candidate.stat().st_size

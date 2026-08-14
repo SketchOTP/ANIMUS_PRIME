@@ -1,0 +1,24 @@
+[Unit]
+Description=ANIMUS PRIME canonical Atlas Node
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/sketch/Projects/ANIMUS_PRIME
+EnvironmentFile=/home/sketch/.config/animus-prime/node.env
+ExecStart=/home/sketch/Projects/ANIMUS_PRIME/.venv/bin/python -m apps.node.main
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=false
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictSUIDSGID=true
+ReadWritePaths=/home/sketch/.local/share/animus-prime-node
+
+[Install]
+WantedBy=default.target

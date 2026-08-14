@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import NodeSettings
+from src.prime_core.node_trust import csr_fingerprint, verify_bootstrap
 
 
 class NodeService:
@@ -20,7 +21,7 @@ class NodeService:
 
     def _load(self) -> dict[str, Any]:
         if not self.settings.state_file.exists():
-            return {"node_id": None, "token_hash": None, "revoked": False, "enrollment_hash": None, "bootstrap_consumed": False, "approval_state": "UNENROLLED", "last_heartbeat": None, "allowed_roots": []}
+            return {"node_id": self.settings.node_id, "token_hash": None, "revoked": False, "bootstrap_consumed": False, "approval_state": "UNENROLLED", "last_heartbeat": None, "allowed_roots": [str(root) for root in self.settings.allowed_roots], "consumed_bootstrap_digests": []}
         try:
             return json.loads(self.settings.state_file.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
@@ -33,46 +34,67 @@ class NodeService:
         os.chmod(temp, 0o600)
         temp.replace(self.settings.state_file)
 
-    def enroll(self, credential: str) -> tuple[str, str]:
-        accepted = not self.state.get("bootstrap_consumed") and secrets.compare_digest(credential, self.settings.bootstrap_credential)
-        if self.state.get("revoked") and self.state.get("enrollment_hash"):
-            accepted = accepted or secrets.compare_digest(self.digest(credential), self.state["enrollment_hash"])
-        if not accepted:
-            raise PermissionError("invalid node bootstrap credential")
-        if self.state.get("node_id") and not self.state.get("revoked"):
+    def enroll(self, credential: str, node_id: str, csr_pem: str) -> dict[str, Any]:
+        if not self.settings.bootstrap_public_key_file:
+            raise PermissionError("Node bootstrap verification is not configured")
+        proof = verify_bootstrap(credential, self.settings.bootstrap_public_key_file)
+        if proof.get("node_id") != self.settings.node_id or node_id != self.settings.node_id:
+            raise PermissionError("Node identity does not match the governed enrollment")
+        credential_digest = self.digest(credential)
+        if credential_digest in set(self.state.get("consumed_bootstrap_digests") or []):
+            raise PermissionError("node bootstrap proof was already consumed")
+        if self.state.get("approval_state") in {"APPROVED", "ACTIVE"} and not self.state.get("revoked"):
             raise ValueError("node is already enrolled")
-        node_id = f"node_{uuid.uuid4().hex}"
-        token = secrets.token_urlsafe(32)
-        prior_audit = list(self.state.get("audit") or [])
-        self.state = {
-            "node_id": node_id,
-            "token_hash": self.digest(token),
-            "enrollment_hash": None,
-            "bootstrap_consumed": True,
+        fingerprint = csr_fingerprint(csr_pem)
+        self.state.update({
+            "node_id": self.settings.node_id,
+            "token_hash": None,
             "revoked": False,
-            "name": self.settings.node_name,
-            "protocol_version": self.settings.protocol_version,
-            "capabilities": list(self.settings.capabilities),
-            "approval_state": "APPROVED",
+            "bootstrap_consumed": True,
+            "consumed_bootstrap_digests": [*(self.state.get("consumed_bootstrap_digests") or []), credential_digest][-32:],
+            "challenge_id": proof["challenge_id"],
+            "csr_pem": csr_pem,
+            "csr_fingerprint": fingerprint,
+            "approval_state": "PENDING_OPERATOR_APPROVAL",
+            "trust_state": "BOOTSTRAP_PROOF_RECEIVED",
             "last_heartbeat": None,
-            "allowed_roots": [str(root) for root in self.settings.allowed_roots],
-            "audit": prior_audit,
-        }
-        self._record_audit("REENROLLED" if prior_audit else "ENROLLED")
+        })
+        self._record_audit("NODE_PROOF_RECEIVED")
         self._save()
-        return node_id, token
+        return {"challenge_id": proof["challenge_id"], "node_id": self.settings.node_id, "csr_fingerprint": fingerprint, "approval_state": "PENDING_OPERATOR_APPROVAL"}
+
+    def approve(self, certificate_pem: str, token: str, metadata: dict[str, Any]) -> dict[str, Any]:
+        if self.state.get("approval_state") != "PENDING_OPERATOR_APPROVAL":
+            raise ValueError("Node is not pending operator approval")
+        target = self.settings.tls_cert_file
+        if not target:
+            raise ValueError("Node TLS certificate path is not configured")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        temporary = target.with_suffix(".new")
+        temporary.write_text(certificate_pem, encoding="ascii")
+        os.chmod(temporary, 0o600)
+        temporary.replace(target)
+        self.state.update({"token_hash": self.digest(token), "approval_state": "APPROVED", "trust_state": "ACTIVE_CREDENTIAL_PENDING_RESTART", "revoked": False, "certificate": metadata, "csr_pem": None})
+        self._record_audit("OPERATOR_APPROVED")
+        self._save()
+        return {"node_id": self.state.get("node_id"), "approval_state": self.state.get("approval_state"), "certificate": metadata}
+
+    def reject(self) -> None:
+        self.state.update({"approval_state": "REJECTED", "trust_state": "REVOKED", "revoked": True, "csr_pem": None})
+        self._record_audit("OPERATOR_REJECTED")
+        self._save()
 
     def authenticate(self, token: str) -> bool:
-        return bool(self.state.get("node_id") and not self.state.get("revoked") and secrets.compare_digest(self.digest(token), self.state.get("token_hash", "")))
+        return bool(self.state.get("node_id") and self.state.get("approval_state") in {"APPROVED", "ACTIVE"} and not self.state.get("revoked") and secrets.compare_digest(self.digest(token), self.state.get("token_hash", "")))
 
     def revoke(self) -> str:
         self.state["revoked"] = True
         self.state["approval_state"] = "REVOKED"
-        replacement = secrets.token_urlsafe(32)
-        self.state["enrollment_hash"] = self.digest(replacement)
+        self.state["trust_state"] = "REVOKED"
+        self.state["token_hash"] = None
         self._record_audit("REVOKED")
         self._save()
-        return replacement
+        return "REVOKED"
 
     def rotate(self, token: str) -> str:
         if not self.authenticate(token):
@@ -96,7 +118,7 @@ class NodeService:
             "allowed_roots": list(self.state.get("allowed_roots") or [str(root) for root in self.settings.allowed_roots]),
             "revoked": bool(self.state.get("revoked")),
             "approval_state": self.state.get("approval_state", "UNENROLLED"),
-            "health": health,
+            "health": "PENDING" if self.state.get("approval_state") == "PENDING_OPERATOR_APPROVAL" else health,
             "node_version": self.settings.node_version,
             "protocol_versions": list(self.settings.supported_protocols),
             "service": "prime-node",
@@ -105,7 +127,11 @@ class NodeService:
     def heartbeat(self, protocol_version: str) -> dict[str, Any]:
         if protocol_version not in self.settings.supported_protocols:
             raise ValueError("incompatible node control protocol")
+        if self.state.get("approval_state") not in {"APPROVED", "ACTIVE"} or self.state.get("revoked"):
+            raise PermissionError("Node is not approved")
         self.state["last_heartbeat"] = time.time()
+        self.state["approval_state"] = "ACTIVE"
+        self.state["trust_state"] = "ACTIVE"
         self._save()
         return {"status": "ONLINE", "node_id": self.state.get("node_id"), "protocol_version": self.settings.protocol_version, "node_version": self.settings.node_version, "capabilities": self.state.get("capabilities", [])}
 
@@ -157,6 +183,20 @@ class NodeService:
         if b"\x00" in data:
             raise ValueError("binary files are not readable through the text endpoint")
         return {"path": str(path), "content": data.decode("utf-8"), "content_hash": hashlib.sha256(data).hexdigest()}
+
+    def list_directory(self, requested: str) -> dict[str, Any]:
+        path = self.safe_path(requested)
+        if not path.is_dir():
+            raise NotADirectoryError("requested path is not a directory")
+        entries = []
+        for entry in sorted(path.iterdir(), key=lambda item: (not item.is_dir(), item.name.lower()))[:200]:
+            if entry.name == ".git":
+                continue
+            item = {"name": entry.name, "path": str(entry), "kind": "directory" if entry.is_dir() else "file"}
+            if entry.is_file():
+                item["size_bytes"] = entry.stat().st_size
+            entries.append(item)
+        return {"path": str(path), "entries": entries}
 
     def inspect_repository(self, requested: str) -> dict[str, Any]:
         path = self.safe_path(requested)

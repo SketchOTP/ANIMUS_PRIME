@@ -641,3 +641,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME single-operator recovery, session security, Atlas persistent runtime, and Node activation boundary.
 - Supersedes learning: L-PRIME-PERSISTENT-RUNTIME-053
+
+## L-PRIME-NODE-TRUST-LIFECYCLE-055
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-NODE-TRUST-LIFECYCLE-055
+- Fact or lesson: A database Node row is not an enrolled control-plane identity. The governed lifecycle must issue a short-lived Core-signed bootstrap proof, accept a one-use CSR proof from the canonical Node, require authenticated operator approval, deliver the CA-signed certificate and bearer credential over mTLS, and retain only secure credential references. Rotation, revocation, re-enrollment, and restart recovery must use the same stable Node identity; when the Node is offline, Core must preserve persisted project state but fail Node-required repository operations closed.
+- Evidence location: src/prime_core/node_trust.py; src/prime_core/service.py; src/prime_node/service.py; migrations/prime/0032_node_trust_lifecycle.sql; packaging/node; evidence/phase15/qualification-continuation-055.md.
+- Confidence: VERIFIED
+- Scope: PRIME Core/Node private Atlas control plane and browser operator continuity.
+- Supersedes learning: L-PRIME-OPERATOR-RECOVERY-054

@@ -20,6 +20,8 @@ from .history_primitives import record_historical_snapshot
 from .authority import REQUIRED_AUTHORITY_FILES, authority_migration_plan, classify_authority_snapshot, migrate_authority, provision_authority, validate_authority
 from .git_provenance import GitProvenanceError, inspect_repository_candidate, resolve_canonical_ref
 from .workflow_primitives import REPLAY_POLICIES, resume_plan_payload, step_resume_decision
+from .node_client import NodeClient, NodeClientSettings, NodeClientError
+from .node_trust import NodeTrustSettings, csr_fingerprint, digest, issue_bootstrap, sign_node_certificate
 
 UTC = timezone.utc
 log = logging.getLogger("prime.core")
@@ -624,9 +626,160 @@ class CoreService:
             self._audit(db, "operator", "operator", "node.registered", target_id=node_id)
             return dict(row)
 
-    def list_nodes(self) -> list[dict[str, Any]]:
+    def _node_trust_settings(self) -> NodeTrustSettings:
+        return NodeTrustSettings.from_environment()
+
+    def issue_node_bootstrap(self, node_id: str, endpoint: str, requested_metadata: dict[str, Any]) -> dict[str, Any]:
+        trust = self._node_trust_settings()
+        token, payload = issue_bootstrap(trust, node_id)
+        with transaction(self.settings) as db:
+            node = db.execute("SELECT node_id,status,approval_state,trust_state FROM prime_core.nodes WHERE node_id=%s FOR UPDATE", (node_id,)).fetchone()
+            if not node:
+                raise KeyError("canonical Node record not found")
+            if node["approval_state"] == "PENDING_OPERATOR_APPROVAL" or node.get("trust_state") in {"BOOTSTRAP_ISSUED", "NODE_PROOF_RECEIVED", "ACTIVE"}:
+                raise ValueError("Node already has an active or pending enrollment")
+            db.execute(
+                "INSERT INTO prime_core.node_enrollment_challenges(challenge_id,node_id,token_digest,issued_at,expires_at,state,requested_metadata) VALUES (%s,%s,%s,%s,%s,'BOOTSTRAP_ISSUED',%s)",
+                (payload["challenge_id"], node_id, digest(token), now(), datetime.fromisoformat(payload["expires_at"]), json.dumps({**requested_metadata, "endpoint": endpoint})),
+            )
+            db.execute("UPDATE prime_core.nodes SET approval_state='BOOTSTRAP_ISSUED', status='OFFLINE', control_endpoint=%s, trust_state='BOOTSTRAP_ISSUED' WHERE node_id=%s", (endpoint, node_id))
+            self._audit(db, "operator", "operator", "node.bootstrap_issued", target_id=node_id, metadata={"challenge_id": payload["challenge_id"], "expires_at": payload["expires_at"]})
+        return {**payload, "bootstrap_credential": token, "node_id": node_id, "endpoint": endpoint}
+
+    def sync_node_proof(self, challenge_id: str, node_id: str, csr_pem: str, metadata: dict[str, Any]) -> dict[str, Any]:
+        fingerprint = csr_fingerprint(csr_pem)
+        with transaction(self.settings) as db:
+            challenge = db.execute("SELECT * FROM prime_core.node_enrollment_challenges WHERE challenge_id=%s FOR UPDATE", (challenge_id,)).fetchone()
+            if not challenge or challenge["node_id"] != node_id:
+                raise KeyError("enrollment challenge not found")
+            if challenge["expires_at"] <= now():
+                db.execute("UPDATE prime_core.node_enrollment_challenges SET state='EXPIRED' WHERE challenge_id=%s", (challenge_id,))
+                raise ValueError("enrollment challenge expired")
+            if challenge["consumed_at"] or challenge["state"] != "BOOTSTRAP_ISSUED":
+                raise ValueError("enrollment challenge was already consumed")
+            db.execute("UPDATE prime_core.node_enrollment_challenges SET consumed_at=now(),state='PENDING_OPERATOR_APPROVAL',csr_pem=%s,csr_fingerprint=%s WHERE challenge_id=%s", (csr_pem, fingerprint, challenge_id))
+            db.execute("UPDATE prime_core.nodes SET approval_state='PENDING_OPERATOR_APPROVAL', status='OFFLINE', trust_state='NODE_PROOF_RECEIVED', diagnostics=%s WHERE node_id=%s", (json.dumps({**metadata, "challenge_id": challenge_id, "csr_fingerprint": fingerprint}), node_id))
+            self._audit(db, "operator", "operator", "node.proof_received", target_id=node_id, metadata={"challenge_id": challenge_id, "csr_fingerprint": fingerprint})
+        return {"challenge_id": challenge_id, "node_id": node_id, "approval_state": "PENDING_OPERATOR_APPROVAL", "csr_fingerprint": fingerprint}
+
+    def list_pending_node_enrollments(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:
-            return [dict(row) for row in db.execute("SELECT * FROM prime_core.nodes ORDER BY enrolled_at").fetchall()]
+            return [dict(row) for row in db.execute("SELECT challenge_id,node_id,issued_at,expires_at,state,csr_fingerprint,requested_metadata FROM prime_core.node_enrollment_challenges WHERE state='PENDING_OPERATOR_APPROVAL' ORDER BY issued_at").fetchall()]
+
+    def _node_client(self, node: dict[str, Any], credential: str | None = None) -> NodeClient:
+        trust = self._node_trust_settings()
+        value = credential
+        if value is None and node.get("credential_ref"):
+            path = Path(node["credential_ref"])
+            if path.is_file():
+                value = path.read_text(encoding="utf-8").strip()
+        return NodeClient(NodeClientSettings(
+            base_url=node.get("control_endpoint") or os.getenv("PRIME_NODE_CONTROL_ENDPOINT", "https://127.0.0.1:18001"),
+            node_id=node["node_id"],
+            credential=value,
+            ca_file=trust.ca_certificate,
+            client_cert=trust.core_client_certificate,
+            client_key=trust.core_client_private_key,
+        ))
+
+    def approve_node_enrollment(self, challenge_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            challenge = db.execute("SELECT c.*,n.name,n.platform,n.control_endpoint FROM prime_core.node_enrollment_challenges c JOIN prime_core.nodes n ON n.node_id=c.node_id WHERE c.challenge_id=%s", (challenge_id,)).fetchone()
+        if not challenge:
+            raise KeyError("enrollment challenge not found")
+        if challenge["state"] != "PENDING_OPERATOR_APPROVAL":
+            raise ValueError("enrollment is not pending operator approval")
+        trust = self._node_trust_settings()
+        certificate_pem, certificate = sign_node_certificate(trust, challenge["csr_pem"], challenge["node_id"])
+        bearer = new_token()
+        node = dict(challenge)
+        client = self._node_client(node, credential=None)
+        client.approve(certificate_pem, bearer, certificate)
+        credential_path = trust.credential_directory / f"{challenge['node_id']}.bearer"
+        credential_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = credential_path.with_suffix(".new")
+        temporary.write_text(bearer, encoding="utf-8")
+        os.chmod(temporary, 0o600)
+        temporary.replace(credential_path)
+        with transaction(self.settings) as db:
+            db.execute("UPDATE prime_core.node_enrollment_challenges SET state='APPROVED',approved_at=now() WHERE challenge_id=%s", (challenge_id,))
+            db.execute("UPDATE prime_core.nodes SET status='ENROLLED',approval_state='APPROVED',trust_state='ACTIVE_CREDENTIAL_PENDING_RESTART',certificate_fingerprint=%s,certificate_serial=%s,certificate_issued_at=%s,certificate_expires_at=%s,credential_ref=%s,control_endpoint=%s WHERE node_id=%s", (certificate["fingerprint"], certificate["serial"], certificate["issued_at"], certificate["expires_at"], str(credential_path), challenge["control_endpoint"], challenge["node_id"]))
+            self._audit(db, "operator", "operator", "node.approved", target_id=challenge["node_id"], metadata={"challenge_id": challenge_id, "certificate_fingerprint": certificate["fingerprint"]})
+        return {"node_id": challenge["node_id"], "challenge_id": challenge_id, "approval_state": "APPROVED", "certificate": certificate, "restart_required": True}
+
+    def reject_node_enrollment(self, challenge_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            challenge = db.execute("SELECT c.*,n.control_endpoint FROM prime_core.node_enrollment_challenges c JOIN prime_core.nodes n ON n.node_id=c.node_id WHERE c.challenge_id=%s", (challenge_id,)).fetchone()
+        if not challenge:
+            raise KeyError("enrollment challenge not found")
+        try:
+            self._node_client(dict(challenge), credential=None).reject()
+        except NodeClientError:
+            pass
+        with transaction(self.settings) as db:
+            db.execute("UPDATE prime_core.node_enrollment_challenges SET state='REJECTED',rejected_at=now(),revoked_at=now() WHERE challenge_id=%s", (challenge_id,))
+            db.execute("UPDATE prime_core.nodes SET status='REVOKED',approval_state='REJECTED',trust_state='REVOKED' WHERE node_id=%s", (challenge["node_id"],))
+            self._audit(db, "operator", "operator", "node.rejected", target_id=challenge["node_id"], metadata={"challenge_id": challenge_id})
+        return {"node_id": challenge["node_id"], "challenge_id": challenge_id, "approval_state": "REJECTED"}
+
+    def rotate_node_credential(self, node_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            row = db.execute("SELECT * FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone()
+        if not row or row["approval_state"] not in {"APPROVED", "ACTIVE"} or not row["credential_ref"]:
+            raise ValueError("Node is not actively enrolled")
+        result = self._node_client(dict(row)).rotate()
+        replacement = result.get("node_credential")
+        if not replacement:
+            raise ValueError("Node did not return a replacement credential")
+        path = Path(row["credential_ref"])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(".new")
+        temporary.write_text(replacement, encoding="utf-8")
+        os.chmod(temporary, 0o600)
+        temporary.replace(path)
+        with transaction(self.settings) as db:
+            self._audit(db, "operator", "operator", "node.credential_rotated", target_id=node_id, metadata={"credential_ref": str(path)})
+        return {"node_id": node_id, "status": "ROTATED", "credential_ref": str(path)}
+
+    def revoke_node(self, node_id: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            row = db.execute("SELECT * FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone()
+        if not row:
+            raise KeyError("node not found")
+        if row["approval_state"] in {"APPROVED", "ACTIVE"} and row["credential_ref"]:
+            self._node_client(dict(row)).revoke()
+        if row["credential_ref"]:
+            Path(row["credential_ref"]).unlink(missing_ok=True)
+        with transaction(self.settings) as db:
+            db.execute("UPDATE prime_core.nodes SET status='REVOKED',approval_state='REVOKED',trust_state='REVOKED',revoked_at=now(),credential_ref=NULL WHERE node_id=%s", (node_id,))
+            self._audit(db, "operator", "operator", "node.revoked", target_id=node_id, metadata={"reason": "operator_action"})
+        return {"node_id": node_id, "status": "REVOKED"}
+
+    def refresh_node_health(self) -> None:
+        with connect(self.settings) as db:
+            nodes = [dict(row) for row in db.execute("SELECT * FROM prime_core.nodes WHERE approval_state IN ('APPROVED','ACTIVE') AND credential_ref IS NOT NULL").fetchall()]
+        for node in nodes:
+            try:
+                result = self._node_client(node).heartbeat()
+                with transaction(self.settings) as db:
+                    db.execute("UPDATE prime_core.nodes SET status='ONLINE',approval_state='ACTIVE',trust_state='ACTIVE',last_heartbeat_at=now(),last_seen_at=now(),diagnostics=%s WHERE node_id=%s", (json.dumps({"last_heartbeat": result.get("status", "ONLINE")}), node["node_id"]))
+            except Exception as exc:
+                with transaction(self.settings) as db:
+                    db.execute("UPDATE prime_core.nodes SET status='OFFLINE',diagnostics=%s WHERE node_id=%s", (json.dumps({"last_failure": type(exc).__name__}), node["node_id"]))
+
+    def node_client_for_project(self, project_id: str) -> tuple[dict[str, Any], NodeClient] | None:
+        self.refresh_node_health()
+        with connect(self.settings) as db:
+            row = db.execute("SELECT n.* FROM prime_core.nodes n JOIN prime_core.project_bindings b ON b.node_id=n.node_id WHERE b.project_id=%s", (project_id,)).fetchone()
+        if not row or not row["control_endpoint"] or not row["credential_ref"] or row["approval_state"] not in {"APPROVED", "ACTIVE"}:
+            return None
+        node = dict(row)
+        return node, self._node_client(node)
+
+    def list_nodes(self) -> list[dict[str, Any]]:
+        self.refresh_node_health()
+        with connect(self.settings) as db:
+            return [dict(row) for row in db.execute("SELECT n.*, c.challenge_id FROM prime_core.nodes n LEFT JOIN LATERAL (SELECT challenge_id FROM prime_core.node_enrollment_challenges c WHERE c.node_id=n.node_id AND c.state='PENDING_OPERATOR_APPROVAL' ORDER BY c.issued_at DESC LIMIT 1) c ON TRUE ORDER BY n.enrolled_at").fetchall()]
 
     def agent_instruction_chain(self, project_id: str, relative_path: str = "") -> dict[str, Any]:
         with connect(self.settings) as db:

@@ -746,3 +746,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-CORE-UI-053
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-NODE-TRUST-LIFECYCLE-055
+
+- Issued: 2026-08-14T19:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 055
+- Objective: Implement and qualify the persistent Core-to-Node trust/enrollment lifecycle, activate canonical Atlas Node `node-041-atlas-native` through operator-approved mTLS, and qualify the real browser-visible offline Node boundary.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight; PRIME-owned Core/Node trust material and user services; private browser journey; recovery-secret regression guard; evidence, governed records, GitHub, and Notion publication.
+- Exclusions: No Z:/SSHFS execution authority; no disposable environments; no public ingress or Funnel changes; no fabricated certificates or secrets; no unrelated service replacement; no Phase 16; no deployment; no R-056 closure; DOD-039/DOD-050/DOD-053 and qualification-edge expansion remain parked unless directly required by the real product.
+- Acceptance: Core-owned signed bootstrap and operator approval; persistent mTLS Node service; rotation/revocation/re-enrollment; clean restart recovery; browser healthy/offline/recovery qualification; truthful degraded integrations; recovery-secret regression guard; validation and exact publication parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-OPERATOR-RECOVERY-NODE-ACTIVATION-054
+- Status at issuance: ISSUED

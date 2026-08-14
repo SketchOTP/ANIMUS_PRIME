@@ -390,7 +390,7 @@ Do not add live decisions or milestones to this template. Examples must remain o
 
 - Date: 2026-08-13
 - Record or decision ID: DEC-PRIME-PHASE15-043
-- Status: PARTIAL
+- Status: CLOSED
 - Decision or event: Direct native Atlas SSH and persistent services are the qualification authority. Archive only verified repository-local regeneration caches to the attached external filesystem when storage exhaustion blocks PostgreSQL; keep uncertain state, evidence, authority, .git, PostgreSQL, and Hindsight local.
 - Rationale: The root filesystem reached zero free bytes and PostgreSQL failed on WAL/checkpoint writes. Only 2.6 MB of clearly safe caches were archived and verified before removal; PostgreSQL recovered with 26 migrations.
 
@@ -491,3 +491,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The permanent operator already exists, so bootstrap and direct password/recovery hash replacement are forbidden. The new recovery digest and service path preserve that identity, rotate secrets, revoke sessions, and audit recovery. The existing Node row cannot prove a live control-plane identity; the repository lacks a governed certificate lifecycle and the directive forbids insecure HTTP or fabricated trust material.
 - Affected areas: local recovery migration/service/API; Atlas Core environment and persistent image; authenticated browser qualification; Node activation boundary; Continuation 054 evidence and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-053
+
+## DEC-PRIME-PHASE15-055
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-055
+- Status: CLOSED
+- Decision or event: Establish the persistent private Core-to-Node trust lifecycle on Atlas for canonical Node `node-041-atlas-native`. Core owns bootstrap signing and approval; the Node proves possession of its key; certificate and bearer references remain outside Git; operator rotation, revocation, re-enrollment, and restart recovery are explicit. Keep DOD-005 projection, R-056, Phase 15 completion, V1 declaration, and deployment open.
+- Rationale: The former enrolled database record did not prove a live secure control plane. The real Atlas Node now submits a signed proof, receives an operator-approved mTLS certificate, and survives service and Core restart. Browser qualification confirms persisted project continuity during legitimate Node outage and truthful fail-closed repository behavior.
+- Affected areas: Core/Node trust lifecycle; persistent Node user service; private Core/UI runtime; browser offline continuity; recovery-secret regression guard; Continuation 055 evidence.
+- Supersedes record: DEC-PRIME-PHASE15-054

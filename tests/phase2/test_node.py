@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from pathlib import Path
+from cryptography import x509
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.x509.oid import NameOID
 
 from fastapi.testclient import TestClient
 
@@ -14,14 +18,29 @@ def test_node_enrollment_path_boundary_and_git_identity(tmp_path: Path, monkeypa
     subprocess.run(["git", "-C", str(repo), "init", "-q"], check=True)
     monkeypatch.setenv("PRIME_NODE_ALLOWED_ROOTS", str(tmp_path))
     monkeypatch.setenv("PRIME_NODE_STATE_FILE", str(tmp_path / "node-state.json"))
+    monkeypatch.setenv("PRIME_NODE_ID", "node-test")
+    monkeypatch.setenv("PRIME_NODE_TLS_CERT_FILE", str(tmp_path / "node.crt"))
+    monkeypatch.setenv("PRIME_NODE_TLS_KEY_FILE", str(tmp_path / "node.key"))
+    monkeypatch.setenv("PRIME_NODE_TLS_CA_FILE", str(tmp_path / "ca.crt"))
+    public_key = tmp_path / "bootstrap-public.pem"
+    from src.prime_core.node_trust import NodeTrustSettings, ensure_signing_key, issue_bootstrap
+    trust = NodeTrustSettings(tmp_path / "ca.crt", tmp_path / "ca.key", tmp_path / "bootstrap-key.pem", public_key, tmp_path / "core.crt", tmp_path / "core.key", tmp_path / "credentials")
+    ensure_signing_key(trust)
+    credential, _ = issue_bootstrap(trust, "node-test")
+    monkeypatch.setenv("PRIME_NODE_BOOTSTRAP_PUBLIC_KEY_FILE", str(public_key))
+    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    csr = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "node-test")])).sign(key, hashes.SHA256())
+    csr_pem = csr.public_bytes(serialization.Encoding.PEM).decode()
     from apps.node import main
     main.settings = main.NodeSettings()
     main.service = main.NodeService(main.settings)
     with TestClient(main.app) as client:
-        enrolled = client.post("/v1/enroll", json={"credential": main.settings.bootstrap_credential})
+        enrolled = client.post("/v1/enroll", json={"credential": credential, "node_id": "node-test", "csr_pem": csr_pem})
         assert enrolled.status_code == 200
-        token = enrolled.json()["node_credential"]
         node_id = enrolled.json()["node_id"]
+        approved = client.post("/v1/enrollment/approve", json={"certificate_pem": "-----BEGIN CERTIFICATE-----\n" + ("A" * 120) + "\n-----END CERTIFICATE-----\n", "token": "node-token-012345678901234567890123456789", "metadata": {"fingerprint": "test"}})
+        assert approved.status_code == 200
+        token = "node-token-012345678901234567890123456789"
         headers = {
             "Authorization": f"Bearer {token}",
             "X-Prime-Node-Id": node_id,
@@ -39,9 +58,10 @@ def test_node_enrollment_path_boundary_and_git_identity(tmp_path: Path, monkeypa
         replacement = client.post("/v1/revoke", headers={**headers, "Authorization": f"Bearer {rotated.json()['node_credential']}"})
         assert replacement.status_code == 200
         assert client.post("/v1/repositories/inspect", json={"path": str(repo)}, headers=headers).status_code == 401
-        reenrolled = client.post("/v1/re-enroll", json={"credential": replacement.json()["re_enrollment_credential"]})
+        reenrollment, _ = issue_bootstrap(trust, "node-test")
+        reenrolled = client.post("/v1/re-enroll", json={"credential": reenrollment, "node_id": "node-test", "csr_pem": csr_pem})
         assert reenrolled.status_code == 200
-        assert reenrolled.json()["node_id"] != node_id
+        assert reenrolled.json()["node_id"] == node_id
 
 
 def test_node_runtime_requires_complete_tls_mtls_configuration(monkeypatch):
