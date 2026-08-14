@@ -651,3 +651,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME Core/Node private Atlas control plane and browser operator continuity.
 - Supersedes learning: L-PRIME-OPERATOR-RECOVERY-054
+
+## L-PRIME-LOCAL-CONVERGENCE-056
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-LOCAL-CONVERGENCE-056
+- Fact or lesson: A persistent recovery control is not operator-qualified until the real Core-served UI exposes a secret-safe recovery path and high-risk actions require recent step-up authentication. Backup restore now fails closed without recent step-up. Source retraction must stale the current Documentation projection while retaining the previous projection as historical provenance. DOD-005 remains a local direct-qualification item even when live Notion is unavailable; external integration absence must not be used to inflate or block the exact local invariant.
+- Evidence location: migrations/prime/0033_step_up_authentication.sql; apps/core/main.py; apps/web/index.html; src/prime_core/history_service.py; tests/phase15/test_recovery_secret_regression.py; tests/phase15/test_requirement_qualification.py; evidence/phase15/qualification-continuation-056.md.
+- Confidence: VERIFIED
+- Scope: PRIME persistent Core/UI recovery, backup privacy, source lifecycle, and local V1 convergence.
+- Supersedes learning: L-PRIME-NODE-TRUST-LIFECYCLE-055

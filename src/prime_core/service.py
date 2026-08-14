@@ -78,7 +78,7 @@ class CoreService:
     def session(self, token: str) -> dict[str, Any] | None:
         with connect(self.settings) as db:
             row = db.execute(
-                "SELECT s.session_id, s.operator_id, s.csrf_hash, s.expires_at, o.username "
+                "SELECT s.session_id, s.operator_id, s.csrf_hash, s.expires_at, s.step_up_at, o.username "
                 "FROM prime_core.sessions s JOIN prime_core.operators o ON o.operator_id=s.operator_id "
                 "WHERE s.token_hash=%s AND s.revoked_at IS NULL AND s.expires_at > now()",
                 (token_digest(token),),
@@ -87,6 +87,33 @@ class CoreService:
                 db.execute("UPDATE prime_core.sessions SET last_seen_at=now() WHERE session_id=%s", (row["session_id"],))
                 db.commit()
             return dict(row) if row else None
+
+    def step_up(self, token: str, password: str) -> dict[str, Any]:
+        """Re-authenticate the current operator session for high-risk actions."""
+        timestamp = now()
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "SELECT s.session_id, s.operator_id, o.password_hash "
+                "FROM prime_core.sessions s JOIN prime_core.operators o ON o.operator_id=s.operator_id "
+                "WHERE s.token_hash=%s AND s.revoked_at IS NULL AND s.expires_at > now()",
+                (token_digest(token),),
+            ).fetchone()
+            if not row or not password_verify(password, row["password_hash"]):
+                raise PermissionError("step-up authentication failed")
+            db.execute(
+                "UPDATE prime_core.sessions SET step_up_at=%s,last_seen_at=%s WHERE session_id=%s",
+                (timestamp, timestamp, row["session_id"]),
+            )
+            self._audit(db, "operator", row["operator_id"], "operator.step_up")
+            return {"authenticated": True, "step_up_at": timestamp.isoformat(), "valid_for_seconds": 300}
+
+    def step_up_is_recent(self, session: dict[str, Any], max_age_seconds: int = 300) -> bool:
+        value = session.get("step_up_at")
+        if not value:
+            return False
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=UTC)
+        return (now() - value).total_seconds() <= max_age_seconds
 
     def logout(self, token: str) -> None:
         with transaction(self.settings) as db:

@@ -501,3 +501,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The former enrolled database record did not prove a live secure control plane. The real Atlas Node now submits a signed proof, receives an operator-approved mTLS certificate, and survives service and Core restart. Browser qualification confirms persisted project continuity during legitimate Node outage and truthful fail-closed repository behavior.
 - Affected areas: Core/Node trust lifecycle; persistent Node user service; private Core/UI runtime; browser offline continuity; recovery-secret regression guard; Continuation 055 evidence.
 - Supersedes record: DEC-PRIME-PHASE15-054
+
+## DEC-PRIME-PHASE15-056
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-056
+- Status: CLOSED
+- Decision or event: Correct the Continuation 055 qualified implementation SHA as governed metadata without rewriting Git history; promote only the locally qualified recovery/step-up and backup/privacy behavior; retain DOD-005 as BACKEND_ONLY until a safe direct persistent mutation qualification is completed.
+- Rationale: GitHub independently resolves the actual qualified implementation commit, while the prior transcription does not. The real persistent Core/UI now proves recent step-up enforcement and secret-safe recovery controls, and source retraction preserves historical projection provenance while staling current documentation. No disposable replacement state or live Notion dependency was used to make local claims.
+- Affected areas: recovery/step-up migration/service/API/UI; backup restore security boundary; source-lifecycle projection; governed qualification records; Continuation 056 evidence; persistent Atlas service state.
+- Supersedes record: DEC-PRIME-PHASE15-055

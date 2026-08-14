@@ -1809,3 +1809,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005 generated Documentation/Notion projection remains unqualified; approved model, live Notion, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open or unqualified.
 - Blockers: full regression/publication closeout and Notion child checkpoint remain pending; no public exposure or deployment was performed.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-056 - PARTIAL
+
+- Outcome ID: O-PRIME-056
+- Supersedes outcome: O-PRIME-055
+- Closed: 2026-08-14T21:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Corrected the non-resolvable Continuation 055 implementation-SHA transcription to the actual GitHub commit without rewriting history. Added and exercised persistent recovery step-up behavior, protected backup restore with recent re-authentication, and extended source retraction to stale the current Documentation projection while preserving historical provenance. The existing persistent Core container was rebuilt under the same name/state path and returned to the enabled user-systemd service; the canonical Node, existing PostgreSQL, and existing Hindsight were preserved. DOD-008 is USER_USABLE_VERIFIED for the bounded single-operator path and DOD-009 is PRODUCT_VERIFIED. DOD-005 remains BACKEND_ONLY because direct mutation qualification against the governed project was not run; it is not blocked by live Notion.
+- Changed areas: step-up migration/service/API/UI; backup restore guard; source-lifecycle projection invalidation; focused tests; corrected ledger/evidence metadata; qualification continuation 056; governed burndown/alignment/traceability records; living journal checkpoint.
+- Validation:
+  - focused recovery/source-lifecycle checks (7 passed, 11 skipped) - PASSED
+  - full regression (94 passed, 28 skipped) - PASSED
+  - compile, diff, secret, governance, burndown, and persistent Core/Node checks - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: DOD-005 direct persistent qualification; 5 local code items; 15 local browser items; 15 external-environment items; R-056, Phase 15 completion, and V1 declaration remain open. Approved model, live Notion projection, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries remain unavailable or unqualified.
+- Blockers: none for the bounded local changes completed here; DOD-005 direct qualification requires a safe restoration-bounded governed-project exercise.
+- Follow-up directive: none

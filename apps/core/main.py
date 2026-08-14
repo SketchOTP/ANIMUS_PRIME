@@ -66,6 +66,10 @@ class Credentials(BaseModel):
     password: str = Field(min_length=1, max_length=256)
 
 
+class StepUpRequest(BaseModel):
+    password: str = Field(min_length=1, max_length=256)
+
+
 class Recovery(BaseModel):
     recovery_credential: str = Field(min_length=1, max_length=256)
     new_password: str = Field(min_length=12, max_length=256)
@@ -419,6 +423,15 @@ def login(body: Credentials, request: Request, response: Response):
     response.set_cookie("prime_session", token, httponly=True, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
     response.set_cookie("prime_csrf", csrf, httponly=False, secure=settings.cookie_secure, samesite="lax", max_age=settings.session_ttl_seconds, path="/")
     return {"authenticated": True, "actor_type": "operator", "csrf_token": csrf}
+
+
+@app.post("/v1/auth/step-up")
+def step_up(body: StepUpRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    session = require_session(request, prime_session)
+    try:
+        return service.step_up(prime_session or "", body.password)
+    except PermissionError:
+        raise HTTPException(status_code=401, detail="step-up authentication failed")
 
 
 @app.post("/v1/auth/logout")
@@ -1605,9 +1618,9 @@ def backup_preflight(body: BackupRequest, request: Request, prime_session: str |
 
 @app.post("/v1/backups/restore")
 def restore_backup(body: BackupRequest, request: Request, prime_session: str | None = Cookie(default=None), step_up: str | None = Header(default=None, alias="X-PRIME-STEP-UP")):
-    require_session(request, prime_session)
-    if step_up != "CONFIRM":
-        return error("RESTORE_STEP_UP_REQUIRED", "restore requires step-up confirmation", request_id(request), status_code=403)
+    session = require_session(request, prime_session)
+    if step_up != "CONFIRM" or not service.step_up_is_recent(session):
+        return error("RESTORE_STEP_UP_REQUIRED", "recent step-up authentication and explicit confirmation are required", request_id(request), status_code=403)
     try:
         return backups.restore_bundle(
             settings,

@@ -4,7 +4,7 @@
 
 `PARTIAL` — the persistent private Core-to-Node product path is operational and the operator-visible offline Node boundary is qualified. DOD-005 generated Documentation/Notion projection, the remaining unavailable integrations, R-056, Phase 15 completion, V1 declaration, and deployment remain open.
 
-- Qualified implementation commit: `0a3c82f53d0c5c70a37db7f8c3a2dbdb6d76d42f`
+- Qualified implementation commit: `0a3c82f0c606fb80f914eb59116dd5f46b9d5ec5`
 - Final governed publication commit: the final publication-record commit containing this closeout
 - Notion checkpoint: https://app.notion.com/p/3bc833cb27ff813994b8ce800ba3c8e1?pvs=204
 
@@ -125,3 +125,7 @@ Result: DOD-074 operator boundary `PRODUCT_VERIFIED` for the exercised persisten
 - R-056 remains OPEN; Phase 15 completion and V1 declaration are not claimed.
 
 No secrets, private keys, bearer values, passwords, or browser session values are included in this record.
+
+## Governed metadata correction recorded in Continuation 056
+
+The earlier closeout transcription `0a3c82f53d0c5c70a37db7f8c3a2dbdb6d76d42f` was not a resolvable commit. GitHub history independently confirms the qualified implementation commit is `0a3c82f0c606fb80f914eb59116dd5f46b9d5ec5`, message `feat-persistent-node-trust-lifecycle`. The ledger and this evidence reference are corrected to the resolvable SHA; Git history is unchanged.

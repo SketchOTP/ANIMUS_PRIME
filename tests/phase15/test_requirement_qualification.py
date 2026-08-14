@@ -298,10 +298,17 @@ def test_r047_product_search_ask_and_documentation_preserve_evidence_citation(
         f"Evidence E1 / SourceReference {citation['source_reference_id']}",
     )
     assert citation["source_reference_id"] in rendered["content"]
-    service.retract_evidence(project["project_id"], evidence["evidence_id"], "source superseded")
+    retracted = service.retract_evidence(project["project_id"], evidence["evidence_id"], "source superseded")
+    assert retracted["derived_views"]["documentation_projections_staled"] == 1
     assert intelligence.search(project["project_id"], "Cited progress")["groups"]["Progress"] == []
     assert progress.snapshot(project["project_id"])["assessment"] is None
     assert intelligence.search(project["project_id"], "durable source")["groups"]["Evidence"] == []
+    with connect(settings) as db:
+        projection_states = [row["sync_status"] for row in db.execute(
+            "SELECT sync_status FROM prime_core.notion_projection_revisions WHERE project_id=%s ORDER BY observed_at",
+            (project["project_id"],),
+        ).fetchall()]
+    assert projection_states[-2:] == ["SYNCED", "DEGRADED"]
     restored = service.store_uploaded_evidence(
         project["project_id"], "restored.txt", b"E1 durable source content", "text/plain", source_revision="commit-A"
     )

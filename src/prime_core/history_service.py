@@ -468,6 +468,32 @@ class HistoryService:
                     (project_id, json.dumps([source_reference_id])),
                 ).fetchall()
                 derived["progress_assessments_staled"] = len(progress)
+                projection = db.execute(
+                    "SELECT content_hash,source_set,metadata FROM prime_core.notion_projection_revisions "
+                    "WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1",
+                    (project_id,),
+                ).fetchone()
+                if projection:
+                    projection_metadata = dict(projection.get("metadata") or {})
+                    projection_metadata.update({
+                        "source_lifecycle": "RETRACTED",
+                        "source_reference_id": source_reference_id,
+                        "retraction_reason": reason.strip()[:500],
+                    })
+                    source_set = list(projection.get("source_set") or [])
+                    if source_reference_id not in source_set:
+                        source_set.append(source_reference_id)
+                    db.execute(
+                        "INSERT INTO prime_core.notion_projection_revisions "
+                        "(projection_revision_id,project_id,content_hash,source_set,sync_status,observed_at,metadata) "
+                        "VALUES (%s,%s,%s,%s,'DEGRADED',%s,%s)",
+                        (_id("notionrev"), project_id, projection["content_hash"], json.dumps(source_set), retracted_at, json.dumps(projection_metadata)),
+                    )
+                    db.execute(
+                        "UPDATE prime_core.notion_projects SET connection_status='DEGRADED',updated_at=%s WHERE project_id=%s",
+                        (retracted_at, project_id),
+                    )
+                    derived["documentation_projections_staled"] = 1
             self._record_historical(db, project_id, "EVIDENCE", evidence_id, row.get("source_revision"), {"evidence_id": evidence_id, "retracted_at": row["retracted_at"].isoformat(), "retraction_reason": row["retraction_reason"], "derived_views": derived}, row["retracted_at"], row.get("content_hash"))
             result = dict(row)
             result["derived_views"] = derived

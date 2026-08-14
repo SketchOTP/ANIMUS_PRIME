@@ -760,3 +760,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-OPERATOR-RECOVERY-NODE-ACTIVATION-054
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-CONVERGENCE-056
+
+- Issued: 2026-08-14T20:45:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 056
+- Objective: Correct the Continuation 055 qualified implementation SHA metadata, re-evaluate DOD-005 against the exact frozen criterion, complete local operator recovery/step-up and backup/privacy convergence, and continue the locally actionable V1 queue without starting R-056 prematurely.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; minimum local implementation and browser qualification; governed evidence, .agent records, GitHub, and continuously maintained Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable environments or synthetic state; no public exposure/Funnel changes; no unapproved credentials; no Phase 16; no deployment; no R-056 closure; DOD-004 generic expansion, DOD-039 relocation, DOD-050 upgrade expansion, and DOD-053 second-machine work remain parked unless directly required by the real operator path.
+- Acceptance: Reconcile the bad SHA without rewriting history; truthfully qualify or retain DOD-005; complete bounded DOD-008/DOD-009 convergence; update all governed records and living journal; validate and publish exact parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-NODE-TRUST-LIFECYCLE-055
+- Status at issuance: ISSUED

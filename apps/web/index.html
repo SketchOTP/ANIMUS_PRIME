@@ -206,6 +206,19 @@
   const dialog = $('#confirm-dialog'); document.querySelectorAll('.danger-action').forEach(button => button.addEventListener('click', () => dialog.showModal())); $('#cancel-confirm')?.addEventListener('click', () => dialog.close()); $('#accept-confirm')?.addEventListener('click', () => { dialog.close(); text('#global-status', 'Protected action requires its specific lifecycle workflow.'); });
   fetch('/health/live', {cache:'no-store'}).then(response => { if (!response.ok) throw new Error(); return response.json(); }).then(() => { if (!state.authenticated) text('#global-status', 'Core live; authentication required for protected state.'); }).catch(() => { text('#global-status', 'Core live check degraded.'); stateBox('#home-state', 'OFFLINE', 'Core live health is unavailable; retry when the service recovers.'); });
   refresh();
+  const recoveryHost = document.querySelector('#setup .half.stack');
+  if (recoveryHost && !document.querySelector('#recovery-form')) {
+    recoveryHost.insertAdjacentHTML('afterbegin', '<form id="recovery-form"><h3>Break-glass recovery</h3><p class="muted small">Use the offline recovery credential. Recovery revokes sessions and issues replacement credentials once.</p><label>Recovery credential<input name="recovery_credential" type="password" minlength="1" required autocomplete="off"></label><label>New operator password<input name="new_password" type="password" minlength="12" required autocomplete="new-password"></label><button type="submit">Reset operator access</button><p id="recovery-message" class="muted small" aria-live="polite"></p></form>');
+  }
+  const securityHost = document.querySelector('#operator-security');
+  if (securityHost && !document.querySelector('#step-up-form')) {
+    securityHost.insertAdjacentHTML('beforeend', '<form id="step-up-form" class="hidden"><label>Current operator password<input name="password" type="password" minlength="1" required autocomplete="current-password"></label><button type="submit">Re-authenticate for high-risk actions</button><p id="step-up-message" class="muted small" aria-live="polite"></p></form>');
+  }
+  document.querySelector('#recovery-form')?.addEventListener('submit', async (event) => { event.preventDefault(); try { const values = Object.fromEntries(new FormData(event.target)); await api('/v1/auth/recover', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(values)}); text('#recovery-message', 'Recovery completed. Replacement credentials were issued once and are not rendered or stored by this console. Sign in with the new operator password.'); event.target.reset(); } catch (error) { text('#recovery-message', `Recovery stopped safely: ${error.message}`); } });
+  document.querySelector('#step-up-form')?.addEventListener('submit', async (event) => { event.preventDefault(); try { const password = new FormData(event.target).get('password'); const result = await api('/v1/auth/step-up', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password})}); text('#step-up-message', `Step-up accepted for ${result.valid_for_seconds} seconds. High-risk actions still require their explicit confirmation.`); event.target.reset(); } catch (error) { text('#step-up-message', `Step-up rejected: ${error.message}`); } });
+  const originalRender = render;
+  render = function(data) { originalRender(data); document.querySelector('#step-up-form')?.classList.remove('hidden'); };
+  document.querySelector('#step-up-form')?.classList.remove('hidden');
 </script>
 </body>
 </html>
