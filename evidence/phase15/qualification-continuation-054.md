@@ -88,19 +88,21 @@ The existing database contained Node records, but inspection found no approved A
 
 ## Validation record
 
-The final command results are recorded in the publication closeout and final governed commit. Secret scans exclude the mode-600 Atlas runtime reference directory and never print its contents.
+Secret scans exclude the mode-600 Atlas runtime reference directory and never print its contents.
 
-- Focused local recovery tests: pending final closeout
-- Node negative/configuration tests: pending final closeout
-- Full regression: pending final closeout
-- Compile/static checks: pending final closeout
-- Governance, burndown, alignment, YAML, diff, and secret checks: pending final closeout
-- Persistent runtime health: PASSED
-- Browser operator qualification: PASSED for the listed surfaces; Node-dependent steps remain blocked
+- Focused local recovery and Node safety tests: **PASSED** — 6 passed
+- Full regression: **PASSED** — 92 passed, 28 skipped. The two-test increase from the 052 baseline is the new local-recovery coverage; the integration skip count is unchanged.
+- Compile/static checks: **PASSED** — Python compileall and shell syntax
+- Governance: **PASSED** — adopted validator
+- Burndown: **PASSED** — counts, IDs, statuses, acceptance kinds, work classes, and fields reconciled
+- Product alignment: **PASSED** for the audit; broader V1 product-goal alignment remains **FAIL** by design
+- YAML and diff checks: **PASSED**
+- Runtime health and service persistence: **PASSED** — systemd active/enabled and `/health/ready` ready on schema `0031_local_recovery.sql`
+- Browser operator qualification: **PASSED** for the listed surfaces; Node-dependent steps remain blocked
 
 ## Governed closeout
 
-- Qualified implementation commit: recorded after final validation
+- Qualified implementation commit: `f36234e` (`phase15-continuation-054-operator-recovery`)
 - Local HEAD / `origin/main` / GitHub `main`: required to be equal before publication is reported
 - Notion: a new child checkpoint for Continuation 054 is required; prior checkpoint pages are not reused
 - Deployment: **NOT PERFORMED**
