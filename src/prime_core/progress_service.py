@@ -113,6 +113,17 @@ class ProgressService:
             correction_id = _id("progress-correction")
             created = now()
             refs = list(source_refs or [])
+            if refs:
+                valid_refs = {
+                    row["source_reference_id"]
+                    for row in db.execute(
+                        "SELECT source_reference_id FROM prime_core.source_references WHERE project_id=%s AND source_reference_id = ANY(%s)",
+                        (project_id, refs),
+                    ).fetchall()
+                }
+                invalid_refs = [source_ref for source_ref in refs if source_ref not in valid_refs]
+                if invalid_refs:
+                    raise ValueError("source reference does not belong to project")
             db.execute(
                 "INSERT INTO prime_core.progress_corrections(correction_id,project_id,assessment_id,goal_revision_id,category,reason,operator_id,source_refs,status,created_at) "
                 "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,'OPEN',%s)",

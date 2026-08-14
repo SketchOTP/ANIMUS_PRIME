@@ -43,6 +43,7 @@ class NodeService:
             raise ValueError("node is already enrolled")
         node_id = f"node_{uuid.uuid4().hex}"
         token = secrets.token_urlsafe(32)
+        prior_audit = list(self.state.get("audit") or [])
         self.state = {
             "node_id": node_id,
             "token_hash": self.digest(token),
@@ -55,7 +56,9 @@ class NodeService:
             "approval_state": "APPROVED",
             "last_heartbeat": None,
             "allowed_roots": [str(root) for root in self.settings.allowed_roots],
+            "audit": prior_audit,
         }
+        self._record_audit("REENROLLED" if prior_audit else "ENROLLED")
         self._save()
         return node_id, token
 
@@ -67,6 +70,7 @@ class NodeService:
         self.state["approval_state"] = "REVOKED"
         replacement = secrets.token_urlsafe(32)
         self.state["enrollment_hash"] = self.digest(replacement)
+        self._record_audit("REVOKED")
         self._save()
         return replacement
 
@@ -75,6 +79,7 @@ class NodeService:
             raise PermissionError("node authentication required")
         replacement = secrets.token_urlsafe(32)
         self.state["token_hash"] = self.digest(replacement)
+        self._record_audit("ROTATED")
         self._save()
         return replacement
 
@@ -120,7 +125,13 @@ class NodeService:
         result = self.status()
         result["state_file"] = str(self.settings.state_file)
         result["credential_present"] = bool(self.state.get("token_hash"))
+        result["audit_events"] = len(self.state.get("audit") or [])
         return result
+
+    def _record_audit(self, event: str) -> None:
+        audit = list(self.state.get("audit") or [])
+        audit.append({"event": event, "node_id": self.state.get("node_id"), "at": time.time()})
+        self.state["audit"] = audit[-128:]
 
     def repository_snapshot(self, requested: str) -> dict[str, Any]:
         path = self.safe_path(requested)
@@ -155,7 +166,7 @@ class NodeService:
         top = Path(values[0]).resolve()
         common = Path(values[1])
         if not common.is_absolute():
-            common = (top / common).resolve()
+            common = (path / common).resolve()
         is_bare = values[2].strip().lower() == "true"
         if is_bare:
             raise ValueError("bare repositories are not supported")

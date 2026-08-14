@@ -185,7 +185,7 @@ class CoreService:
         top = Path(values[0]).resolve()
         common = Path(values[1])
         if not common.is_absolute():
-            common = (top / common).resolve()
+            common = (candidate / common).resolve()
         identity = hashlib.sha256(str(common).encode("utf-8")).hexdigest()
         with connect(self.settings) as db:
             duplicate = db.execute("SELECT project_id FROM prime_core.repositories WHERE identity_fingerprint=%s AND project_id<>%s", (identity, project_id)).fetchone()
@@ -272,6 +272,25 @@ class CoreService:
             raise ValueError("only a valid existing authority package can be adopted")
         if decision == "ADOPT":
             source_hash = hashlib.sha256(json.dumps(validation, sort_keys=True).encode()).hexdigest()
+            with connect(self.settings) as db:
+                existing = db.execute(
+                    "SELECT authority_revision_id FROM prime_core.authority_revisions "
+                    "WHERE project_id=%s AND source_path=%s AND source_hash=%s "
+                    "AND metadata->>'decision'='ADOPT' ORDER BY observed_at DESC LIMIT 1",
+                    (project_id, ".agent", source_hash),
+                ).fetchone()
+            if existing:
+                return {
+                    "project_id": project_id,
+                    "decision": decision,
+                    "state": state,
+                    "valid": validation["valid"],
+                    "missing": validation["missing"],
+                    "files": validation["files"],
+                    "rewrite": "NONE",
+                    "adoption_status": "ALREADY_ADOPTED",
+                    "authority_revision_id": existing["authority_revision_id"],
+                }
             self.record_authority_revision(project_id, ".agent", source_hash, "VALID", {"provenance": "operator-approved existing authority adoption", "decision": "ADOPT"}, canonical_commit=None)
             with transaction(self.settings) as db:
                 db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
