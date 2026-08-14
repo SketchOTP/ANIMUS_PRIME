@@ -471,3 +471,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Direct persistent Atlas evidence confirms the existing canonical repository and logical identity, but no legitimate alternate repository candidate or current persistent Core/Node topology is available. The implementation therefore records what can be proven, refuses unsafe or stale transitions, and leaves provider/fork/restore/archive and full interruption qualification open.
 - Affected areas: repository candidate/provenance inspection; repository rebind service/API and migration 0030; durable workflow primitives and CREATE_REPOSITORY path; Continuation 050 qualification/evidence; governed DOD audit/burndown/traceability; append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-049
+
+## DEC-PRIME-PHASE15-053
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-053
+- Status: CLOSED
+- Decision or event: Authorize and establish the persistent private PRIME Core-served Web UI on Atlas with user-systemd ownership, existing PostgreSQL/Hindsight reuse, and no public ingress. Keep authenticated operator qualification, live Node control-plane qualification, DOD-005/DOD-074 operator promotion, R-056, Phase 15 completion, and V1 declaration open.
+- Rationale: Core health, readiness, listener ownership, real UI serving, clean stop/start recovery, and bounded browser behavior are directly proven. The existing operator credential is not available through approved references, and no approved Node mTLS installation exists; neither gap may be hidden with a password reset, synthetic session, insecure Node override, or disposable replacement environment.
+- Affected areas: Dockerfile.core; packaging/core/prime-core.service; persistent Atlas runtime; DOD-006/DOD-005/DOD-074 evidence references; Continuation 053 evidence; append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-050

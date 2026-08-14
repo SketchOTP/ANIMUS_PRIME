@@ -718,3 +718,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: supersedes
 - Related directive: D-PRIME-PHASE15-V1-SOURCE-LIFECYCLE-OFFLINE-NODE-UPGRADE-051
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-CORE-UI-053
+
+- Issued: 2026-08-14T12:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 053
+- Objective: Configure, start, and qualify the genuine persistent PRIME Core-served Web UI on Atlas using the existing persistent PostgreSQL, existing Hindsight, and existing enrolled repository Node where the approved secure topology permits.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; PRIME-owned persistent runtime configuration and service definitions; private Core/UI startup, restart recovery, real browser operator journey, DOD-005/DOD-074 operator-visible qualification, minimal user-impact repairs, governed evidence, GitHub, and Notion publication.
+- Exclusions: No Z:/SSHFS execution authority; no disposable databases, containers, projects, repositories, worktrees, Hindsight banks, browser profiles, or synthetic state; no public exposure, Funnel changes, security weakening, unapproved credentials, unrelated service replacement, Phase 16, deployment, R-056 closure, or parked DOD-039/DOD-050/DOD-053/generic qualification-edge work unless directly required by the real operator journey; preserve pre-existing untracked directories.
+- Acceptance: Establish the intended persistent private topology or report a concrete stop condition; prove process/listener ownership, persistent dependencies, health, startup/shutdown/restart recovery, real UI/browser journey, truthful degraded integrations, DOD-005/DOD-074 operator boundaries, validation, exact Git parity, and final governed evidence with Notion checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-CONVERGENCE-RESET-052
+- Status at issuance: ISSUED

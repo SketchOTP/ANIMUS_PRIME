@@ -1743,3 +1743,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005 exact full Documentation/Notion projection qualification, DOD-074 operator workflow qualification, DOD-004, DOD-006, DOD-008, DOD-009, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-033, DOD-037, DOD-038, DOD-039, DOD-044, DOD-045, DOD-050, DOD-053, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open, bounded, or unqualified.
 - Blockers: no persistent PRIME Core/UI runtime has been explicitly authorized/configured for this run; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-CORE-UI-053 - PARTIAL
+
+- Outcome ID: O-PRIME-053
+- Supersedes outcome: O-PRIME-052
+- Closed: 2026-08-14T14:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Established the genuine persistent private PRIME Core-served Web UI on Atlas through a PRIME-owned user-level systemd service and one persistent Core container, reusing the existing PostgreSQL and Hindsight. Repaired the non-root Docker image permission failure, proved Core health/readiness, private listener ownership, clean stop/start recovery, real Chromium shell/protected-route/404/responsive/keyboard behavior, and preserved truthful degraded states. Full authenticated operator qualification was not claimed because the existing operator password was unavailable through approved references. The enrolled repository Node was not started because Atlas has no PRIME-owned service or approved mTLS credential set; the disposable-only insecure HTTP override was not used. No governed requirement was promoted, R-056 remained open, and no deployment or public exposure occurred.
+- Changed areas: Dockerfile.core; packaging/core/prime-core.service; packaging/core/README.md; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; evidence/phase15/qualification-continuation-053.md; append-only .agent records.
+- Validation:
+  - persistent Core/Web health and clean stop/start recovery - PASSED
+  - real Chromium shell, protected 401, invalid-route 404, responsive and keyboard checks - PASSED within unauthenticated boundary
+  - full code regression - PASSED (90 passed, 28 skipped)
+  - compileall and diff check - PASSED
+  - adopted governance - PASSED
+  - product alignment audit and burndown - PASSED; broader V1 product-goal alignment remains FAIL by design
+  - authenticated operator journey and live Node control-plane qualification - BLOCKED by existing operator credential and missing approved Node mTLS material
+  - deployment - NOT PERFORMED
+- Remaining risks: authenticated Home/project journey, DOD-005 operator-visible source lifecycle, DOD-074 operator-visible offline Node, live Notion, approved model, Hindsight Reflect/Mental Models, native Windows, second-device/provider boundaries, and R-056 remain open or unqualified.
+- Blockers: existing operator password is required for protected browser qualification; no approved PRIME Node mTLS installation exists on Atlas.
+- Follow-up directive: none

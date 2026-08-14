@@ -621,3 +621,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME Phase 15 prioritization, persistent Atlas runtime readiness, source lifecycle, and offline Node qualification.
 - Supersedes learning: none
+
+## L-PRIME-PERSISTENT-RUNTIME-053
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-PERSISTENT-RUNTIME-053
+- Fact or lesson: The supported V1 topology serves the genuine Web UI from the PRIME Core process, so a second Web server is unnecessary. A PRIME-owned user-level systemd service can manage one persistent Core container against the existing PostgreSQL/Hindsight without recreating qualification dependencies. Source files with owner-only modes can break a non-root Docker image at import time; normalizing application read/execute permissions in the image preserves the non-root contract. An enrolled Node database row is not a live Node process, and the packaged Node must remain stopped when approved mTLS material is absent; the disposable-only insecure HTTP override is not an acceptable persistent workaround.
+- Evidence location: Dockerfile.core; packaging/core/prime-core.service; evidence/phase15/qualification-continuation-053.md; direct Atlas service/listener/container inspection.
+- Confidence: VERIFIED
+- Scope: PRIME persistent Core/UI runtime, Atlas service ownership, Docker packaging, and Node security boundary.
+- Supersedes learning: L-PRIME-CONVERGENCE-RESET-052

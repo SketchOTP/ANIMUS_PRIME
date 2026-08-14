@@ -10,6 +10,8 @@ RUN apt-get update \
 COPY apps ./apps
 COPY src ./src
 COPY migrations ./migrations
+# Preserve the non-root runtime contract when source files carry owner-only modes.
+RUN chmod -R a+rX /app
 
 USER nobody
 EXPOSE 8000
