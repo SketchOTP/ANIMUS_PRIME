@@ -7,7 +7,7 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 10
+  LOCAL_CODE: 6
   LOCAL_BROWSER_QUALIFICATION: 16
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 2
@@ -314,31 +314,6 @@ items:
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-028
-    current_status: "BACKEND_ONLY"
-    product_area: "authority adoption"
-    owner_phase: 7
-    mapped_r_requirements: ["R-008"]
-    exact_missing_behavior: "Direct authority-adoption qualification must prove explicit adopt, migrate, and review paths never silently overwrite authority; no dedicated UI is required."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-028 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
-    depends_on: "R-008"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-031
     current_status: "BACKEND_ONLY"
     product_area: "warm start"
@@ -464,56 +439,6 @@ items:
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-037
-    current_status: "BACKEND_ONLY"
-    product_area: "Git"
-    owner_phase: 11
-    mapped_r_requirements: ["R-049"]
-    exact_missing_behavior: "Direct Git qualification must prove canonical state is separated from experimental branches and worktrees; no dedicated UI is required."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-037 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
-    depends_on: "R-049"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
-  - dod_id: DOD-038
-    current_status: "BACKEND_ONLY"
-    product_area: "worktrees"
-    owner_phase: 11
-    mapped_r_requirements: ["R-049"]
-    exact_missing_behavior: "Direct worktree-provenance qualification must prove branch and worktree context retains canonical acceptance or merge state where determinable; no dedicated UI is required."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-038 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
-    depends_on: "R-049"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-039
     current_status: "BACKEND_ONLY"
     product_area: "rebind"
@@ -564,31 +489,6 @@ items:
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-051"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-045
-    current_status: "PARTIAL"
-    product_area: "authentication"
-    owner_phase: 1
-    mapped_r_requirements: ["R-001"]
-    exact_missing_behavior: "Direct security qualification must prove operator authentication and web-session protections guard management and destructive operations; no dedicated UI is required."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-045 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
-    depends_on: "R-001"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-047
     current_status: "UI_SHELL_ONLY"
     product_area: "Usage"

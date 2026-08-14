@@ -1679,3 +1679,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-045, DOD-028, DOD-037, DOD-006, DOD-038, DOD-039, DOD-004, R-045, and R-056 remain open or blocked.
 - Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-FROZEN-AUTH-PROVENANCE-049 - PARTIAL
+
+- Outcome ID: O-PRIME-049
+- Supersedes outcome: O-PRIME-048
+- Closed: 2026-08-14T07:54:00-04:00
+- Acceptance: PARTIAL
+- Summary: Reconciled the frozen authentication boundary and promoted DOD-045, DOD-037, DOD-038, and DOD-028 only after direct persistent Atlas qualification. Canonical Git truth is explicitly persisted as `refs/heads/main`; Git graph, dirty-worktree, historical, unknown, and memory-capture provenance states are qualified; current/legacy/conflict authority migration paths are explicit and fail closed. DOD-008 recovery replay remains partial, DOD-006 remains unqualified by current topology, DOD-039 and DOD-004 remain reference-only decisions, and no Core/browser/disposable/Phase 16/R-045/R-056 work was performed.
+- Changed areas: src/prime_core/git_provenance.py; src/prime_core/authority.py; src/prime_core/service.py; src/prime_core/memory_service.py; src/prime_core/mcp_service.py; apps/core/main.py; migrations/prime/0029_canonical_git_provenance.sql; scripts/phase15_qualify_continuation_049.py; governed DOD audit/burndown/traceability; Continuation 049 evidence; append-only .agent records; implementation commit b0c1238ca763870812e22dca4fdcd6c8e9abb1c3.
+- Validation:
+  - direct persistent Continuation 049 qualification - PASSED
+  - focused persistent regression - PASSED (20 passed, 1 explicit FRESH_STATE_REQUIRED skip)
+  - full persistent regression - PASSED (109 passed, 3 explicit FRESH_STATE_REQUIRED skips)
+  - test collection - PASSED (112 tests collected)
+  - adopted governance validation - PASSED
+  - template governance validation - PASSED
+  - product burndown and alignment audit - PASSED; broader V1 release alignment remains FAIL by design
+  - compileall, YAML/governed reconciliation, diff, and secret checks - PASSED
+  - PostgreSQL and Hindsight health - PASSED
+  - storage - PASSED; no cleanup performed
+  - Core/browser qualification - NOT RUN; no persistent Core listener exists
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-008, DOD-006, DOD-039, DOD-004, R-045, R-056, approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/provider boundaries remain open, bounded, or unqualified.
+- Blockers: no persistent Core listener and no approved disposable state for the remaining fresh-state/recovery boundaries.
+- Follow-up directive: none

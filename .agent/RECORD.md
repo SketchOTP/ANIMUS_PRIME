@@ -451,3 +451,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The three promoted rows have direct persistent or in-process evidence, while withheld rows retain concrete unreconciled acceptance clauses. Continuation 048 therefore closes only its bounded scope and preserves the remaining blockers.
 - Affected areas: progress correction provenance, Node state audit and repository identity, governed DOD audit/burndown, Continuation 048 evidence, and append-only .agent records.
 - Supersedes record: DEC-PRIME-PHASE15-047
+
+## DEC-PRIME-PHASE15-049
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-049
+- Status: CLOSED
+- Decision or event: Promote only DOD-045, DOD-037, DOD-038, and DOD-028 after direct persistent Atlas qualification. Keep DOD-008 partial, DOD-006 topology-unqualified, DOD-039 and DOD-004 reference-only, and R-045/R-056 open; do not start Core, browser qualification, disposable state, Phase 16, or deployment.
+- Rationale: The four promoted rows have exact product-boundary evidence and reconciled governed records. The remaining rows retain concrete unavailable recovery, topology, external-provider, browser/Core, sustained-capacity, or aggregate acceptance clauses and must not be papered over.
+- Affected areas: canonical Git provenance and authority migration controls; memory provenance; DOD audit/burndown/traceability; Continuation 049 evidence; append-only .agent records.
+- Supersedes record: DEC-PRIME-PHASE15-048

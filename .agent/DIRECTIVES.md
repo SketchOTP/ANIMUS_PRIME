@@ -662,3 +662,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-INCREMENTAL-OBSERVATION-REPAIR-047
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-FROZEN-AUTH-PROVENANCE-049
+
+- Issued: 2026-08-14T07:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 049
+- Objective: Reconcile DOD-045 against DOD-008, establish explicit canonical Git truth, retain Git-native memory provenance, and complete explicit legacy/conflict authority paths directly on persistent Atlas.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; persistent PostgreSQL/Hindsight; DOD-045, DOD-037, DOD-038, DOD-028, and DOD-006 evidence; governed evidence and publication.
+- Exclusions: No Z:/SSHFS execution authority; no Core startup; no browser qualification without an approved persistent Core listener; no disposable resources; no Phase 16; no deployment; no R-045 pressure; no R-056 closure; preserve pre-existing untracked directories.
+- Acceptance: Promote only exact frozen rows with direct evidence; preserve DOD-008/DOD-006 and all external blockers; run focused/full persistent validation; reconcile all governed views; publish with local/origin/GitHub and Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-CORE-INDEPENDENT-SECURITY-PROVENANCE-CONVERGENCE-048
+- Status at issuance: ISSUED

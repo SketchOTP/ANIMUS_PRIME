@@ -591,3 +591,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME provenance, Node security lifecycle, repository identity, and Continuation 048 qualification.
 - Supersedes learning: none
+
+## L-PRIME-CONTINUATION-049
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONTINUATION-049
+- Fact or lesson: The DOD-045 operator-session boundary is distinct from DOD-008 break-glass recovery and must not inherit its unavailable replay evidence. Canonical Git truth must persist an explicit fully qualified ref and resolved commit independently of the active worktree; Git graph plus dirty state supports fail-closed acceptance classifications. Memory capture should preserve canonical, active, worktree, and acceptance-overlay provenance without rewriting historical records. Authority migration must expose CURRENT, LEGACY, CONFLICT, and NONE states, require confirmation for recognized legacy migration, and leave malformed/conflicting input for review.
+- Evidence location: src/prime_core/git_provenance.py; src/prime_core/authority.py; src/prime_core/service.py; src/prime_core/memory_service.py; src/prime_core/mcp_service.py; apps/core/main.py; scripts/phase15_qualify_continuation_049.py; evidence/phase15/qualification-continuation-049.md; persistent project_d9a1a5b609394282b62fc12c0d04634d.
+- Confidence: VERIFIED
+- Scope: PRIME authentication boundary, canonical Git provenance, memory provenance, authority migration, and direct Atlas qualification.
+- Supersedes learning: none
