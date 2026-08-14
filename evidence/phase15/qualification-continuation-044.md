@@ -72,7 +72,7 @@ The existing requirements traceability, Phase 15 remediation matrix, and qualifi
 - `git diff --check`: `PASSED`.
 - Product-gap/governance validator: `PASSED` — 81 total, 26 complete, 55 burndown, counts and IDs aligned.
 - Secret scan: `PASSED` — no secret-bearing changes admitted; the negative secret-rejection test passed.
-- Local/origin parity: pending final publication check.
+- Local/origin parity: `PASSED` — final published SHA `231c58da1ecf8a0f15bf4677cea4a3d9eac1a123` matches local `HEAD`, `origin/main`, and `git ls-remote origin refs/heads/main`.
 
 ## Remaining bounded work
 
