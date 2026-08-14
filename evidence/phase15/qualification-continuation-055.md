@@ -5,7 +5,8 @@
 `PARTIAL` — the persistent private Core-to-Node product path is operational and the operator-visible offline Node boundary is qualified. DOD-005 generated Documentation/Notion projection, the remaining unavailable integrations, R-056, Phase 15 completion, V1 declaration, and deployment remain open.
 
 - Qualified implementation commit: `0a3c82f53d0c5c70a37db7f8c3a2dbdb6d76d42f`
-- Final governed publication commit: recorded after closeout publication
+- Final governed publication commit: the final publication-record commit containing this closeout
+- Notion checkpoint: https://app.notion.com/p/3bc833cb27ff813994b8ce800ba3c8e1?pvs=204
 
 ## Baseline
 
@@ -114,7 +115,7 @@ Result: DOD-074 operator boundary `PRODUCT_VERIFIED` for the exercised persisten
 - Product alignment audit: PASSED; release gate remains FAIL by design while open §26 rows remain.
 - Secret scan and `git diff --check`: PASSED; no private keys, bearer values, passwords, or raw credentials detected.
 - Persistent service/listener health and enabled startup policy: PASSED.
-- Local/origin parity and final publication: pending the governed commit/push closeout recorded below.
+- Local/origin parity and final publication: PASSED after the governed closeout push; the final publication-record commit is the final governed tip.
 - Deployment: NOT PERFORMED.
 
 ## Remaining gaps
