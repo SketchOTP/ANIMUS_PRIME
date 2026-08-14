@@ -394,6 +394,18 @@ class CoreService:
                 raise KeyError("project not found")
             if not db.execute("SELECT 1 FROM prime_core.nodes WHERE node_id=%s", (node_id,)).fetchone():
                 raise KeyError("node not found")
+            existing_binding = db.execute(
+                "SELECT repository_id FROM prime_core.project_bindings WHERE project_id=%s",
+                (project_id,),
+            ).fetchone()
+            if existing_binding:
+                raise ValueError("project already has a primary repository binding")
+            duplicate = db.execute(
+                "SELECT project_id FROM prime_core.repositories WHERE identity_fingerprint=%s",
+                (identity_fingerprint,),
+            ).fetchone()
+            if duplicate:
+                raise ValueError("repository is already bound to another project")
             row = db.execute(
                 "INSERT INTO prime_core.repositories(repository_id,node_id,project_id,identity_fingerprint,canonical_path,is_bare,created_at,last_observed_at) "
                 "VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *",

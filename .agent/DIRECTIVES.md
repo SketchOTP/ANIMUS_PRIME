@@ -620,3 +620,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-PERSISTENT-ATLAS-PRODUCT-CONVERGENCE-044
 - Status at issuance: ISSUED
+## D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046
+
+- Issued: 2026-08-14T05:10:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Continuation 046
+- Objective: Reconcile all 52 starting open section-26 rows against the frozen sentence, repair over-specified governance, close exact core-independent architecture rows, implement bounded incremental observation where the current full-rescan implementation is a real gap, and publish only truthful persistent-Atlas evidence.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; persistent PostgreSQL and Hindsight; local code/tests/evidence/governance; GitHub and Notion publication.
+- Exclusions: No temporary Core; no browser qualification without a persistent Core listener; no disposable environments/projects/repos/worktrees/fixtures/browser profiles; no Phase 16; no deployment; no R-045 pressure; no aggregate R-056 release claim; no fabricated provider or second-device evidence.
+- Acceptance: All 52 rows classified; governed audit/burndown/traceability reconciled; exact direct promotions supported; incremental observation is bounded and fail-closed; persistent regression and governance/secret/storage checks pass; local/origin/GitHub and Notion parity recorded.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-FROZEN-SPEC-RECONCILIATION-045
+- Status at issuance: ISSUED

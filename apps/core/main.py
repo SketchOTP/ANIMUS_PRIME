@@ -84,6 +84,11 @@ class EventRequest(BaseModel):
     dedupe_key: str | None = Field(default=None, max_length=240)
 
 
+class IncrementalIndexRequest(BaseModel):
+    source_revision: str = Field(min_length=1, max_length=240)
+    changed_paths: list[str] = Field(min_length=1, max_length=1000)
+
+
 class ProjectRequest(BaseModel):
     name: str = Field(min_length=1, max_length=200)
     description: str = Field(default="", max_length=4000)
@@ -779,6 +784,15 @@ def index_project(project_id: str, request: Request, prime_session: str | None =
         return indexer.build(project_id)
     except (KeyError, ValueError, FileNotFoundError, OSError) as exc:
         return error("INDEX_REJECTED", str(exc), request_id(request), retryable=True, status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/index/incremental")
+def index_project_incremental(project_id: str, body: IncrementalIndexRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return indexer.observe_incremental(project_id, body.changed_paths, body.source_revision)
+    except (KeyError, ValueError, FileNotFoundError, OSError) as exc:
+        return error("INCREMENTAL_INDEX_REJECTED", str(exc), request_id(request), retryable=True, status_code=400)
 
 
 @app.get("/v1/projects/{project_id}/search")

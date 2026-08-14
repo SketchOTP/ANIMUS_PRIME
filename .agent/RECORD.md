@@ -421,3 +421,12 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The frozen specification places automatic authority admission in DOD-030, evidence-backed percentage/confidence/explanation in DOD-062, stale/refresh in DOD-063, and correction/challenge with history, Goal Alignment, and milestones in DOD-026. Continuation 044 directly evidenced the first three boundaries.
 - Affected areas: scripts/validate_governance.py; governed audit and burndown; Continuation 045 evidence; .agent ledgers.
 - Supersedes record: DEC-PRIME-PHASE15-044-CLOSEOUT
+## DEC-PRIME-PHASE15-046
+
+- Date: 2026-08-14
+- Record or decision ID: DEC-PRIME-PHASE15-046
+- Status: CLOSED
+- Decision or event: Continuation 046 treats the frozen section-26 sentence as the acceptance authority, removes invented operator paths from architecture/documentation rows, implements bounded incremental repository observation, and keeps Core/browser work blocked when no persistent Core listener exists.
+- Rationale: The audit found a real full-rescan/incremental-observation product gap and a direct duplicate-binding API gap. Both were repaired and covered by persistent Atlas regression; the remaining open rows require their exact external, browser, workflow, or aggregate boundaries.
+- Affected areas: repository indexing and change intake; repository binding preflight; frozen section-26 audit/burndown; R-011 traceability; Continuation 046 evidence.
+- Supersedes record: DEC-PRIME-PHASE15-045

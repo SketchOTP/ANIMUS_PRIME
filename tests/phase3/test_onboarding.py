@@ -38,6 +38,13 @@ def test_onboarding_binding_and_approved_goal(monkeypatch):
         assert node.status_code == 200
         binding = client.post("/v1/repositories/bind", json={"project_id": project["project_id"], "node_id": node_id, "identity_fingerprint": uuid.uuid4().hex + uuid.uuid4().hex, "canonical_path": "/srv/repo"}, headers=headers)
         assert binding.status_code == 200
+        duplicate_same_project = client.post("/v1/repositories/bind", json={"project_id": project["project_id"], "node_id": node_id, "identity_fingerprint": uuid.uuid4().hex + uuid.uuid4().hex, "canonical_path": "/srv/other"}, headers=headers)
+        assert duplicate_same_project.status_code == 400
+        bare = client.post("/v1/repositories/bind", json={"project_id": project["project_id"], "node_id": node_id, "identity_fingerprint": uuid.uuid4().hex + uuid.uuid4().hex, "canonical_path": "/srv/bare", "is_bare": True}, headers=headers)
+        assert bare.status_code == 400
+        other_project = client.post("/v1/projects", json={"name": "Duplicate Binding Project"}, headers=headers).json()
+        duplicate_other_project = client.post("/v1/repositories/bind", json={"project_id": other_project["project_id"], "node_id": node_id, "identity_fingerprint": binding.json()["identity_fingerprint"], "canonical_path": "/srv/repo"}, headers=headers)
+        assert duplicate_other_project.status_code == 400
         goal = client.post(f"/v1/projects/{project['project_id']}/goal", json={"content": "Ship the approved goal", "approve": True}, headers=headers)
         assert goal.status_code == 200
         assert goal.json()["status"] == "APPROVED"

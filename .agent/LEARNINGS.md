@@ -561,3 +561,12 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: ANIMUS PRIME governance and requirement qualification.
 - Supersedes learning: none
+## L-PRIME-CONTINUATION-046
+
+- Date: 2026-08-14
+- Learning ID: L-PRIME-CONTINUATION-046
+- Fact or lesson: Incremental repository qualification must carry changed relative paths and a Git revision, reject stale ancestry and diverged revisions before projection, mark deleted current rows stale while preserving historical rows, and filter retrieval to current rows. A full recursive scan remains an explicit rebuild path, not the change-observation path.
+- Evidence location: src/prime_core/indexer.py; apps/core/main.py; tests/phase4/test_incremental_observation.py; evidence/phase15/qualification-continuation-046.md
+- Confidence: VERIFIED
+- Scope: PRIME repository observation/index projection and section-26.61 qualification.
+- Supersedes learning: none

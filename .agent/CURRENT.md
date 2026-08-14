@@ -3,17 +3,17 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: `2026-08-13T22:20:00-04:00`
+- Last updated: `2026-08-14T05:10:00-04:00`
 
 ## Active state after adoption
 
-- Local directive ID: `D-PRIME-PHASE15-V1-FROZEN-SPEC-RECONCILIATION-045`
-- External directive ID: `ANIMUS PRIME — Continuation 045`
-- Objective: `Reconcile frozen §26 boundaries, repair adopted governance schema validation, and close only directly evidenced local architecture gaps.`
+- Local directive ID: `D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046`
+- External directive ID: ANIMUS PRIME - Continuation 046
+- Objective: `Reconcile all 52 starting open section-26 rows, implement bounded incremental observation and binding fail-closed checks, and close only directly evidenced core-independent architecture rows.`
 - Current status: `COMPLETE`
 - Acceptance: `PARTIAL`
 - Current phase: `CLOSED_PARTIAL`
-- Expected or actual touched areas: `scripts/validate_governance.py; governed audit/burndown; Continuation 045 evidence; append-only .agent records`
+- Expected or actual touched areas: `src/prime_core/indexer.py; apps/core/main.py; src/prime_core/service.py; governed audit/burndown/traceability; Continuation 046 evidence; append-only .agent records`
 - Immediate next action: `Awaiting reset for the next explicitly authorized continuation; no Phase 16 or deployment.`
 
 ## Temporary task-relevant facts

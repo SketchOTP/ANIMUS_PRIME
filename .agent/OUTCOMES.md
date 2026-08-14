@@ -1619,3 +1619,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-026, DOD-068, R-045, R-056, and live Notion/model/provider/native boundaries remain open or blocked.
 - Blockers: approved Hindsight Reflect/Mental Models, live Notion, approved model execution, and required native/second-device provider boundaries remain unavailable or unqualified.
 - Follow-up directive: none
+## D-PRIME-PHASE15-V1-CORE-INDEPENDENT-FROZEN-SPEC-CONVERGENCE-046 - PARTIAL
+
+- Outcome ID: O-PRIME-046
+- Supersedes outcome: O-PRIME-045
+- Closed: 2026-08-14T05:10:00-04:00
+- Acceptance: PARTIAL
+- Summary: Audited all 52 rows open at Continuation 046 start. Repaired over-specified architectural/documentary rows, corrected stale work classes, promoted DOD-002, DOD-012, DOD-023, DOD-052, DOD-061, and DOD-075 on direct evidence, and left DOD-004 open because generic durable resume/compensation/orphan guarantees remain incomplete. Governed result: 35 complete and 46 open section-26 rows; PRODUCT_VERIFIED=21, USER_USABLE_VERIFIED=14, IMPLEMENTED_NOT_PRODUCT_QUALIFIED=11, BACKEND_ONLY=21, UI_SHELL_ONLY=9, PARTIAL=4, BLOCKED_BY_ENVIRONMENT=1, MISSING=0.
+- Changed areas: src/prime_core/indexer.py; apps/core/main.py; src/prime_core/service.py; tests/phase3/test_onboarding.py; tests/phase4/test_incremental_observation.py; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml; docs/requirements-traceability.yaml; evidence/phase15/qualification-continuation-046.md.
+- Validation:
+  - persistent focused and full regression - PASSED (106 passed, 3 explicit FRESH_STATE_REQUIRED skips)
+  - test collection - PASSED (109 tests collected)
+  - adopted and template governance - PASSED
+  - product alignment/burndown structural validation - PASSED; release alignment remains FAIL
+  - YAML, compileall, diff, secret scan, PostgreSQL, Hindsight, and storage checks - PASSED
+  - Core/browser qualification - NOT RUN; no persistent Core listener existed
+  - deployment - NOT PERFORMED
+- Remaining risks: DOD-004, DOD-005, DOD-008, DOD-013, DOD-016, DOD-021, DOD-022, DOD-026, DOD-028, DOD-031, DOD-032, DOD-038, DOD-039, DOD-044, DOD-045, DOD-068, DOD-079, DOD-080, DOD-081, R-045, and R-056 remain open or blocked.
+- Blockers: no persistent Core listener; approved model, live Notion workflow, Hindsight Reflect/Mental Models, native Windows, and second-device/Tailscale boundaries remain unqualified.
+- Follow-up directive: none
