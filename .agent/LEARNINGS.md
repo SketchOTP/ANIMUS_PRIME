@@ -751,3 +751,14 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Atlas lifecycle/security-negative matrix, onboarding refusal, authority adoption, Goal protection, Progress correction refusal, backup preflight, and browser polish.
 - Supersedes learning: L-PRIME-EXPLICIT-OPERATOR-WORKFLOWS-064
+
+
+## L-PRIME-V1-RELEASE-BLOCKER-CLASSIFICATION-066
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-V1-RELEASE-BLOCKER-CLASSIFICATION-066
+- Fact or lesson: After the negative/refusal wave is complete, an unchanged burndown is not evidence of a missing test. The remaining rows must be separated into exact frozen clauses that are resource-available, require a real external capability, require a legitimate durable target, or are parked/gated. Existing Hindsight, a running Tailscale daemon, or the Notion journal connector do not by themselves prove that PRIME's approved runtime integrations or qualification targets are available.
+- Evidence location: evidence/phase15/qualification-continuation-066.md; docs/v1-product-gap-burndown.yaml; docs/phase15-remediation-matrix.yaml; docs/phase15-remediation-qualification-ledger.yaml; docs/requirements-traceability.yaml
+- Confidence: VERIFIED
+- Scope: Continuation 066 release-blocker classification and persistent Atlas resource inspection.
+- Supersedes learning: L-PRIME-LOCAL-V1-CONVERGENCE-065

@@ -904,3 +904,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-V1-RELEASE-BLOCKER-EXECUTION-066
+
+- Issued: 2026-08-15T19:04:40-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 066
+- Objective: Classify and execute only genuinely available V1 release-blocker work; reduce governed requirements without repeating completed local refusal tests or fabricating targets.
+- Scope: Direct Atlas SSH/native execution; current persistent PRIME topology; current Notion/GitHub/burndown/traceability rails; exact local/external/legitimate-target classification; available qualification only; truthful evidence and living Notion journal.
+- Exclusions: No Z:/SSHFS runtime authority; no generic repeated local-browser/refusal pass; no synthetic projects, repositories, Nodes, Goals, authority, backup, upgrade, or second-device state; DOD-005 parked; DOD-081/R-056 last; no public exposure, Funnel changes, deployment, Phase 16, or V1 declaration.
+- Acceptance: Inspect all 32 open burndown items, classify each honestly, promote only if a frozen clause is actually complete, record exact external resources and legitimate targets required, reconcile governance, publish evidence, and update GitHub/Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-LOCAL-V1-CONVERGENCE-065
+- Status at issuance: ISSUED

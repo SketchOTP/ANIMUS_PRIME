@@ -601,3 +601,14 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The live product proved the requested no-mutation boundaries and one Goal-protection defect was repaired at the smallest clause-linked point. The canonical project returned to ACTIVE / ONLINE / CURRENT / NORMAL, Goal identity/hash remained unchanged, the approved authority files were not rewritten, and no synthetic resource or public exposure was used. A safe authority-adoption observation advanced onboarding metadata, so the exact pre-probe values were restored and the side effect was recorded as a remaining product concern.
 - Affected areas: CoreService Goal protection; focused regression; persistent Core image; local browser/API qualification; Continuation 065 evidence; append-only governed records.
 - Supersedes record: DEC-PRIME-PHASE15-064
+
+
+## DEC-PRIME-PHASE15-066
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-066
+- Status: CLOSED
+- Decision or event: Publish Continuation 066 as PARTIAL with no governed release-blocker reduction after classifying every open burndown item against actual Atlas resources and frozen acceptance boundaries.
+- Rationale: The current persistent product and evidence already cover the completed negative/refusal boundaries. Remaining local items require legitimate durable targets or broad unbounded implementation; remaining external items require unavailable approved integrations, hosts, devices, or capabilities. No synthetic state, public exposure, or scope expansion was used.
+- Affected areas: Continuation 066 evidence; .agent directive/outcome/learning/record state; current release-blocker classification.
+- Supersedes record: DEC-PRIME-PHASE15-065
