@@ -531,3 +531,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The existing operator password must not be read, rotated, or replaced. A separate high-entropy host-held secret and purpose-isolated challenge lifecycle preserve the existing operator identity while keeping approval outside the browser. The flow was qualified through the real private Core/UI, including fail-closed negatives and Core restart recovery, without creating disposable state or changing public exposure.
 - Affected areas: local identity migration/service/API/UI; Atlas host approval helper; persistent Core image/service; browser authentication and step-up qualification; Continuation 058 evidence and governed records.
 - Supersedes record: DEC-PRIME-PHASE15-057
+
+## DEC-PRIME-PHASE15-059
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-059
+- Status: CLOSED
+- Decision or event: Rebuild the existing persistent PRIME Core image through the approved Atlas systemd/container topology so the safe browser wave exercises the actual current implementation. Promote only directly supported product states: DOD-056 metadata continuity is user-verified; DOD-026, DOD-027, DOD-047, and DOD-049 advance to PARTIAL; DOD-048 remains shell-only; DOD-005 and R-056 remain gated.
+- Rationale: The running service initially imported the prior image, so checkout edits were not live despite the canonical repository mount. The same persistent state mount and service identity were preserved while the image was rebuilt and swapped; metadata was tested through the real UI across Core restart and restored exactly. No disposable database/project/Node/browser profile, public exposure, or unrelated service change was used.
+- Affected areas: Core Usage endpoint; reliability Backup diagnostics; project metadata UI/API; mobile navigation CSS; focused safe-wave regression; Continuation 058/059 evidence; governed records.
+- Supersedes record: DEC-PRIME-PHASE15-058

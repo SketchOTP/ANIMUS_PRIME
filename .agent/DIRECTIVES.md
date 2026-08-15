@@ -802,3 +802,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059
+
+- Issued: 2026-08-15T00:18:01-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 059
+- Objective: Use the qualified trusted-host authenticated browser path to qualify safe local operator surfaces, repair the 058 evidence closeout, preserve persistent Atlas topology, and keep DOD-005/R-056/parked work outside scope.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; safe browser qualification for DOD-047, DOD-048, DOD-080, DOD-049, DOD-026, DOD-027, DOD-054, and DOD-056; minimal product repairs, governed evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable environments or synthetic state; no public exposure/Funnel changes; no credential discovery or raw secrets; no destructive lifecycle/creation/authority/delete/release work; DOD-005 remains parked; R-056 remains gated; no Phase 16 or deployment.
+- Acceptance: Produce truthful direct browser evidence, reconcile governed views, validate and publish exact parity, and record the living journal/checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058
+- Status at issuance: ISSUED

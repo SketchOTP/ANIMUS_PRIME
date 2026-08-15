@@ -681,3 +681,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Atlas Core/UI trusted-host authentication and single-operator browser continuity.
 - Supersedes learning: L-PRIME-RESTORATION-BOUNDED-LOCAL-QUALIFICATION-057
+
+## L-PRIME-SAFE-PRODUCT-WAVE-059
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-SAFE-PRODUCT-WAVE-059
+- Fact or lesson: A persistent Core image must be rebuilt and swapped through the existing PRIME-owned systemd/container path before checkout edits are live; a read-only repository mount does not change the image import tree. Safe operator qualification is strongest when UI mutations are bounded, restarted against the same persistent state mount, and restored exactly. Truthful product panels should render existing records and explicit unavailable provider/limit states rather than invent cost or capability.
+- Evidence location: Dockerfile.core; packaging/core/prime-core.service; apps/core/main.py; apps/web/index.html; src/prime_core/reliability_service.py; tests/phase15/test_continuation059_safe_wave.py; evidence/phase15/qualification-continuation-059.md
+- Confidence: VERIFIED
+- Scope: PRIME persistent Atlas Core/UI image lifecycle, safe browser qualification, data-backed Usage/Backup/Metadata surfaces, and responsive navigation.
+- Supersedes learning: L-PRIME-TRUSTED-HOST-LOCAL-IDENTITY-058

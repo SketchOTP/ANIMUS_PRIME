@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-14T23:35:00-04:00
+- Last updated: 2026-08-15T00:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 058
+- Local directive ID: D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 059
 - Objective: Establish spec-compliant trusted-host local identity sign-in and step-up authentication on the existing persistent Atlas PRIME installation, then resume the real browser operator journey.
 - Current status: `COMPLETE`
 - Acceptance: PARTIAL; trusted-host sign-in, step-up, negative security cases, persistent service restart, and the real protected browser journey passed, while DOD-005, the remaining local queue, external boundaries, and R-056 remain open.
-- Current phase: TRUSTED_HOST_LOCAL_IDENTITY_AUTHENTICATION_058
-- Expected or actual touched areas: local identity migration/service/API/UI; Atlas host approval helper; persistent Core image/service; browser operator journey; evidence and governed records
-- Immediate next action: continue the bounded local browser qualification queue without reopening DOD-005 or starting R-056; preserve private Atlas runtime and parked DOD-004/DOD-039/DOD-050/DOD-053 scope.
+- Current phase: AUTHENTICATED_LOCAL_BROWSER_QUALIFICATION_059
+- Expected or actual touched areas: Core Usage/Backup/Metadata surfaces; responsive UI polish; browser qualification; persistent image/service; evidence and governed records
+- Immediate next action: close the remaining locally actionable safe wave, keep DOD-005 parked and R-056 gated, then reassess only the still-open exact clauses.
 
 ## Temporary task-relevant facts
 
@@ -30,6 +30,11 @@
 - Continuation 055 preserves the canonical Node identity `node-041-atlas-native`, uses persistent trust material outside Git, and keeps public ingress, deployment, Phase 16, and parked qualification work out of scope.
 - Continuation 058 implementation commit: `8c881256b6a0164cfef9ae411eb404107ac5c3c0`; the existing single operator now has a separate host-held local identity secret, stored only as a digest in Core state, with short-lived SIGN_IN and STEP_UP challenge/approval/redeem flows.
 - Continuation 058 qualified the real persistent Core/UI path: trusted-host sign-in and 300-second step-up succeeded; missing/wrong host-secret approval returned 401; consumed challenge replay returned 401; Core restart preserved authenticated project identity, Progress, repository binding, and Node state.
+
+- Continuation 059 active image: animus-prime-core:continuation-059-ui under animus-prime-core.service; prior persistent images/containers are inactive rollback artifacts. Existing PostgreSQL, Hindsight, canonical Node, state mount, and private listeners were preserved.
+- Continuation 059 browser evidence: Usage renders project-scoped records with truthful unavailable limits/cost states; Backup renders the existing verified continuity record and encryption version; Project Settings provides a real metadata form.
+- Continuation 059 metadata evidence: name, description, image URL, canonical project ID, Node, and repository path persisted through Core restart and were restored exactly to the original governed values.
+- Continuation 059 status: DOD-026, DOD-027, DOD-047, and DOD-049 are PARTIAL; DOD-056 is USER_USABLE_VERIFIED; DOD-048 remains shell-only; DOD-005 remains BACKEND_ONLY. The 375px browser check passes without horizontal overflow and keyboard Tab shows visible focus.
 
 ## Last validation after adoption
 

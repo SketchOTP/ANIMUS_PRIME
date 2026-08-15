@@ -1863,3 +1863,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005 remains BACKEND_ONLY because no safe existing source lifecycle was available for direct mutation qualification; local browser/code queue and external environment boundaries remain open; R-056, Phase 15 completion, and V1 declaration remain gated.
 - Blockers: none for the bounded trusted-host local identity scope; DOD-005 still requires a safe restoration-bounded source exercise and external integrations remain unavailable or unqualified.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059 - PARTIAL
+
+- Outcome ID: O-PRIME-059
+- Supersedes outcome: O-PRIME-058
+- Closed: 2026-08-15T00:45:00-04:00
+- Acceptance: PARTIAL
+- Summary: Repaired the Continuation 058 evidence closeout and rebuilt the existing persistent Atlas Core image so the real browser wave exercised the current checkout implementation. Added data-backed project Usage, verified-backup diagnostics, and a protected Project Settings metadata form. The canonical Qualification Project metadata name, description, image, project ID, Node, and repository path persisted across a Core restart and were restored exactly. Responsive navigation no longer overflows at 375px and keyboard focus visibly qualifies the bounded polish repair. DOD-056 is USER_USABLE_VERIFIED for the exercised metadata continuity path; DOD-026, DOD-027, DOD-047, and DOD-049 are PARTIAL; DOD-048 remains UI_SHELL_ONLY; DOD-005 remains BACKEND_ONLY and parked; R-056 remains OPEN.
+- Changed areas: apps/core/main.py; apps/web/index.html; src/prime_core/reliability_service.py; tests/phase15/test_continuation059_safe_wave.py; Continuation 058/059 evidence; governed YAML; append-only .agent records; persistent Core image tag animus-prime-core:continuation-059-ui.
+- Validation:
+  - focused safe-wave/authentication/recovery checks - PASSED (6 passed)
+  - full repository regression - PASSED (98 passed, 28 skipped; two new focused tests explain the pass increase)
+  - compile, shell syntax, diff, governance, burndown, and alignment structural checks - PASSED
+  - persistent Core/Node health and restart recovery - PASSED
+  - authenticated browser safe wave - PASSED for bounded surfaces; exact remaining clauses recorded
+  - phase15 aggregate qualifier - BLOCKED/FAIL because the established migration qualification requires PRIME_PHASE1_DB_URL or PRIME_DATABASE_URL; no substitute database was created
+  - secret checks - PASSED; no raw credentials or private keys recorded
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: DOD-005 direct persistent source lifecycle qualification; complete Progress/Alignment correction; Integrity negative boundary; configured provider usage/limits; notification lifecycle; backup export/restore controls; complete registration lifecycle; full polish acceptance; 15 external-environment items; R-056, Phase 15 completion, and V1 remain gated.
+- Blockers: no blocker to the bounded safe wave; aggregate qualification remains constrained by the established database/environment boundary and unavailable external provider/host requirements.
+- Follow-up directive: continue the remaining local queue without reopening DOD-005 or starting R-056.

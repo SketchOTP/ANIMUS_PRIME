@@ -101,7 +101,9 @@ Browser: real Chromium controlled through the project-required gstack browse ski
 
 ## Closeout publication
 
-- Final governed HEAD: to be filled after the evidence/record commit.
-- `origin/main`: to be filled after push.
-- Local/origin/GitHub parity: to be filled after refetch and diff check.
-- Notion checkpoint: Phase 15 Product Completion Checkpoint 058, linked from the living ANIMUS PRIME journal after publication.
+- Qualified implementation: `8c881256b6a0164cfef9ae411eb404107ac5c3c0`.
+- Final governed HEAD: `8829f248ab8c87f03dd94a7a29c06fef267c8855`.
+- `origin/main`: `8829f248ab8c87f03dd94a7a29c06fef267c8855`.
+- GitHub main: `8829f248ab8c87f03dd94a7a29c06fef267c8855`.
+- Parity: **PASSED**.
+- Notion checkpoint: [Phase 15 Product Completion Checkpoint 058 — 8829f24](https://app.notion.com/p/3bc833cb27ff811693ffcc763d4de350).
