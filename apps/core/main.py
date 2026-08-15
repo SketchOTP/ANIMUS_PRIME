@@ -35,6 +35,7 @@ from src.prime_core.history_service import HistoryService
 from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
 from src.prime_core.progress_service import ProgressService
+from src.prime_core.build_info import build_info
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
@@ -418,7 +419,7 @@ def live():
 def ready(request: Request):
     if startup_state.get("database") != "CONNECTED":
         return error("DEPENDENCY_DEGRADED", "canonical database is unavailable", request_id(request), retryable=True, status_code=503)
-    return {"status": "ready", "schema_version": startup_state.get("migrations")}
+    return {"status": "ready", **build_info(startup_state.get("migrations"))}
 
 
 @app.post("/v1/auth/bootstrap")
@@ -578,6 +579,12 @@ def core_status(request: Request, prime_session: str | None = Cookie(default=Non
     return {"service": "prime-core", "actor_id": session["operator_id"], "schema_version": startup_state.get("migrations"), "health": startup_state}
 
 
+@app.get("/v1/system/build")
+def system_build(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return build_info(startup_state.get("migrations"))
+
+
 @app.get("/v1/system/setup")
 def setup_status(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -667,6 +674,7 @@ def operator_state(request: Request, prime_session: str | None = Cookie(default=
     return {
         "service": "prime-core",
         "startup": dict(startup_state),
+        "build": build_info(startup_state.get("migrations")),
         "projects": projects,
         "nodes": nodes,
         "notion": notion_credentials.public_status(),
