@@ -551,3 +551,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The persistent service initially imported its prior image despite the canonical checkout mount. Build-time identity and health/operator exposure provide truthful runtime evidence; the existing database/environment boundary does not permit the aggregate qualifier to run safely without substitute state. The browser wave advanced bounded UI evidence and repaired narrow-screen diagnostics.
 - Affected areas: Core build metadata; health/operator state; persistent Core image/service; responsive UI diagnostics; focused regression; Continuation 060 evidence and governed records.
 - Supersedes record: DEC-PRIME-PHASE15-059
+
+## DEC-PRIME-PHASE15-061
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-061
+- Status: CLOSED
+- Decision or event: Publish Continuation 061 as PARTIAL with the final qualified implementation `6dd5d805` and persistent runtime image `animus-prime-core:continuation-061-local-product3`. Treat the authenticated snapshot repair, persistent restart recovery, and safe product/API boundaries as qualified; keep browser qualification blocked, DOD-005 parked, R-056 open, and deployment unperformed.
+- Rationale: The first real API probe found a user-impacting snapshot crash that structural tests did not catch. Fixing and requalifying the persistent image produced a truthful product boundary without modifying persistent project data or substituting an environment. The approved browser tool cannot currently start because its bundled server lacks Playwright, so browser claims remain unpromoted.
+- Affected areas: persistent Core image/service; snapshot/progress alignment; Notifications; Backup controls; Continuation 061 evidence and governed records.
+- Supersedes record: DEC-PRIME-PHASE15-060

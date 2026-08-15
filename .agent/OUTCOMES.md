@@ -1903,3 +1903,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: notification lifecycle; backup export/restore controls; alignment and integrity negative boundaries; provider-backed usage/model; registration matrix; full accessibility/polish; external environments; DOD-005; R-056; Phase 15 completion; and V1 remain open.
 - Blockers: aggregate qualification cannot safely run from native Atlas because the secure database reference is container-scoped and the established qualifier performs persistent migrations/fixtures; no substitute database was created.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-SAFE-LOCAL-PRODUCT-COMPLETION-061 - PARTIAL
+
+- Outcome ID: O-PRIME-061
+- Supersedes outcome: O-PRIME-060
+- Closed: 2026-08-15T10:05:00-04:00
+- Acceptance: PARTIAL
+- Summary: Implemented the safe local product wave for Notifications, advisory Goal Alignment/Milestones, Backup controls, and related UI polish on the real Atlas checkout. The first authenticated snapshot probe exposed a progress-service shadowing defect; it was repaired in `6dd5d805` with a focused regression assertion. The persistent Core now runs image `animus-prime-core:continuation-061-local-product3` with exact build provenance `6dd5d805`, reuses existing PostgreSQL/Hindsight/Node/state, and survives Core restart with the same Qualification Project. Browser qualification remains blocked by the missing bundled Playwright dependency in gstack browse; no browser promotion or disposable workaround was used.
+- Changed areas: notification migration/service/routes/UI; Goal Alignment/Milestones; Backup controls; project snapshot repair; focused tests; Continuation 061 evidence; append-only governed records; persistent Core image/service.
+- Validation:
+  - focused product and web-shell tests (5 passed) - PASSED
+  - full regression (104 passed, 28 skipped) - PASSED
+  - compile, diff, tracked-secret, governance, burndown, and product-alignment audit - PASSED
+  - persistent readiness, private listener identity, authenticated API, and Core restart recovery - PASSED
+  - browser operator qualification - BLOCKED by missing bundled Playwright dependency in gstack browse
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: browser qualification of new surfaces; registration and integrity negatives; complete backup lifecycle; DOD-005; external providers/environments; R-056; Phase 15 completion; V1 declaration.
+- Blockers: approved gstack browser setup; aggregate qualifier remains constrained by the established secure database/environment boundary.
+- Follow-up directive: none

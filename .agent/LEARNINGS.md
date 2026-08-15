@@ -701,3 +701,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: persistent Core image provenance, service swap, operator diagnostics, and responsive browser behavior.
 - Supersedes learning: L-PRIME-SAFE-PRODUCT-WAVE-059
+
+## L-PRIME-SAFE-LOCAL-PRODUCT-COMPLETION-061
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-SAFE-LOCAL-PRODUCT-COMPLETION-061
+- Fact or lesson: Product implementation must be exercised through the persistent runtime before qualification. The 061 snapshot addition initially shadowed the ProgressService with a database row and failed only on the real authenticated snapshot path; the minimal rename-and-regression-test repair restored the service call. The gstack browser executable must run from a local writable state location, but the bundled server currently lacks the Playwright package; direct SSHFS execution fails with EPERM and is not an acceptable substitute.
+- Evidence location: apps/core/main.py; tests/phase15/test_continuation_061_product.py; Dockerfile.core; packaging/core/prime-core.service; evidence/phase15/qualification-continuation-061.md
+- Confidence: VERIFIED
+- Scope: PRIME persistent Atlas product runtime, safe local product surfaces, authenticated API qualification, and browser-tool boundary.
+- Supersedes learning: L-PRIME-RUNTIME-PROVENANCE-060

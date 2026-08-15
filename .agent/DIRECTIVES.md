@@ -830,3 +830,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-SAFE-LOCAL-PRODUCT-COMPLETION-061
+
+- Issued: 2026-08-15T09:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 061
+- Objective: Implement and qualify safe local product completion for Notifications, Goal Alignment/Milestones, Backup controls, Integrity diagnostics, Registration negatives, and Polish while preserving runtime provenance and persistent Atlas boundaries.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; additive product implementation; real browser qualification; focused/full validation; governed evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No Z:/SSHFS execution; no disposable resources or synthetic state; no public exposure/Funnel; no high-risk DOD-024/055/057/058/076/077/081 state changes; DOD-005 parked; aggregate qualifier blocked boundary preserved; no R-056 closure; no Phase 16; no deployment.
+- Acceptance: Keep runtime build identity bound to the qualified implementation commit; extend existing notification and GoalModel primitives; qualify only truthful safe local clauses; reconcile evidence/governance and publish exact GitHub/Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-RUNTIME-PROVENANCE-LOCAL-WAVE-060
+- Status at issuance: ISSUED
