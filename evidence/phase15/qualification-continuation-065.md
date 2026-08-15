@@ -10,7 +10,7 @@ PARTIAL / DONE_WITH_CONCERNS for the bounded local V1 convergence scope. The gen
 - Authoritative checkout: /home/sketch/Projects/ANIMUS_PRIME
 - Starting governed baseline: 90b9edbe37702a5a03a1d8098d8e66d72618e6ba
 - Qualified implementation candidate: 43fcba400819a1f03c642a4e2ac43c62cc4bb5ad
-- Final governed publication SHA: recorded after final publication parity
+- Published evidence parity anchor: 9b3fd148c73eab348de5d291f48b4294d3d1d8d8; final local/origin parity is recorded in the closeout and Notion checkpoint
 - Execution: direct SSH/native Atlas only; no Z: execution
 - Preserved untracked directories: .codebase-memory/, .prime-evidence/, .vscode/
 - Canonical Qualification Project: project_d9a1a5b609394282b62fc12c0d04634d
