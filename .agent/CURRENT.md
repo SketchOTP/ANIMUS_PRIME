@@ -3,33 +3,33 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-15T19:04:40-04:00
+- Last updated: 2026-08-15T19:40:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-RELEASE-BLOCKER-EXECUTION-066
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 066
-- Objective: Reduce actual frozen V1 release blockers by executing only genuinely available work and classifying every remaining item without repetition or fabricated state.
+- Local directive ID: D-PRIME-PHASE15-PRIME-RUNTIME-NOTION-UNBLOCK-067
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 067
+- Objective: Determine whether the approved PRIME runtime Notion credential/resource path exists and qualify only the frozen Notion-backed V1 clauses if it is available.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL; no governed release blocker reduced, no requirement/DOD promotion, and no product/runtime change.
-- Current phase: V1_RELEASE_BLOCKER_EXECUTION_066
-- Expected or actual touched areas: Continuation 066 evidence and append-only .agent records; no product source or runtime topology.
-- Immediate next action: obtain an explicitly listed real external resource or authorize a legitimate durable target; do not begin another generic local qualification wave.
+- Acceptance: PARTIAL; blocked by PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE; no requirement/DOD promotion and no product/runtime change.
+- Current phase: PRIME_RUNTIME_NOTION_UNBLOCK_067
+- Expected or actual touched areas: Continuation 067 evidence and append-only .agent records; no product source or runtime topology.
+- Immediate next action: restore the approved PRIME runtime Notion credential reference and provide an operator-approved live qualification resource; do not search broadly or invent a substitute.
 
 ## Temporary task-relevant facts
 
 - Baseline PRIME-SPEC-V1.0.0; authoritative execution is direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; disposable resources: none.
-- Governed baseline and inherited implementation e4e142c56f94e0b58faee14e10200ac47db6762b / 43fcba400819a1f03c642a4e2ac43c62cc4bb5ad.
+- Governed baseline and inherited implementation 879c3ade4bbf324e58518fe6ffd24f9584888ea1 / 43fcba400819a1f03c642a4e2ac43c62cc4bb5ad.
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved; Core image animus-prime-core:continuation-065 remains active and Node service remains active/enabled.
 - Current burndown remains 5 LOCAL_CODE / 12 LOCAL_BROWSER_QUALIFICATION / 15 EXTERNAL_ENVIRONMENT; audit 81, complete 49, burndown 32.
-- No configured PRIME Notion/provider credential references were present in the inspected Core container environment; no values were printed or persisted.
+- PRIME runtime Notion source NOTION_READONLY_KEY and state reference env/myassistant/notion-readonly were absent; no values were printed or persisted.
 - Tailscale daemon is running on Atlas, but approved second-device Serve qualification was not established and no network state was changed.
 - No synthetic project, repository, Node, Goal, authority, backup, upgrade, second-device, or destructive target was created.
 - Untracked .codebase-memory/, .prime-evidence/, and .vscode/ remain preserved.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 066 rail reconciliation, 32-item classification, live Atlas resource inspection, governance, burndown, alignment, and diff checks
+- Command or check: Continuation 067 bounded PRIME runtime Notion credential/resource check
 - Result: PASSED
 
 ## Risks
@@ -38,11 +38,11 @@
 
 ## Blockers
 
-- No currently available resource/target can reduce the governed queue without crossing the Continuation 066 boundaries.
+- PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE: NOTION_READONLY_KEY and the approved secure MyAssistant runtime authorization are absent from the PRIME Core service environment.
 
 ## Pending decisions
 
-- Provide one explicitly listed external resource or authorize one legitimate durable target.
+- Restore the existing approved MyAssistant runtime authorization for NOTION_READONLY_KEY through the PRIME-owned credential-reference mechanism and provide or confirm an approved live Notion qualification resource.
 - Keep DOD-005 parked, DOD-081/R-056 last, Phase 16 and deployment out of scope.
 
 ## Status vocabulary

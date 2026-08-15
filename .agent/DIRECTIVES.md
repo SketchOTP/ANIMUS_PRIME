@@ -919,3 +919,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-LOCAL-V1-CONVERGENCE-065
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRIME-RUNTIME-NOTION-UNBLOCK-067
+
+- Issued: 2026-08-15T19:40:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 067
+- Objective: Determine whether the approved PRIME runtime Notion credential/resource path exists and, only if available, qualify the frozen Notion-backed V1 requirements.
+- Scope: Direct Atlas SSH/native execution; existing persistent PRIME Core/UI/PostgreSQL/Hindsight/Node; approved MyAssistant credential-reference architecture; bounded capability check; only frozen Notion-backed qualification if the real runtime resource exists; governed evidence and living Notion journal.
+- Exclusions: No broad secret discovery; no token creation; no substitute integration; no assistant-side Notion connector as runtime evidence; no disposable Notion page; no unrelated Hindsight/provider/Tailscale/Windows/secondary-target work; DOD-005 parked; DOD-081/R-056 last; no public exposure, Funnel changes, deployment, Phase 16, or V1 declaration.
+- Acceptance: Either promote genuinely qualified Notion-backed requirements or stop with the exact PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE prerequisite and no fabricated state.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-RELEASE-BLOCKER-EXECUTION-066
+- Status at issuance: ISSUED

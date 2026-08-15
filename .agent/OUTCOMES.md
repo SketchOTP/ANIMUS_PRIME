@@ -2015,3 +2015,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: all positive/destructive/target-gated local clauses; PRIME runtime Notion; Hindsight Reflect/Mental Models; approved provider; Tailscale second device; Windows host; second LAN machine; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: no currently available resource/target can reduce the governed queue without crossing the directive boundaries.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PRIME-RUNTIME-NOTION-UNBLOCK-067 - PARTIAL
+
+- Outcome ID: O-PRIME-067
+- Supersedes outcome: O-PRIME-066
+- Closed: 2026-08-15T19:40:00-04:00
+- Acceptance: PARTIAL
+- Summary: Performed the bounded PRIME runtime Notion capability check. The approved source environment NOTION_READONLY_KEY was absent from the running Core container, the durable credential-reference state file was absent, and the in-process registry returned SOURCE_ABSENT and UNCONFIGURED without mutation. No Notion-backed requirement or DOD was promoted.
+- Changed areas: Continuation 067 evidence and append-only .agent records only.
+- Validation:
+  - approved credential contract inspection - PASSED
+  - in-process fail-closed registry check - PASSED
+  - governance and burndown validation - PENDING closeout
+  - product regression/browser qualification/runtime rebuild - NOT RUN or NOT APPLICABLE because the required runtime resource was absent and no product code changed
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: PRIME runtime Notion credential/resource; live Notion qualification page; Hindsight Reflect/Mental Models; approved provider; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE. Operator must restore the approved MyAssistant runtime authorization through the secure PRIME credential-reference mechanism and provide or confirm a legitimate live qualification resource.
+- Follow-up directive: none

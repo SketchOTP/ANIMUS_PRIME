@@ -762,3 +762,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 066 release-blocker classification and persistent Atlas resource inspection.
 - Supersedes learning: L-PRIME-LOCAL-V1-CONVERGENCE-065
+
+## L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067
+- Fact or lesson: The Notion journal connector being available to an assistant does not establish PRIME runtime Notion capability. PRIME must receive the approved MyAssistant source NOTION_READONLY_KEY and retain only env/myassistant/notion-readonly. When that source is absent, the live registry correctly returns SOURCE_ABSENT and UNCONFIGURED without mutating state; qualification must stop rather than search broadly or create a substitute resource.
+- Evidence location: evidence/phase15/qualification-continuation-067.md; src/prime_core/notion_credentials.py; live animus-prime-core container environment and registry check
+- Confidence: VERIFIED
+- Scope: PRIME runtime Notion credential/resource capability boundary.
+- Supersedes learning: L-PRIME-V1-RELEASE-BLOCKER-CLASSIFICATION-066
