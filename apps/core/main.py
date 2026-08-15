@@ -1387,7 +1387,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         ).fetchone()
         goal = db.execute("SELECT goal_revision_id,revision_number,content,content_hash,status,created_at,approved_at FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
         goal_items = db.execute("SELECT goal_item_id,title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY goal_item_id", (project_id, goal["goal_revision_id"] if goal else "")).fetchall()
-        progress = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
+        progress_row = db.execute("SELECT assessment_id,goal_revision_id,repository_revision,progress_percent,confidence,freshness_state,summary,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1", (project_id,)).fetchone()
         progress_corrections = [dict(row) for row in db.execute("SELECT correction_id,assessment_id,goal_revision_id,category,reason,operator_id,source_refs,status,created_at,reassessment_id FROM prime_core.progress_corrections WHERE project_id=%s ORDER BY created_at DESC LIMIT 12", (project_id,)).fetchall()]
         authority = db.execute("SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
         notion = db.execute("SELECT project_id,page_id,page_url,connection_status,managed_content_hash,last_synced_at FROM prime_core.notion_projects WHERE project_id=%s", (project_id,)).fetchone()
@@ -1432,7 +1432,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         "binding": dict(binding) if binding else None,
         "goal": dict(goal) if goal else None,
         "goal_items": [dict(row) for row in goal_items],
-        "progress": dict(progress) if progress else None,
+        "progress": dict(progress_row) if progress_row else None,
         "progress_corrections": progress_corrections,
         "alignment": alignment_detail,
         "notifications": open_notifications,

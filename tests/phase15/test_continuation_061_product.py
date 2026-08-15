@@ -37,3 +37,9 @@ def test_backup_controls_are_real_and_guarded():
     assert "Run restore preflight" in web
     assert "/v1/backups/preflight" in web
     assert "explicit confirmation" in web
+
+def test_project_snapshot_preserves_progress_service_for_alignment():
+    main = (ROOT / "apps" / "core" / "main.py").read_text(encoding="utf-8")
+    assert "progress_row = db.execute" in main
+    assert '"progress": dict(progress_row) if progress_row else None' in main
+    assert "alignment_detail = progress.alignment(project_id)" in main
