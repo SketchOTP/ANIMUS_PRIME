@@ -1977,3 +1977,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: positive Class-B registration/creation/authority/Goal targets; canonical Remove/Archive/Delete/Purge/completion outcomes; full stale/replay/CSRF/step-up matrix; backup/privacy reconciliation; DOD-005; provider/external environments; R-056; Phase 15/V1 completion.
 - Blockers: no supported inverse or legitimate secondary target exists for the remaining positive/destructive paths; aggregate qualification remains open.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-LOCAL-V1-CONVERGENCE-065 - PARTIAL
+
+- Outcome ID: O-PRIME-065
+- Supersedes outcome: O-PRIME-064
+- Closed: 2026-08-15T17:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Qualified the requested local V1 negative/refusal matrix through the genuine persistent Atlas product. Lifecycle CSRF, step-up preflight, confirmation, stale/replay, wrong-target, audit, and no-mutation boundaries passed. Existing Node repository inspection refused traversal, outside-root, nonexistent, and confirm=false registration paths. Existing authority review/adoption was idempotent without file rewrite; approved Goal overwrite protection was repaired and requalified; Progress correction negatives and backup restore preflight refused safely; narrow-screen reload had no overflow or console errors. The persistent Core was rebuilt as image animus-prime-core:continuation-065 with exact candidate provenance 43fcba4. No governed requirement was promoted because positive/destructive and legitimate-target clauses remain open.
+- Changed areas: approved Goal protection ordering; focused 065 regression test; Continuation 065 evidence; append-only governed records; persistent Core image.
+- Validation:
+  - focused 065 test (1 passed) - PASSED
+  - full regression (108 passed, 28 skipped) - PASSED
+  - compile/static, diff, governance, burndown, alignment audit, and tracked-secret checks - PASSED; V1 gate remains FAIL
+  - persistent readiness, exact runtime provenance, service identity, private listeners, rollback target, authenticated browser refusal/polish checks - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: no legitimate target for positive Class-B or canonical destructive qualification; authority adoption onboarding side effect needs future product repair; DOD-005; provider/external environments; DOD-081; R-056; Phase 15 completion; V1 declaration.
+- Blockers: aggregate qualification remains constrained by the established secure database/environment boundary; external and target-gated clauses remain separate; no substitute state was created.
+- Follow-up directive: none

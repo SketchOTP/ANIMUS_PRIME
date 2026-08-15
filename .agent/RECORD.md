@@ -591,3 +591,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The persistent product now has explicit preflight/action boundaries instead of a generic protected-action shell. PAUSE survived a real Core restart, RESUME and completion-review cancel restored the canonical project to ACTIVE, and delete refused wrong-target input while requiring recent step-up. The existing project, repository, Node, PostgreSQL, Hindsight, and authority state were preserved without manufacturing evidence.
 - Affected areas: lifecycle preflight/action migration and service; Core API; web UI; Goal and authority controls; persistent Core image; Continuation 064 evidence and governed records.
 - Supersedes record: DEC-PRIME-PHASE15-063
+
+## DEC-PRIME-PHASE15-065
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-065
+- Status: CLOSED
+- Decision or event: Publish Continuation 065 as PARTIAL after completing the bounded local security-negative and refusal qualification wave on the persistent Atlas product. Keep all positive/destructive target-gated work, DOD-005, DOD-081, R-056, Phase 15 completion, V1 declaration, Phase 16, and deployment outside scope.
+- Rationale: The live product proved the requested no-mutation boundaries and one Goal-protection defect was repaired at the smallest clause-linked point. The canonical project returned to ACTIVE / ONLINE / CURRENT / NORMAL, Goal identity/hash remained unchanged, the approved authority files were not rewritten, and no synthetic resource or public exposure was used. A safe authority-adoption observation advanced onboarding metadata, so the exact pre-probe values were restored and the side effect was recorded as a remaining product concern.
+- Affected areas: CoreService Goal protection; focused regression; persistent Core image; local browser/API qualification; Continuation 065 evidence; append-only governed records.
+- Supersedes record: DEC-PRIME-PHASE15-064

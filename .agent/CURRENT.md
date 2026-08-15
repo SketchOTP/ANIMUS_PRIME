@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-15T11:35:00-04:00
+- Last updated: 2026-08-15T17:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 064
-- Objective: Implement explicit frozen operator workflows and qualify only reversible/refusal paths through the genuine persistent Atlas product.
+- Local directive ID: D-PRIME-PHASE15-LOCAL-V1-CONVERGENCE-065
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 065
+- Objective: Exhaust locally actionable frozen V1 qualification gaps using the persistent Atlas product, with no synthetic state or scope expansion.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL for the bounded scope; explicit reversible/refusal workflows are implemented and qualified, while canonical destructive and positive Class-B mutations remain outside scope.
-- Current phase: EXPLICIT_OPERATOR_WORKFLOWS_064
+- Acceptance: PARTIAL for the bounded local negative/refusal scope; no governed requirement promotion, positive target, destructive action, DOD-005 reopening, R-056 closure, or deployment.
+- Current phase: LOCAL_V1_CONVERGENCE_065
 - Expected or actual touched areas: lifecycle preflight/action API, guided Goal and authority controls, repository onboarding inspection/binding controls, persistent Core image, Continuation 064 evidence, and append-only governed records.
-- Immediate next action: publish the Continuation 064 evidence and governed closeout records, then continue the remaining locally actionable qualification queue without manufacturing secondary targets.
+- Immediate next action: stop local convergence until a new bounded directive identifies a remaining clause with a legitimate target; external/provider work and R-056 remain gated.
 
 ## Temporary task-relevant facts
 
@@ -31,7 +31,7 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 064 focused/full regression, persistent runtime readiness, rollback-safe Core swap, authenticated browser lifecycle/refusal paths, restart recovery, compile, and diff checks
+- Command or check: Continuation 065 focused/full regression, persistent runtime readiness, rollback-safe Core swap, authenticated browser negative/refusal paths, Goal protection requalification, project-state restoration, compile, governance, burndown, alignment, secret, and diff checks
 - Result: PASSED
 
 ## Risks

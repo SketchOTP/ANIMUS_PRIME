@@ -889,3 +889,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-LOCAL-V1-CONVERGENCE-065
+
+- Issued: 2026-08-15T16:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 065
+- Objective: Exhaust locally actionable frozen V1 qualification gaps using the persistent Atlas product, prioritizing lifecycle security negatives, onboarding refusals, authority/Goal protection and idempotency, Progress correction negatives, Backup non-destructive behavior, and exact residual polish.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; existing Qualification Project; bounded browser/API qualification through the genuine UI; minimal clause-linked repairs; focused/full validation; governed evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable project/repository/worktree/Node/browser profile/backup destination; no DOD-005 reopening unless a real reversible source naturally appears; no synthetic positive Class-B targets; no provider/Notion-runtime/Hindsight/Windows/second-device/Tailscale work; no DOD-081, R-056 closure, Phase 16, public exposure, Funnel changes, or deployment.
+- Acceptance: Reduce the governed local V1 queue only where exact frozen clauses are directly qualified; make the smallest repair only for a proven product defect; preserve persistent topology and canonical project state; publish truthful evidence and exact GitHub/Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064
+- Status at issuance: ISSUED

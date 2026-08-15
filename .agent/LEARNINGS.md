@@ -741,3 +741,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: persistent Atlas PRIME Core/UI, lifecycle safety, onboarding boundaries, authority review, guided Goal controls, and browser operator qualification.
 - Supersedes learning: L-PRIME-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
+
+## L-PRIME-LOCAL-V1-CONVERGENCE-065
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-LOCAL-V1-CONVERGENCE-065
+- Fact or lesson: Security-negative qualification is only complete when CSRF, stale and replayed single-use preflights, exact-target mismatch, typed confirmation, recent step-up requirements, and post-refusal state identity are all checked against the persistent project. Approved Goal protection must precede content validation so legacy governed Goal text cannot turn a protected overwrite into a misleading validation error. Safe authority adoption can be idempotent and file-preserving while still advancing onboarding metadata, so that side effect must be restored or explicitly surfaced.
+- Evidence location: src/prime_core/service.py; tests/phase15/test_continuation_065_local_convergence.py; evidence/phase15/qualification-continuation-065.md; persistent Core readiness and browser network evidence.
+- Confidence: VERIFIED
+- Scope: PRIME persistent Atlas lifecycle/security-negative matrix, onboarding refusal, authority adoption, Goal protection, Progress correction refusal, backup preflight, and browser polish.
+- Supersedes learning: L-PRIME-EXPLICIT-OPERATOR-WORKFLOWS-064
