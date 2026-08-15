@@ -1958,3 +1958,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: lifecycle implementation; complete correction/challenge; backup export/destructive restore; registration and creation negatives/positive targets; authority idempotency; guided Goal; remove/archive/delete distinction; delete step-up/audit matrix; broader polish; provider/external environments; DOD-005; R-056; Phase 15/V1.
 - Blockers: no supported inverse or legitimate secondary target exists for the remaining positive/destructive paths; aggregate qualification remains constrained by the established secure database boundary.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064 - PARTIAL
+
+- Outcome ID: O-PRIME-064
+- Supersedes outcome: O-PRIME-063
+- Closed: 2026-08-15T11:40:00-04:00
+- Acceptance: PARTIAL
+- Summary: Implemented and persistently started the explicit lifecycle, safety, onboarding inspection, authority review, and guided Goal controls authorized by Continuation 064. The authenticated existing Qualification Project qualified PAUSE through Core restart, RESUME, completion-review enter/cancel, distinct Remove/Archive/Delete preflight presentation, exact-target delete refusal, and authority review. The canonical project and persistent dependencies remained intact.
+- Changed areas: lifecycle preflight/action migration and service; Core routes; web operator controls; Goal and authority service protections; focused tests; Continuation 064 evidence; append-only governed records.
+- Validation:
+  - focused Continuation 064 tests - PASSED (3 passed)
+  - full regression - PASSED (107 passed, 28 skipped)
+  - compile/static and diff checks - PASSED
+  - persistent Core build, migration, readiness, service swap, restart recovery, listener ownership, and rollback target - PASSED
+  - authenticated browser lifecycle, refusal, authority-review, and UI boundary checks - PASSED for bounded scope
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: positive Class-B registration/creation/authority/Goal targets; canonical Remove/Archive/Delete/Purge/completion outcomes; full stale/replay/CSRF/step-up matrix; backup/privacy reconciliation; DOD-005; provider/external environments; R-056; Phase 15/V1 completion.
+- Blockers: no supported inverse or legitimate secondary target exists for the remaining positive/destructive paths; aggregate qualification remains open.
+- Follow-up directive: none

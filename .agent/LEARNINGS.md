@@ -731,3 +731,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: persistent Atlas PRIME browser qualification, restoration ledger, lifecycle/refusal boundaries, correction validation, backup preflight, onboarding safety, and destructive-action preservation.
 - Supersedes learning: L-PRIME-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
+
+## L-PRIME-EXPLICIT-OPERATOR-WORKFLOWS-064
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-EXPLICIT-OPERATOR-WORKFLOWS-064
+- Fact or lesson: Durable lifecycle operations need a server-issued, expiring, single-use preflight bound to the observed project/repository/node identity. The real persistent browser path can qualify reversible actions and exact-target refusal without creating a secondary project. A rollback-safe container rename preserves recovery while a user-scoped systemd unit restarts the same persistent state bind. The Core-served UI is the actual private web product on `127.0.0.1:18000`; the previously assumed `28000` route is not a PRIME listener in the current Atlas topology.
+- Evidence location: src/prime_core/lifecycle_service.py; migrations/prime/0036_operator_workflows.sql; apps/core/main.py; apps/web/index.html; evidence/phase15/qualification-continuation-064.md
+- Confidence: VERIFIED
+- Scope: persistent Atlas PRIME Core/UI, lifecycle safety, onboarding boundaries, authority review, guided Goal controls, and browser operator qualification.
+- Supersedes learning: L-PRIME-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063

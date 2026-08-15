@@ -581,3 +581,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The UI's generic protected-action shell safely refuses without a specific lifecycle workflow, and the remaining Class-B/destructive paths lack legitimate durable targets or proven inverses. Empty correction and incomplete backup preflight failed closed without mutation. The exact canonical state and runtime provenance were rechecked after every exercised path.
 - Affected areas: Continuation 063 evidence; product alignment/burndown remaining-gap wording; append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-062
+
+## DEC-PRIME-PHASE15-064
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-064
+- Status: CLOSED
+- Decision or event: Publish Continuation 064 as PARTIAL after implementing the authorized explicit operator workflows and qualifying them through the genuine persistent Atlas Core-served UI. Keep canonical destructive actions, positive Class-B target creation, DOD-005, R-056, Phase 16, and deployment outside scope.
+- Rationale: The persistent product now has explicit preflight/action boundaries instead of a generic protected-action shell. PAUSE survived a real Core restart, RESUME and completion-review cancel restored the canonical project to ACTIVE, and delete refused wrong-target input while requiring recent step-up. The existing project, repository, Node, PostgreSQL, Hindsight, and authority state were preserved without manufacturing evidence.
+- Affected areas: lifecycle preflight/action migration and service; Core API; web UI; Goal and authority controls; persistent Core image; Continuation 064 evidence and governed records.
+- Supersedes record: DEC-PRIME-PHASE15-063
