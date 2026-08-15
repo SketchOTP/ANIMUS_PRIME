@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 063
-- Objective: Qualify restoration-bounded lifecycle, onboarding-safety, correction, backup, authority, guided-goal, and destructive-refusal workflows through the genuine persistent Atlas product.
+- Local directive ID: D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 064
+- Objective: Implement explicit frozen operator workflows and qualify only reversible/refusal paths through the genuine persistent Atlas product.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL; restoration ledger, supported refusal paths, exact before/after comparison, and validation passed, while lifecycle implementation, positive correction, export/restore, Class-B onboarding, authority/Goal workflows, destructive safety matrix, DOD-005, external environments, and R-056 remain open.
-- Current phase: RESTORATION_BOUNDED_LIFECYCLE_ONBOARDING_063
+- Acceptance: implementation and qualification are in progress; canonical destructive and positive Class-B mutations remain outside scope.
+- Current phase: EXPLICIT_OPERATOR_WORKFLOWS_064
 - Expected or actual touched areas: Continuation 063 browser evidence; product alignment/burndown remaining-gap records; append-only governed records.
-- Immediate next action: await the next bounded directive; preserve the canonical Qualification Project and keep DOD-005 parked, R-056 gated, and the private Atlas topology unchanged.
+- Immediate next action: validate the new candidate, rebuild/swap the PRIME-owned Core from its exact commit, then qualify reversible/refusal flows.
 
 ## Temporary task-relevant facts
 

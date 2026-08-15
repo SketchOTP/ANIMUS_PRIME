@@ -37,6 +37,7 @@ from src.prime_core.brain_service import BrainService
 from src.prime_core.progress_service import ProgressService
 from src.prime_core.build_info import build_info
 from src.prime_core.notification_service import NotificationService
+from src.prime_core.lifecycle_service import LifecycleService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
@@ -59,6 +60,7 @@ intelligence = IntelligenceService(settings, memory)
 ai = AIExecutionService(settings)
 brain = BrainService(settings)
 progress = ProgressService(settings)
+lifecycle = LifecycleService(settings)
 notifications = NotificationService(settings)
 notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
@@ -195,6 +197,17 @@ class AuthorityBootstrapRequest(BaseModel):
 class GoalRequest(BaseModel):
     content: str = Field(min_length=1, max_length=200000)
     approve: bool = False
+    new_revision: bool = False
+
+
+class LifecyclePreflightRequest(BaseModel):
+    action: str = Field(min_length=1, max_length=40)
+
+
+class LifecycleActionRequest(BaseModel):
+    action: str = Field(min_length=1, max_length=40)
+    preflight_token: str = Field(min_length=1, max_length=240)
+    confirmation: str = Field(default="", max_length=240)
 
 
 class AuthorityRequest(BaseModel):
@@ -771,6 +784,40 @@ def list_projects(request: Request, prime_session: str | None = Cookie(default=N
     return {"projects": service.list_projects()}
 
 
+@app.get("/v1/projects/{project_id}/lifecycle")
+def project_lifecycle(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    with connect(settings) as db:
+        row = db.execute("SELECT project_id,name,lifecycle_state,connectivity_state,freshness_state,work_condition,updated_at FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone()
+    if not row:
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return dict(row)
+
+
+@app.post("/v1/projects/{project_id}/lifecycle/preflight")
+def lifecycle_preflight(project_id: str, body: LifecyclePreflightRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    session = require_session(request, prime_session)
+    try:
+        return lifecycle.preflight(project_id, body.action, service.step_up_is_recent(session))
+    except KeyError as exc:
+        return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except ValueError as exc:
+        return error("LIFECYCLE_PREFLIGHT_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/lifecycle")
+def lifecycle_action(project_id: str, body: LifecycleActionRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    session = require_session(request, prime_session)
+    try:
+        return lifecycle.execute(project_id, body.action, body.preflight_token, body.confirmation, service.step_up_is_recent(session))
+    except KeyError as exc:
+        return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except PermissionError as exc:
+        return error("LIFECYCLE_AUTHORIZATION_REQUIRED", str(exc), request_id(request), status_code=403)
+    except ValueError as exc:
+        return error("LIFECYCLE_ACTION_REJECTED", str(exc), request_id(request), status_code=409)
+
+
 @app.post("/v1/workflows")
 def create_workflow(body: WorkflowRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
@@ -982,9 +1029,18 @@ def project_onboarding_state(project_id: str, request: Request, prime_session: s
 def create_goal(project_id: str, body: GoalRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        return service.create_goal_revision(project_id, body.content, body.approve)
-    except Exception as exc:
-        return error("GOAL_REJECTED", type(exc).__name__, request_id(request), status_code=400)
+        return service.create_goal_revision(project_id, body.content, body.approve, body.new_revision)
+    except (KeyError, ValueError) as exc:
+        return error("GOAL_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/goal/{goal_revision_id}/approve")
+def approve_goal(project_id: str, goal_revision_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.approve_goal_revision(project_id, goal_revision_id)
+    except (KeyError, ValueError) as exc:
+        return error("GOAL_APPROVAL_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/projects/{project_id}/progress/baseline")

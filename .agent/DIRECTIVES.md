@@ -874,3 +874,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-EXPLICIT-OPERATOR-WORKFLOWS-064
+
+- Issued: 2026-08-15T12:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 064
+- Objective: Implement concrete frozen lifecycle, onboarding, authority, Goal, destructive-safety, correction, backup-boundary, and polish workflows, then qualify only reversible/refusal paths against the persistent Atlas installation.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; existing Qualification Project; additive product implementation; focused/full validation; governed evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No disposable project/repository/worktree/Node/browser profile/backup destination; no canonical completion/delete/restore; no authority overwrite or new Goal revision on the Qualification Project; DOD-005 parked; no aggregate qualifier, R-056 closure, Phase 16, public exposure, Funnel changes, or deployment.
+- Acceptance: Existing lifecycle/onboarding/security primitives are exposed as explicit operator workflows; reversible/refusal browser paths are qualified; canonical state is restored exactly; runtime build provenance matches the qualified implementation commit; validation and Notion/GitHub parity are complete.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
+- Status at issuance: ISSUED

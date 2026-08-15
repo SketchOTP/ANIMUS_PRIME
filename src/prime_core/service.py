@@ -1086,17 +1086,34 @@ class CoreService:
             self._audit(db, "operator", "operator", "repository.bound", project_id=project_id, target_id=row["repository_id"])
             return dict(row)
 
-    def create_goal_revision(self, project_id: str, content: str, approve: bool = False) -> dict[str, Any]:
+    @staticmethod
+    def validate_goal_content(content: str) -> None:
+        normalized = " ".join(content.lower().split())
+        required = {
+            "purpose": ("what", "why"), "operator": ("target user", "operator"),
+            "end state": ("desired end state", "end state", "outcome"),
+            "requirements": ("requirement", "functional"), "constraints": ("constraint", "non-functional"),
+            "success": ("success", "acceptance"), "validation": ("validation", "evidence"),
+            "non-goals": ("non-goal", "out of scope"), "failure rules": ("failure", "stop"),
+        }
+        missing = [label for label, markers in required.items() if not any(marker in normalized for marker in markers)]
+        if len(content.strip()) < 80 or missing:
+            raise ValueError("goal proposal is incomplete; missing: " + ", ".join(missing))
+
+    def create_goal_revision(self, project_id: str, content: str, approve: bool = False, new_revision: bool = False) -> dict[str, Any]:
         timestamp = now()
-        if approve:
-            with connect(self.settings) as db:
-                binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
-            if binding:
-                canonical_path = Path(binding["canonical_path"])
-                if canonical_path.exists():
-                    goal_path = canonical_path.resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
-                    if goal_path.parent.is_dir():
-                        goal_path.write_text(content, encoding="utf-8")
+        self.validate_goal_content(content)
+        with connect(self.settings) as db:
+            approved = db.execute("SELECT 1 FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' LIMIT 1", (project_id,)).fetchone()
+            binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+        if approve and approved and not new_revision:
+            raise ValueError("approved GoalRevision is protected; explicit new-revision intent is required")
+        if approve and binding:
+            canonical_path = Path(binding["canonical_path"])
+            if canonical_path.exists():
+                goal_path = canonical_path.resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
+                if goal_path.parent.is_dir():
+                    goal_path.write_text(content, encoding="utf-8")
         with transaction(self.settings) as db:
             last = db.execute("SELECT COALESCE(MAX(revision_number),0) AS number FROM prime_core.goal_revisions WHERE project_id=%s", (project_id,)).fetchone()["number"]
             status = "APPROVED" if approve else "DRAFT"
@@ -1110,6 +1127,25 @@ class CoreService:
             record_historical_snapshot(db, project_id, "GOAL", row["goal_revision_id"], row["content_hash"], {"goal_revision_id": row["goal_revision_id"], "revision_number": row["revision_number"], "content": content, "status": status}, row["created_at"], row["content_hash"])
             self._audit(db, "operator", "operator", "goal.revision_created", project_id=project_id, target_id=row["goal_revision_id"])
             return dict(row)
+
+    def approve_goal_revision(self, project_id: str, goal_revision_id: str) -> dict[str, Any]:
+        timestamp = now()
+        with transaction(self.settings) as db:
+            row = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s AND status='DRAFT' FOR UPDATE", (project_id, goal_revision_id)).fetchone()
+            if not row:
+                raise ValueError("draft GoalRevision not found")
+            self.validate_goal_content(row["content"])
+            binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
+            if binding:
+                goal_path = Path(binding["canonical_path"]).resolve(strict=True) / ".agent" / "PROJECT_GOAL.md"
+                if goal_path.parent.is_dir():
+                    goal_path.write_text(row["content"], encoding="utf-8")
+            db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND status='APPROVED'", (project_id,))
+            approved = db.execute("UPDATE prime_core.goal_revisions SET status='APPROVED',approved_by='operator',approved_at=%s WHERE goal_revision_id=%s RETURNING *", (timestamp, goal_revision_id)).fetchone()
+            db.execute("UPDATE prime_core.projects SET work_condition='NORMAL',onboarding_step='INDEX',onboarding_state='IN_PROGRESS',updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+            record_historical_snapshot(db, project_id, "GOAL", goal_revision_id, row["content_hash"], {"goal_revision_id": goal_revision_id, "revision_number": row["revision_number"], "content": row["content"], "status": "APPROVED"}, row["created_at"], row["content_hash"])
+            self._audit(db, "operator", "operator", "goal.revision_approved", project_id=project_id, target_id=goal_revision_id)
+            return dict(approved)
 
     def record_authority_revision(self, project_id: str, source_path: str, source_hash: str, validation_status: str, metadata: dict[str, Any] | None = None, content_snapshot: str | None = None, canonical_commit: str | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:
