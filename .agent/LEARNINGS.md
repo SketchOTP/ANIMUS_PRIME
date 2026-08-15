@@ -691,3 +691,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Atlas Core/UI image lifecycle, safe browser qualification, data-backed Usage/Backup/Metadata surfaces, and responsive navigation.
 - Supersedes learning: L-PRIME-TRUSTED-HOST-LOCAL-IDENTITY-058
+
+## L-PRIME-RUNTIME-PROVENANCE-060
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-RUNTIME-PROVENANCE-060
+- Fact or lesson: A read-only checkout mount does not change code imported by an already-built Core image. Runtime provenance must be injected at image build time and exposed through health/operator state. Inherited container environment variables can shadow new image defaults, so stale provenance variables must be removed during a persistent swap while other runtime references are preserved. Long diagnostic identifiers need overflow containment for narrow-screen usability.
+- Evidence location: Dockerfile.core; src/prime_core/build_info.py; apps/core/main.py; apps/web/index.html; tests/phase15/test_runtime_provenance.py; evidence/phase15/qualification-continuation-060.md
+- Confidence: VERIFIED
+- Scope: persistent Core image provenance, service swap, operator diagnostics, and responsive browser behavior.
+- Supersedes learning: L-PRIME-SAFE-PRODUCT-WAVE-059

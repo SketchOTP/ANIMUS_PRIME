@@ -816,3 +816,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-TRUSTED-HOST-LOCAL-IDENTITY-058
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-RUNTIME-PROVENANCE-LOCAL-WAVE-060
+
+- Issued: 2026-08-15T00:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 060
+- Objective: Prove runtime build provenance through the existing persistent Atlas Core/UI path, qualify safe local browser/product surfaces, diagnose the aggregate database boundary without substitute state, and publish truthful evidence.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing PostgreSQL/Hindsight/Core/UI/Node; runtime provenance; bounded browser qualification; evidence, .agent records, governed YAML, GitHub, and living Notion journal.
+- Exclusions: No Z:/SSHFS execution authority; no disposable resources; no public exposure/Funnel; no high-risk state-changing qualification; no DOD-005 mutation; no R-056 closure; no Phase 16; no deployment.
+- Acceptance: Runtime identity visible and restart-persistent; safe browser behavior recorded honestly; aggregate boundary diagnosed without substitute state; validation, governance, GitHub, and Notion closeout complete.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059
+- Status at issuance: ISSUED

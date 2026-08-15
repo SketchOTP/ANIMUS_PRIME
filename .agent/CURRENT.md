@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-SAFE-PRODUCT-WAVE-059
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 059
-- Objective: Establish spec-compliant trusted-host local identity sign-in and step-up authentication on the existing persistent Atlas PRIME installation, then resume the real browser operator journey.
+- Local directive ID: D-PRIME-PHASE15-RUNTIME-PROVENANCE-LOCAL-WAVE-060
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 060
+- Objective: Prove runtime build provenance through the existing persistent Atlas Core/UI path, qualify safe local browser/product surfaces, and preserve truthful external and aggregate-qualifier boundaries.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL; trusted-host sign-in, step-up, negative security cases, persistent service restart, and the real protected browser journey passed, while DOD-005, the remaining local queue, external boundaries, and R-056 remain open.
-- Current phase: AUTHENTICATED_LOCAL_BROWSER_QUALIFICATION_059
+- Acceptance: PARTIAL; runtime provenance, restart recovery, responsive overflow repair, keyboard focus, and bounded browser surfaces passed, while notifications, backup controls, alignment, integrity negatives, provider-backed usage, registration/polish, DOD-005, external environments, and R-056 remain open.
+- Current phase: RUNTIME_PROVENANCE_LOCAL_BROWSER_QUALIFICATION_060
 - Expected or actual touched areas: Core Usage/Backup/Metadata surfaces; responsive UI polish; browser qualification; persistent image/service; evidence and governed records
-- Immediate next action: close the remaining locally actionable safe wave, keep DOD-005 parked and R-056 gated, then reassess only the still-open exact clauses.
+- Immediate next action: continue the remaining safe local queue; keep DOD-005 parked, high-risk state-changing qualification outside scope, external blockers truthful, and R-056 gated.
 
 ## Temporary task-relevant facts
 
@@ -31,11 +31,10 @@
 - Continuation 058 implementation commit: `8c881256b6a0164cfef9ae411eb404107ac5c3c0`; the existing single operator now has a separate host-held local identity secret, stored only as a digest in Core state, with short-lived SIGN_IN and STEP_UP challenge/approval/redeem flows.
 - Continuation 058 qualified the real persistent Core/UI path: trusted-host sign-in and 300-second step-up succeeded; missing/wrong host-secret approval returned 401; consumed challenge replay returned 401; Core restart preserved authenticated project identity, Progress, repository binding, and Node state.
 
-- Continuation 059 active image: animus-prime-core:continuation-059-ui under animus-prime-core.service; prior persistent images/containers are inactive rollback artifacts. Existing PostgreSQL, Hindsight, canonical Node, state mount, and private listeners were preserved.
-- Continuation 059 browser evidence: Usage renders project-scoped records with truthful unavailable limits/cost states; Backup renders the existing verified continuity record and encryption version; Project Settings provides a real metadata form.
-- Continuation 059 metadata evidence: name, description, image URL, canonical project ID, Node, and repository path persisted through Core restart and were restored exactly to the original governed values.
-- Continuation 059 status: DOD-026, DOD-027, DOD-047, and DOD-049 are PARTIAL; DOD-056 is USER_USABLE_VERIFIED; DOD-048 remains shell-only; DOD-005 remains BACKEND_ONLY. The 375px browser check passes without horizontal overflow and keyboard Tab shows visible focus.
-
+- Continuation 059 active image: animus-prime-core:continuation-059-ui under animus-prime-core.service; replaced in 060 by animus-prime-core:continuation-060-provenance2. Prior persistent images/containers remain inactive rollback artifacts. Existing PostgreSQL, Hindsight, canonical Node, state mount, and private listeners were preserved.
+- Continuation 060 runtime evidence: /health/ready and protected system/operator state report PRIME-SPEC-V1.0.0, build commit 0324b380fc5fac54fa037695cfe09146ba850baa, image animus-prime-core:continuation-060-provenance2, schema 0034_local_identity_authentication.sql, and service version 1.0.0. Restart recovery retained the same identity.
+- Continuation 060 browser evidence: runtime identity rendered; 375px, 768px, and 1440px widths had no horizontal overflow; visible focus and no console errors passed. Backup and Integrity data-backed states rendered; Goal/Alignment UNKNOWN; Notifications shell-only.
+- Continuation 060 status: DOD-026, DOD-027, DOD-047, DOD-049, and DOD-080 PARTIAL; DOD-048 shell-only; DOD-054 IMPLEMENTED_NOT_PRODUCT_QUALIFIED; DOD-056 USER_USABLE_VERIFIED; DOD-005 BACKEND_ONLY/PARKED; R-056 OPEN.
 ## Last validation after adoption
 
 - Command or check: Continuation 055 mTLS lifecycle, browser healthy/offline/recovery journey, trust-chain checks, focused regression, governance, and persistent runtime checks

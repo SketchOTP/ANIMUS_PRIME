@@ -1884,3 +1884,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005 direct persistent source lifecycle qualification; complete Progress/Alignment correction; Integrity negative boundary; configured provider usage/limits; notification lifecycle; backup export/restore controls; complete registration lifecycle; full polish acceptance; 15 external-environment items; R-056, Phase 15 completion, and V1 remain gated.
 - Blockers: no blocker to the bounded safe wave; aggregate qualification remains constrained by the established database/environment boundary and unavailable external provider/host requirements.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-RUNTIME-PROVENANCE-LOCAL-WAVE-060 - PARTIAL
+
+- Outcome ID: O-PRIME-060
+- Supersedes outcome: O-PRIME-059
+- Closed: 2026-08-15T00:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Added runtime build provenance to the genuine persistent Core image/service path and proved the running image reports the qualified implementation commit, spec revision, schema, service version, timestamp, and image identity. Preserved persistent PostgreSQL, Hindsight, state mount, canonical Node, private listener, and user-systemd topology. The real browser rendered provenance and existing surfaces; responsive overflow, visible focus, and no-console-error behavior passed. DOD-026, DOD-027, DOD-047, DOD-049, and DOD-080 remain PARTIAL; DOD-048 remains UI_SHELL_ONLY; DOD-054 remains IMPLEMENTED_NOT_PRODUCT_QUALIFIED; DOD-005 remains BACKEND_ONLY/PARKED; R-056 remains OPEN.
+- Changed areas: Dockerfile.core; src/prime_core/build_info.py; apps/core/main.py; apps/web/index.html; tests/phase15/test_runtime_provenance.py; tests/phase14/test_web_shell.py; Continuation 060 evidence and governed records.
+- Validation:
+  - focused provenance/web-shell tests - PASSED (3 passed)
+  - full regression - PASSED (100 passed, 28 skipped)
+  - compile/static, runtime health/restart, browser bounded checks, governance, burndown, and secret checks - PASSED
+  - product alignment audit - PASSED structurally; V1 gate remains FAIL
+  - aggregate qualifier - BLOCKED by native database credential/environment boundary; no substitute database created
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: notification lifecycle; backup export/restore controls; alignment and integrity negative boundaries; provider-backed usage/model; registration matrix; full accessibility/polish; external environments; DOD-005; R-056; Phase 15 completion; and V1 remain open.
+- Blockers: aggregate qualification cannot safely run from native Atlas because the secure database reference is container-scoped and the established qualifier performs persistent migrations/fixtures; no substitute database was created.
+- Follow-up directive: none

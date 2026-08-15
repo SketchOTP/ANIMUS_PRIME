@@ -541,3 +541,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The running service initially imported the prior image, so checkout edits were not live despite the canonical repository mount. The same persistent state mount and service identity were preserved while the image was rebuilt and swapped; metadata was tested through the real UI across Core restart and restored exactly. No disposable database/project/Node/browser profile, public exposure, or unrelated service change was used.
 - Affected areas: Core Usage endpoint; reliability Backup diagnostics; project metadata UI/API; mobile navigation CSS; focused safe-wave regression; Continuation 058/059 evidence; governed records.
 - Supersedes record: DEC-PRIME-PHASE15-058
+
+## DEC-PRIME-PHASE15-060
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-060
+- Status: CLOSED
+- Decision or event: Establish runtime build provenance in the existing persistent PRIME Core image/service path and qualify only safe local product behavior through the real browser. Preserve the Atlas topology and keep aggregate qualification, DOD-005, high-risk rows, external boundaries, R-056, Phase 15 completion, V1, and deployment gated.
+- Rationale: The persistent service initially imported its prior image despite the canonical checkout mount. Build-time identity and health/operator exposure provide truthful runtime evidence; the existing database/environment boundary does not permit the aggregate qualifier to run safely without substitute state. The browser wave advanced bounded UI evidence and repaired narrow-screen diagnostics.
+- Affected areas: Core build metadata; health/operator state; persistent Core image/service; responsive UI diagnostics; focused regression; Continuation 060 evidence and governed records.
+- Supersedes record: DEC-PRIME-PHASE15-059
