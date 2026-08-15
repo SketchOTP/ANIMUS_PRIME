@@ -845,3 +845,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-RUNTIME-PROVENANCE-LOCAL-WAVE-060
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
+
+- Issued: 2026-08-15T10:52:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 062
+- Objective: Restore the approved existing gstack browser harness outside PRIME, prove the real persistent Atlas browser path, and qualify the already-implemented 061 product surfaces through the genuine authenticated operator experience.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing gstack installation only for tooling repair; persistent PostgreSQL/Hindsight/Core/UI/Node; existing Qualification Project; Notifications, Goal Alignment/Milestones, Backup controls, Integrity negatives, Registration negatives, and browser polish; evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No PRIME dependency changes; no project-local gstack; no disposable browser profile or state; no Z:/SSHFS execution authority; no public exposure/Funnel; no high-risk DOD-024/055/057/058/076/077/081 state changes; DOD-005 parked; aggregate qualifier blocked boundary preserved; no R-056 closure; no Phase 16; no deployment.
+- Acceptance: Existing gstack dependency/runtime diagnosis and bounded repair; harness smoke; runtime provenance proof; truthful browser/operator evidence; reversible Node outage and restoration; validation, governance, evidence, GitHub, and Notion closeout with exact parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-SAFE-LOCAL-PRODUCT-COMPLETION-061
+- Status at issuance: ISSUED

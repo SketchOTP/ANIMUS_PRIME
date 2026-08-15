@@ -561,3 +561,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The first real API probe found a user-impacting snapshot crash that structural tests did not catch. Fixing and requalifying the persistent image produced a truthful product boundary without modifying persistent project data or substituting an environment. The approved browser tool cannot currently start because its bundled server lacks Playwright, so browser claims remain unpromoted.
 - Affected areas: persistent Core image/service; snapshot/progress alignment; Notifications; Backup controls; Continuation 061 evidence and governed records.
 - Supersedes record: DEC-PRIME-PHASE15-060
+
+## DEC-PRIME-PHASE15-062
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-062
+- Status: CLOSED
+- Decision or event: Publish Continuation 062 as PARTIAL after recovering the existing external gstack browser harness and qualifying the persistent Atlas PRIME operator journey. Promote DOD-027 and DOD-048 only for their directly exercised boundaries; preserve DOD-005 as parked, keep high-risk registration/restore and external/provider work open, keep R-056 open, and do not deploy.
+- Rationale: The existing harness was present and usable once invoked from its local installation root with its pinned Playwright dependency and persistent state. The real browser reached the persistent 061 Core through the existing private SSH forward, and the reversible canonical Node outage demonstrated usable degraded operation, fail-closed Node control, restoration, and unchanged authority state without substitute resources or public exposure.
+- Affected areas: Continuation 062 browser evidence; product alignment and gap-burndown records; append-only project state; persistent Atlas operator qualification.
+- Supersedes record: DEC-PRIME-PHASE15-061

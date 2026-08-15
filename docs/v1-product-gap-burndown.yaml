@@ -8,7 +8,7 @@ purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 5
-  LOCAL_BROWSER_QUALIFICATION: 14
+  LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
   EXTERNAL_ENVIRONMENT: 15
@@ -194,7 +194,7 @@ items:
     product_area: "Progress/Alignment"
     owner_phase: 8
     mapped_r_requirements: ["R-055"]
-    exact_missing_behavior: "Data-backed Progress history and challenge controls were observed; complete Goal Alignment, milestones, and correction/challenge acceptance remain unqualified."
+    exact_missing_behavior: "Browser showed GoalItems, per-item Alignment UNKNOWN, stable milestone identities, and append-only correction history; complete truthful correction/challenge acceptance remains unqualified."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -214,31 +214,6 @@ items:
     blocked_by: "NONE"
     depends_on: "R-055"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-027
-    current_status: "PARTIAL"
-    product_area: "Integrity"
-    owner_phase: 15
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "A healthy data-backed Integrity snapshot was observed; structural-failure diagnostics and the no-authority-rewrite boundary remain unqualified."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Qualify safe structural continuity warning/failure behavior without mutating authority, then promote only when the full clause passes."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-031
     current_status: "BACKEND_ONLY"
     product_area: "warm start"
@@ -439,37 +414,12 @@ items:
     blocked_by: "NONE"
     depends_on: "R-045"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-048
-    current_status: "UI_SHELL_ONLY"
-    product_area: "Notifications"
-    owner_phase: 14
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "The named UI exists, but the criterion 'Notifications are high-signal and exclude routine noise.' still lacks data-backed behavior at 'Open Notifications from PRIME.'."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Notifications are high-signal and exclude routine noise.' still lacks data-backed behavior at 'Open Notifications from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-049
     current_status: "PARTIAL"
     product_area: "Backup"
     owner_phase: 13
     mapped_r_requirements: ["R-042"]
-    exact_missing_behavior: "The Backup surface now renders verified continuity status, record count, encryption version, and protected restore boundary; export/restore operator controls and recovery workflow remain open."
+    exact_missing_behavior: "Verified backup metadata and guarded controls are visible; approved destination export and complete restore workflow remain open. Preflight refused incomplete input with HTTP 422 without mutation."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -544,7 +494,7 @@ items:
     product_area: "registration"
     owner_phase: 3
     mapped_r_requirements: ["R-046"]
-    exact_missing_behavior: "Node-constrained inspection/registration exists; complete browser negative matrix and live enrolled-Node lifecycle qualification remain."
+    exact_missing_behavior: "Node-constrained inspection/registration exists; the browser negative matrix was not safely exercised through the existing project's UI without creating a project or mutating the canonical binding, so duplicate/outside-root/traversal/nonexistent/confirm=false clauses remain."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "NO"
     requires_browser: "YES"
@@ -819,7 +769,7 @@ items:
     product_area: "polish"
     owner_phase: 14
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "The frozen criterion requires: UI is polished, modern, responsive, and avoids unnecessary subsystem complexity.. Current evidence does not yet demonstrate the complete operator behavior at 'Open polish from PRIME.'."
+    exact_missing_behavior: "Responsive no-overflow, keyboard focus, and clean-console checks passed at the exercised widths; the complete frozen visual/operator polish acceptance remains open."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"

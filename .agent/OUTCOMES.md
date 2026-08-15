@@ -1922,3 +1922,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: browser qualification of new surfaces; registration and integrity negatives; complete backup lifecycle; DOD-005; external providers/environments; R-056; Phase 15 completion; V1 declaration.
 - Blockers: approved gstack browser setup; aggregate qualifier remains constrained by the established secure database/environment boundary.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062 - PARTIAL
+
+- Outcome ID: O-PRIME-062
+- Supersedes outcome: O-PRIME-061
+- Closed: 2026-08-15T12:20:00-04:00
+- Acceptance: PARTIAL
+- Summary: Recovered and exercised the approved existing gstack browser harness outside PRIME, using its pinned Playwright/runtime and persistent browser state without installing packages, creating a disposable profile, or changing PRIME dependencies. Reused the existing private Atlas SSH forward to the persistent 061 Core/UI and qualified the authenticated existing Qualification Project through Home, Needs Attention, Overview, Goal, Progress, Ask, Search, Memory, Knowledge, Evidence, Activity, Repository, Authority, Brain, Time Lens, Notifications, Backup, Integrity, and Settings. Reversibly stopped and restored only the canonical PRIME Node; the browser remained usable, repository operations failed closed while offline, and the exact healthy/enrolled state returned after restoration. DOD-027 and DOD-048 are promoted to PRODUCT_VERIFIED for the directly exercised boundaries; DOD-005, R-056, high-risk registration/restore paths, provider/external boundaries, and full Phase 15/V1 remain open.
+- Changed areas: Continuation 062 evidence; product alignment and gap-burndown records; append-only current-state and governed records. No PRIME source or dependency change was required.
+- Validation:
+  - existing gstack diagnosis and browser smoke - PASSED
+  - authenticated persistent operator journey and responsive/keyboard/console checks - PASSED
+  - reversible canonical Node outage, fail-closed repository operation, restoration, and authority-hash continuity - PASSED
+  - focused product/authentication tests (6 passed), full regression (104 passed, 28 skipped), compile/static, governance, burndown, alignment, diff, tracked-secret, and runtime checks - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: full registration-negative matrix; destructive backup export/restore; DOD-005 source lifecycle; provider/external environments; broader accessibility/polish; R-056; Phase 15 completion; V1 declaration.
+- Blockers: aggregate qualification remains constrained by the established secure database/environment boundary; no substitute database or project was created.
+- Follow-up directive: none

@@ -711,3 +711,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME persistent Atlas product runtime, safe local product surfaces, authenticated API qualification, and browser-tool boundary.
 - Supersedes learning: L-PRIME-RUNTIME-PROVENANCE-060
+
+## L-PRIME-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
+- Fact or lesson: The approved gstack harness must be run from its local writable installation root with its existing pinned runtime and state. The existing Atlas SSH forward can prove the genuine persistent PRIME topology without using the Z: SSHFS path, and an authenticated browser journey is materially stronger evidence than isolated API checks. A canonical Node outage must preserve the operator shell, surface one truthful material NODE_DEGRADED notification, fail closed on Node-required repository control, and restore the exact healthy/enrolled state without authority-hash mutation.
+- Evidence location: C:\\Users\\sketc\\.agents\\skills\\gstack; evidence/phase15/qualification-continuation-062.md; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml
+- Confidence: VERIFIED
+- Scope: existing gstack browser harness, persistent Atlas PRIME UI/Core route, authenticated operator qualification, Node outage/recovery, and browser state continuity.
+- Supersedes learning: L-PRIME-SAFE-LOCAL-PRODUCT-COMPLETION-061
