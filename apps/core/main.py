@@ -36,6 +36,7 @@ from src.prime_core.intelligence_service import IntelligenceService
 from src.prime_core.brain_service import BrainService
 from src.prime_core.progress_service import ProgressService
 from src.prime_core.build_info import build_info
+from src.prime_core.notification_service import NotificationService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
@@ -58,6 +59,7 @@ intelligence = IntelligenceService(settings, memory)
 ai = AIExecutionService(settings)
 brain = BrainService(settings)
 progress = ProgressService(settings)
+notifications = NotificationService(settings)
 notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
 auth_failures: dict[str, list[float]] = defaultdict(list)
@@ -1242,7 +1244,7 @@ def _project_context(project_id: str) -> dict[str, Any]:
         "goal": {"revision": dict(goal) if goal else None, "items": snapshot.get("goal_items", []), "history": progress_history},
         "current_work": {"authority": authority_files.get(".agent/CURRENT.md"), "directives": authority_files.get(".agent/DIRECTIVES.md")},
         "authority": {"latest": snapshot.get("authority"), "history": authority_history, "files": authority_files},
-        "status": {"progress": snapshot.get("progress"), "progress_history": progress_history, "attention": snapshot.get("attention", []), "alignment": "UNKNOWN", "milestones": "UNKNOWN"},
+        "status": {"progress": snapshot.get("progress"), "progress_history": progress_history, "attention": snapshot.get("attention", []), "alignment": (snapshot.get("alignment") or {}).get("state", "UNKNOWN"), "alignment_detail": snapshot.get("alignment") or {}, "milestones": (snapshot.get("alignment") or {}).get("milestones", [])},
         "continuity": {"notion": snapshot.get("notion"), "memory": snapshot.get("memory"), "evidence": snapshot.get("evidence"), "ai_runs": ai_runs, "mcp_grants": grants},
         "memory": memory_rows,
         "evidence": evidence_rows,
@@ -1408,6 +1410,23 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         attention.append({"code": "NODE_DEGRADED", "severity": "HIGH", "message": f"Bound repository node is {binding.get('node_status')}."})
     if evidence and int(evidence["failed"] or 0):
         attention.append({"code": "EVIDENCE_DEGRADED", "severity": "MEDIUM", "message": "One or more Evidence parser/index operations failed."})
+    conditions = [
+        {
+            "category": item["code"],
+            "severity": item["severity"],
+            "message": item["message"],
+            "dedupe_key": item["code"],
+            "source_type": "PROJECT_SNAPSHOT",
+            "source_ref": project_id,
+        }
+        for item in attention
+    ]
+    try:
+        open_notifications = notifications.sync(project_id, conditions)
+    except Exception:
+        logging.getLogger("prime.core").warning("notification synchronization degraded", exc_info=True)
+        open_notifications = []
+    alignment_detail = progress.alignment(project_id)
     return {
         "project": project_dict,
         "binding": dict(binding) if binding else None,
@@ -1415,6 +1434,8 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         "goal_items": [dict(row) for row in goal_items],
         "progress": dict(progress) if progress else None,
         "progress_corrections": progress_corrections,
+        "alignment": alignment_detail,
+        "notifications": open_notifications,
         "authority": dict(authority) if authority else None,
         "notion": dict(notion) if notion else {"connection_status": "DISCONNECTED"},
         "evidence": dict(evidence) if evidence else {"total": 0, "current": 0, "failed": 0},
@@ -1728,6 +1749,21 @@ def restore_backup(body: BackupRequest, request: Request, prime_session: str | N
         )
     except (BackupError, OSError, ValueError) as exc:
         return error("RESTORE_REJECTED", str(exc), request_id(request), retryable=False, status_code=409)
+
+
+@app.get("/notifications")
+def list_notifications(request: Request, project_id: str | None = None, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return {"notifications": notifications.list_open(project_id)}
+
+
+@app.post("/notifications/{notification_id}/dismiss")
+def dismiss_notification(notification_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return notifications.dismiss(notification_id)
+    except KeyError as exc:
+        return error("NOTIFICATION_NOT_FOUND", str(exc), request_id(request), status_code=404)
 
 
 @app.get("/v1/projects/{project_id}/usage")

@@ -157,3 +157,42 @@ class ProgressService:
             "corrections": [dict(row) for row in corrections],
             "explanation": result.get("summary") if result else "UNKNOWN: no evidence-backed assessment exists.",
         }
+
+    def alignment(self, project_id: str) -> dict[str, Any]:
+        """Derive advisory alignment and stable milestone projections from GoalModel."""
+        with connect(self.settings) as db:
+            goal = db.execute("SELECT goal_revision_id,revision_number,status,content_hash FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (project_id,)).fetchone()
+            items = db.execute("SELECT goal_item_id,title,weight,required FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY goal_item_id", (project_id, goal["goal_revision_id"] if goal else "")).fetchall()
+            assessment = db.execute("SELECT assessment_id,repository_revision,progress_percent,confidence,item_results,evidence_refs,created_at FROM prime_core.progress_assessments WHERE project_id=%s AND goal_revision_id=%s AND freshness_state='CURRENT' ORDER BY created_at DESC LIMIT 1", (project_id, goal["goal_revision_id"] if goal else "")).fetchone()
+        if not goal or not items:
+            return {"state": "UNKNOWN", "goal_revision_id": goal["goal_revision_id"] if goal else None, "items": [], "milestones": [], "explanation": "No approved GoalModel with stable GoalItems is available."}
+        results = (assessment or {}).get("item_results") if assessment else []
+        if isinstance(results, str):
+            results = json.loads(results)
+        by_title = {str(row.get("title", "")): row for row in (results or [])}
+        evidence_refs = (assessment or {}).get("evidence_refs") if assessment else []
+        if isinstance(evidence_refs, str):
+            evidence_refs = json.loads(evidence_refs)
+        derived_items = []
+        for item in items:
+            result = by_title.get(str(item["title"]), {})
+            completion = max(0.0, min(1.0, float(result.get("completion", 0))))
+            derived_items.append({"goal_item_id": item["goal_item_id"], "title": item["title"], "alignment_state": "ALIGNED" if assessment and completion > 0 else "UNKNOWN", "completion": completion, "confidence": float(result.get("confidence", assessment.get("confidence", 0) if assessment else 0)), "evidence_refs": list(result.get("evidence_refs") or evidence_refs or []), "current_work_refs": [], "explanation": "Derived from the current approved GoalModel assessment; alignment is advisory and read-only." if assessment else "No current evidence-backed assessment exists."})
+        if not assessment:
+            state = "UNKNOWN"
+        elif all(row["completion"] >= 0.8 for row in derived_items):
+            state = "ALIGNED"
+        elif any(row["completion"] > 0 for row in derived_items):
+            state = "PARTIAL"
+        else:
+            state = "DRIFT_RISK"
+        milestones = []
+        for row in derived_items:
+            if row["completion"] >= 1:
+                milestone_state = "COMPLETE"
+            elif row["completion"] > 0:
+                milestone_state = "IN_PROGRESS"
+            else:
+                milestone_state = "NOT_STARTED" if assessment else "UNKNOWN"
+            milestones.append({"milestone_id": f"milestone_{goal['goal_revision_id']}_{row['goal_item_id']}", "label": row["title"], "goal_item_ids": [row["goal_item_id"]], "progress": row["completion"] * 100, "confidence": row["confidence"], "state": milestone_state, "evidence_refs": row["evidence_refs"]})
+        return {"state": state, "goal_revision_id": goal["goal_revision_id"], "repository_revision": assessment["repository_revision"] if assessment else None, "evaluated_at": assessment["created_at"] if assessment else None, "items": derived_items, "unsupported_current_work": [], "contradictory_authority": [], "abandoned_required_items": [], "source_revision": assessment["repository_revision"] if assessment else None, "milestones": milestones, "explanation": "Advisory alignment is derived from stable GoalItems and the current evidence-backed assessment; it does not edit authority."}
