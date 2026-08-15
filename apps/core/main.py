@@ -1722,6 +1722,30 @@ def restore_backup(body: BackupRequest, request: Request, prime_session: str | N
         return error("RESTORE_REJECTED", str(exc), request_id(request), retryable=False, status_code=409)
 
 
+@app.get("/v1/projects/{project_id}/usage")
+def project_usage(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    with connect(settings) as db:
+        rows = db.execute(
+            "SELECT capability,provider,units,estimated_cost,occurred_at FROM prime_core.usage_records WHERE project_id=%s ORDER BY occurred_at DESC LIMIT 100",
+            (project_id,),
+        ).fetchall()
+    records = []
+    for row in rows:
+        item = dict(row)
+        item["cost_state"] = "KNOWN" if item.get("estimated_cost") is not None else "UNAVAILABLE"
+        records.append(item)
+    return {
+        "project_id": project_id,
+        "state": "KNOWN" if records else "UNAVAILABLE",
+        "reason": "No provider executions are recorded for this project." if not records else "Historical project-scoped usage records loaded.",
+        "limits": {"status": "UNAVAILABLE", "reason": "No project usage limits are configured."},
+        "records": records,
+    }
+
+
 @app.get("/v1/system/reliability")
 def reliability_status(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)

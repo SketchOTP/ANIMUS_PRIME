@@ -172,7 +172,20 @@ class ReliabilityService:
             jobs = db.execute("SELECT status,count(*) AS count FROM prime_core.jobs GROUP BY status").fetchall()
             pressure = self.capacity_status()
             health = {"database": "CONNECTED", "queue": pressure["queue"]["status"], "disk": pressure["disk"]["status"]}
-            return {"health": health, "counts": counts, "jobs": [dict(row) for row in jobs], "capacity": pressure}
+            latest = db.execute(
+                "SELECT backup_id,status,captured_at,verified_at,encryption_version,destination_class FROM prime_core.backup_records WHERE backup_type='CONTINUITY' ORDER BY captured_at DESC LIMIT 20"
+            ).fetchall()
+            latest_verified = next((row for row in latest if row["status"] == "VERIFIED"), None)
+            return {
+                "health": health,
+                "counts": counts,
+                "jobs": [dict(row) for row in jobs],
+                "capacity": pressure,
+                "backup_status": "HEALTHY" if latest_verified else "REQUIRES_ACTION",
+                "backup_detail": "Latest verified continuity backup is recorded." if latest_verified else "No verified continuity backup is currently recorded.",
+                "latest_verified_backup": latest_verified["backup_id"] if latest_verified else "NONE",
+                "backup_encryption": latest_verified["encryption_version"] if latest_verified else "UNKNOWN",
+            }
 
     def sample(self, component: str, status: str, metrics: dict[str, Any]) -> None:
         with transaction(self.settings) as db:
