@@ -10,6 +10,7 @@ def test_web_shell_is_accessible_and_non_caching():
     assert 'prefers-reduced-motion' in html
     assert 'href="#projects"' in html
     assert 'data.build?.build_commit' in html
+    assert 'overflow-wrap: anywhere' in html
     for surface in ("setup", "nodes", "notion", "remote", "backup", "progress", "integrity", "ask", "search", "memory", "brain", "evidence", "timelens", "lifecycle"):
         assert f'id="{surface}"' in html
     assert 'id="time-lens-form"' in html
