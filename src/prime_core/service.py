@@ -1102,12 +1102,12 @@ class CoreService:
 
     def create_goal_revision(self, project_id: str, content: str, approve: bool = False, new_revision: bool = False) -> dict[str, Any]:
         timestamp = now()
-        self.validate_goal_content(content)
         with connect(self.settings) as db:
             approved = db.execute("SELECT 1 FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' LIMIT 1", (project_id,)).fetchone()
             binding = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
         if approve and approved and not new_revision:
             raise ValueError("approved GoalRevision is protected; explicit new-revision intent is required")
+        self.validate_goal_content(content)
         if approve and binding:
             canonical_path = Path(binding["canonical_path"])
             if canonical_path.exists():
