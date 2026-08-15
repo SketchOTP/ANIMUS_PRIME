@@ -1940,3 +1940,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: full registration-negative matrix; destructive backup export/restore; DOD-005 source lifecycle; provider/external environments; broader accessibility/polish; R-056; Phase 15 completion; V1 declaration.
 - Blockers: aggregate qualification remains constrained by the established secure database/environment boundary; no substitute database or project was created.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063 - PARTIAL
+
+- Outcome ID: O-PRIME-063
+- Supersedes outcome: O-PRIME-062
+- Closed: 2026-08-15T10:30:13-04:00
+- Acceptance: PARTIAL
+- Summary: Captured a non-secret restoration ledger and exercised only supported safe/refusal paths through the genuine persistent Atlas browser product. The Qualification Project remained ACTIVE / ONLINE / CURRENT with the same repository, Node, Goal, correction history, authority state, Core provenance, and backup identity. The current UI exposes a generic protected-action shell but no supported lifecycle transition, remove/archive/delete distinction, registration validation, authority provisioning, or guided Goal workflow. Protected-action cancel/refusal, empty correction validation, and incomplete backup preflight were verified without mutation. No positive lifecycle, correction, export/restore, registration, creation, authority, Goal, archive, remove, or delete claim was promoted.
+- Changed areas: Continuation 063 evidence; governed product alignment/burndown wording and evidence links; append-only directive/outcome/learning/decision records. No PRIME source or runtime code changed.
+- Validation:
+  - focused lifecycle/security/product tests - PASSED (8 passed, 1 skipped)
+  - full regression - PASSED (104 passed, 28 skipped)
+  - browser restoration, protected-action refusal, backup preflight refusal, console, and runtime provenance - PASSED
+  - compile/static, shell syntax, governance, burndown, alignment, diff, and tracked-secret checks - PASSED; V1 gate remains FAIL
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: lifecycle implementation; complete correction/challenge; backup export/destructive restore; registration and creation negatives/positive targets; authority idempotency; guided Goal; remove/archive/delete distinction; delete step-up/audit matrix; broader polish; provider/external environments; DOD-005; R-056; Phase 15/V1.
+- Blockers: no supported inverse or legitimate secondary target exists for the remaining positive/destructive paths; aggregate qualification remains constrained by the established secure database boundary.
+- Follow-up directive: none

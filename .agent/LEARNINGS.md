@@ -721,3 +721,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: existing gstack browser harness, persistent Atlas PRIME UI/Core route, authenticated operator qualification, Node outage/recovery, and browser state continuity.
 - Supersedes learning: L-PRIME-SAFE-LOCAL-PRODUCT-COMPLETION-061
+
+## L-PRIME-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
+
+- Date: 2026-08-15
+- Learning ID: L-PRIME-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
+- Fact or lesson: A real persistent product can be qualified safely without manufacturing positive state. The current PRIME UI's generic protected-action dialog refuses because no specific lifecycle workflow is wired; empty correction input is blocked before network submission; incomplete backup preflight returns HTTP 422 without mutation. When a supported inverse or legitimate Class-B target is absent, the correct result is an exact remaining gap, not a synthetic project, repository, Goal, authority rewrite, backup destination, or destructive restore.
+- Evidence location: apps/web/index.html; apps/core/main.py; evidence/phase15/qualification-continuation-063.md; docs/v1-product-goal-alignment-audit.yaml; docs/v1-product-gap-burndown.yaml
+- Confidence: VERIFIED
+- Scope: persistent Atlas PRIME browser qualification, restoration ledger, lifecycle/refusal boundaries, correction validation, backup preflight, onboarding safety, and destructive-action preservation.
+- Supersedes learning: L-PRIME-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062

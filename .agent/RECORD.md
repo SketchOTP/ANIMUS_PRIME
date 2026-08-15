@@ -571,3 +571,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The existing harness was present and usable once invoked from its local installation root with its pinned Playwright dependency and persistent state. The real browser reached the persistent 061 Core through the existing private SSH forward, and the reversible canonical Node outage demonstrated usable degraded operation, fail-closed Node control, restoration, and unchanged authority state without substitute resources or public exposure.
 - Affected areas: Continuation 062 browser evidence; product alignment and gap-burndown records; append-only project state; persistent Atlas operator qualification.
 - Supersedes record: DEC-PRIME-PHASE15-061
+
+## DEC-PRIME-PHASE15-063
+
+- Date: 2026-08-15
+- Record or decision ID: DEC-PRIME-PHASE15-063
+- Status: CLOSED
+- Decision or event: Publish Continuation 063 as PARTIAL after restoration-bounded qualification of the existing persistent product. Preserve the canonical Qualification Project and promote no new requirement because lifecycle, correction-positive, export/restore, onboarding, authority, Goal, remove/archive/delete, and release workflows were not safely available as supported browser paths.
+- Rationale: The UI's generic protected-action shell safely refuses without a specific lifecycle workflow, and the remaining Class-B/destructive paths lack legitimate durable targets or proven inverses. Empty correction and incomplete backup preflight failed closed without mutation. The exact canonical state and runtime provenance were rechecked after every exercised path.
+- Affected areas: Continuation 063 evidence; product alignment/burndown remaining-gap wording; append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-062

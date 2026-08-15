@@ -860,3 +860,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-SAFE-LOCAL-PRODUCT-COMPLETION-061
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-RESTORATION-BOUNDED-LIFECYCLE-ONBOARDING-063
+
+- Issued: 2026-08-15T10:30:13-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 063
+- Objective: Qualify remaining local lifecycle, onboarding-safety, correction, backup, authority, guided-goal, and destructive-refusal workflows through the genuine persistent Atlas product using restoration-bounded real behavior.
+- Scope: Direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; existing persistent PostgreSQL/Hindsight/Core/UI/Node; existing Qualification Project; existing gstack browser harness; DOD-024, DOD-026, DOD-049, DOD-054, DOD-055, DOD-057, DOD-058, DOD-076, DOD-077, DOD-080, and safe DOD-081 inspection; evidence, .agent records, GitHub, and living Notion journal.
+- Exclusions: No fake project/repository/worktree/Node/browser profile/backup destination; no destructive canonical completion/delete/restore; no authority overwrite or new Goal revision; no public exposure/Funnel; DOD-005 parked; no aggregate qualifier, R-056 closure, Phase 16, or deployment.
+- Acceptance: Capture restoration ledger; execute only supported reversible/refusal paths with known inverses; compare exact before/after state; reconcile governed records; run full validation; publish truthful evidence and Notion checkpoint with exact Git parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-BROWSER-HARNESS-OPERATOR-QUALIFICATION-062
+- Status at issuance: ISSUED
