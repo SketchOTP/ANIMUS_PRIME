@@ -1114,7 +1114,7 @@ def record_authority(body: AuthorityRequest, request: Request, prime_session: st
     return service.record_authority_revision(body.project_id, body.source_path, body.source_hash, body.validation_status, body.metadata, body.content_snapshot, body.canonical_commit)
 
 
-def hindsight_capabilities() -> dict[str, Any]:
+def hindsight_capabilities(project_id: str | None = None) -> dict[str, Any]:
     adapter = PrimeMemoryAdapter(settings.hindsight_base_url, "health-probe", timeout_seconds=settings.hindsight_timeout_seconds)
     service_result = adapter.health()
     service_status = service_result.status
@@ -1129,6 +1129,17 @@ def hindsight_capabilities() -> dict[str, Any]:
         "reflect": "UNAVAILABLE",
         "mental_models": "UNSUPPORTED",
     }
+    if project_id and service_status == "CURRENT":
+        project_models = PrimeMemoryAdapter(
+            settings.hindsight_base_url,
+            project_id,
+            timeout_seconds=settings.hindsight_timeout_seconds,
+        ).list_mental_models()
+        items = project_models.payload.get("items", []) if isinstance(project_models.payload, dict) else []
+        generated = [item for item in items if isinstance(item, dict) and item.get("content") and item.get("content") != "Generating content..."]
+        if project_models.status == "CURRENT":
+            capabilities["mental_models"] = "CURRENT" if generated else "AVAILABLE"
+            capabilities["reflect"] = "CURRENT" if any(item.get("reflect_response") for item in generated) else "AVAILABLE"
     overall = "CURRENT" if all(capabilities[key] == "CURRENT" for key in ("service_connectivity", "retain", "recall")) else "DEGRADED"
     return {"overall": overall, "capabilities": capabilities, "stored_memory_records": retained}
 
@@ -1505,7 +1516,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         "evidence": dict(evidence) if evidence else {"total": 0, "current": 0, "failed": 0},
         "memory": {
             **(dict(memory_row) if memory_row else {"total": 0}),
-            "health": hindsight_capabilities(),
+            "health": hindsight_capabilities(project_id),
             "mental_models": memory_service_mental_models,
         },
         "files": dict(files) if files else {"total": 0},
