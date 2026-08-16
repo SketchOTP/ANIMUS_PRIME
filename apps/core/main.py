@@ -876,6 +876,12 @@ def notion_project_action(project_id: str, body: NotionOperatorActionRequest, re
         elif body.action == "HISTORY":
             if not state.page_id:
                 return error("NOTION_PROJECT_RECORD_MISSING", "Bind the approved project record before rolling history", request_id(request), status_code=409)
+            period = body.period or f"operator-{time.strftime('%Y-%m-%d', time.gmtime())}"
+            existing_history = state.history_pages.get(period)
+            if existing_history:
+                result = {**existing_history, "idempotent": True}
+                response: dict[str, Any] = {"action": body.action, "result": result, "state": _public_notion_project_state(project_id, notion)}
+                return response
             snapshot = _project_snapshot(project_id)
             project = snapshot.get("project") or {}
             managed_content = json.dumps({
@@ -886,7 +892,6 @@ def notion_project_action(project_id: str, body: NotionOperatorActionRequest, re
                 "progress": (snapshot.get("progress") or {}).get("progress_percent"),
                 "source_revision": body.source_revision,
             }, sort_keys=True)
-            period = body.period or f"operator-{time.strftime('%Y-%m-%d', time.gmtime())}"
             result = notion.rollover_history(project_id, period, managed_content, body.source_revision, body.source_revision)
         elif body.action == "ATTACH_SOURCE":
             if not body.page_id or not body.source_binding_id:
