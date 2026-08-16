@@ -18,3 +18,9 @@ def test_web_shell_is_accessible_and_non_caching():
     assert 'id="time-lens-now"' in html
     assert "Authentication required" in html
     assert "Funnel/public exposure" in html
+    assert 'notion-reconcile' in html
+    assert 'notion-sync' in html
+    assert 'notion-history' in html
+    assert 'notion-attach-source' in html
+    assert 'notion-detach-source' in html
+    assert 'Detach this read-only source and retract it from current retrieval' in html

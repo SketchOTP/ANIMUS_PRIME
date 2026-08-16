@@ -322,6 +322,16 @@ class NotionCapabilityRequest(BaseModel):
     probe_parent_id: str | None = Field(default=None, max_length=80)
 
 
+class NotionOperatorActionRequest(BaseModel):
+    action: Literal["SYNC", "RECONCILE", "HISTORY", "ATTACH_SOURCE", "REFRESH_SOURCE", "DETACH_SOURCE"]
+    source_revision: str = Field(default="operator-ui", min_length=1, max_length=240)
+    source_rank: int = Field(default=0, ge=0, le=2_147_483_647)
+    period: str | None = Field(default=None, max_length=80)
+    source_binding_id: str | None = Field(default=None, max_length=160)
+    page_id: str | None = Field(default=None, max_length=80)
+    confirm: bool = False
+
+
 def error(code: str, message: str, request_id: str, retryable: bool = False, status_code: int = 400) -> JSONResponse:
     response = JSONResponse(status_code=status_code, content={
         "error_code": code, "message": message, "request_id": request_id, "retryable": retryable,
@@ -756,6 +766,160 @@ def notion_capability_test(body: NotionCapabilityRequest, request: Request, prim
             })
             return error("NOTION_CAPABILITY_FAILED", "Notion capability test failed", request_id(request), retryable=exc.retryable, status_code=status_code)
         return error("NOTION_CAPABILITY_FAILED", type(exc).__name__, request_id(request), retryable=True, status_code=503)
+
+
+def _notion_page_url(page_id: str | None) -> str | None:
+    return f"https://www.notion.so/{page_id.replace('-', '')}" if page_id else None
+
+
+def _public_notion_project_state(project_id: str, notion: NotionLifecycleService) -> dict[str, Any]:
+    state = notion.projects.get(project_id)
+    health = notion.health(project_id)
+    if state is None:
+        return {
+            "project_id": project_id,
+            "status": "UNCONFIGURED",
+            "health": health,
+            "record": {"page_id": None, "page_url": None},
+            "managed": {"sections": [], "projections": [], "jobs": []},
+            "history": [],
+            "sources": [],
+            "classification": "PRIME_MANAGED_RECORD_AND_READ_ONLY_SOURCES",
+            "authoritative": False,
+        }
+    metadata = notion.backup_metadata(project_id)
+    record: dict[str, Any] = {
+        "page_id": state.page_id,
+        "page_url": _notion_page_url(state.page_id),
+        "parent_id": state.parent_id,
+        "status": state.status,
+        "page_revision": None,
+    }
+    if state.page_id:
+        try:
+            page = notion.provider.get_page(state.page_id)
+            record["page_revision"] = page.revision
+        except Exception as exc:
+            record["status"] = "PAGE_MISSING" if getattr(exc, "code", None) == "PAGE_MISSING" else "DEGRADED"
+    return {
+        "project_id": project_id,
+        "status": state.status,
+        "health": health,
+        "record": record,
+        "managed": {
+            "sections": sorted(state.managed_hashes),
+            "projections": [
+                {
+                    key: projection.get(key)
+                    for key in ("source_revision", "source_commit", "authority_revision", "managed_sections", "provider_revision", "rendered_hash", "status", "documentation_run_id")
+                    if key in projection
+                }
+                for projection in state.projection_revisions[-20:]
+            ],
+            "jobs": [dict(job, job_id=job_id) for job_id, job in state.jobs.items()],
+            "latest_source_revision": state.latest_source_revision,
+        },
+        "history": list(state.history_pages.values()),
+        "sources": [
+            {
+                key: source.get(key)
+                for key in ("binding_id", "page_id", "status", "revision", "content_hash", "observed_at", "detached_at", "retrieval", "purged")
+                if key in source
+            }
+            for source in state.sources.values()
+        ],
+        "classification": "PRIME_MANAGED_RECORD_AND_READ_ONLY_SOURCES",
+        "authoritative": False,
+        "provenance": {"project_id": project_id, "record_page_id": state.page_id},
+        "redaction": {"credential": "OMITTED", "authorization_headers": "OMITTED", "raw_source_content": "OMITTED_FROM_STATE"},
+        "state_revision_count": len(metadata.get("projection_revisions", [])),
+    }
+
+
+@app.get("/v1/projects/{project_id}/notion")
+def notion_project_state(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return _public_notion_project_state(project_id, _live_notion_lifecycle())
+    except LookupError as exc:
+        return error("NOTION_CREDENTIAL_UNAVAILABLE", str(exc), request_id(request), retryable=True, status_code=503)
+    except Exception as exc:
+        return error("NOTION_STATE_UNAVAILABLE", type(exc).__name__, request_id(request), retryable=True, status_code=503)
+
+
+@app.post("/v1/projects/{project_id}/notion")
+def notion_project_action(project_id: str, body: NotionOperatorActionRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        notion = _live_notion_lifecycle()
+        state = notion.projects.get(project_id)
+        if state is None or not state.credential_ref:
+            return error("NOTION_PROJECT_UNCONFIGURED", "Notion is not configured for this project", request_id(request), retryable=False, status_code=409)
+        if body.action == "RECONCILE":
+            result = notion.reconcile(project_id)
+        elif body.action == "SYNC":
+            if not state.page_id:
+                return error("NOTION_PROJECT_RECORD_MISSING", "Bind the approved project record before synchronizing", request_id(request), status_code=409)
+            result = intelligence.execute_product(
+                project_id,
+                "DOCUMENTATION",
+                {"request": "Synchronize the current project record through the approved PRIME-managed Notion regions."},
+                [],
+                notion=notion,
+                source_revision=body.source_revision,
+                source_rank=max(body.source_rank, state.latest_source_rank),
+            )
+        elif body.action == "HISTORY":
+            if not state.page_id:
+                return error("NOTION_PROJECT_RECORD_MISSING", "Bind the approved project record before rolling history", request_id(request), status_code=409)
+            snapshot = _project_snapshot(project_id)
+            project = snapshot.get("project") or {}
+            managed_content = json.dumps({
+                "project_id": project_id,
+                "project_name": project.get("name"),
+                "lifecycle": project.get("lifecycle_state"),
+                "freshness": project.get("freshness_state"),
+                "progress": (snapshot.get("progress") or {}).get("progress_percent"),
+                "source_revision": body.source_revision,
+            }, sort_keys=True)
+            period = body.period or f"operator-{time.strftime('%Y-%m-%d', time.gmtime())}"
+            result = notion.rollover_history(project_id, period, managed_content, body.source_revision, body.source_revision)
+        elif body.action == "ATTACH_SOURCE":
+            if not body.page_id or not body.source_binding_id:
+                return error("NOTION_SOURCE_INPUT_REQUIRED", "A source page and binding identity are required", request_id(request), status_code=422)
+            if not state.parent_id:
+                return error("NOTION_TARGET_UNBOUND", "The approved Notion target is not bound for this project", request_id(request), status_code=409)
+            page = notion.provider.get_page(body.page_id)
+            if page.parent_id != state.parent_id:
+                return error("NOTION_TARGET_OUT_OF_SCOPE", "The source page is outside the approved project Notion target", request_id(request), status_code=422)
+            result = notion.attach_source(project_id, body.source_binding_id, body.page_id)
+        elif body.action == "REFRESH_SOURCE":
+            if not body.source_binding_id:
+                return error("NOTION_SOURCE_INPUT_REQUIRED", "A source binding identity is required", request_id(request), status_code=422)
+            result = notion.refresh_source(project_id, body.source_binding_id)
+        else:
+            if not body.source_binding_id:
+                return error("NOTION_SOURCE_INPUT_REQUIRED", "A source binding identity is required", request_id(request), status_code=422)
+            if not body.confirm:
+                return error("NOTION_DETACH_CONFIRMATION_REQUIRED", "Detach/retract requires explicit confirmation", request_id(request), status_code=422)
+            result = notion.detach_source(project_id, body.source_binding_id, purge_history=False)
+        response: dict[str, Any] = {"action": body.action, "result": result, "state": _public_notion_project_state(project_id, notion)}
+        if body.action == "REFRESH_SOURCE" and isinstance(result, dict):
+            response["content"] = result.get("content", "")
+            response["provenance"] = result.get("provenance")
+        return response
+    except KeyError as exc:
+        return error("NOTION_SOURCE_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except LookupError as exc:
+        return error("NOTION_CREDENTIAL_UNAVAILABLE", str(exc), request_id(request), retryable=True, status_code=503)
+    except Exception as exc:
+        code = getattr(exc, "code", None) or "NOTION_ACTION_FAILED"
+        status_code = 409 if code == "CONFLICT" else 503 if getattr(exc, "retryable", False) else 400
+        return error(code, "Notion operator action failed", request_id(request), retryable=getattr(exc, "retryable", False), status_code=status_code)
 
 
 @app.post("/v1/jobs")
