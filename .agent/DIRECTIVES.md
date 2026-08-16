@@ -959,3 +959,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-HINDSIGHT-CAPABILITY-UNBLOCK-068
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-PARAGON-ACTIVATE-GENERAL-AI-HINDSIGHT-COMPATIBILITY-070
+
+- Issued: 2026-08-15T23:55:17-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 070 architecture correction
+- Objective: Activate persistent PRIME general AI through approved PARAGON configuration, then separately qualify Hindsight native tool-call compatibility.
+- Scope: Direct Atlas SSH/native execution; persistent PRIME Core/UI/PostgreSQL/Hindsight; existing Qualification Project and Hindsight bank; protected PARAGON credential; existing OpenAI-compatible adapter; bounded Hindsight retain/recall/Reflect/Mental Models checks; governed evidence and living Notion journal.
+- Exclusions: No PARAGON CLI tool-call redesign; no new provider architecture; no Notion, DOD-005, Windows, Tailscale, second-device, legitimate-target, DOD-081/R-056, public exposure, deployment, Funnel, Phase 16, or V1 declaration work.
+- Acceptance: PRIME general AI active through persistent Core, and Hindsight either qualified through its exact native tool path or recorded with the exact blocker and operator action.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
+- Status at issuance: ISSUED

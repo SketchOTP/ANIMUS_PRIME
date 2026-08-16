@@ -791,3 +791,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Scope: PRIME provider capability gate for Hindsight Reflect/Mental Models and provider-backed V1 clauses.
 
 - Supersedes learning: L-PRIME-HINDSIGHT-CAPABILITY-UNBLOCK-068
+
+## L-PRIME-PARAGON-GENERAL-AI-HINDSIGHT-TOOL-BOUNDARY-070
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-PARAGON-GENERAL-AI-HINDSIGHT-TOOL-BOUNDARY-070
+- Fact or lesson: The persistent PRIME Core can use the existing PARAGON endpoint for ordinary structured general AI while preserving LOCAL_ONLY semantics. A harmless single-function PARAGON request emitted a valid OpenAI-compatible tool_call, but the exact native Hindsight tool set (search_mental_models, search_observations, recall, expand, done) returned no_eligible_model. Therefore single-tool support does not establish Hindsight native tool compatibility.
+- Evidence location: evidence/phase15/qualification-continuation-070.md; persistent Core profile and ASK_PRIME result; direct protected PARAGON/Hindsight runtime probes.
+- Confidence: VERIFIED
+- Scope: PRIME general AI provider activation and Hindsight Reflect/Mental Models capability boundary.
+- Supersedes learning: L-PRIME-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069

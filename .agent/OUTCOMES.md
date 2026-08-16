@@ -2068,3 +2068,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Blockers: PARAGON_TOOL_CALLING. Operator must make the approved PARAGON transport/model expose usable OpenAI-compatible function calling or provide an explicitly approved Hindsight-backed tool-calling model/profile.
 
 - Follow-up directive: none
+
+
+## D-PRIME-PHASE15-PARAGON-ACTIVATE-GENERAL-AI-HINDSIGHT-COMPATIBILITY-070 - PARTIAL
+
+- Outcome ID: O-PRIME-070
+- Supersedes outcome: O-PRIME-069
+- Closed: 2026-08-15T23:55:17-04:00
+- Acceptance: PARTIAL
+- Summary: Activated persistent PRIME Core PARAGON and qualified authenticated general AI through the existing Qualification Project. Reused persistent Hindsight and bank, changed only the existing model label to paragon, and proved retain/recall plus a genuine single-function tool call. The exact Hindsight five-tool Reflect payload is rejected with no_eligible_model, so Reflect and Mental Models were not promoted.
+- Changed areas: protected Atlas runtime env files outside Git; persistent Core/Hindsight containers; Continuation 070 evidence; append-only .agent records. No product source change.
+- Validation:
+  - Core readiness, protected API, general AI, single-function tool call, Hindsight health, retain, and recall - PASSED
+  - Exact Hindsight native tool set, Reflect, and Mental Models - BLOCKED
+  - Governance validation, diff, and tracked-secret checks - PASSED
+  - Focused and full regression tests - BLOCKED because Atlas Python test collection lacks psycopg
+  - Deployment and public exposure - NOT APPLICABLE
+- Remaining risks: exact Hindsight tool-set routing; PRIME runtime Notion; R-045/DOD-047 limits; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: HINDSIGHT_NATIVE_TOOL_SET_UNAVAILABLE. Provide approved PARAGON capability for search_mental_models/search_observations/recall/expand/done, or an approved Hindsight-backed tool-calling model/profile.
+- Follow-up directive: none
