@@ -841,3 +841,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: 073 post-restart runtime qualification only.
 - Supersedes learning: L-PRIME-PARAGON-TOOL-MEDIATED-CONTEXT-GATE-073
+
+## L-PRIME-LEGITIMATE-MENTAL-MODEL-QUALIFICATION-074
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-LEGITIMATE-MENTAL-MODEL-QUALIFICATION-074
+- Fact or lesson: A legitimate Hindsight Mental Model must be created through the supported operation from an already-qualified Reflect source, retain stored provenance and exact project-bank identity, remain manually refreshable, and be surfaced by PRIME as derived and non-authoritative. Creation alone is insufficient without durable API/UI re-read and persistent restart evidence.
+- Evidence location: evidence/phase15/qualification-continuation-074.md; src/prime_memory_adapter.py; src/prime_core/memory_service.py; apps/core/main.py; apps/web/index.html; tests/phase0/test_prime_memory_adapter.py
+- Confidence: VERIFIED
+- Scope: PRIME project-scoped Hindsight Mental Model creation and operator boundary.
+- Supersedes learning: L-PRIME-LEGITIMATE-MENTAL-MODEL-SOURCE-GATE-072

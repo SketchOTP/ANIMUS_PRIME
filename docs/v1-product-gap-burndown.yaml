@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 15
+  EXTERNAL_ENVIRONMENT: 14
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -664,31 +664,6 @@ items:
     blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
     depends_on: "R-037"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-068
-    current_status: "BACKEND_ONLY"
-    product_area: "Hindsight semantics"
-    owner_phase: 6
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "Native Hindsight retain/recall and PRIME durable/source-ledger classification are qualified; the approved Mental Models/reflect path remains unavailable for complete qualification."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Qualify the approved Hindsight Mental Models/reflect path when its provider capability is available; do not promote on retain/recall evidence alone."
-    evidence_already_available: ["evidence/phase15/qualification-continuation-037.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight Mental Models/reflect path unavailable"
-    depends_on: "R-054"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-076
     current_status: "UI_SHELL_ONLY"
     product_area: "lifecycle safety"

@@ -691,3 +691,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The new PARAGON MainPID and start time were verified, private health passed, the repaired routing preview exposed 129 eligible candidates for the exact tool-mediated architecture query, and Hindsight Reflect returned substantive provenance-bearing output with four genuine native observation/recall calls. No Mental Model was created, so DOD-068 remains BACKEND_ONLY and no V1 gate was promoted.
 - Affected areas: Continuation 073 evidence and append-only governed records only; no code, Hindsight data/configuration, Notion state, or product state changed during resumption.
 - Supersedes record: DEC-PRIME-PHASE15-073
+
+## DEC-PRIME-PHASE15-074
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-074
+- Status: CLOSED
+- Decision or event: Continuation 074 legitimately created and qualified the first ANIMUS PRIME Operating Model through the existing persistent Hindsight bank and PRIME operator path.
+- Rationale: The exact approved source-query Reflect basis passed in Continuation 073. Hindsight's supported Mental Model operation generated substantive content with provenance. PRIME now exposes project-specific state through API and Memory UI as CURRENT and DERIVED_NON_AUTHORITATIVE, and the object survived persistent Core restart without duplication or fallback.
+- Affected areas: PRIME Hindsight adapter/service/API, Memory UI capability state, focused adapter test, DOD-068 governance, R-054 supporting evidence, and append-only Continuation 074 records.
+- Supersedes record: DEC-PRIME-PHASE15-073-POST-RESTART

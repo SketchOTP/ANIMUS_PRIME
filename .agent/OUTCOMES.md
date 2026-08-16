@@ -2173,3 +2173,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Hindsight Mental Model remains unqualified; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: none for the bounded 073 post-restart gate; Mental Model creation is intentionally deferred and is not a 073 acceptance requirement.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-074 - COMPLETE
+
+- Outcome ID: O-PRIME-074
+- Supersedes outcome: O-PRIME-073-POST-RESTART
+- Closed: 2026-08-16T15:40:00-04:00
+- Acceptance: MET
+- Changed areas: PRIME Mental Model adapter/service/API/UI, runtime image 376dfce3ce8e46941b7fa276fd751872a7fcd462, focused adapter test, DOD-068 promotion, R-054 supporting evidence, and append-only 073 correction.
+- Summary: Created exactly one legitimate ANIMUS PRIME Operating Model through the existing persistent PRIME Hindsight bank and PRIME path; DOD-068 is USER_USABLE_VERIFIED, R-054 remains VERIFIED with evidence appended only, Continuation 073 bounded PASS remains append-only, and deployment was NOT PERFORMED.
+- Validation:
+  - compileall - PASSED
+  - focused adapter tests - PASSED; 4 passed
+  - persistent Core, Hindsight, PRIME API, and browser qualification - PASSED
+  - governance, burndown, diff, and secret checks - PASSED
+  - full regression 110 passed, 28 skipped
+- Remaining risks: Notion prerequisite 067, DOD-005, DOD-081, R-056, external target/provider requirements, Phase 15/V1, and deployment remain unresolved or gated.
+- Blockers: Notion runtime credential prerequisite 067 remains unavailable; no blocker remains for this bounded Mental Model scope.
+- Follow-up directive: none

@@ -282,3 +282,17 @@ result: FAIL
 - no code change, no Hindsight mutation, no Notion change, no deployment, no public exposure, no Phase 16
 - original full-suite concern preserved: 440 passed and one unrelated pre-existing submitAuthCode timing failure
 - next: do not create the Mental Model and do not begin Continuation 074 automatically
+
+## Continuation 074 - legitimate Mental Model creation and qualification
+
+- directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-074
+- baseline: a652b0a4f38a493ec43f888551555d4be1dcb2ba
+- implementation: 376dfce3ce8e46941b7fa276fd751872a7fcd462
+- result: PASSED for bounded scope
+- Mental Model: prime-operating-model / ANIMUS PRIME Operating Model; exactly one item in the existing PRIME bank; generated content 8901 characters; stored based_on total 200; manual refresh; DERIVED_NON_AUTHORITATIVE; authoritative=false.
+- source query: exact authorized Continuation 073 query; prior accepted Reflect basis had four native observation/recall calls and substantive provenance-bearing output.
+- PRIME path: authenticated project API list/operation/snapshot and Chromium Memory UI all passed; UI showed one CURRENT model, derived classification, NO authority, and exact bank.
+- restart: persistent Core restarted after creation; service MainPID 814238, ActiveEnterTimestamp 2026-08-16 15:33:22 EDT, health ready and build provenance passed; API and browser re-read passed.
+- governed status: DOD-068 promoted to USER_USABLE_VERIFIED; R-054 remains VERIFIED with evidence append only; Notion 067 pending; DOD-005 parked; DOD-081/R-056 gated; Phase 15/V1 incomplete.
+- validation: compileall, focused adapter tests (4 passed), persistent Core/Hindsight/API/browser checks passed; final governance, burndown, diff, secret, and full regression results recorded at closeout.
+- deployment: NOT PERFORMED.
