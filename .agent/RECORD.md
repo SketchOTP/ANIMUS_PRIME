@@ -671,3 +671,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Recall proved the existing PRIME bank contains real project memory, but the required Reflect synthesis returned repeated no_eligible_model tool-call failures and an unavailable zero-tool fallback. Creating content manually would violate the authorized resource boundary and the frozen derived-memory contract. No Hindsight, PARAGON, PRIME, Notion, or persistent project state was changed.
 - Affected areas: Continuation 072 evidence and append-only governed records; current Hindsight Reflect capability boundary.
 - Supersedes record: DEC-PRIME-PHASE15-071
+
+## DEC-PRIME-PHASE15-073
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-073
+- Status: CLOSED
+- Decision or event: Publish Continuation 073 as BLOCKED after proving and minimally repairing a false PARAGON context hard gate, while refusing to claim the repair live until the existing PARAGON service is restarted.
+- Rationale: The known-good and failing routing profiles differed first at semantic context demand. The exact tool-mediated query was small, but architecture imposed 200000 required context tokens and excluded every unknown-context candidate. The minimal repair applies semantic floors only to non-tool requests and keeps actual capacity protection for tool-mediated requests. PARAGON GitHub publication succeeded at 60c1668. The deployment gate remains blocked by Atlas interactive authentication, so no stale-runtime Reflect result was relabeled as a repaired-runtime qualification.
+- Affected areas: PARAGON published repair; Continuation 073 evidence; append-only governed records; no PRIME source, Hindsight persistent data, Notion state, or public/network configuration changed.
+- Supersedes record: DEC-PRIME-PHASE15-072

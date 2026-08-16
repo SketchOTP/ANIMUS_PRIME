@@ -1003,3 +1003,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073
+
+- Issued: 2026-08-16T13:05:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 073
+- Objective: Determine the first PARAGON routing gate that excludes the exact 072 Hindsight Reflect query, repair it only if proven false, publish the smallest correction, and rerun the exact preflight.
+- Scope: Direct Atlas SSH/native execution; existing persistent PARAGON, Hindsight, PRIME, and approved PRIME bank; bounded A/B routing diagnostics; minimal PARAGON repair with regression tests; existing PARAGON service publication/restart; exact 072 Reflect preflight only after the repaired runtime is live.
+- Exclusions: No Mental Model creation; no source-query rewrite as workaround; no Hindsight change; no PRIME product change; no Notion 067 work; no DOD-005; no DOD-081; no R-056; no Phase 16; no new provider architecture; no synthetic memories/targets; no public exposure or unrelated cleanup.
+- Acceptance: Identify the first hard divergence; repair only a proven false gate; publish and restart only the existing PARAGON service; then pass the exact original 072 Reflect preflight with genuine native tool calls, or record the exact external blocker.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072
+- Status at issuance: ISSUED

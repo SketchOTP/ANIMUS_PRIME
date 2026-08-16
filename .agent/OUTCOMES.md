@@ -2128,3 +2128,28 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: current Hindsight Reflect tool-capable provider availability; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: LEGITIMATE_MENTAL_MODEL_SOURCE_INSUFFICIENT because the required Reflect synthesis cannot currently produce native tool calls through the approved persistent path.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073 - BLOCKED
+
+- Outcome ID: O-PRIME-073
+- Supersedes outcome: O-PRIME-072
+- Closed: 2026-08-16T13:20:00-04:00
+- Acceptance: NOT MET
+- Summary: The first hard divergence was proven to be PARAGON's semantic architecture context floor: the exact tool-mediated 072 query was assigned 200000 required context tokens, excluding all 129 otherwise catalog-eligible candidates with unknown context metadata. The smallest correction makes tool-mediated requests use actual request plus output capacity while preserving hard protection for genuinely large requests. The repair was published to PARAGON GitHub as 60c1668, but the existing systemd service could not be restarted because Atlas requires interactive authentication for systemctl/sudo. The running process therefore remains pre-repair, and the exact 072 Reflect preflight was not rerun against stale runtime.
+- Changed areas: PARAGON published implementation/test commit 60c1668; PRIME Continuation 073 evidence and append-only .agent/phase records. No PRIME product source, Hindsight data/configuration, Notion state, or provider architecture changed.
+- Validation:
+  - A/B/lexical routing differential - PASSED
+  - minimal PARAGON routing repair and focused regressions - PASSED
+  - PARAGON release scan - PASSED
+  - PARAGON full npm test - FAILED; 440 passed and the one documented unrelated pre-existing submitAuthCode timing failure remained
+  - PARAGON GitHub publication/parity - PASSED
+  - existing PARAGON service health before attempted restart - PASSED
+  - existing PARAGON service restart through authorized service path - BLOCKED; interactive authentication required
+  - repaired runtime health and exact 072 Reflect preflight - NOT RUN
+  - secret scan and diff review - PASSED
+  - PRIME product/runtime qualification - NOT APPLICABLE; no PRIME product/runtime change
+  - Mental Model creation - NOT RUN
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: PARAGON repaired runtime not loaded; Hindsight Reflect/Mental Model; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: ATLAS_PARAGON_SERVICE_RESTART_REQUIRES_INTERACTIVE_AUTH. Operator must provide the existing approved non-interactive service restart authority or perform systemctl restart paragon.service on Atlas, then rerun only the exact original 072 Reflect preflight.
+- Follow-up directive: none

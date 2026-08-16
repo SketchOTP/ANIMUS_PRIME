@@ -821,3 +821,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME legitimate Mental Model creation gate and Hindsight Reflect/Recall capability boundary.
 - Supersedes learning: L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+
+## L-PRIME-PARAGON-TOOL-MEDIATED-CONTEXT-GATE-073
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-PARAGON-TOOL-MEDIATED-CONTEXT-GATE-073
+- Fact or lesson: A semantic architecture label must not impose a large hard context requirement on a tool-mediated request whose retrieved project state arrives incrementally. The exact 072 query was a small request with 1000 estimated input tokens and 1024 requested output tokens, yet PARAGON assigned 200000 required context and excluded all 129 unknown-context candidates. The corrected contract uses actual request/output capacity for tool-call requests and keeps large-request capacity gates active.
+- Evidence location: evidence/phase15/qualification-continuation-073.md; PARAGON commit 60c1668; src/routing/taskProfile.js; test/automaticRouting.test.js; live routing preview A/B/lexical differential.
+- Confidence: VERIFIED
+- Scope: Continuation 073 PARAGON routing eligibility correction.
+- Supersedes learning: L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071

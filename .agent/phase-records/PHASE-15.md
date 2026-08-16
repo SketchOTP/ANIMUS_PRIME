@@ -248,3 +248,24 @@ result: FAIL
 - Mental Model persistence/provenance/PRIME-path acceptance: NOT RUN because creation preflight did not pass
 - governed status: no DOD/R promotion; DOD-068 remains BACKEND_ONLY; DOD-005, DOD-081, R-056, Notion 067, Phase 16, and deployment remain out of scope.
 - deployment: NOT PERFORMED.
+
+## Continuation 073 — PARAGON query-specific context-demand differential
+
+- directive: D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073
+- PRIME baseline: 25ac64dc891224f7592f3b1d016787b83bbb2e49
+- PARAGON starting SHA: a5d1485c7b61b3328d028db299d24aadf60c894f
+- PARAGON published repair: 60c1668de0af459629d8f1e6148b46f167d08ad9
+- A known-good tool-mediated preview: workType=unknown, required context 16000, 150 candidates, 129 eligible; 19 lacked verified tool calls and 2 were unhealthy.
+- B exact 072 query preview: workType=architecture, required context 200000, 150 candidates, 0 eligible; 129 were excluded by routing.unknownContextForLargeRequest, with the same 19 tool-capability and 2 health exclusions.
+- C lexical perturbation replacing only architectural invariants with system invariants: workType=unknown, required context 16000, 150 candidates, 129 eligible.
+- first hard divergence: architecture semantic context floor to 200000, before provider dispatch or Hindsight semantics.
+- repair: tool-mediated outputContract=tool_call requests now use actual estimated input plus requested output capacity; ordinary semantic context floors and actual large-request gates remain.
+- focused_regression: PASS — 59 automatic-routing tests selected/run, including the two new tool-mediated context tests.
+- full_regression: FAIL — 440 passed; one documented unrelated pre-existing submitAuthCode timing failure.
+- release_scan: PASS.
+- publication: PASS — PARAGON GitHub main 60c1668.
+- persistent_restart: BLOCKED — systemctl restart paragon.service and sudo -n systemctl restart paragon.service both require interactive Atlas authentication.
+- exact_original_072_reflect_after_repair: NOT RUN — running process remained pre-repair; live preview still showed the old 200000 gate and 0 eligible candidates.
+- mental_model: NOT RUN; no Mental Model created.
+- governed status: no PRIME DOD/R promotion; DOD-068 remains BACKEND_ONLY; DOD-005, DOD-081, R-056, Notion 067, Phase 16, and deployment remain out of scope.
+- final result: BLOCKED; operator action is to provide the existing approved non-interactive restart authority or restart only paragon.service, then rerun the exact original 072 Reflect preflight.
