@@ -66,6 +66,73 @@ class MemoryService:
                 break
         return {"status": result.status, "results": results, "project_id": project_id}
 
+    def list_mental_models(self, project_id: str) -> dict[str, Any]:
+        adapter = self.adapter_factory(project_id)
+        result = adapter.list_mental_models()
+        payload = result.payload if isinstance(result.payload, dict) else {}
+        items = payload.get("items", []) if isinstance(payload.get("items", []), list) else []
+        return {
+            "status": result.status,
+            "project_id": project_id,
+            "bank_id": f"prime-{project_id}",
+            "classification": "DERIVED_NON_AUTHORITATIVE",
+            "authoritative": False,
+            "items": items,
+            "count": len(items),
+            "reason": result.reason,
+        }
+
+    def create_mental_model(
+        self,
+        project_id: str,
+        name: str,
+        source_query: str,
+        model_id: str | None = None,
+        max_tokens: int = 2048,
+    ) -> dict[str, Any]:
+        adapter = self.adapter_factory(project_id)
+        result = adapter.create_mental_model(
+            name=name,
+            source_query=source_query,
+            model_id=model_id,
+            max_tokens=max_tokens,
+        )
+        return {
+            "status": result.status,
+            "project_id": project_id,
+            "bank_id": f"prime-{project_id}",
+            "classification": "DERIVED_NON_AUTHORITATIVE",
+            "authoritative": False,
+            "operation": result.payload,
+            "reason": result.reason,
+        }
+
+    def mental_model_operation(self, project_id: str, operation_id: str) -> dict[str, Any]:
+        adapter = self.adapter_factory(project_id)
+        result = adapter.mental_model_operation(operation_id)
+        return {
+            "status": result.status,
+            "project_id": project_id,
+            "bank_id": f"prime-{project_id}",
+            "classification": "DERIVED_NON_AUTHORITATIVE",
+            "authoritative": False,
+            "operation": result.payload,
+            "reason": result.reason,
+        }
+
+    def get_mental_model(self, project_id: str, model_id: str) -> dict[str, Any]:
+        adapter = self.adapter_factory(project_id)
+        result = adapter.get_mental_model(model_id)
+        return {
+            "status": result.status,
+            "project_id": project_id,
+            "bank_id": f"prime-{project_id}",
+            "classification": "DERIVED_NON_AUTHORITATIVE",
+            "authoritative": False,
+            "mental_model": result.payload,
+            "reason": result.reason,
+        }
+
     def rebuild_from_source_ledger(self, project_id: str) -> dict[str, Any]:
         """Recreate a project bank from PRIME's current, provenance-bearing ledger.
 

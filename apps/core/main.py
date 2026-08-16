@@ -228,6 +228,13 @@ class MemoryRequest(BaseModel):
     branch_context: str | None = None
 
 
+class MentalModelRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+    source_query: str = Field(min_length=1, max_length=4000)
+    model_id: str | None = Field(default=None, pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$", max_length=160)
+    max_tokens: int = Field(default=2048, ge=256, le=8192)
+
+
 class AIExecutionRequest(BaseModel):
     function: str = Field(min_length=1, max_length=80)
     prompt_input: dict[str, Any] = Field(default_factory=dict)
@@ -1448,7 +1455,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         authority = db.execute("SELECT authority_revision_id,source_path,source_hash,contract_version,validation_status,observed_at FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 1", (project_id,)).fetchone()
         notion = db.execute("SELECT project_id,page_id,page_url,connection_status,managed_content_hash,last_synced_at FROM prime_core.notion_projects WHERE project_id=%s", (project_id,)).fetchone()
         evidence = db.execute("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE retracted_at IS NULL AND purged_at IS NULL) AS current, COUNT(*) FILTER (WHERE parser_status='FAILED' OR index_status='FAILED') AS failed FROM prime_core.evidence_records WHERE project_id=%s", (project_id,)).fetchone()
-        memory = db.execute("SELECT COUNT(*) AS total, MAX(created_at) AS last_created FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchone()
+        memory_row = db.execute("SELECT COUNT(*) AS total, MAX(created_at) AS last_created FROM prime_core.memory_records WHERE project_id=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id,)).fetchone()
         events = [dict(row) for row in db.execute("SELECT event_id,event_type,project_sequence,observed_at,payload,source_revision FROM prime_core.events WHERE project_id=%s ORDER BY observed_at DESC LIMIT 20", (project_id,)).fetchall()]
         files = db.execute("SELECT COUNT(*) AS total, MAX(observed_at) AS last_observed, MAX(source_revision) AS source_revision FROM prime_core.repository_files WHERE project_id=%s", (project_id,)).fetchone()
         checkpoint = db.execute("SELECT last_seen_event_sequence,updated_at FROM prime_core.activity_checkpoints WHERE project_id=%s", (project_id,)).fetchone()
@@ -1483,6 +1490,7 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         logging.getLogger("prime.core").warning("notification synchronization degraded", exc_info=True)
         open_notifications = []
     alignment_detail = progress.alignment(project_id)
+    memory_service_mental_models = memory.list_mental_models(project_id)
     return {
         "project": project_dict,
         "binding": dict(binding) if binding else None,
@@ -1495,7 +1503,11 @@ def _project_snapshot(project_id: str) -> dict[str, Any]:
         "authority": dict(authority) if authority else None,
         "notion": dict(notion) if notion else {"connection_status": "DISCONNECTED"},
         "evidence": dict(evidence) if evidence else {"total": 0, "current": 0, "failed": 0},
-        "memory": {**(dict(memory) if memory else {"total": 0}), "health": hindsight_capabilities()},
+        "memory": {
+            **(dict(memory_row) if memory_row else {"total": 0}),
+            "health": hindsight_capabilities(),
+            "mental_models": memory_service_mental_models,
+        },
         "files": dict(files) if files else {"total": 0},
         "events": events,
         "checkpoint": dict(checkpoint) if checkpoint else {"last_seen_event_sequence": 0},
@@ -1580,6 +1592,68 @@ def store_memory(project_id: str, body: MemoryRequest, request: Request, prime_s
 def recall_memory(project_id: str, q: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return memory.recall(project_id, q)
+
+
+@app.get("/v1/projects/{project_id}/memory/mental-models")
+def list_project_mental_models(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return memory.list_mental_models(project_id)
+
+
+@app.post("/v1/projects/{project_id}/memory/mental-models")
+def create_project_mental_model(
+    project_id: str,
+    body: MentalModelRequest,
+    request: Request,
+    prime_session: str | None = Cookie(default=None),
+):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return memory.create_mental_model(
+            project_id,
+            body.name,
+            body.source_query,
+            body.model_id,
+            body.max_tokens,
+        )
+    except (KeyError, ValueError) as exc:
+        return error("MENTAL_MODEL_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/memory/mental-models/operations/{operation_id}")
+def project_mental_model_operation(
+    project_id: str,
+    operation_id: str,
+    request: Request,
+    prime_session: str | None = Cookie(default=None),
+):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return memory.mental_model_operation(project_id, operation_id)
+    except (KeyError, ValueError) as exc:
+        return error("MENTAL_MODEL_OPERATION_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.get("/v1/projects/{project_id}/memory/mental-models/{model_id}")
+def get_project_mental_model(
+    project_id: str,
+    model_id: str,
+    request: Request,
+    prime_session: str | None = Cookie(default=None),
+):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return memory.get_mental_model(project_id, model_id)
+    except (KeyError, ValueError) as exc:
+        return error("MENTAL_MODEL_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.get("/v1/projects/{project_id}/evidence")

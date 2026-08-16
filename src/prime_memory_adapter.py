@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
@@ -84,6 +85,59 @@ class PrimeMemoryAdapter:
     def reflect(self, query: str) -> AdapterResult:
         try:
             return AdapterResult("CURRENT", self._request("POST", f"/v1/default/banks/{self.bank_id}/reflect", {"query": query, "budget": "low", "max_tokens": 256}))
+        except RuntimeError as exc:
+            return AdapterResult("UNAVAILABLE", {}, str(exc))
+
+    def list_mental_models(self) -> AdapterResult:
+        try:
+            path = f"/v1/default/banks/{self.bank_id}/mental-models?{urlencode({'detail': 'full', 'limit': 1000})}"
+            return AdapterResult("CURRENT", self._request("GET", path))
+        except RuntimeError as exc:
+            return AdapterResult("UNAVAILABLE", {}, str(exc))
+
+    def create_mental_model(
+        self,
+        name: str,
+        source_query: str,
+        model_id: str | None = None,
+        max_tokens: int = 2048,
+    ) -> AdapterResult:
+        body: dict[str, object] = {
+            "name": name,
+            "source_query": source_query,
+            "max_tokens": max_tokens,
+            "trigger": {"refresh_after_consolidation": False},
+        }
+        if model_id:
+            body["id"] = model_id
+        try:
+            return AdapterResult(
+                "CURRENT",
+                self._request("POST", f"/v1/default/banks/{self.bank_id}/mental-models", body),
+            )
+        except RuntimeError as exc:
+            return AdapterResult("UNAVAILABLE", {}, str(exc))
+
+    def mental_model_operation(self, operation_id: str) -> AdapterResult:
+        if not operation_id or "/" in operation_id:
+            raise ValueError("invalid operation_id")
+        try:
+            return AdapterResult(
+                "CURRENT",
+                self._request(
+                    "GET",
+                    f"/v1/default/banks/{self.bank_id}/operations/{operation_id}",
+                ),
+            )
+        except RuntimeError as exc:
+            return AdapterResult("UNAVAILABLE", {}, str(exc))
+
+    def get_mental_model(self, model_id: str) -> AdapterResult:
+        if not model_id or "/" in model_id:
+            raise ValueError("invalid mental_model_id")
+        try:
+            path = f"/v1/default/banks/{self.bank_id}/mental-models/{model_id}?{urlencode({'detail': 'full'})}"
+            return AdapterResult("CURRENT", self._request("GET", path))
         except RuntimeError as exc:
             return AdapterResult("UNAVAILABLE", {}, str(exc))
 

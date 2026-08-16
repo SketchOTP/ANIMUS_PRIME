@@ -1017,3 +1017,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-074
+
+- Issued: 2026-08-16T15:08:20-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 074
+- Objective: Create exactly one legitimate ANIMUS PRIME Operating Model from the existing PRIME bank through Hindsight's supported Mental Model path, then qualify the directly applicable frozen PRIME Mental Model boundary.
+- Scope: Direct Atlas SSH/native execution; existing PRIME project and Hindsight bank; exact source query proven by 073; one authorized Mental Model; adapter/API/UI path; provenance, persistence, restart/recovery, isolation, derived/non-authoritative classification, degraded behavior, evidence, governance, and Notion closeout.
+- Exclusions: No PARAGON changes unless new regression evidence appears; no synthetic memories, sources, targets, banks, or manual model content; no additional Mental Models; no Notion-runtime prerequisite 067; no DOD-005; no DOD-081; no R-056; no Phase 16; no public deployment/exposure; no unrelated cleanup or refactoring.
+- Acceptance: PASS only if the authorized model is legitimately generated, has stable identity and substantive provenance-bearing content, persists through the established restart/recovery check, remains isolated and derived/non-authoritative, and the applicable PRIME path qualifies; PARTIAL only for a genuine separate unqualified surface after successful creation; BLOCKED if the supported source or capability cannot support truthful creation; FAILED only for an implementation or persistence defect.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073
+- Status at issuance: ISSUED
