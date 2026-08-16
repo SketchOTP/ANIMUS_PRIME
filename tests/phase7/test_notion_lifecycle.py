@@ -77,6 +77,9 @@ def test_knowledge_source_is_project_scoped_and_detach_retracts_and_reviews_memo
     detached = service.detach_source("project-a", "source-a")
     assert detached["retrieval"] == "RETRACTED"
     assert service.projects["project-a"].admitted_memory["memory-a"]["reconciliation_status"] == "REVIEW_REQUIRED"
+    assert service.refresh_source("project-a", "source-a")["status"] == "DETACHED"
+    assert service.refresh_source("project-a", "source-a")["retrieval"] == "RETRACTED"
+    assert service.reconcile("project-a")["results"][-1]["retrieval"] == "RETRACTED"
     assert service.refresh_source("project-b", "source-b")["retrieval"] == "CURRENT"
 
 

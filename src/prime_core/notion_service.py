@@ -491,6 +491,8 @@ class NotionLifecycleService:
         binding = state.sources.get(source_binding_id)
         if not binding:
             raise KeyError(source_binding_id)
+        if binding.get("status") == "DETACHED":
+            return {**binding, "retrieval": "RETRACTED"}
         try:
             page = self.provider.get_page(binding["page_id"])
         except NotionProviderError as exc:
@@ -534,6 +536,9 @@ class NotionLifecycleService:
                 state.status = "PAGE_MISSING" if exc.code == "PAGE_MISSING" else ("ACCESS_LOST" if exc.code == "ACCESS_DENIED" else "DEGRADED")
                 results.append({"kind": "project_record", "status": state.status, "error_code": exc.code})
         for binding_id in list(state.sources):
+            if state.sources[binding_id].get("status") == "DETACHED":
+                results.append({"kind": "knowledge_source", "binding_id": binding_id, "status": "DETACHED", "retrieval": "RETRACTED"})
+                continue
             refreshed = self.refresh_source(project_id, binding_id)
             results.append({"kind": "knowledge_source", "binding_id": binding_id, "status": refreshed["status"], "retrieval": refreshed.get("retrieval")})
         self._persist()
