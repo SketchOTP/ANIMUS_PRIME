@@ -2049,3 +2049,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Hindsight Reflect/Mental Models; PRIME runtime Notion; approved provider; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: HINDSIGHT_REFLECT_TOOL_CALLING. Operator must provide an approved tool-calling Hindsight model/profile or repair the approved routerbot-local tool-calling contract.
 - Follow-up directive: none
+## D-PRIME-PHASE15-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069 - PARTIAL
+
+- Outcome ID: O-PRIME-069
+- Supersedes outcome: O-PRIME-068
+- Closed: 2026-08-16T02:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: The existing protected runtime credential authenticated to the approved PARAGON endpoint. Model discovery, ordinary completion, and structured JSON passed. The required harmless function/tool-call probe returned HTTP 200 without tool_calls and stated that the tool was unavailable. No PRIME provider profile or Hindsight configuration was changed; no requirement or DOD was promoted.
+- Changed areas: Continuation 069 evidence and append-only .agent records only.
+- Validation:
+  - PARAGON connectivity, authentication, model discovery, ordinary completion, and structured JSON - PASSED
+  - PARAGON function/tool-call probe - BLOCKED; exact no-tool-call result recorded in evidence
+  - existing Hindsight health/database status - PASSED
+  - governance, burndown, diff, and tracked-secret checks - PASSED
+  - product regression/browser qualification/Core rebuild - NOT RUN or NOT APPLICABLE because no product/runtime change occurred
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: PARAGON tool calling; Hindsight Reflect/Mental Models; PRIME runtime Notion; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: PARAGON_TOOL_CALLING. Operator must make the approved PARAGON transport/model expose usable OpenAI-compatible function calling or provide an explicitly approved Hindsight-backed tool-calling model/profile.
+
+- Follow-up directive: none

@@ -946,3 +946,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PRIME-RUNTIME-NOTION-UNBLOCK-067
 - Status at issuance: ISSUED
+## D-PRIME-PHASE15-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
+
+- Issued: 2026-08-16T02:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 069
+- Objective: Establish the operator-approved PARAGON model through the existing OpenAI-compatible provider architecture and use it to unblock only the frozen provider/Hindsight requirements.
+- Scope: Direct Atlas SSH/native execution; existing persistent PRIME Core/Hindsight/PostgreSQL/Node; protected runtime credential handling; bounded PARAGON connectivity, model, completion, JSON, and tool-calling smoke; Hindsight Reflect/Mental Models only if the smoke passes; governed evidence and living Notion journal.
+- Exclusions: No new provider architecture; no raw secret output or persistence; no Notion work; no Windows, second device, Tailscale, secondary target, DOD-005, DOD-081, R-056, public exposure, deployment, or Phase 16; no Hindsight replacement or substitute bank.
+- Acceptance: Either PARAGON tool calling succeeds and the affected frozen clauses are genuinely qualified, or stop with the exact PARAGON capability failure and operator action required.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-HINDSIGHT-CAPABILITY-UNBLOCK-068
+- Status at issuance: ISSUED

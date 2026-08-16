@@ -631,3 +631,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Hindsight health, private identity, PRIME bank isolation, and recall are real, but Reflect fails with the exact openai/routerbot-local tool-calling capability error and the PRIME bank contains no Mental Models. DOD-068/R-054 remain open because retain/recall evidence alone cannot satisfy the frozen Hindsight semantics clause. No Hindsight state, provider configuration, product code, runtime, or network state was changed.
 - Affected areas: Continuation 068 evidence; append-only .agent records; exact Hindsight operator prerequisite.
 - Supersedes record: DEC-PRIME-PHASE15-067
+## DEC-PRIME-PHASE15-069
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-069
+- Status: CLOSED
+- Decision or event: Publish Continuation 069 as PARTIAL/BLOCKED after the approved PARAGON endpoint passed authentication, model discovery, ordinary completion, and structured JSON but failed the required function/tool-calling smoke.
+- Rationale: The endpoint returned HTTP 200 with no tool_calls and explicitly said the harmless probe tool was unavailable. This is an exact provider capability boundary. The directive required stopping before changing PRIME Core or Hindsight when the PARAGON tool-call smoke failed. No persistent state, product code, provider profile, bank, network, or qualification target was changed.
+- Affected areas: Continuation 069 evidence; append-only .agent directive/outcome/learning/record state; exact PARAGON tool-calling prerequisite.
+
+- Supersedes record: DEC-PRIME-PHASE15-068

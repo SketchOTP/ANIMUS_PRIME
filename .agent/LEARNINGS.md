@@ -781,3 +781,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Hindsight capability qualification for PRIME V1.
 - Supersedes learning: L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067
+## L-PRIME-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
+- Fact or lesson: PARAGON authentication, model discovery, ordinary completion, and structured JSON do not establish OpenAI-compatible function calling. The live endpoint returned HTTP 200 for a forced harmless tool request but emitted ordinary assistant text with no tool_calls, so Hindsight Reflect cannot be qualified from this profile.
+- Evidence location: evidence/phase15/qualification-continuation-069.md; protected PARAGON smoke through the existing Hindsight runtime secret; live Hindsight model profile
+- Confidence: VERIFIED
+- Scope: PRIME provider capability gate for Hindsight Reflect/Mental Models and provider-backed V1 clauses.
+
+- Supersedes learning: L-PRIME-HINDSIGHT-CAPABILITY-UNBLOCK-068
