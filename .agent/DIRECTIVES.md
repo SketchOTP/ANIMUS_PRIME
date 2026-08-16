@@ -974,3 +974,18 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
 - Status at issuance: ISSUED
+
+
+## D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+
+- Issued: 2026-08-16T05:09:04-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 071
+- Objective: Determine the first PARAGON/OpenRouter eligibility divergence between the known single-tool PASS and the actual Hindsight Reflect request shape; recover the established regression harness; publish truthful evidence and journal.
+- Scope: Direct Atlas execution; existing persistent PARAGON, Hindsight, PRIME Core, and approved project bank; bounded request-shape and routing diagnostics; minimal correction only with direct proof; evidence, governance, and Notion closeout.
+- Exclusions: Notion implementation; DOD-005; Windows, Tailscale, second-machine, external legitimate-target work; DOD-081; R-056; Phase 16; deployment; replacement architecture; disposable environments; secret discovery.
+- Acceptance: Either the exact Hindsight route becomes eligible and Reflect produces genuine native tool calls with any supported qualification promoted, or the exact first hard gate and missing capability/operator action are recorded.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PARAGON-ACTIVATE-GENERAL-AI-HINDSIGHT-COMPATIBILITY-070
+- Status at issuance: ISSUED

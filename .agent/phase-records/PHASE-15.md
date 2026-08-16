@@ -223,3 +223,16 @@ result: FAIL
 - newly_verified: `R-043`, `R-048`.
 - preserved_verified: `R-037`, `R-038`, `R-039`, `R-040`, `R-041`, `R-042`, `R-046`, `R-047`, `R-049`, `R-050`, `R-051`, `R-052`, `R-054`, `R-055`.
 - deployment: `NOT PERFORMED`.
+
+## Continuation 071 — Hindsight Reflect eligibility differential
+
+- directive: `D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071`
+- baseline: `3fbd1783c4cfcf0befc65d64d45cb583860c249a`
+- PARAGON published repair: `a5d1485c7b61b3328d028db299d24aadf60c894f`
+- result: `PARTIAL`
+- Hindsight Reflect: `PASS` — persistent PRIME bank returned HTTP 200, four native observation/recall calls, five LLM iterations, and no eligibility error.
+- Mental Models: `BLOCKED` — existing approved bank returned `items=[]`; no synthetic target created.
+- governed status: no DOD/R promotion; DOD-068 remains `BACKEND_ONLY`; R-054 remains at prior status; Notion prerequisite remains pending; DOD-005, DOD-081, R-056, Phase 16, and deployment remain out of scope.
+- validation: PRIME 108 passed / 28 skipped; PARAGON focused 61 passed; PARAGON full 438 passed / 1 unrelated pre-existing timing failure; governance and burndown structural checks passed.
+- qualification_state: unchanged by this continuation; V1 gate remains incomplete.
+- deployment: `NOT PERFORMED`.

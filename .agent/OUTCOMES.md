@@ -2087,3 +2087,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: exact Hindsight tool-set routing; PRIME runtime Notion; R-045/DOD-047 limits; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: HINDSIGHT_NATIVE_TOOL_SET_UNAVAILABLE. Provide approved PARAGON capability for search_mental_models/search_observations/recall/expand/done, or an approved Hindsight-backed tool-calling model/profile.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071 - PARTIAL
+
+- Outcome ID: O-PRIME-071
+- Supersedes outcome: O-PRIME-070
+- Closed: 2026-08-16T06:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Isolated the first PARAGON eligibility divergence to routing classification over Hindsight system/client and accumulated assistant/tool content. Published PARAGON repair `a5d1485c7b61b3328d028db299d24aadf60c894f`, restarted only the existing PARAGON service, and requalified the real persistent Hindsight Reflect path with HTTP 200, four native observation/recall calls, five LLM iterations, and no eligibility error. No Mental Model target exists in the approved PRIME bank, so no complete Hindsight-backed requirement was promoted.
+- Changed areas: PARAGON published repair and focused test only; Continuation 071 evidence; append-only/current-state .agent records. PRIME source, persistent bank, Hindsight image, and PRIME runtime topology were preserved.
+- Validation:
+  - PRIME regression - PASSED (108 passed; 28 skipped)
+  - PARAGON focused tests - PASSED (61 passed)
+  - PARAGON full npm test - FAILED (438 passed; one pre-existing unrelated `submitAuthCode` timing failure)
+  - persistent PARAGON restart/health - PASSED
+  - persistent Hindsight Reflect observation/recall path - PASSED
+  - governance and burndown structural validation - PASSED
+  - V1 product-goal gate - FAILED as expected; Phase 15 remains incomplete
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: legitimate Hindsight Mental Model target; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: `DOD-068` remains `BACKEND_ONLY` because the existing approved bank reports zero Mental Models. Do not create a synthetic target.
+- Follow-up directive: none

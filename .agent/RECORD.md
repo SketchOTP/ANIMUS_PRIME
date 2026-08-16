@@ -651,3 +651,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The architecture correction separates PRIME general AI from Hindsight native tool calling. No product source or PARAGON CLI semantics were changed. The persistent Core and Hindsight services were changed only through their existing service/runtime configuration and existing durable state; failed replacement attempts were removed while rollback containers were preserved. No V1 requirement was promoted because Reflect/Mental Models require the unavailable exact tool set.
 - Affected areas: Continuation 070 evidence; persistent runtime configuration; append-only .agent directive/outcome/learning/record state; Hindsight capability blocker.
 - Supersedes record: DEC-PRIME-PHASE15-069
+
+## DEC-PRIME-PHASE15-071
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-071
+- Status: CLOSED
+- Decision or event: Publish Continuation 071 as PARTIAL after correcting the PARAGON routing eligibility boundary and proving the real persistent Hindsight Reflect observation/recall path.
+- Rationale: The first hard divergence was task classification over system/client and accumulated tool history, which drove a false 50,000-token unknown-context exclusion. The minimal published PARAGON repair classifies only operator user messages while preserving full provider/context data. Persistent Hindsight Reflect then completed with four native observation/recall calls. The existing PRIME bank contains no Mental Models, so DOD-068 and the affected complete V1 clause remain blocked; no synthetic target or requirement promotion was allowed.
+- Affected areas: published PARAGON repair; Continuation 071 evidence; append-only governed records; no PRIME source or persistent Hindsight state change.
+- Supersedes record: DEC-PRIME-PHASE15-070

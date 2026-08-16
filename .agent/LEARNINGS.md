@@ -801,3 +801,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME general AI provider activation and Hindsight Reflect/Mental Models capability boundary.
 - Supersedes learning: L-PRIME-PARAGON-PROVIDER-HINDSIGHT-UNBLOCK-069
+
+## L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+- Fact or lesson: Hindsight Reflect request classification must use only operator `user` messages for routing task identity. System/client instructions and accumulated assistant/tool history remain part of provider payload and context estimation, but including them in task classification can falsely produce a high context demand and exclude every unknown-context OpenRouter candidate before capability selection. A representative tool-call probe must also preserve Hindsight's bank attribution; a stripped request is not equivalent evidence. Native observation/recall Reflect success still does not establish Mental Models, which must be observed in the legitimate project bank rather than synthesized.
+- Evidence location: evidence/phase15/qualification-continuation-071.md; published PARAGON commits `9b6dec4` and `a5d1485`; persistent Hindsight Reflect result and Mental Models listing
+- Confidence: VERIFIED
+- Scope: PARAGON routing eligibility boundary and persistent Hindsight Reflect/Mental Models qualification.
+- Supersedes learning: L-PRIME-PARAGON-GENERAL-AI-HINDSIGHT-TOOL-BOUNDARY-070
