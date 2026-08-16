@@ -2191,3 +2191,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Notion prerequisite 067, DOD-005, DOD-081, R-056, external target/provider requirements, Phase 15/V1, and deployment remain unresolved or gated.
 - Blockers: Notion runtime credential prerequisite 067 remains unavailable; no blocker remains for this bounded Mental Model scope.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-RUNTIME-NOTION-QUALIFICATION-075 - PARTIAL
+
+- Outcome ID: O-PRIME-075
+- Supersedes outcome: O-PRIME-074
+- Closed: 2026-08-16T17:00:00-04:00
+- Acceptance: PARTIAL
+- Changed areas: Continuation 075 evidence and append-only `.agent` records; persistent PRIME runtime credential configuration outside Git; approved Notion sandbox qualification data. No PRIME product source or unrelated infrastructure changed.
+- Summary: The supplied runtime credential was installed only in the Atlas secure environment and resolved through PRIME's existing credential reference. Capability read, managed write, product Documentation API, and the production adapter lifecycle all passed against the approved sandbox, including idempotent binding/history, operator-content preservation, conflict refusal, stale-job refusal, provenance-bearing source refresh, and source retraction. The persistent UI showed healthy connected/read state but did not expose the complete operator lifecycle, so no DOD/R promotion is justified.
+- Validation:
+  - persistent Core restart and health - PASSED
+  - runtime Notion credential resolution - PASSED
+  - approved sandbox capability read/write probes - PASSED
+  - PRIME product API path - PASSED
+  - production adapter lifecycle - PASSED
+  - browser operator-visible connection/read status - PASSED; complete lifecycle surface - NOT RUN
+  - full regression - PASSED; 110 passed, 28 skipped
+  - governance, burndown, diff, and secret checks - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: operator-visible Notion lifecycle; DOD-005; DOD-081; R-056; remaining external/provider/target-gated clauses; Phase 15/V1.
+- Blockers: none for credential resolution or backend lifecycle; UI action surface is the bounded remaining Notion qualification gap.
+- Follow-up directive: none

@@ -851,3 +851,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME project-scoped Hindsight Mental Model creation and operator boundary.
 - Supersedes learning: L-PRIME-LEGITIMATE-MENTAL-MODEL-SOURCE-GATE-072
+
+## L-PRIME-RUNTIME-NOTION-SECURE-LIFECYCLE-075
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-RUNTIME-NOTION-SECURE-LIFECYCLE-075
+- Fact or lesson: PRIME can resolve the approved runtime Notion credential from an Atlas-only `0600` environment file while storing only the existing credential reference and `0600` metadata/state files. Against the approved sandbox, the existing production lifecycle preserved operator content, refused conflicts and stale work, supported idempotent history, and carried source provenance through attach/refresh/detach. These backend results do not by themselves qualify a frozen operator-visible workflow when the persistent UI exposes only connection/read health.
+- Evidence location: evidence/phase15/qualification-continuation-075.md; `/home/sketch/.config/animus-prime/notion-runtime.env`; PRIME credential-reference and lifecycle-state metadata; persistent adapter probe result.
+- Confidence: VERIFIED
+- Scope: PRIME runtime Notion credential boundary and backend lifecycle qualification.
+- Supersedes learning: L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067

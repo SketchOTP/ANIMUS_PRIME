@@ -1031,3 +1031,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-RUNTIME-NOTION-QUALIFICATION-075
+
+- Issued: 2026-08-16T16:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 075
+- Objective: Use the newly supplied approved runtime Notion credential through PRIME's existing secure path and qualify the frozen Notion-backed lifecycle against the named sandbox.
+- Scope: Direct Atlas SSH/native execution; existing persistent PRIME Core/UI, existing qualification project, approved Notion sandbox, existing PRIME credential resolver, capability probes, product API, adapter lifecycle, browser status, evidence, governance, and Notion journal closeout.
+- Exclusions: No raw secret persistence or disclosure; no broad secret discovery; no canonical SOT mutation; no synthetic project, repository, bank, Node, or replacement integration; no DOD-005; no DOD-081; no R-056; no PARAGON/Hindsight changes; no Windows, second-device, Tailscale, Phase 16, deployment, or public exposure; no automatic Continuation 076.
+- Acceptance: Promote only complete frozen Notion-backed requirements. PARTIAL if the real credential and backend lifecycle qualify but a required operator-visible surface remains unqualified; BLOCKED only if the credential or approved capability cannot be used truthfully.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-074
+- Status at issuance: ISSUED

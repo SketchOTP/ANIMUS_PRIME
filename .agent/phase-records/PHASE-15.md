@@ -249,6 +249,20 @@ result: FAIL
 - governed status: no DOD/R promotion; DOD-068 remains BACKEND_ONLY; DOD-005, DOD-081, R-056, Notion 067, Phase 16, and deployment remain out of scope.
 - deployment: NOT PERFORMED.
 
+## Continuation 075 - runtime Notion credential and lifecycle boundary
+
+- directive: D-PRIME-PHASE15-RUNTIME-NOTION-QUALIFICATION-075
+- baseline: 92e05b5199ea3901d92a1f83902cede0e0bc63e5
+- runtime credential: approved `NOTION_READONLY_KEY` resolved through `env/myassistant/notion-readonly`; raw value omitted; Atlas env and state metadata mode 0600
+- approved target: Runtime Notion Qualification Sandbox 2026-08-16, parent `3be833cb-27ff-814f-af89-ebfc3a2a8aed`
+- capability: page/block read PASSED; managed write PASSED; controlled child `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`
+- PRIME product API: authenticated Documentation projection HTTP 200; project record page `3be833cb-27ff-8159-add6-e883c1cc54af`
+- adapter lifecycle: bind/projection/operator-content preservation/conflict refusal/recovery/stale rejection/history idempotence/source provenance and retraction PASSED
+- browser: Notion connected/healthy/read available PASSED; full projection/conflict/detach/history action surface NOT COMPLETE
+- governed result: PARTIAL; no DOD/R promotion; DOD-034/035/036/064/065/066 remain BACKEND_ONLY; R-037 through R-041 remain VERIFIED on prior evidence
+- validation: 110 passed, 28 skipped; compileall, governance, burndown, diff, and secret checks PASSED
+- deployment: NOT PERFORMED; no public exposure, Phase 16, DOD-005, DOD-081, or R-056 work
+
 ## Continuation 073 — PARAGON query-specific context-demand differential
 
 - directive: D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073

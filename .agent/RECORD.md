@@ -701,3 +701,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The exact approved source-query Reflect basis passed in Continuation 073. Hindsight's supported Mental Model operation generated substantive content with provenance. PRIME now exposes project-specific state through API and Memory UI as CURRENT and DERIVED_NON_AUTHORITATIVE, and the object survived persistent Core restart without duplication or fallback.
 - Affected areas: PRIME Hindsight adapter/service/API, Memory UI capability state, focused adapter test, DOD-068 governance, R-054 supporting evidence, and append-only Continuation 074 records.
 - Supersedes record: DEC-PRIME-PHASE15-073-POST-RESTART
+
+## DEC-PRIME-PHASE15-075
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-075
+- Status: CLOSED
+- Decision or event: Continuation 075 qualifies the approved PRIME runtime Notion credential and the real backend lifecycle in the named sandbox, but remains PARTIAL because the persistent PRIME UI does not expose the complete operator-visible Notion workflow.
+- Rationale: The credential resolved through the existing secure reference without raw-secret disclosure. Capability read/write, the authenticated PRIME Documentation API path, and the production Notion adapter lifecycle passed against the existing qualification project and approved sandbox. Projection preserved operator content, refused conflicts and stale jobs, maintained idempotent history, and recorded source provenance/retraction. The browser showed healthy connected/read state, but page projection, conflict, detach, and history actions were not exposed as a complete operator workflow; backend evidence alone cannot promote the affected frozen DODs.
+- Affected areas: Continuation 075 evidence and append-only governed records; Atlas-only runtime secret configuration; approved Notion sandbox qualification data.
+- Supersedes record: DEC-PRIME-PHASE15-074
