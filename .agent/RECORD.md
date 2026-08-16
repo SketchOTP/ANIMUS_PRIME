@@ -681,3 +681,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The known-good and failing routing profiles differed first at semantic context demand. The exact tool-mediated query was small, but architecture imposed 200000 required context tokens and excluded every unknown-context candidate. The minimal repair applies semantic floors only to non-tool requests and keeps actual capacity protection for tool-mediated requests. PARAGON GitHub publication succeeded at 60c1668. The deployment gate remains blocked by Atlas interactive authentication, so no stale-runtime Reflect result was relabeled as a repaired-runtime qualification.
 - Affected areas: PARAGON published repair; Continuation 073 evidence; append-only governed records; no PRIME source, Hindsight persistent data, Notion state, or public/network configuration changed.
 - Supersedes record: DEC-PRIME-PHASE15-072
+
+## DEC-PRIME-PHASE15-073-POST-RESTART
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-073-POST-RESTART
+- Status: CLOSED
+- Decision or event: Close the bounded 073 post-restart runtime qualification as PASSED after the exact original 072 Reflect query succeeded through the repaired persistent PARAGON service.
+- Rationale: The new PARAGON MainPID and start time were verified, private health passed, the repaired routing preview exposed 129 eligible candidates for the exact tool-mediated architecture query, and Hindsight Reflect returned substantive provenance-bearing output with four genuine native observation/recall calls. No Mental Model was created, so DOD-068 remains BACKEND_ONLY and no V1 gate was promoted.
+- Affected areas: Continuation 073 evidence and append-only governed records only; no code, Hindsight data/configuration, Notion state, or product state changed during resumption.
+- Supersedes record: DEC-PRIME-PHASE15-073

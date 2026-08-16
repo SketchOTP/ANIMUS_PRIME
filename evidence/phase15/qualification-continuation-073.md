@@ -121,3 +121,49 @@ Then verify the new MainPID/start time and private health, and rerun only the ex
 ## Closeout
 
 Continuation 073 is BLOCKED, not FAILED. The PARAGON root cause is fixed and published, but the running service has not loaded it. No stale-runtime result is being relabeled as success.
+
+## Post-restart resumption — runtime qualification
+
+Resumption date: 2026-08-16.
+
+The operator-provided restart resolved the previous 073 deployment gate without any code or configuration change in this run.
+
+- paragon.service ActiveState/SubState: active/running.
+- new MainPID: 607574.
+- new ActiveEnterTimestamp: 2026-08-16 14:03:00 EDT.
+- established private health: PASSED, GET http://127.0.0.1:4117/health returned {"ok":true}.
+- live repaired routing preview for the exact query shape: PASSED; architecture classification retained, output contract tool_call, estimated required context 2024, 150 candidates, 129 eligible.
+- existing Hindsight health/database: PASSED.
+- existing PRIME bank: prime-project_d9a1a5b609394282b62fc12c0d04634d.
+- exact original Continuation 072 query: used verbatim, with no lexical or semantic rewrite.
+
+### Exact Reflect result
+
+- HTTP status: 200.
+- answer: substantive markdown response, 7897 characters.
+- native tool-call trace: 4 calls.
+- native tool names: search_observations, search_observations, recall, recall.
+- LLM calls: 3.
+- provenance-bearing memories in based_on: 198.
+- mental models in based_on: 0.
+- directives in based_on: 0.
+- result: PASSED; no no_eligible_model, unavailable fallback, or prose-only tool substitution occurred.
+- answer began with a continuity-preserving architectural summary and was grounded in prior PRIME records.
+
+This proves the repaired persistent PARAGON runtime can support the exact Hindsight Reflect source preflight. It does not create or qualify a Mental Model.
+
+### Mental Model safety boundary
+
+- Mental Model listing after Reflect: 0 items.
+- Mental Model creation: NOT RUN by instruction.
+- Hindsight bank/project isolation: PASSED for this read-only qualification.
+- DOD-068: remains BACKEND_ONLY.
+- No DOD/R promotion, PRIME source change, Hindsight mutation, Notion change, deployment, public exposure, Phase 16, DOD-005, DOD-081, or R-056 activity occurred.
+
+### Resumption disposition
+
+- Continuation 073 post-restart runtime qualification: PASSED.
+- Original 073 full-suite concern remains recorded: 440 passed and one pre-existing unrelated submitAuthCode timing failure.
+- The prior ATLAS_PARAGON_SERVICE_RESTART_REQUIRES_INTERACTIVE_AUTH blocker is resolved by the operator restart and is preserved as historical evidence.
+- Do not create the Mental Model in this continuation.
+- Do not begin Continuation 074 automatically.

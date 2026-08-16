@@ -2153,3 +2153,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: PARAGON repaired runtime not loaded; Hindsight Reflect/Mental Model; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: ATLAS_PARAGON_SERVICE_RESTART_REQUIRES_INTERACTIVE_AUTH. Operator must provide the existing approved non-interactive service restart authority or perform systemctl restart paragon.service on Atlas, then rerun only the exact original 072 Reflect preflight.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073 - PARTIAL
+
+- Outcome ID: O-PRIME-073-POST-RESTART
+- Supersedes outcome: O-PRIME-073
+- Closed: 2026-08-16T14:15:00-04:00
+- Acceptance: MET
+- Summary: The operator restarted the existing PARAGON systemd service. The new MainPID 607574 and ActiveEnterTimestamp 2026-08-16 14:03:00 EDT were verified, private health passed, the repaired routing preview reported 2024 required context and 129 eligible candidates, and the exact original 072 Reflect query returned HTTP 200 with a substantive 7897-character response, four genuine native tool calls, three LLM calls, and 198 provenance-bearing memories. Mental Model creation was not run by instruction and the bank listing remained empty.
+- Changed areas: Continuation 073 evidence and append-only governed records only; no code, PRIME product, Hindsight data/configuration, Notion state, or deployment state changed during resumption.
+- Validation:
+  - persistent PARAGON restart identity and health - PASSED
+  - exact repaired routing preview - PASSED
+  - exact original 072 Hindsight Reflect query - PASSED
+  - native tool-call trace - PASSED
+  - provenance-bearing Reflect result - PASSED
+  - Mental Model non-creation/bank isolation - PASSED
+  - full PARAGON-suite concern from original 073 - FAILED
+- Remaining risks: Hindsight Mental Model remains unqualified; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: none for the bounded 073 post-restart gate; Mental Model creation is intentionally deferred and is not a 073 acceptance requirement.
+- Follow-up directive: none

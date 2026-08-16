@@ -269,3 +269,16 @@ result: FAIL
 - mental_model: NOT RUN; no Mental Model created.
 - governed status: no PRIME DOD/R promotion; DOD-068 remains BACKEND_ONLY; DOD-005, DOD-081, R-056, Notion 067, Phase 16, and deployment remain out of scope.
 - final result: BLOCKED; operator action is to provide the existing approved non-interactive restart authority or restart only paragon.service, then rerun the exact original 072 Reflect preflight.
+
+## Continuation 073 post-restart runtime qualification
+
+- directive: D-PRIME-PHASE15-PARAGON-QUERY-CONTEXT-DIFFERENTIAL-073
+- result: PASSED for the bounded post-restart runtime gate
+- PARAGON runtime: new MainPID 607574, ActiveEnterTimestamp 2026-08-16 14:03:00 EDT, private health PASSED
+- exact query routing: architecture/tool_call, required context 2024, 150 candidates, 129 eligible
+- exact 072 Reflect: HTTP 200, substantive 7897-character markdown response, 4 native calls (search_observations x2, recall x2), 3 LLM calls, 198 provenance-bearing memories
+- Mental Models: 0 before/after; creation NOT RUN
+- DOD-068: BACKEND_ONLY; no DOD/R promotion
+- no code change, no Hindsight mutation, no Notion change, no deployment, no public exposure, no Phase 16
+- original full-suite concern preserved: 440 passed and one unrelated pre-existing submitAuthCode timing failure
+- next: do not create the Mental Model and do not begin Continuation 074 automatically

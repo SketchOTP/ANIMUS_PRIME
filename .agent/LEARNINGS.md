@@ -831,3 +831,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 073 PARAGON routing eligibility correction.
 - Supersedes learning: L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+
+## L-PRIME-PARAGON-EXACT-REFLECT-POST-RESTART-073
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-PARAGON-EXACT-REFLECT-POST-RESTART-073
+- Fact or lesson: After the published tool-mediated context-gate correction is loaded by the persistent PARAGON service, the exact original 072 Hindsight Reflect query succeeds without wording changes. The real result used four native observation/recall tool calls and returned 198 provenance-bearing memories in based_on. A successful Reflect preflight still does not authorize Mental Model creation.
+- Evidence location: evidence/phase15/qualification-continuation-073.md; PARAGON MainPID 607574; Hindsight Reflect response trace and based_on summary.
+- Confidence: VERIFIED
+- Scope: 073 post-restart runtime qualification only.
+- Supersedes learning: L-PRIME-PARAGON-TOOL-MEDIATED-CONTEXT-GATE-073
