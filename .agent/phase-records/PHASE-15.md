@@ -236,3 +236,15 @@ result: FAIL
 - validation: PRIME 108 passed / 28 skipped; PARAGON focused 61 passed; PARAGON full 438 passed / 1 unrelated pre-existing timing failure; governance and burndown structural checks passed.
 - qualification_state: unchanged by this continuation; V1 gate remains incomplete.
 - deployment: `NOT PERFORMED`.
+
+## Continuation 072 — legitimate Mental Model source gate
+
+- directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072
+- baseline: 7bb75c15021811d1a5fbd55ca8fdb48b99ee789b
+- result: BLOCKED
+- authorized resource: ANIMUS PRIME Operating Model; not created
+- source query Recall: PASSED — real provenance-bearing PRIME project memories returned from the existing bank
+- source query Reflect: BLOCKED — repeated PARAGON 503 no_eligible_model; final fallback had zero native tool calls
+- Mental Model persistence/provenance/PRIME-path acceptance: NOT RUN because creation preflight did not pass
+- governed status: no DOD/R promotion; DOD-068 remains BACKEND_ONLY; DOD-005, DOD-081, R-056, Notion 067, Phase 16, and deployment remain out of scope.
+- deployment: NOT PERFORMED.

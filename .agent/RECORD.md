@@ -661,3 +661,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The first hard divergence was task classification over system/client and accumulated tool history, which drove a false 50,000-token unknown-context exclusion. The minimal published PARAGON repair classifies only operator user messages while preserving full provider/context data. Persistent Hindsight Reflect then completed with four native observation/recall calls. The existing PRIME bank contains no Mental Models, so DOD-068 and the affected complete V1 clause remain blocked; no synthetic target or requirement promotion was allowed.
 - Affected areas: published PARAGON repair; Continuation 071 evidence; append-only governed records; no PRIME source or persistent Hindsight state change.
 - Supersedes record: DEC-PRIME-PHASE15-070
+
+## DEC-PRIME-PHASE15-072
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-072
+- Status: CLOSED
+- Decision or event: Publish Continuation 072 as BLOCKED without creating a Mental Model after the authorized source-query Reflect preflight failed.
+- Rationale: Recall proved the existing PRIME bank contains real project memory, but the required Reflect synthesis returned repeated no_eligible_model tool-call failures and an unavailable zero-tool fallback. Creating content manually would violate the authorized resource boundary and the frozen derived-memory contract. No Hindsight, PARAGON, PRIME, Notion, or persistent project state was changed.
+- Affected areas: Continuation 072 evidence and append-only governed records; current Hindsight Reflect capability boundary.
+- Supersedes record: DEC-PRIME-PHASE15-071

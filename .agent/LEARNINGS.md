@@ -811,3 +811,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PARAGON routing eligibility boundary and persistent Hindsight Reflect/Mental Models qualification.
 - Supersedes learning: L-PRIME-PARAGON-GENERAL-AI-HINDSIGHT-TOOL-BOUNDARY-070
+
+## L-PRIME-LEGITIMATE-MENTAL-MODEL-SOURCE-GATE-072
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-LEGITIMATE-MENTAL-MODEL-SOURCE-GATE-072
+- Fact or lesson: A persistent Hindsight bank can contain substantial real project memories and pass Recall while the exact Reflect tool-call path is unavailable. Mental Model creation must therefore be gated on successful source-query Reflect synthesis, not on bank non-emptiness or manually assembled content. A current no_eligible_model result is a truthful blocker for creation, even when prior bounded Reflect evidence passed.
+- Evidence location: evidence/phase15/qualification-continuation-072.md; persistent Hindsight Recall result; Hindsight Reflect logs for the exact authorized source query
+- Confidence: VERIFIED
+- Scope: PRIME legitimate Mental Model creation gate and Hindsight Reflect/Recall capability boundary.
+- Supersedes learning: L-PRIME-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071

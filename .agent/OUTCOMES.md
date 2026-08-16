@@ -2108,3 +2108,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: legitimate Hindsight Mental Model target; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: `DOD-068` remains `BACKEND_ONLY` because the existing approved bank reports zero Mental Models. Do not create a synthetic target.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072 - BLOCKED
+
+- Outcome ID: O-PRIME-072
+- Supersedes outcome: O-PRIME-071
+- Closed: 2026-08-16T12:25:00-04:00
+- Acceptance: NOT MET
+- Summary: The existing PRIME bank contains substantive provenance-bearing project memories, but the exact authorized Operating Model source query could not complete through Hindsight Reflect. Four native tool-call attempts returned PARAGON 503 no_eligible_model; the final fallback produced no tool calls and an unavailable answer. No Mental Model was created.
+- Changed areas: Continuation 072 evidence and append-only/current-state .agent records only. No PRIME source, Hindsight persistent data, PARAGON configuration, project identity, or Notion state changed.
+- Validation:
+  - Hindsight health/database and bank identity - PASSED
+  - Recall source-memory preflight - PASSED
+  - exact Reflect source query - BLOCKED
+  - Mental Model creation/read/persistence - NOT RUN
+  - governance and burndown structural validation - PASSED
+  - tracked-secret scan and diff review - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: current Hindsight Reflect tool-capable provider availability; PRIME runtime Notion; remaining external/provider/target-gated V1 clauses; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: LEGITIMATE_MENTAL_MODEL_SOURCE_INSUFFICIENT because the required Reflect synthesis cannot currently produce native tool calls through the approved persistent path.
+- Follow-up directive: none

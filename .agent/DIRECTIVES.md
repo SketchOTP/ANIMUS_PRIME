@@ -989,3 +989,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-PARAGON-ACTIVATE-GENERAL-AI-HINDSIGHT-COMPATIBILITY-070
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072
+
+- Issued: 2026-08-16T12:05:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 072
+- Objective: Create exactly one legitimate ANIMUS PRIME Operating Model from the existing PRIME bank through Hindsight Reflect, then qualify only the directly applicable frozen Mental Model boundary.
+- Scope: Direct Atlas execution; existing PRIME project and Hindsight bank; bounded source-query preflight; one authorized Mental Model only if Reflect produces substantive evidence-grounded content; persistence/provenance/isolation qualification; governed evidence and records.
+- Exclusions: No PARAGON changes or broad investigation; no Hindsight replacement; no synthetic memories or targets; no additional Mental Models; no Notion; DOD-005; DOD-081; R-056; Phase 16; deployment; public exposure; unrelated cleanup or refactoring.
+- Acceptance: PASS only if the one authorized model is legitimately generated and persists with provenance and the frozen boundary passes; PARTIAL only after successful model creation with a separate unqualified surface; BLOCKED if source history or required Reflect capability cannot support truthful creation; FAILED only for an implementation/persistence defect.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
+- Status at issuance: ISSUED

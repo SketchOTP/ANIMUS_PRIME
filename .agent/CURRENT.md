@@ -3,48 +3,47 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-16T06:00:00-04:00
+- Last updated: 2026-08-16T12:25:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-HINDSIGHT-REFLECT-ELIGIBILITY-DIFFERENTIAL-071
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 071
-- Objective: Isolate the first PARAGON eligibility divergence for the actual Hindsight Reflect request, apply only the proven minimal repair, and qualify the persistent observation/recall path.
+- Local directive ID: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-072
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 072
+- Objective: Create exactly one legitimate ANIMUS PRIME Operating Model from the existing PRIME bank through Hindsight Reflect, then qualify only the directly applicable frozen Mental Model boundary.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL; PARAGON routing eligibility was repaired and persistent Hindsight Reflect observation/recall passed, but the approved bank has zero Mental Models and no complete V1 requirement/DOD promotion occurred.
-- Current phase: HINDSIGHT_REFLECT_ELIGIBILITY_DIFFERENTIAL_071
-- Expected or actual touched areas: published PARAGON routing repair and focused test; Continuation 071 evidence; append-only/current-state .agent records; PRIME source and persistent Hindsight data preserved.
-- Immediate next action: Obtain an operator-approved legitimate Mental Model resource/state in the existing Hindsight bank, then qualify only the affected frozen clause. Keep Notion pending and do not repeat broad PARAGON probing.
+- Acceptance: BLOCKED; source Recall found real project memory, but exact Reflect synthesis returned repeated no_eligible_model failures and no Mental Model was created.
+- Current phase: LEGITIMATE_MENTAL_MODEL_SOURCE_GATE_072
+- Expected or actual touched areas: Continuation 072 evidence and append-only/current-state .agent records only; no product source or persistent runtime state changed.
+- Immediate next action: Restore or approve a currently usable Hindsight Reflect tool-capable runtime path, then rerun only the exact authorized source-query preflight. Do not create the Mental Model through a workaround.
 
 ## Temporary task-relevant facts
 
 - Baseline PRIME-SPEC-V1.0.0; authoritative execution is direct SSH/native Atlas at /home/sketch/Projects/ANIMUS_PRIME; disposable resources: none.
-- Governed starting baseline 3fbd1783c4cfcf0befc65d64d45cb583860c249a; Continuation 071 made no PRIME source change.
-- Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Core is active through animus-prime-core.service on 127.0.0.1:18000; Hindsight is active through mimir-hindsight.service on 127.0.0.1:8888; Node remains preserved on 127.0.0.1:18001.
-- Core profile is provider=paragon, model=paragon, privacy_mode=LOCAL_ONLY with the credential kept in the protected Atlas env file. Authenticated ASK_PRIME returned durable structured JSON with no sources and no fallback.
-- PARAGON final published repair is a5d1485c7b61b3328d028db299d24aadf60c894f. The actual persistent Hindsight Reflect request returned HTTP 200 with four native observation/recall calls and five LLM iterations. The existing bank Mental Models listing remains items=[]; no synthetic target was created.
-- Current governed V1 queue is unchanged by this continuation. Notion prerequisite from 067 remains pending; DOD-005 remains parked; DOD-081/R-056 remain last; Phase 15/V1 remain incomplete. DOD-068 remains BACKEND_ONLY.
-- No synthetic project, repository, Node, Goal, authority, backup, Hindsight bank, memory, second-device, or destructive target was created. No deployment, public exposure, Funnel change, or Phase 16 activity occurred.
+- Starting and final governed PRIME state before publication was 7bb75c15021811d1a5fbd55ca8fdb48b99ee789b; no PRIME source change occurred.
+- Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
+- Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d returned real provenance-bearing Recall results. Its Mental Model listing remains empty.
+- Exact authorized Reflect source query was attempted through the real bank. Four native tool-call attempts returned PARAGON 503 no_eligible_model; final fallback returned no native tool calls and an unavailable answer.
+- No synthetic project, repository, Node, Goal, authority, backup, bank, memory, or Mental Model was created. No deployment, public exposure, Funnel change, Phase 16, Notion change, or PARAGON modification occurred.
 - Untracked .codebase-memory/, .prime-evidence/, and .vscode/ remain preserved.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 071 PARAGON eligibility repair, persistent Hindsight Reflect, and governed closeout
+- Command or check: Continuation 072 legitimate Mental Model source-query preflight and governed closeout
 - Result: `BLOCKED`
 
 ## Risks
 
-- Legitimate Hindsight Mental Model target; PRIME runtime Notion; R-045/DOD-047; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Current Hindsight Reflect tool-capable provider availability; PRIME runtime Notion; R-045/DOD-047; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
 
 ## Blockers
 
-- HINDSIGHT_MENTAL_MODEL_TARGET_UNAVAILABLE: persistent Reflect observation/recall now succeeds, but the existing approved PRIME bank has zero Mental Models and no synthetic target is permitted.
+- LEGITIMATE_MENTAL_MODEL_SOURCE_INSUFFICIENT: existing Recall memory is real, but the required Reflect synthesis cannot currently produce native tool calls through the approved persistent path.
 - PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE: the 067 prerequisite remains pending and untouched.
 
 ## Pending decisions
 
-- Provide or approve a legitimate Mental Model resource/state in the existing Hindsight bank, then re-run only the bounded affected qualification. Keep the Notion runtime prerequisite pending and do not broaden scope.
-- Keep DOD-005 parked, DOD-081/R-056 last, and Phase 16/deployment out of scope.
+- Restore or approve a currently usable Hindsight Reflect tool-capable runtime path, then rerun only the bounded source-query preflight.
+- Keep DOD-005 parked, DOD-081/R-056 last, Notion pending, and Phase 16/deployment out of scope.
 
 ## Status vocabulary
 
