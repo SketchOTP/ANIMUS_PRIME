@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-16T17:35:00-04:00
+- Last updated: 2026-08-16T23:45:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 076
-- Objective: Qualify the approved PRIME runtime Notion lifecycle through the real authenticated persistent PRIME UI.
+- Local directive ID: D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 077
+- Objective: Requalify the real authenticated persistent PRIME Ask and Unified Search surfaces.
 - Current status: `COMPLETE`
-- Acceptance: BOUNDED operator qualification passed; DOD-034/035/036/064/065/066 promoted and remaining external/release gates preserved.
-- Current phase: RUNTIME_NOTION_OPERATOR_WORKFLOW_076
-- Expected or actual touched areas: PRIME Core/UI operator surface, detached-source lifecycle repair, persisted-history idempotence repair, final persistent image, Continuation 076 evidence, governed audit/burndown, and append-only .agent records. No unrelated infrastructure or public exposure changed.
-- Immediate next action: After this governed closeout and Notion journal update, await reset; do not start another directive automatically.
+- Acceptance: Ask and Search bounded runtime gates passed, but complete frozen operator contracts failed; DOD-021 and DOD-022 remain unpromoted.
+- Current phase: ASK_SEARCH_REQUALIFICATION_077
+- Expected or actual touched areas: authenticated PRIME Ask/Search, existing approved Notion source lifecycle, Continuation 077 evidence, audit/burndown, and append-only .agent records. No product source or unrelated infrastructure changed.
+- Immediate next action: Await an explicit bounded repair directive for Ask current grounding/citations and Search indexing/no-result behavior; do not start automatically.
 
 ## Temporary task-relevant facts
 
@@ -45,8 +45,8 @@
 
 ## Pending decisions
 
-- Runtime Notion credential and backend lifecycle qualified in the approved sandbox; await reset and do not begin another directive automatically.
-- Keep DOD-005 parked, DOD-081/R-056 last, the operator-visible Notion lifecycle pending, and Phase 16/deployment out of scope.
+- Runtime Notion credential and backend lifecycle remain qualified; Ask/Search require an explicit repair directive and must not be treated as automatically continued.
+- Keep the qualified Notion lifecycle preserved, DOD-005 parked, DOD-081/R-056 last, and Phase 16/deployment out of scope.
 
 ## Status vocabulary
 

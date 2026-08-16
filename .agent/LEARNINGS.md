@@ -871,3 +871,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 076 persistent Notion operator workflow only.
 - Supersedes learning: L-PRIME-RUNTIME-NOTION-SECURE-LIFECYCLE-075
+
+## L-PRIME-ASK-SEARCH-REQUALIFICATION-077
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-ASK-SEARCH-REQUALIFICATION-077
+- Fact or lesson: Passing persistent runtime, provider, and Notion lifecycle gates does not qualify Ask or Unified Search. The current Ask path can return stale memory-derived prose or UNKNOWN without citations because natural-language source selection is not content-aware and several grounded source groups are excluded from model sources. The current Search path can return Repository/Memory results while lacking positive Git/Notion projection and can return unrelated Memory hits for a unique no-result query. Detached Notion sources were correctly excluded. These are product source-indexing/current-grounding defects, not reasons to reopen PARAGON or manufacture qualification targets.
+- Evidence location: evidence/phase15/qualification-continuation-077.md; src/prime_core/intelligence_service.py; apps/core/main.py; apps/web/index.html
+- Confidence: VERIFIED
+- Scope: Continuation 077 Ask/Search operator qualification.
+- Supersedes learning: none

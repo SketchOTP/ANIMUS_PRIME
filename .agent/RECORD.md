@@ -721,3 +721,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The existing approved Notion record/source lifecycle passed through the authenticated persistent PRIME UI, including sync, history, attach/refresh, explicit detach/retraction, conflict-preserving reconciliation, provenance, restart recovery, and same-period idempotence. The minimal repairs preserve user content and prevent reactivation or duplicate managed history. No external page was deleted and no unrelated release gate changed.
 - Affected areas: PRIME Core/UI Notion operator surface, persistent runtime image, Continuation 076 evidence, audit/burndown, and append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-075
+
+## DEC-PRIME-PHASE15-077
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-077
+- Status: CLOSED
+- Decision or event: Close Continuation 077 as PARTIAL without promoting DOD-021 or DOD-022.
+- Rationale: The authenticated persistent PRIME runtime and existing approved Notion lifecycle remained healthy. Real Ask and Search qualification exposed exact product defects: Ask did not produce citation-bearing current answers and returned stale/unsupported or UNKNOWN results for known questions; Search did not provide positive Git/Notion groups, returned unrelated Memory hits for a unique no-result query, and did not prove complete grouped-source freshness/drill-down/isolation. Retraction exclusion passed. No product repair was made because a larger source-indexing/current-grounding change would exceed truthful bounded qualification scope; no synthetic target or external service change was used.
+- Affected areas: Continuation 077 evidence and append-only governance/audit/burndown records; no product source, runtime image, Hindsight data, PARAGON configuration, or public/network configuration.
+- Supersedes record: DEC-PRIME-PHASE15-076

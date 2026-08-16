@@ -133,10 +133,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the missing current browser checks against the already qualified R-054/R-055 path."
+    next_action: "Repair the current Ask source-selection, current-state grounding, citation, and revision-aware behavior, then rerun the authenticated browser matrix."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    blocked_by: "PRIME Ask current-grounding and citation behavior is not yet product-qualified; the approved PARAGON runtime itself is available."
     depends_on: "R-054"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-022
@@ -158,10 +158,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Use populated A/B fixtures to run grouped-source, freshness, drill-down, and isolation checks."
+    next_action: "Repair Search source indexing/grouping and no-result filtering for the existing Qualification Project, then rerun grouped-source, freshness, drill-down, and isolation checks."
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py","src/prime_core/intelligence_service.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
+    blocked_by: "The approved Notion runtime is available, but Search does not yet index its lifecycle state; Git checkpoints are also absent for this project and no-result filtering is unsound."
     depends_on: "R-047"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-024

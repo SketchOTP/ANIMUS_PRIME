@@ -1059,3 +1059,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-RUNTIME-NOTION-QUALIFICATION-075
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077
+
+- Issued: 2026-08-16T23:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 077
+- Objective: Requalify the real authenticated persistent PRIME Ask and Unified Search surfaces against the existing Qualification Project and current PARAGON, Notion, and Hindsight environment.
+- Scope: Direct Atlas SSH/native execution; existing persistent PRIME Core/UI, existing Qualification Project, existing approved Notion source lifecycle, authenticated browser Search and Ask, source grouping/provenance/retraction, negative/no-result behavior, evidence, governance, GitHub parity, and Notion journal closeout.
+- Exclusions: No product redesign or broad architecture; no synthetic projects, sources, memories, banks, Nodes, or repositories; no PARAGON changes; no Hindsight replacement; no DOD-005; no DOD-081; no R-056; no Phase 16; no deployment/public exposure; no automatic Continuation 078.
+- Acceptance: Promote DOD-021 or DOD-022 only if the complete frozen operator contract passes. Otherwise record the exact live defect and preserve the prior verified state.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
+- Status at issuance: ISSUED

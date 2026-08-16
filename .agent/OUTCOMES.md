@@ -2234,3 +2234,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005, remaining external/provider/legitimate-target requirements, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
 - Blockers: none for this bounded approved Notion operator workflow.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077 - PARTIAL
+
+- Outcome ID: O-PRIME-077
+- Supersedes outcome: O-PRIME-076
+- Closed: 2026-08-16T23:45:00-04:00
+- Acceptance: NOT MET
+- Summary: The persistent Core, PARAGON, Hindsight, approved Notion lifecycle, authenticated project selection, and browser reload gate passed. Ask and Unified Search did not meet their complete frozen operator contracts. Ask returned UNKNOWN for known questions, stale unsupported current-state prose for one workflow question, and no citation-bearing current answer; Search returned Repository/Memory results but no positive Git or Notion group, unrelated Memory hits for a unique no-result query, and no complete grouped-source freshness/drill-down proof. Retracted Notion exclusion passed. No DOD/R promotion is justified.
+- Changed areas: Continuation 077 evidence, audit/burndown reconciliation, and append-only .agent records only. No product source, runtime image, PARAGON configuration, Hindsight data, or public exposure changed.
+- Validation:
+  - persistent runtime health - PASSED
+  - authenticated browser/project/reload/clean-console - PASSED
+  - Notion refresh provenance - PASSED
+  - Notion detach/retraction/Search exclusion - PASSED
+  - Ask frozen operator contract - FAILED
+  - Search frozen operator contract - FAILED
+  - unique no-result behavior - FAILED
+  - focused/full product tests and compile - NOT RUN; no product source changed
+  - governance, burndown, diff, secret, and Git parity - PASSED at publication closeout
+- Remaining risks: Ask current-grounding/citation/source-selection defect; Search indexing/grouping/no-result defect; DOD-005; DOD-081; R-056; remaining external/legitimate-target clauses; Phase 15/V1; deployment.
+- Blockers: `PRIME_ASK_CURRENT_GROUNDING_AND_CITATION_DEFECT`; `PRIME_SEARCH_SOURCE_INDEX_AND_NO_RESULT_DEFECT`.
+- Follow-up directive: none
