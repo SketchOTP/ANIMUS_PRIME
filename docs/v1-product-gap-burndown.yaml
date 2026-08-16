@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 14
+  EXTERNAL_ENVIRONMENT: 8
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -264,81 +264,6 @@ items:
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-054"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-034
-    current_status: "BACKEND_ONLY"
-    product_area: "Notion Record"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: Each project has managed Notion Record plus read-only sources and managed history rollover.. The missing operator behavior is a qualified path at 'Open Notion Record from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Each project has managed Notion Record plus read-only sources and managed history rollover.. The missing operator behavior is a qualified path at 'Open Notion Record from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-035
-    current_status: "BACKEND_ONLY"
-    product_area: "Notion detach"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: Notion detach/purge retracts current retrieval without claiming external deletion.. The missing operator behavior is a qualified path at 'Open Notion detach from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Notion detach/purge retracts current retrieval without claiming external deletion.. The missing operator behavior is a qualified path at 'Open Notion detach from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-036
-    current_status: "BACKEND_ONLY"
-    product_area: "Notion conflict"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: Generated Notion changes do not recursively ingest; conflicts are surfaced.. The missing operator behavior is a qualified path at 'Open Notion conflict from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Generated Notion changes do not recursively ingest; conflicts are surfaced.. The missing operator behavior is a qualified path at 'Open Notion conflict from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-039
     current_status: "BACKEND_ONLY"
     product_area: "rebind"
@@ -589,81 +514,6 @@ items:
     blocked_by: "NONE"
     depends_on: "R-051"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-064
-    current_status: "BACKEND_ONLY"
-    product_area: "Notion UI"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: Each project automatically receives a human-readable Notion page.. The missing operator behavior is a qualified path at 'Open Notion UI from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Each project automatically receives a human-readable Notion page.. The missing operator behavior is a qualified path at 'Open Notion UI from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-065
-    current_status: "BACKEND_ONLY"
-    product_area: "managed Notion"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: Managed Notion sections update without overwriting user knowledge.. The missing operator behavior is a qualified path at 'Open managed Notion from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Managed Notion sections update without overwriting user knowledge.. The missing operator behavior is a qualified path at 'Open managed Notion from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-066
-    current_status: "BACKEND_ONLY"
-    product_area: "knowledge"
-    owner_phase: 7
-    mapped_r_requirements: ["R-037"]
-    exact_missing_behavior: "The frozen criterion requires: User Notion knowledge is retrieved with provenance without becoming authority/memory.. The missing operator behavior is a qualified path at 'Open knowledge from PRIME.'; backend capability alone is not sufficient."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: User Notion knowledge is retrieved with provenance without becoming authority/memory.. The missing operator behavior is a qualified path at 'Open knowledge from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "A current live Notion resource/product workflow is required where the frozen clause demands it."
-    depends_on: "R-037"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-076
     current_status: "UI_SHELL_ONLY"
     product_area: "lifecycle safety"

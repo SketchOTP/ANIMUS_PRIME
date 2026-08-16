@@ -2213,3 +2213,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: operator-visible Notion lifecycle; DOD-005; DOD-081; R-056; remaining external/provider/target-gated clauses; Phase 15/V1.
 - Blockers: none for credential resolution or backend lifecycle; UI action surface is the bounded remaining Notion qualification gap.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-RUNTIME-NOTION-OPERATOR-WORKFLOW-076 - COMPLETE
+
+- Outcome ID: O-PRIME-076
+- Supersedes outcome: O-PRIME-075
+- Closed: 2026-08-16T17:35:00-04:00
+- Acceptance: MET
+- Changed areas: persistent Notion operator UI/API, detached-source lifecycle repair, persisted-history idempotence repair, final persistent Core image, Continuation 076 evidence, product audit/burndown reconciliation, and append-only `.agent` records.
+- Summary: The approved existing Notion record and controlled source are now operable through PRIME's authenticated persistent UI. Sync, managed history, approved-source attach/refresh, explicit detach/retraction, conflict-preserving reconciliation, provenance, restart recovery, and same-period idempotence passed without exposing secrets or deleting the external page. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED. R-037 through R-041 remain VERIFIED. No unrelated row, deployment, public exposure, Phase 16, DOD-005, DOD-081, or R-056 status was changed.
+- Validation:
+  - focused Notion/UI suite - PASSED; 14 passed, 1 skipped
+  - full supported Atlas `.venv` regression - PASSED; 110 passed, 28 skipped
+  - compileall and diff check - PASSED
+  - governance validation - PASSED
+  - burndown validation - PASSED; 56 complete, 25 open
+  - persistent Core final3 health/provenance/restart - PASSED
+  - browser operator lifecycle and clean-console check - PASSED
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: DOD-005, remaining external/provider/legitimate-target requirements, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
+- Blockers: none for this bounded approved Notion operator workflow.
+- Follow-up directive: none

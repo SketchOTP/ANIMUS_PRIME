@@ -861,3 +861,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME runtime Notion credential boundary and backend lifecycle qualification.
 - Supersedes learning: L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067
+
+## L-PRIME-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
+- Fact or lesson: The approved Notion lifecycle is product-qualified only when the authenticated persistent UI exposes the existing production actions. Detached sources must remain DETACHED/RETRACTED across reconcile and refresh, and same-period managed history must return the persisted record idempotently instead of attempting a duplicate external create.
+- Evidence location: evidence/phase15/qualification-continuation-076.md; apps/core/main.py; src/prime_core/notion_service.py; apps/web/index.html; tests/phase14/test_web_shell.py
+- Confidence: VERIFIED
+- Scope: Continuation 076 persistent Notion operator workflow only.
+- Supersedes learning: L-PRIME-RUNTIME-NOTION-SECURE-LIFECYCLE-075

@@ -1045,3 +1045,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-LEGITIMATE-OPERATING-MENTAL-MODEL-074
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
+
+- Issued: 2026-08-16T17:05:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 076
+- Objective: Expose and qualify the already-approved persistent Notion lifecycle through PRIME's real authenticated web UI using only the existing Qualification Project and approved Notion sandbox.
+- Scope: Direct Atlas SSH/native execution; existing persistent PostgreSQL, Hindsight, PRIME Core/UI, enrolled Node, secure runtime Notion authorization, approved Notion parent/record/source, browser qualification, minimal defect repairs, evidence, governance, GitHub parity, and Notion journal closeout.
+- Exclusions: No raw secret disclosure; no synthetic projects, repositories, banks, sources, Nodes, or browser evidence; no DOD-005; no DOD-081; no R-056; no Phase 16; no deployment/public exposure; no Funnel change; no unrelated qualification expansion.
+- Acceptance: Promote only complete frozen Notion-backed operator rows. Record truthful degraded or blocked behavior, preserve detached-source retraction, prove restart/idempotence, and stop at this bounded continuation without automatic 077.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-RUNTIME-NOTION-QUALIFICATION-075
+- Status at issuance: ISSUED

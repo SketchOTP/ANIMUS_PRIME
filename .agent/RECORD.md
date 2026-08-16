@@ -711,3 +711,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The credential resolved through the existing secure reference without raw-secret disclosure. Capability read/write, the authenticated PRIME Documentation API path, and the production Notion adapter lifecycle passed against the existing qualification project and approved sandbox. Projection preserved operator content, refused conflicts and stale jobs, maintained idempotent history, and recorded source provenance/retraction. The browser showed healthy connected/read state, but page projection, conflict, detach, and history actions were not exposed as a complete operator workflow; backend evidence alone cannot promote the affected frozen DODs.
 - Affected areas: Continuation 075 evidence and append-only governed records; Atlas-only runtime secret configuration; approved Notion sandbox qualification data.
 - Supersedes record: DEC-PRIME-PHASE15-074
+
+## DEC-PRIME-PHASE15-076
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-076
+- Status: CLOSED
+- Decision or event: Close Continuation 076 as PASS for its bounded scope and promote DOD-034/035/036/064/065/066 to USER_USABLE_VERIFIED.
+- Rationale: The existing approved Notion record/source lifecycle passed through the authenticated persistent PRIME UI, including sync, history, attach/refresh, explicit detach/retraction, conflict-preserving reconciliation, provenance, restart recovery, and same-period idempotence. The minimal repairs preserve user content and prevent reactivation or duplicate managed history. No external page was deleted and no unrelated release gate changed.
+- Affected areas: PRIME Core/UI Notion operator surface, persistent runtime image, Continuation 076 evidence, audit/burndown, and append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-075
