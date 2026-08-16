@@ -933,3 +933,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-RELEASE-BLOCKER-EXECUTION-066
 - Status at issuance: ISSUED
+## D-PRIME-PHASE15-HINDSIGHT-CAPABILITY-UNBLOCK-068
+
+- Issued: 2026-08-16T00:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 068
+- Objective: Determine which approved persistent Hindsight capabilities are available and qualify only the frozen Hindsight-backed V1 clauses supported by the real environment.
+- Scope: Direct Atlas SSH/native execution; existing persistent Hindsight, PRIME Core/UI/PostgreSQL/Node; bounded service, endpoint, bank isolation, retain/recall, Reflect, Mental Models, and lifecycle capability checks; governed evidence and living Notion journal.
+- Exclusions: No Notion work; no local UI/provider/Tailscale/Windows/secondary-target work; no Hindsight replacement or substitute bank; no synthetic memory; no DOD-005; no DOD-081/R-056 closure; no Phase 16, public exposure, Funnel changes, or deployment.
+- Acceptance: Promote only complete Hindsight-backed frozen clauses or record the exact capability blocker and operator action; preserve all existing state and publish truthful parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRIME-RUNTIME-NOTION-UNBLOCK-067
+- Status at issuance: ISSUED

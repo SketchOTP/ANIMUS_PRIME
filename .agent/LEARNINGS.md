@@ -772,3 +772,12 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: PRIME runtime Notion credential/resource capability boundary.
 - Supersedes learning: L-PRIME-V1-RELEASE-BLOCKER-CLASSIFICATION-066
+## L-PRIME-HINDSIGHT-CAPABILITY-UNBLOCK-068
+
+- Date: 2026-08-16
+- Learning ID: L-PRIME-HINDSIGHT-CAPABILITY-UNBLOCK-068
+- Fact or lesson: A healthy persistent Hindsight API and successful PRIME recall do not establish Reflect or Mental Models. The service can be reachable while Reflect fails at the configured model transport because no usable tool call is produced. Mental Models must be observed in the project bank, not inferred from endpoint existence or container health.
+- Evidence location: evidence/phase15/qualification-continuation-068.md; live mimir-hindsight-production health, bank, recall, Reflect, and Mental Models probes
+- Confidence: VERIFIED
+- Scope: Hindsight capability qualification for PRIME V1.
+- Supersedes learning: L-PRIME-PRIME-RUNTIME-NOTION-UNBLOCK-067

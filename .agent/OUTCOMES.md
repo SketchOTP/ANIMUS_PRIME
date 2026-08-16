@@ -2033,3 +2033,19 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: PRIME runtime Notion credential/resource; live Notion qualification page; Hindsight Reflect/Mental Models; approved provider; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
 - Blockers: PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE. Operator must restore the approved MyAssistant runtime authorization through the secure PRIME credential-reference mechanism and provide or confirm a legitimate live qualification resource.
 - Follow-up directive: none
+## D-PRIME-PHASE15-HINDSIGHT-CAPABILITY-UNBLOCK-068 - PARTIAL
+
+- Outcome ID: O-PRIME-068
+- Supersedes outcome: O-PRIME-067
+- Closed: 2026-08-16T00:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Persistent Hindsight is healthy and PRIME recall returned durable results. Reflect failed because openai/routerbot-local produced no usable tool call, and the PRIME bank has no Mental Models. No requirement or DOD was promoted.
+- Changed areas: Continuation 068 evidence and append-only .agent records only.
+- Validation:
+  - Hindsight identity, private listener, health/database, bank listing/isolation, recall, Reflect, and Mental Models checks - PASSED as bounded checks; required Reflect/Mental Models capability BLOCKED
+  - governance, burndown, diff, and secret checks - PASSED
+  - product regression/browser qualification/runtime rebuild - NOT RUN or NOT APPLICABLE because no product code or runtime changed
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: Hindsight Reflect/Mental Models; PRIME runtime Notion; approved provider; legitimate targets; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Blockers: HINDSIGHT_REFLECT_TOOL_CALLING. Operator must provide an approved tool-calling Hindsight model/profile or repair the approved routerbot-local tool-calling contract.
+- Follow-up directive: none

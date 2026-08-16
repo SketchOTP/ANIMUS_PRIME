@@ -622,3 +622,12 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: PRIME explicitly requires NOTION_READONLY_KEY from the approved MyAssistant path and stores only env/myassistant/notion-readonly. The live Core process had no source variable and no credential-reference state file; the in-process registry failed closed with SOURCE_ABSENT and UNCONFIGURED. The assistant-side Notion connector was deliberately not treated as product evidence. No code, runtime, persistent data, network exposure, or qualification target changed.
 - Affected areas: Continuation 067 evidence; append-only .agent records; exact PRIME runtime Notion prerequisite.
 - Supersedes record: DEC-PRIME-PHASE15-066
+## DEC-PRIME-PHASE15-068
+
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-068
+- Status: CLOSED
+- Decision or event: Publish Continuation 068 as PARTIAL/BLOCKED after bounded qualification of the existing persistent Hindsight environment.
+- Rationale: Hindsight health, private identity, PRIME bank isolation, and recall are real, but Reflect fails with the exact openai/routerbot-local tool-calling capability error and the PRIME bank contains no Mental Models. DOD-068/R-054 remain open because retain/recall evidence alone cannot satisfy the frozen Hindsight semantics clause. No Hindsight state, provider configuration, product code, runtime, or network state was changed.
+- Affected areas: Continuation 068 evidence; append-only .agent records; exact Hindsight operator prerequisite.
+- Supersedes record: DEC-PRIME-PHASE15-067
