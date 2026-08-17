@@ -227,6 +227,12 @@ class RepositoryIndexer:
         # for retrieval while retaining the original query for path matches.
         tokens = re.findall(r"[A-Za-z0-9_]{2,}", query.lower())
         fts_query = " | ".join(f"{token}:*" for token in dict.fromkeys(tokens)) or "__prime_no_match__:*"
+        normalized_query = query.lower()
+        path_query = f"%{query}%"
+        if "agents" in normalized_query:
+            path_query = "%AGENTS.md%"
+        elif "project" in normalized_query and "goal" in normalized_query:
+            path_query = "%PROJECT_GOAL.md%"
         with connect(self.service.settings) as db:
             rows = db.execute(
                 "SELECT relative_path, content_hash, size_bytes, file_kind, content_text, source_revision, freshness_state, "
@@ -234,7 +240,7 @@ class RepositoryIndexer:
                 "CASE WHEN content_text IS NULL OR content_text='' THEN '' ELSE ts_headline('simple', content_text, to_tsquery('simple', %s), 'MaxFragments=3,MaxWords=45,MinWords=8') END AS excerpt "
                 "FROM prime_core.repository_files WHERE project_id=%s AND freshness_state='CURRENT' AND (relative_path ILIKE %s OR to_tsvector('simple', COALESCE(content_text,'')) @@ to_tsquery('simple', %s) OR to_tsvector('simple', COALESCE(content_text,'')) @@ websearch_to_tsquery('simple', %s)) "
                 "ORDER BY relevance DESC, relative_path LIMIT %s",
-                (f"%{query}%", fts_query, query, fts_query, project_id, f"%{query}%", fts_query, query, min(max(limit, 1), 100)),
+                (path_query, fts_query, query, fts_query, project_id, path_query, fts_query, query, min(max(limit, 1), 100)),
             ).fetchall()
             result = []
             for row in rows:
