@@ -65,6 +65,10 @@ class AIProvider(Protocol):
     def generate(self, request: dict[str, Any]) -> "ProviderResult": ...
 
 
+class UsagePolicy(Protocol):
+    def check(self, project_id: str, capability: str, projected_units: float) -> dict[str, Any]: ...
+
+
 @dataclass(frozen=True)
 class ProviderResult:
     output: dict[str, Any]
@@ -380,7 +384,13 @@ def _validate_output(function: str, output: dict[str, Any], source_ids: set[str]
 
 
 class AIExecutionService:
-    def __init__(self, settings: Any, providers: dict[str, AIProvider] | None = None, clock: Callable[[], Any] = now):
+    def __init__(
+        self,
+        settings: Any,
+        providers: dict[str, AIProvider] | None = None,
+        clock: Callable[[], Any] = now,
+        usage_policy: UsagePolicy | None = None,
+    ):
         self.settings = settings
         self.providers = providers if providers is not None else {}
         configured = OpenAICompatibleProvider.from_environment()
@@ -388,7 +398,7 @@ class AIExecutionService:
         if configured is not None and provider_name and provider_name not in self.providers:
             self.providers[provider_name] = configured
         self.clock = clock
-        self.usage = UsagePolicyService(settings, clock=clock)
+        self.usage = usage_policy if usage_policy is not None else UsagePolicyService(settings, clock=clock)
         self.default_provider = os.getenv("PRIME_AI_PROVIDER", "unconfigured").strip() or "unconfigured"
         self.default_model = os.getenv("PRIME_AI_MODEL", "unconfigured").strip() or "unconfigured"
         self.default_privacy = os.getenv("PRIME_AI_PRIVACY_MODE", "LOCAL_ONLY").strip().upper() or "LOCAL_ONLY"

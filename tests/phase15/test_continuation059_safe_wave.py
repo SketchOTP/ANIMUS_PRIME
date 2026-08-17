@@ -9,7 +9,8 @@ def test_continuation_059_safe_product_surfaces_are_data_backed():
     reliability = (ROOT / "src" / "prime_core" / "reliability_service.py").read_text(encoding="utf-8")
 
     assert '@app.get("/v1/projects/{project_id}/usage")' in core
-    assert '"limits": {"status": "UNAVAILABLE"' in core
+    assert 'policies = usage_limits.snapshot(project_id)' in core
+    assert '"limits": {"status": "KNOWN", "policies": policies}' in core
     assert 'id="usage-detail"' in web
     assert 'id="backup-detail"' in web
     assert 'id="project-metadata-form"' in web

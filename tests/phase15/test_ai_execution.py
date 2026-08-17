@@ -7,6 +7,24 @@ from pathlib import Path
 from src.prime_core.ai_service import AIExecutionService, OpenAICompatibleProvider, ProviderResult, fixture_fingerprint
 
 
+class AllowAllUsagePolicy:
+    def __init__(self):
+        self.calls = []
+
+    def check(self, project_id, capability, projected_units):
+        self.calls.append((project_id, capability, projected_units))
+        return {"allowed": True, "status": "TEST_UNLIMITED"}
+
+
+class BlockingUsagePolicy:
+    def __init__(self):
+        self.calls = []
+
+    def check(self, project_id, capability, projected_units):
+        self.calls.append((project_id, capability, projected_units))
+        return {"allowed": False, "status": "EXCEEDED", "reason": "fixture usage limit"}
+
+
 class FakeLocalProvider:
     is_local = True
 
@@ -27,7 +45,7 @@ def service_with(provider_name, provider, monkeypatch):
     monkeypatch.setenv("PRIME_AI_PROVIDER", provider_name)
     monkeypatch.setenv("PRIME_AI_MODEL", "qualified-test-model")
     monkeypatch.setenv("PRIME_AI_PRIVACY_MODE", "CLOUD_MODELS_ALLOWED" if not provider.is_local else "LOCAL_ONLY")
-    service = AIExecutionService(object(), providers={provider_name: provider})
+    service = AIExecutionService(object(), providers={provider_name: provider}, usage_policy=AllowAllUsagePolicy())
     records = []
     service._persist = records.append
     return service, records
@@ -38,6 +56,43 @@ def test_golden_fixture_is_versioned_and_machine_readable():
     assert fixture["fixture_revision"] == "prime-ai-fixtures-v1"
     assert {case["id"] for case in fixture["cases"]} >= {"ask-unknown", "prompt-injection", "project-isolation", "local-only"}
     assert fixture_fingerprint(fixture)
+
+
+def test_injected_usage_policy_is_consulted(monkeypatch):
+    provider = FakeLocalProvider({"category": "UNKNOWN", "answer": "UNKNOWN", "citations": []})
+    policy = AllowAllUsagePolicy()
+    monkeypatch.setenv("PRIME_AI_PROVIDER", "local")
+    monkeypatch.setenv("PRIME_AI_MODEL", "qualified-test-model")
+    monkeypatch.setenv("PRIME_AI_PRIVACY_MODE", "LOCAL_ONLY")
+    service = AIExecutionService(object(), providers={"local": provider}, usage_policy=policy)
+    service._persist = lambda record: None
+    result = service.execute("project-a", "ASK_PRIME", {"question": "q"}, [])
+    assert result["status"] == "SUCCEEDED"
+    assert policy.calls and policy.calls[0][0:2] == ("project-a", "ASK_PRIME")
+
+
+def test_exceeded_injected_usage_policy_blocks_provider(monkeypatch):
+    provider = FakeLocalProvider({"category": "UNKNOWN", "answer": "UNKNOWN", "citations": []})
+    policy = BlockingUsagePolicy()
+    monkeypatch.setenv("PRIME_AI_PROVIDER", "local")
+    monkeypatch.setenv("PRIME_AI_MODEL", "qualified-test-model")
+    monkeypatch.setenv("PRIME_AI_PRIVACY_MODE", "LOCAL_ONLY")
+    service = AIExecutionService(object(), providers={"local": provider}, usage_policy=policy)
+    records = []
+    service._persist = records.append
+    result = service.execute("project-a", "ASK_PRIME", {"question": "q"}, [])
+    assert result["status"] == "REJECTED"
+    assert result["error_class"] == "USAGE_LIMIT_EXCEEDED"
+    assert not provider.requests
+    assert records[0]["provider_usage"]["status"] == "EXCEEDED"
+
+
+def test_production_default_constructs_real_usage_policy(monkeypatch):
+    monkeypatch.setenv("PRIME_AI_PROVIDER", "unconfigured")
+    service = AIExecutionService(object(), providers={})
+    from src.prime_core.usage_limits import UsagePolicyService
+
+    assert isinstance(service.usage, UsagePolicyService)
 
 
 def test_profile_execution_records_provenance_usage_and_untrusted_source(monkeypatch):
