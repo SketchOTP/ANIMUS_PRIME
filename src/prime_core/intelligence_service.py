@@ -194,6 +194,19 @@ class IntelligenceService:
                 })
         model = self.ai.execute(project_id, "ASK_PRIME", {"question": question}, model_sources)
         result = dict(model.get("result") or {})
+        admitted_by_id = {str(source["source_id"]): source for source in model_sources if source.get("source_id")}
+        resolved_citations = []
+        for citation in result.get("citations") or []:
+            source_id = str(citation.get("source_id", ""))
+            admitted = admitted_by_id.get(source_id)
+            if admitted is None:
+                continue
+            resolved = dict(citation)
+            for field in ("source_class", "source_id", "locator", "project_id", "source_revision", "content_hash", "freshness_state", "privacy_class"):
+                if admitted.get(field) is not None:
+                    resolved[field] = admitted[field]
+            resolved_citations.append(resolved)
+        result["citations"] = resolved_citations
         response = {"project_id": project_id, **result, "epistemic": result.get("category", "UNKNOWN"), "ai_run": {key: model.get(key) for key in ("run_id", "provider", "model", "profile_revision", "prompt_revision", "schema_revision", "privacy_mode", "source_revision_set", "status")}}
         if model["status"] != "SUCCEEDED":
             response.update({"answer": "UNKNOWN: available evidence does not support this claim.", "citations": [], "epistemic": "UNKNOWN"})
