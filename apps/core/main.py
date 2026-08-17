@@ -1441,7 +1441,7 @@ def _project_context(project_id: str) -> dict[str, Any]:
             "FROM prime_core.authority_revisions WHERE project_id=%s ORDER BY observed_at DESC LIMIT 8", (project_id,),
         ).fetchall()]
         memory_rows = [dict(row) for row in db.execute(
-            "SELECT memory_id,content_class,content,status,source_revision,source_reference_id,branch_context,created_at,supersedes_memory_id "
+            "SELECT memory_id,content_class,content,status,source_revision,source_reference_id,branch_context,created_at,supersedes_memory_id,content_hash,bank_id "
             "FROM prime_core.memory_records WHERE project_id=%s ORDER BY created_at DESC LIMIT 16", (project_id,),
         ).fetchall()]
         evidence_rows = [dict(row) for row in db.execute(
@@ -1452,7 +1452,7 @@ def _project_context(project_id: str) -> dict[str, Any]:
             "SELECT page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at,metadata FROM prime_core.notion_knowledge_sources WHERE project_id=%s ORDER BY observed_at DESC NULLS LAST LIMIT 12", (project_id,),
         ).fetchall()]
         ai_runs = [dict(row) for row in db.execute(
-            "SELECT run_id,function,provider,model,profile_revision,prompt_revision,schema_revision,privacy_mode,source_revision_set,status,error_class,created_at "
+            "SELECT run_id,function,provider,model,profile_revision,prompt_revision,schema_revision,privacy_mode,source_revision_set,status,error_class,created_at,input_tokens,output_tokens "
             "FROM prime_core.ai_runs WHERE project_id=%s ORDER BY created_at DESC LIMIT 8", (project_id,),
         ).fetchall()]
         grants = [dict(row) for row in db.execute(
