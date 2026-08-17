@@ -93,6 +93,21 @@ class ProgressService:
             summary=f"Reassessed against canonical repository revision {repository_revision}.",
             evidence_refs=refs,
         )
+        with transaction(self.settings) as db:
+            correction = db.execute(
+                "SELECT correction_id FROM prime_core.progress_corrections "
+                "WHERE project_id=%s AND assessment_id=%s AND status='OPEN' "
+                "ORDER BY created_at DESC LIMIT 1 FOR UPDATE",
+                (project_id, latest["assessment_id"]),
+            ).fetchone()
+            if correction:
+                db.execute(
+                    "UPDATE prime_core.progress_corrections "
+                    "SET reassessment_id=%s,status='REASSESSED' WHERE correction_id=%s",
+                    (result["assessment_id"], correction["correction_id"]),
+                )
+                result["correction_id"] = correction["correction_id"]
+                result["correction_status"] = "REASSESSED"
         result["reassessed_from"] = latest["assessment_id"]
         return result
 

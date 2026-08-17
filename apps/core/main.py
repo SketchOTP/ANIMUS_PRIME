@@ -1253,8 +1253,10 @@ def assess_project_progress(project_id: str, body: AssessmentRequest, request: R
 def refresh_project_progress(project_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        root, _ = _safe_repository_path(project_id)
-        revision = _git(root, "rev-parse", "HEAD")
+        git_state = _git_state(project_id)
+        revision = git_state.get("canonical_revision")
+        if not revision or revision in {"UNKNOWN", "UNAVAILABLE"}:
+            raise ValueError("canonical repository revision is unavailable")
         return progress.refresh(project_id, revision)
     except (KeyError, ValueError) as exc:
         return error("PROGRESS_REFRESH_REJECTED", str(exc), request_id(request), retryable=True, status_code=409)
