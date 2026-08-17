@@ -2256,3 +2256,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Ask current-grounding/citation/source-selection defect; Search indexing/grouping/no-result defect; DOD-005; DOD-081; R-056; remaining external/legitimate-target clauses; Phase 15/V1; deployment.
 - Blockers: `PRIME_ASK_CURRENT_GROUNDING_AND_CITATION_DEFECT`; `PRIME_SEARCH_SOURCE_INDEX_AND_NO_RESULT_DEFECT`.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078 - COMPLETE
+
+- Outcome ID: O-PRIME-078
+- Supersedes outcome: O-PRIME-077
+- Closed: 2026-08-17T02:00:00Z
+- Acceptance: MET
+- Summary: The persistent PRIME product now uses one typed shared retrieval contract for Search and Ask. Repository/.agent retrieval is content-aware, canonical Git and live Notion state participate in the derived Search representation, detached Notion sources retract, pinned Hindsight score shapes are honored behind a PRIME relevance floor, Ask receives all qualified source groups, grounded answers require admitted citations, and citation identities resolve to revision/hash/freshness metadata. DOD-021 and DOD-022 were promoted to USER_USABLE_VERIFIED.
+- Changed areas: shared retrieval contract, repository index migration, Git/Notion/Search/Memory adapters, Ask grounding/citation validation, persistent Core image, Continuation 078 evidence, traceability, audit, burndown, and append-only `.agent` records.
+- Validation:
+  - focused retrieval/Ask/Notion/runtime suite - PASSED; 20 passed, 4 skipped
+  - full supported Atlas regression - PASSED; 113 passed, 28 skipped
+  - compile, diff, governance, burndown, and secret checks - PASSED
+  - persistent Core readiness and browser Search/Ask qualification - PASSED
+- Remaining risks: DOD-005, external/provider/legitimate-target clauses, DOD-081, R-056, Phase 15/V1, deployment.
+- Blockers: none for this bounded shared retrieval / grounding repair.
+- Follow-up directive: none

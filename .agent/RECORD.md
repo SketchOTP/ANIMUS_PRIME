@@ -731,3 +731,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The authenticated persistent PRIME runtime and existing approved Notion lifecycle remained healthy. Real Ask and Search qualification exposed exact product defects: Ask did not produce citation-bearing current answers and returned stale/unsupported or UNKNOWN results for known questions; Search did not provide positive Git/Notion groups, returned unrelated Memory hits for a unique no-result query, and did not prove complete grouped-source freshness/drill-down/isolation. Retraction exclusion passed. No product repair was made because a larger source-indexing/current-grounding change would exceed truthful bounded qualification scope; no synthetic target or external service change was used.
 - Affected areas: Continuation 077 evidence and append-only governance/audit/burndown records; no product source, runtime image, Hindsight data, PARAGON configuration, or public/network configuration.
 - Supersedes record: DEC-PRIME-PHASE15-076
+
+## DEC-PRIME-PHASE15-078
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-078
+- Status: CLOSED
+- Decision or event: Close Continuation 078 as COMPLETE for its bounded shared retrieval / grounding scope and promote DOD-021 and DOD-022 to USER_USABLE_VERIFIED.
+- Rationale: Real authenticated browser qualification on the persistent Atlas product proved content-aware Repository/.agent retrieval, canonical Git, attached and retracted Notion projection, Memory relevance flooring, Activity grouping, truthful all-group no-result behavior, grounded Ask citations with admitted revision/hash identity, and safe UNKNOWN behavior. The repair reused the existing persistent topology and did not create synthetic resources or public exposure.
+- Affected areas: shared retrieval contract, repository index migration, Git/Notion/Search/Memory adapters, Ask grounding/citation validation, persistent Core image `animus-prime-core:continuation-078-r9`, evidence, traceability, audit, burndown, and append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-077

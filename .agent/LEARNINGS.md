@@ -881,3 +881,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 077 Ask/Search operator qualification.
 - Supersedes learning: none
+
+## L-PRIME-SHARED-RETRIEVAL-GROUNDING-078
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-SHARED-RETRIEVAL-GROUNDING-078
+- Fact or lesson: Ask and Unified Search must consume one typed retrieval-hit contract. PostgreSQL content projection fixes natural-language repository/.agent retrieval without a second search subsystem; canonical Git and live Notion lifecycle state must enter the derived Search projection; detach must retract; pinned Hindsight 0.6 score payloads can be nested and require PRIME-side extraction/flooring; provider category spelling must be normalized before grounded citation validation; and citation resolution must retain source identity, revision, hash, freshness, and authority class. Common-word OR terms can create false positives, so stopword handling is part of truthful no-result behavior.
+- Evidence location: evidence/phase15/qualification-continuation-078.md; src/prime_core/retrieval.py; src/prime_core/indexer.py; src/prime_core/intelligence_service.py; src/prime_core/ai_service.py; src/prime_core/memory_service.py; src/prime_core/notion_service.py
+- Confidence: VERIFIED
+- Scope: Continuation 078 shared retrieval and grounding repair only.
+- Supersedes learning: L-PRIME-ASK-SEARCH-REQUALIFICATION-077

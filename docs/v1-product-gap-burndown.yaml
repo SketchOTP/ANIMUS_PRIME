@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 8
+  EXTERNAL_ENVIRONMENT: 6
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -114,56 +114,6 @@ items:
     blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
     depends_on: "R-048"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-021
-    current_status: "PARTIAL"
-    product_area: "Ask"
-    owner_phase: 9
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "Ask must show the answer, FACT/INTERPRETATION/UNKNOWN boundaries, citations, source class, revision identity, changed-source handling, and degraded behavior."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Repair the current Ask source-selection, current-state grounding, citation, and revision-aware behavior, then rerun the authenticated browser matrix."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "PRIME Ask current-grounding and citation behavior is not yet product-qualified; the approved PARAGON runtime itself is available."
-    depends_on: "R-054"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-022
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Search"
-    owner_phase: 11
-    mapped_r_requirements: ["R-047"]
-    exact_missing_behavior: "Search must group Repository, .agent/Authority, Git, Notion, Memory, and Activity results with freshness/revision, drill-down, and Project A/B isolation."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Repair Search source indexing/grouping and no-result filtering for the existing Qualification Project, then rerun grouped-source, freshness, drill-down, and isolation checks."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-029.md","apps/web/index.html","apps/core/main.py","src/prime_core/intelligence_service.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "The approved Notion runtime is available, but Search does not yet index its lifecycle state; Git checkpoints are also absent for this project and no-result filtering is unsound."
-    depends_on: "R-047"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-024
     current_status: "UI_SHELL_ONLY"
     product_area: "lifecycle"
