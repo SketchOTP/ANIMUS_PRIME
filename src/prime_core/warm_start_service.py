@@ -116,7 +116,10 @@ class WarmStartService:
             content = item.pop("content_text", "") or ""
             item["source_class"] = "NOTION_KNOWLEDGE"
             item["classification"] = "NON_AUTHORITATIVE_KNOWLEDGE"
-            item["content_available"] = bool(content) and item.get("status") == "ATTACHED"
+            # The derived search projection persists an attached source as
+            # CURRENT. Treat that state as readable while preserving the
+            # explicit non-authoritative Notion classification.
+            item["content_available"] = bool(content) and item.get("status") in {"ATTACHED", "CURRENT"}
             item["content_preview"] = content[:320] if item["content_available"] else ""
             item["status"] = "CURRENT" if item["content_available"] else (item.get("status") or "UNAVAILABLE")
             candidates.append(item)

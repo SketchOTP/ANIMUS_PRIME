@@ -27,3 +27,8 @@ def test_warm_start_authority_allowlist_excludes_unbounded_repository_context():
     assert "PROJECT_GOAL.md" in source
     assert "DIRECTIVES.md" in source
     assert "whole repository" not in source.lower()
+
+
+def test_warm_start_accepts_current_attached_notion_projection():
+    source = (ROOT / "src/prime_core/warm_start_service.py").read_text(encoding="utf-8")
+    assert 'item.get("status") in {"ATTACHED", "CURRENT"}' in source
