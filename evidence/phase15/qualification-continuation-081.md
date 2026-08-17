@@ -4,7 +4,7 @@
 
 `PARTIAL` for the bounded consolidated local completion sweep.
 
-Continuation 081 began from governed `7e6fa8ecffac71f1ef97b030b64294dffbe18cbf`. The qualified product implementation is `b58c94d50ad488de444b1a68309154000fdc26ee`, and the final governed publication SHA is recorded in the qualification ledger and matrix at publication closeout. The initial governed queue was 59 complete / 22 open. After this continuation, the reconciled queue is 61 complete / 20 open.
+Continuation 081 began from governed `7e6fa8ecffac71f1ef97b030b64294dffbe18cbf`. The qualified product implementation is `b58c94d50ad488de444b1a68309154000fdc26ee`. The qualification publication commit carrying this evidence is `31406b3d9d733948c59408d450d0f1aad27f3c37`; the final governed closeout commit is the subsequent metadata reconciliation commit. The initial governed queue was 59 complete / 22 open. After this continuation, the reconciled queue is 61 complete / 20 open.
 
 Only DOD-026 and DOD-076 were promoted. DOD-024, DOD-054, DOD-057, and DOD-077 were requalified as truthful partials. No V1, Phase 15, deployment, public-exposure, Funnel, DOD-081, or R-056 claim is made.
 
