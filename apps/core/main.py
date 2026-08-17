@@ -43,6 +43,7 @@ from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleServ
 from src.prime_core.ai_service import AIExecutionService
 from src.prime_core.usage_limits import UsagePolicyService
 from src.prime_core.upgrade_service import UpgradeService
+from src.prime_core.warm_start_service import WarmStartService
 from src.prime_memory_adapter import PrimeMemoryAdapter
 
 settings = Settings()
@@ -62,6 +63,7 @@ intelligence = IntelligenceService(settings, memory)
 ai = AIExecutionService(settings)
 usage_limits = UsagePolicyService(settings)
 upgrades = UpgradeService(settings)
+warm_start = WarmStartService(settings, service)
 brain = BrainService(settings)
 progress = ProgressService(settings)
 lifecycle = LifecycleService(settings)
@@ -347,6 +349,12 @@ class NotionOperatorActionRequest(BaseModel):
     period: str | None = Field(default=None, max_length=80)
     source_binding_id: str | None = Field(default=None, max_length=160)
     page_id: str | None = Field(default=None, max_length=80)
+    confirm: bool = False
+
+
+class WarmStartRequest(BaseModel):
+    authority_paths: list[str] = Field(default_factory=list, max_length=12)
+    notion_source_binding_ids: list[str] = Field(default_factory=list, max_length=12)
     confirm: bool = False
 
 
@@ -1775,6 +1783,34 @@ def advance_since_you_were_here(project_id: str, request: Request, prime_session
     if not project_exists(project_id):
         return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
     return intelligence.since_last_seen(project_id, advance=True)
+
+
+@app.get("/v1/projects/{project_id}/warm-start/preview")
+def warm_start_preview(
+    project_id: str,
+    request: Request,
+    authority_paths: list[str] | None = None,
+    notion_source_binding_ids: list[str] | None = None,
+    prime_session: str | None = Cookie(default=None),
+):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return warm_start.preview(project_id, authority_paths, notion_source_binding_ids)
+    except (KeyError, ValueError, OSError) as exc:
+        return error("WARM_START_PREVIEW_REJECTED", str(exc), request_id(request), status_code=400)
+
+
+@app.post("/v1/projects/{project_id}/warm-start")
+def run_warm_start(project_id: str, body: WarmStartRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    try:
+        return warm_start.run(project_id, body.authority_paths, body.notion_source_binding_ids, body.confirm)
+    except (KeyError, ValueError, OSError) as exc:
+        return error("WARM_START_REJECTED", str(exc), request_id(request), status_code=400)
 
 
 @app.post("/v1/projects/{project_id}/ask")
