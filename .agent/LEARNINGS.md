@@ -930,3 +930,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 082 local release closure only.
 - Supersedes learning: none
+
+## L-PRIME-V1-GOAL-REALIZATION-LAB-083
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-V1-GOAL-REALIZATION-LAB-083
+- Fact or lesson: The persistent Core container must be able to validate the enrolled Node repository path before dispatching live Node tree/file calls; mounting only the canonical checkout makes legitimate sibling project paths appear absent. A read-only `/home/sketch/Projects` mount preserves the private boundary. Rebind confirmation must snapshot every field it compares (`candidate_path` and `candidate_location_fingerprint` were previously omitted), otherwise a valid relocation preflight is falsely rejected as stale.
+- Evidence location: evidence/phase15/qualification-continuation-083.md; src/prime_core/service.py; tests/phase15/test_continuation050.py; persistent `animus-prime-core:continuation-083` health and browser evidence.
+- Confidence: VERIFIED
+- Scope: Continuation 083 authorized fixture/runtime qualification only.
+- Supersedes learning: none

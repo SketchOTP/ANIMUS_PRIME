@@ -2352,3 +2352,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: provider-backed cost attribution and R-045 capacity boundaries, approved independent restore target, second enrolled LAN machine, runtime Notion prerequisite, Hindsight setup capability limits, DOD-005, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
 - Blockers: none for the bounded local changes; external/legitimate-target gates remain.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-GOAL-REALIZATION-LAB-083 - PARTIAL
+
+- Outcome ID: O-PRIME-083
+- Supersedes outcome: O-PRIME-082
+- Closed: 2026-08-17T15:10:00-04:00
+- Acceptance: PARTIAL
+- Summary: The authorized Atlas V1 qualification lab exercised real PRIME fixture workflows. DOD-005 source retraction/history and DOD-039 repository relocation/rebind were promoted to PRODUCT_VERIFIED. The live persistent Core received a read-only parent-projects mount and secure Notion runtime credential reference; browser qualification passed project selection, repository/authority visibility, grounded Ask, grouped Search with current Notion Knowledge, and lifecycle preflight/Pause/Resume. Full regression remained 112 passed / 29 skipped / 6 failed.
+- Changed areas: `src/prime_core/service.py` rebind preflight continuity snapshot, focused regression guard, persistent Core runtime topology, 083 lab/evidence, audit/burndown, and append-only records.
+- Validation:
+  - rebind-focused tests - PASSED (6 tests)
+  - full regression - FAILED (112 passed / 29 skipped / 6 failed; failures are recorded in Continuation 083 evidence)
+  - governance and burndown reconciliation - PASSED (64 complete / 17 open)
+  - persistent Core readiness and exact image provenance - PASSED
+  - browser operator path - PASSED for the bounded fixture flow
+- DOD/R result: DOD-005 and DOD-039 promoted; DOD-004, DOD-024, DOD-047, DOD-049, DOD-054, DOD-055, DOD-057, DOD-058, DOD-077, and DOD-080 remain bounded; DOD-013, DOD-016, DOD-031, DOD-044, DOD-053, DOD-079 and provider/restore/second-device gates remain external; DOD-081/R-056/Phase 15/V1 remain open.
+- Remaining risks: six regression failures, independent restore target, provider cost attribution, complete browser-positive clauses, fresh install, second LAN machine, Windows/native service lifecycle, Tailscale/second device, and aggregate R-056.
+- Blockers: no blocker to the bounded lab; release remains blocked by the recorded regression and external/complete-operator gates.
+- Follow-up directive: none

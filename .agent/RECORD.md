@@ -780,3 +780,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The persistent Atlas product qualified Usage limit save/enforcement/disable, Upgrade status/no-op readiness/backup refusal/guarded recovery-required preflight, a durable encrypted backup export, and real-project workflow checkpoint/idempotent resume primitives. The remaining provider cost, restore-target, second-LAN-machine, Notion/Hindsight, parked DOD-005, DOD-081, and R-056 gates were preserved without manufacture or weakening.
 - Affected areas: usage-limit migration/service/API/UI, upgrade preflight service/API/UI, focused tests, Continuation 082 evidence, persistent Core image, audit/burndown/traceability/matrix/ledger, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-081
+
+## DEC-PRIME-PHASE15-083
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-083
+- Status: CLOSED
+- Decision or event: Close Continuation 083 as PARTIAL for its bounded V1 qualification-lab scope; promote DOD-005 and DOD-039 to PRODUCT_VERIFIED and retain all other incomplete/external gates honestly.
+- Rationale: The persistent Atlas product and authorized isolated fixtures qualified source retraction/history, real repository relocation/rebind after a minimal repair, durable workflow interruption/reconciliation, registration refusals, Goal/authority protection, encrypted backup/preflight safety, and live browser Ask/Search/repository/authority/lifecycle behavior. The supported regression recorded 112 passed, 29 skipped, and 6 failed; no V1 or release claim is permitted.
+- Affected areas: persistent Core parent-projects/Notion runtime configuration, `src/prime_core/service.py`, focused rebind test, 083 evidence, product-goal audit, burndown, and append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-082

@@ -7,7 +7,7 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 4
+  LOCAL_CODE: 2
   LOCAL_BROWSER_QUALIFICATION: 9
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
@@ -38,31 +38,6 @@ items:
     qualification_needed: "Direct qualification of Fork, Notion, Hindsight, restore, archive, and full interruption/orphan boundaries; no dedicated UI is required."
     blocked_by: "NONE"
     depends_on: "R-012"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
-  - dod_id: DOD-005
-    current_status: "BACKEND_ONLY"
-    product_area: "source lifecycle"
-    owner_phase: 11
-    mapped_r_requirements: ["R-011"]
-    exact_missing_behavior: "Direct source-lifecycle qualification must prove current derived views retract while historical provenance remains until purge; no dedicated UI is required."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run bounded direct invariant qualification for DOD-005 against the exact frozen clause, including required positive and negative or fail-closed cases; append direct evidence and promote only if every clause passes."
-    evidence_already_available: ["src/prime_core/history_service.py","src/prime_core/memory_service.py","src/prime_core/progress_service.py","src/prime_core/intelligence_service.py","tests/phase15/test_requirement_qualification.py","evidence/phase15/qualification-continuation-052.md","evidence/phase15/qualification-continuation-053.md","evidence/phase15/qualification-continuation-056.md","evidence/phase15/qualification-continuation-057.md","evidence/phase15/qualification-continuation-058.md"]
-    qualification_needed: "Direct implementation, test, and evidence qualification of the exact frozen invariant, including required negative or fail-closed cases."
-    blocked_by: "NONE"
-    depends_on: "R-011"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-013
     current_status: "BACKEND_ONLY"
@@ -164,31 +139,6 @@ items:
     blocked_by: "LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START"
     depends_on: "R-054"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
-  - dod_id: DOD-039
-    current_status: "BACKEND_ONLY"
-    product_area: "rebind"
-    owner_phase: 11
-    mapped_r_requirements: ["R-031"]
-    exact_missing_behavior: "Logical continuity, stable project_id/repository_id, non-mutating preflight, stale-token protection, rollback safety, and audit/history recording are implemented; no legitimate alternate repository exists for real relocation cutover qualification."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Use a naturally existing alternate Atlas location if one becomes available; otherwise preserve IMPLEMENTED_NOT_PRODUCT_QUALIFIED without fabricating a relocation."
-    evidence_already_available: ["src/prime_core/service.py","src/prime_core/git_provenance.py","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md"]
-    qualification_needed: "Real relocation/rebind cutover against a legitimate alternate repository location; no disposable repository or clone may be created."
-    blocked_by: "REAL_RELOCATION_CUTOVER_NOT_AVAILABLE_UNDER_CURRENT_NONDISPOSABLE_CONSTRAINT"
-    depends_on: "R-031"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-044
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "onboarding"
