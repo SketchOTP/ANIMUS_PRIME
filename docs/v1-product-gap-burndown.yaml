@@ -94,7 +94,7 @@ items:
     product_area: "warm start"
     owner_phase: 9
     mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The frozen criterion requires a qualified PRIME warm-start path that seeds high-value .agent history and explicitly selected non-empty Notion knowledge without bulk ingestion. The existing managed record contains only PRIME-managed status/history metadata and the approved probe page is blank/retracted; no legitimate selected Notion knowledge payload is available."
+    exact_missing_behavior: "The bounded PRIME warm-start path now admits explicitly selected .agent history through the real Core/UI and preserves source/revision/provenance boundaries. The frozen criterion still requires explicitly selected non-empty Notion knowledge without bulk ingestion; the approved probe page is blank/retracted, so no legitimate selected Notion knowledge payload is available."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "YES"
     requires_browser: "NO"
@@ -109,7 +109,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Provide one operator-approved, legitimate, non-empty Notion knowledge source for the existing Qualification Project, then qualify the bounded .agent plus selected-Notion warm-start path without bulk ingestion."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/warm_start_service.py","evidence/phase15/qualification-continuation-085.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START"
     depends_on: "R-054"

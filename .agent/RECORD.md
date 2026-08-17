@@ -800,3 +800,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The persistent Atlas Core/UI and enrolled Node qualified terminal lifecycle completion, fresh positive repository registration, fresh authority provisioning, and guided Goal draft/approval with durable hash/restart recovery in the authorized lab. The supported regression is now 122 passed / 29 skipped / 0 failed. Remaining external, legitimate-target, creation-recovery, polish, DOD-081, R-056, Phase 15, and V1 gates remain open. No canonical destructive mutation, public exposure, deployment, Funnel change, frozen-spec change, or Phase 16 occurred.
 - Affected areas: AI Usage-policy test seam, authority-template runtime resolution, repository creation UI, completion workflow UI, narrow viewport CSS, persistent Core v5, Continuation 084 evidence, audit/burndown/matrix/ledger, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-083
+
+## DEC-PRIME-PHASE15-085
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-085
+- Status: CLOSED
+- Decision or event: Close Continuation 085 as PARTIAL; retain DOD-031 and the aggregate V1 gates as open.
+- Rationale: The real persistent Atlas PRIME Core/UI now exercises a bounded Warm Start path for explicitly selected `.agent` history with source identity, revision, provenance, project isolation, duplicate handling, and honest degraded behavior. The only candidate Notion source available to the Qualification Project is RETRACTED/blank, so the complete frozen selected-Notion clause cannot be promoted without an operator-approved non-empty resource. The supported full regression is 124 passed / 29 skipped / 0 failed. No synthetic state, canonical destructive mutation, public exposure, deployment, Funnel change, frozen-spec change, DOD-005, DOD-081, R-056 closure, or Phase 16 was attempted.
+- Affected areas: bounded Warm Start service/API/UI, focused tests, persistent Core image `animus-prime-core:continuation-085-warm-start-final`, Continuation 085 evidence, audit/burndown/matrix/ledger/traceability, and append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-084

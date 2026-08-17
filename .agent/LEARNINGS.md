@@ -950,3 +950,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 084 persistent authority provisioning and authorized Qualification Lab only.
 - Supersedes learning: none
+
+## L-PRIME-WARM-START-PERSISTENCE-085
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-WARM-START-PERSISTENCE-085
+- Fact or lesson: Native Hindsight admission can be temporarily degraded while the persistent service is consolidating; a later bounded reread can return CURRENT content from the same PRIME bank. Warm Start must map authority inputs to the database's valid memory content classes and must report a degraded admission honestly rather than claiming a complete current result. Duplicate reruns remain append-safe and do not require synthetic source data.
+- Evidence location: evidence/phase15/qualification-continuation-085.md; src/prime_core/warm_start_service.py; migrations/prime/0005_memory.sql; persistent Hindsight health and bank reread evidence.
+- Confidence: VERIFIED
+- Scope: Continuation 085 bounded Warm Start admission and persistent Hindsight interaction only.
+- Supersedes learning: none

@@ -2390,3 +2390,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: durable multi-system interruption/orphan breadth, selected non-empty Notion warm start, clean install, independent restore target, provider cost attribution, creation recovery negatives, complete polish, second LAN machine, Windows/native service lifecycle, Tailscale/second device, and aggregate release qualification.
 - Blockers: no blocker to the bounded local implementation/qualification work; external and legitimate-target gates remain.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-085 - PARTIAL
+
+- Outcome ID: O-PRIME-085
+- Supersedes outcome: O-PRIME-084
+- Closed: 2026-08-17T17:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: The persistent Atlas PRIME Core/UI implemented and exercised a bounded Warm Start workflow for explicitly selected `.agent` history. The real browser preview and admission path preserved source references, revisions, provenance, project isolation, duplicate handling, and honest degraded behavior. The approved Notion candidate was RETRACTED/blank, so no selected Notion knowledge was manufactured and the complete Notion-backed frozen clause remains open.
+- Changed areas: `src/prime_core/warm_start_service.py`, `apps/core/main.py`, `apps/web/index.html`, focused Continuation 085 tests, persistent Core image `animus-prime-core:continuation-085-warm-start-final`, evidence, burndown/matrix/ledger/traceability, and append-only records.
+- Validation:
+  - focused Continuation 085 tests (3) - PASSED
+  - compileall and git diff --check - PASSED
+  - supported full regression (124 passed / 29 skipped / 0 failed) - PASSED
+  - governance validation - PASSED
+  - burndown validation - PASSED
+  - product alignment audit - PASSED; historical V1 alignment gate remains incomplete
+  - persistent runtime and browser qualification for the bounded `.agent` path - PASSED
+- DOD/R result: no DOD/R promotion; DOD-031 remains BACKEND_ONLY / external because a legitimate non-empty operator-selected Notion knowledge source is unavailable. DOD-005 remains parked; DOD-081/R-056, Phase 15, V1, and deployment remain open.
+- Remaining risks: selected non-empty Notion knowledge, durable multi-system workflow breadth, provider cost attribution, independent restore target, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, remaining browser clauses, and aggregate release qualification.
+- Blockers: no blocker to the bounded Warm Start implementation; the complete frozen DOD-031 clause is blocked by the exact selected Notion resource state recorded in Continuation 085 evidence.
+- Follow-up directive: none

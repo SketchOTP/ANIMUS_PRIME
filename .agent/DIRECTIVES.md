@@ -1168,3 +1168,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-GOAL-REALIZATION-LAB-083
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-085
+
+- Issued: 2026-08-17T16:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 085
+- Objective: Close the remaining safe local V1 software boundary by qualifying a bounded, provenance-bearing Warm Start path over explicitly selected `.agent` history and any legitimate selected Notion source, without bulk ingestion or synthetic state.
+- Scope: Persistent Atlas Core/UI Warm Start implementation, selected-source preview/admission, source identity/revision/provenance, duplicate and degraded handling, real browser qualification, supported regression, governance reconciliation, and publication.
+- Exclusions: no synthetic Notion knowledge, no bulk ingestion, no canonical destructive mutation, no public exposure/deployment/Funnel, no Phase 16, no frozen-spec changes, no DOD-005 change, no DOD-081/R-056 closure claim, direct Atlas SSH only.
+- Acceptance: Promote only complete frozen clauses supported by real persistent runtime evidence; preserve the selected-Notion resource gate and all incomplete/external requirements; publish evidence, exact Git parity, and the living Notion journal/checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-CLOSURE-084
+- Status at issuance: ISSUED
