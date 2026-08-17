@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import mimetypes
+import re
 from pathlib import Path
 from pathlib import PurePosixPath
 from typing import Any
@@ -218,14 +219,22 @@ class RepositoryIndexer:
         from .db import connect
         if not query or not query.strip():
             return []
+        # Natural-language questions should retrieve content when any
+        # meaningful term matches.  websearch_to_tsquery alone treats the
+        # question as an AND query, which makes ordinary questions such as
+        # "What does AGENTS.md say about code exploration?" miss the file
+        # even though its content is indexed.  Build a sanitized OR query
+        # for retrieval while retaining the original query for path matches.
+        tokens = re.findall(r"[A-Za-z0-9_]{2,}", query.lower())
+        fts_query = " | ".join(f"{token}:*" for token in dict.fromkeys(tokens)) or "__prime_no_match__:*"
         with connect(self.service.settings) as db:
             rows = db.execute(
                 "SELECT relative_path, content_hash, size_bytes, file_kind, content_text, source_revision, freshness_state, "
-                "CASE WHEN relative_path ILIKE %s THEN 1.0 ELSE ts_rank(to_tsvector('simple', COALESCE(content_text,'')), websearch_to_tsquery('simple', %s)) END AS relevance, "
-                "CASE WHEN content_text IS NULL OR content_text='' THEN '' ELSE ts_headline('simple', content_text, websearch_to_tsquery('simple', %s), 'MaxFragments=3,MaxWords=45,MinWords=8') END AS excerpt "
-                "FROM prime_core.repository_files WHERE project_id=%s AND freshness_state='CURRENT' AND (relative_path ILIKE %s OR to_tsvector('simple', COALESCE(content_text,'')) @@ websearch_to_tsquery('simple', %s)) "
+                "CASE WHEN relative_path ILIKE %s THEN 1.0 ELSE GREATEST(ts_rank(to_tsvector('simple', COALESCE(content_text,'')), to_tsquery('simple', %s)), ts_rank(to_tsvector('simple', COALESCE(content_text,'')), websearch_to_tsquery('simple', %s))) END AS relevance, "
+                "CASE WHEN content_text IS NULL OR content_text='' THEN '' ELSE ts_headline('simple', content_text, to_tsquery('simple', %s), 'MaxFragments=3,MaxWords=45,MinWords=8') END AS excerpt "
+                "FROM prime_core.repository_files WHERE project_id=%s AND freshness_state='CURRENT' AND (relative_path ILIKE %s OR to_tsvector('simple', COALESCE(content_text,'')) @@ to_tsquery('simple', %s) OR to_tsvector('simple', COALESCE(content_text,'')) @@ websearch_to_tsquery('simple', %s)) "
                 "ORDER BY relevance DESC, relative_path LIMIT %s",
-                (f"%{query}%", query, query, project_id, f"%{query}%", query, min(max(limit, 1), 100)),
+                (f"%{query}%", fts_query, query, fts_query, project_id, f"%{query}%", fts_query, query, min(max(limit, 1), 100)),
             ).fetchall()
             result = []
             for row in rows:

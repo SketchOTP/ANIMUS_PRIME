@@ -39,3 +39,5 @@ def test_index_is_deterministic_and_searchable(tmp_path: Path, monkeypatch):
     assert first["files_indexed"] == 2
     assert second["source_revision"] == first["source_revision"]
     assert indexer.search(project["project_id"], "README")[0]["relative_path"] == "README.md"
+    natural = indexer.search(project["project_id"], "What does the repository say about phase four?")
+    assert natural and natural[0]["relative_path"] == "README.md"
