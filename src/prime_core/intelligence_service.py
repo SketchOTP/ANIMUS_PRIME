@@ -66,7 +66,13 @@ class IntelligenceService:
         authority: list[RetrievalHit] = []
         for row in repository_rows:
             relative_path = str(row["relative_path"])
-            is_authority = relative_path == "AGENTS.md" or relative_path == "PROJECT_GOAL.md" or relative_path.startswith(".agent/")
+            is_authority = (
+                relative_path == "AGENTS.md"
+                or relative_path.endswith("/AGENTS.md")
+                or relative_path == "PROJECT_GOAL.md"
+                or relative_path.endswith("/PROJECT_GOAL.md")
+                or relative_path.startswith(".agent/")
+            )
             group = "Authority" if is_authority else "Repository"
             target = authority if is_authority else repository
             target.append(retrieval_hit(
