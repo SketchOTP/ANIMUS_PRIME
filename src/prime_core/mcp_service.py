@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import secrets
 from datetime import timedelta
 from typing import Any
@@ -14,6 +15,8 @@ CANONICAL_TOOLS = {
     "prime_memory_store", "prime_memory_recall", "prime_memory_timeline",
     "prime_memory_get", "prime_memory_report_problem", "prime_memory_context",
 }
+SECRET_PATTERN = re.compile(r"(?i)(api[_-]?key|secret|password|token|private[_-]?key)\s*[:=]\s*[^\s]+")
+
 KIND_TO_CLASS = {
     "learning": "LEARNING", "decision_rationale": "RATIONALE", "failure": "FAILURE",
     "procedure": "PROCEDURE", "environment": "ENVIRONMENT", "constraint": "CONSTRAINT",
@@ -66,7 +69,78 @@ class MCPService:
         if not grant:
             return {"error_code": "PROJECT_SCOPE_VIOLATION", "message": "invalid or revoked MCP grant"}
         if tool not in grant["capabilities"]:
-            return {"error_code": "PROJECT_SCOPE_VIOLATION", "message": "capability not granted"}
+            response = {"error_code": "PROJECT_SCOPE_VIOLATION", "message": "capability not granted"}
+            self._record_activity(grant, tool, body, response)
+            return response
+        try:
+            response = self._call_granted(grant, tool, body)
+        except (TypeError, ValueError, KeyError):
+            response = {"error_code": "INVALID_INPUT", "message": "bounded MCP request could not be processed"}
+        except Exception:
+            response = {"error_code": "MCP_EXECUTION_FAILED", "message": "MCP operation failed safely"}
+        self._record_activity(grant, tool, body, response)
+        return response
+
+    @staticmethod
+    def _redact_activity_text(value: Any) -> str | None:
+        if value is None:
+            return None
+        text = " ".join(str(value).split())
+        return SECRET_PATTERN.sub(lambda match: f"{match.group(1)}=[REDACTED]", text)[:2000]
+
+    def _record_activity(self, grant: dict[str, Any], tool: str, body: dict[str, Any], response: dict[str, Any]) -> None:
+        request_key = "query" if tool == "prime_memory_recall" else ("objective" if tool == "prime_memory_context" else "")
+        request_value = self._redact_activity_text(body.get(request_key)) if request_key else None
+        request_kind = "QUERY" if request_key == "query" else ("OBJECTIVE" if request_key == "objective" else "NONE")
+        items: list[Any] = []
+        if isinstance(response.get("results"), list):
+            items = response["results"]
+        elif isinstance(response.get("memory"), list):
+            items = response["memory"]
+        elif isinstance(response.get("result"), dict):
+            items = [response["result"]]
+        elif response.get("memory_id"):
+            items = [{"memory_id": response.get("memory_id")}]
+        memory_ids: list[str] = []
+        source_types: list[str] = []
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            memory_id = item.get("memory_id") or item.get("document_id")
+            if memory_id and str(memory_id) not in memory_ids:
+                memory_ids.append(str(memory_id))
+            source_type = item.get("content_class") or item.get("source_type") or item.get("kind")
+            if source_type and str(source_type) not in source_types:
+                source_types.append(str(source_type))
+        def bounded_int(value: Any, maximum: int) -> int | None:
+            try:
+                parsed = int(value)
+            except (TypeError, ValueError):
+                return None
+            return min(max(parsed, 0), maximum)
+        response_status = response.get("status")
+        error_code = response.get("error_code")
+        status = "FAILED" if error_code else "SUCCEEDED"
+        stored_memory_id = str(response["memory_id"]) if tool == "prime_memory_store" and response.get("memory_id") else None
+        reported_memory_id = str(response["memory_id"]) if tool == "prime_memory_report_problem" and response.get("memory_id") else None
+        with transaction(self.settings) as db:
+            db.execute(
+                "INSERT INTO prime_core.mcp_memory_activity("
+                "activity_id,project_id,grant_id,client_id,tool,request_kind,objective_or_query,"
+                "returned_memory_ids,source_types,requested_max_results,requested_max_tokens,"
+                "actual_result_count,stored_memory_id,reported_memory_id,status,response_status,error_code,created_at"
+                ") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                (
+                    _id("mcpact"), grant["project_id"], grant.get("grant_id", "UNKNOWN"), grant["client_id"],
+                    tool, request_kind, request_value, json.dumps(memory_ids), json.dumps(source_types),
+                    bounded_int(body.get("max_results"), 50), bounded_int(body.get("max_tokens"), 6000),
+                    len(items), stored_memory_id, reported_memory_id, status,
+                    str(response_status)[:80] if response_status is not None else None,
+                    str(error_code)[:120] if error_code else None, now(),
+                ),
+            )
+
+    def _call_granted(self, grant: dict[str, Any], tool: str, body: dict[str, Any]) -> dict[str, Any]:
         project_id = grant["project_id"]
         if tool == "prime_memory_store":
             required = ("kind", "summary", "content")
@@ -127,7 +201,7 @@ class MCPService:
 
     def _grant(self, token: str) -> dict[str, Any] | None:
         with connect(self.settings) as db:
-            row = db.execute("SELECT project_id,client_id,capabilities FROM prime_core.mcp_grants WHERE token_hash=%s AND revoked_at IS NULL AND expires_at>now()", (self.digest(token),)).fetchone()
+            row = db.execute("SELECT grant_id,project_id,client_id,capabilities FROM prime_core.mcp_grants WHERE token_hash=%s AND revoked_at IS NULL AND expires_at>now()", (self.digest(token),)).fetchone()
             if not row:
                 return None
             value = dict(row)

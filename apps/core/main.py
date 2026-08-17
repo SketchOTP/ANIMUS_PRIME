@@ -1455,6 +1455,12 @@ def _project_context(project_id: str) -> dict[str, Any]:
             "SELECT run_id,function,provider,model,profile_revision,prompt_revision,schema_revision,privacy_mode,source_revision_set,status,error_class,created_at,input_tokens,output_tokens "
             "FROM prime_core.ai_runs WHERE project_id=%s ORDER BY created_at DESC LIMIT 8", (project_id,),
         ).fetchall()]
+        mcp_memory_activity = [dict(row) for row in db.execute(
+            "SELECT activity_id,grant_id,client_id,tool,request_kind,objective_or_query,returned_memory_ids,source_types,"
+            "requested_max_results,requested_max_tokens,actual_result_count,stored_memory_id,reported_memory_id,"
+            "status,response_status,error_code,created_at "
+            "FROM prime_core.mcp_memory_activity WHERE project_id=%s ORDER BY created_at DESC LIMIT 50", (project_id,),
+        ).fetchall()]
         grants = [dict(row) for row in db.execute(
             "SELECT grant_id,client_id,capabilities,created_at,expires_at,revoked_at FROM prime_core.mcp_grants WHERE project_id=%s ORDER BY created_at DESC LIMIT 8", (project_id,),
         ).fetchall()]
@@ -1488,7 +1494,7 @@ def _project_context(project_id: str) -> dict[str, Any]:
         "current_work": {"authority": authority_files.get(".agent/CURRENT.md"), "directives": authority_files.get(".agent/DIRECTIVES.md")},
         "authority": {"latest": snapshot.get("authority"), "history": authority_history, "files": authority_files},
         "status": {"progress": snapshot.get("progress"), "progress_history": progress_history, "attention": snapshot.get("attention", []), "alignment": (snapshot.get("alignment") or {}).get("state", "UNKNOWN"), "alignment_detail": snapshot.get("alignment") or {}, "milestones": (snapshot.get("alignment") or {}).get("milestones", [])},
-        "continuity": {"notion": snapshot.get("notion"), "memory": snapshot.get("memory"), "evidence": snapshot.get("evidence"), "ai_runs": ai_runs, "mcp_grants": grants},
+        "continuity": {"notion": snapshot.get("notion"), "memory": snapshot.get("memory"), "evidence": snapshot.get("evidence"), "ai_runs": ai_runs, "mcp_grants": grants, "mcp_memory_activity": mcp_memory_activity},
         "memory": memory_rows,
         "evidence": evidence_rows,
         "activity": snapshot.get("events", []),
