@@ -41,6 +41,8 @@ from src.prime_core.lifecycle_service import LifecycleService
 from src.prime_core.notion_credentials import NotionCredentialRegistry, KNOWN_GRANTED_PAGE
 from src.prime_core.notion_service import NotionApiProvider, NotionLifecycleService
 from src.prime_core.ai_service import AIExecutionService
+from src.prime_core.usage_limits import UsagePolicyService
+from src.prime_core.upgrade_service import UpgradeService
 from src.prime_memory_adapter import PrimeMemoryAdapter
 
 settings = Settings()
@@ -58,6 +60,8 @@ backups = BackupCoordinator()
 history = HistoryService(settings)
 intelligence = IntelligenceService(settings, memory)
 ai = AIExecutionService(settings)
+usage_limits = UsagePolicyService(settings)
+upgrades = UpgradeService(settings)
 brain = BrainService(settings)
 progress = ProgressService(settings)
 lifecycle = LifecycleService(settings)
@@ -240,6 +244,20 @@ class AIExecutionRequest(BaseModel):
     prompt_input: dict[str, Any] = Field(default_factory=dict)
     sources: list[dict[str, Any]] = Field(default_factory=list, max_length=32)
     privacy_mode: str | None = Field(default=None, max_length=40)
+
+
+class UsageLimitRequest(BaseModel):
+    capability: str = Field(min_length=1, max_length=80)
+    period: Literal["DAILY", "MONTHLY"] = "DAILY"
+    max_units: float = Field(gt=0, le=1_000_000_000)
+    enabled: bool = True
+
+
+class UpgradePreflightRequest(BaseModel):
+    target_version: str = Field(min_length=1, max_length=80)
+    target_schema: str | None = Field(default=None, max_length=120)
+    backup_available: bool = False
+    simulate: Literal["NONE", "INTERRUPTED", "FAILED"] = "NONE"
 
 
 class ProductAIRequest(AIExecutionRequest):
@@ -2099,16 +2117,47 @@ def project_usage(project_id: str, request: Request, prime_session: str | None =
         item = dict(row)
         item["cost_state"] = "KNOWN" if item.get("estimated_cost") is not None else "UNAVAILABLE"
         records.append(item)
+    policies = usage_limits.snapshot(project_id)
     return {
         "project_id": project_id,
         "state": "KNOWN" if records else "UNAVAILABLE",
         "reason": "No provider executions are recorded for this project." if not records else "Historical project-scoped usage records loaded.",
-        "limits": {"status": "UNAVAILABLE", "reason": "No project usage limits are configured."},
+        "limits": {"status": "KNOWN", "policies": policies} if policies else {"status": "UNAVAILABLE", "reason": "No project usage limits are configured."},
         "records": records,
     }
+
+
+@app.put("/v1/projects/{project_id}/usage/limits")
+def set_usage_limit(project_id: str, body: UsageLimitRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    return {"project_id": project_id, "limit": usage_limits.upsert(project_id, body.capability, body.period, body.max_units, body.enabled)}
+
+
+@app.delete("/v1/projects/{project_id}/usage/limits/{limit_id}")
+def disable_usage_limit(project_id: str, limit_id: str, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    if not project_exists(project_id):
+        return error("PROJECT_NOT_FOUND", "project not found", request_id(request), status_code=404)
+    if not usage_limits.disable(project_id, limit_id):
+        return error("USAGE_LIMIT_NOT_FOUND", "usage limit not found", request_id(request), status_code=404)
+    return {"project_id": project_id, "limit_id": limit_id, "status": "DISABLED"}
 
 
 @app.get("/v1/system/reliability")
 def reliability_status(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return ReliabilityService(settings).diagnostics()
+
+
+@app.get("/v1/system/upgrade")
+def upgrade_status(request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return upgrades.status(startup_state.get("migrations"))
+
+
+@app.post("/v1/system/upgrade/preflight")
+def upgrade_preflight(body: UpgradePreflightRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return upgrades.preflight(body.target_version, body.target_schema, body.backup_available, body.simulate)

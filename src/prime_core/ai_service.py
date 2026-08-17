@@ -21,6 +21,7 @@ from typing import Any, Callable, Protocol
 
 from .db import connect, transaction
 from .service import now
+from .usage_limits import UsagePolicyService
 
 PRIVACY_MODES = {"CLOUD_MODELS_ALLOWED", "LOCAL_ONLY"}
 PROFILE_REVISION = "prime-ai-profile-v1"
@@ -109,6 +110,12 @@ class AIProviderError(RuntimeError):
     def __init__(self, error_class: str, message: str = "provider unavailable"):
         super().__init__(message)
         self.error_class = error_class
+
+
+class UsageLimitExceeded(AIInputError):
+    def __init__(self, decision: dict[str, Any]):
+        super().__init__(decision.get("reason", "project usage limit would be exceeded"))
+        self.decision = decision
 
 
 class UnconfiguredProvider:
@@ -381,6 +388,7 @@ class AIExecutionService:
         if configured is not None and provider_name and provider_name not in self.providers:
             self.providers[provider_name] = configured
         self.clock = clock
+        self.usage = UsagePolicyService(settings, clock=clock)
         self.default_provider = os.getenv("PRIME_AI_PROVIDER", "unconfigured").strip() or "unconfigured"
         self.default_model = os.getenv("PRIME_AI_MODEL", "unconfigured").strip() or "unconfigured"
         self.default_privacy = os.getenv("PRIME_AI_PRIVACY_MODE", "LOCAL_ONLY").strip().upper() or "LOCAL_ONLY"
@@ -415,6 +423,13 @@ class AIExecutionService:
         provider = self.providers.get(profile.provider)
         try:
             context, source_set = admit_sources(project_id, sources, privacy_mode=profile.privacy_mode)
+            projected_units = max(
+                1,
+                (len(json.dumps(prompt_input, sort_keys=True, separators=(",", ":"))) + sum(len(str(item)) for item in context) + 3) // 4,
+            )
+            usage_decision = self.usage.check(project_id, profile.function, projected_units)
+            if not usage_decision["allowed"]:
+                raise UsageLimitExceeded(usage_decision)
             if profile.privacy_mode == "LOCAL_ONLY" and not _provider_is_local(profile.provider, provider):
                 raise AIPrivacyError("LOCAL_ONLY blocks non-local model provider")
             if provider is None:
@@ -444,9 +459,11 @@ class AIExecutionService:
             input_tokens = output_tokens = estimated_cost = None
             usage_metadata = {"message": "provider unavailable"}
         except (AIInputError, ValueError) as exc:
-            status, error_class, output = "REJECTED", "INVALID_OUTPUT_OR_INPUT", {"category": "UNKNOWN", "answer": "UNKNOWN: model output or input was rejected.", "citations": []}
+            status = "REJECTED"
+            error_class = "USAGE_LIMIT_EXCEEDED" if isinstance(exc, UsageLimitExceeded) else "INVALID_OUTPUT_OR_INPUT"
+            output = {"category": "UNKNOWN", "answer": "UNKNOWN: project usage limit prevents this model run." if isinstance(exc, UsageLimitExceeded) else "UNKNOWN: model output or input was rejected.", "citations": []}
             input_tokens = output_tokens = estimated_cost = None
-            usage_metadata = {"message": str(exc)}
+            usage_metadata = {"message": str(exc), **(exc.decision if isinstance(exc, UsageLimitExceeded) else {})}
         except Exception:
             status, error_class, output = "DEGRADED", "PROVIDER_ERROR", {"category": "UNKNOWN", "answer": "UNKNOWN: model execution failed.", "citations": []}
             input_tokens = output_tokens = estimated_cost = None
