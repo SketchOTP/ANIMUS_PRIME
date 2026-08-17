@@ -760,3 +760,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The existing Qualification Project and PRIME MCP boundary were used through the real persistent Core. Recall, context, timeline, and memory-get calls produced durable project-scoped activity rows containing bounded request identity, returned memory IDs, source types, grant/client identity, budgets, statuses, and response state. The authenticated Memory UI exposes the derived `PROJECT_BOUND_MCP_MEMORY_CALLS` surface separately from generic model runs. The exact projection remained present after a PRIME-owned service restart with a new MainPID/start time and the same persistent image/schema. Temporary grants were revoked. DOD-031 remains blocked by the legitimate non-empty selected Notion source prerequisite; no synthetic state or unrelated gate changed.
 - Affected areas: MCP memory activity migration/service, Core context, Memory UI, focused MCP test scope, Continuation 080 evidence, R-054 supporting records, DOD-032 audit/burndown, persistent Core image, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-079
+
+## DEC-PRIME-PHASE15-081
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-081
+- Status: CLOSED
+- Decision or event: Close Continuation 081 as PARTIAL after the consolidated local sweep and promote only DOD-026 and DOD-076.
+- Rationale: The real persistent Atlas product and enrolled Node qualified the live-revision Progress reassessment and bounded reversible workflow contract. The minimal Progress repair uses the live Node canonical revision, reconciles stale binding state, and preserves correction history. Other rows were either honestly partial or required legitimate external/secondary targets that were not available. The governed queue is 61 complete / 20 open. No synthetic state, public exposure, deployment, Funnel change, Phase 16, DOD-005, DOD-081, or R-056 closure was attempted.
+- Affected areas: live-Node Progress refresh, focused tests, persistent Core image `animus-prime-core:continuation-081-final`, evidence, audit/burndown/traceability/matrix/ledger, and append-only project records.
+- Supersedes record: DEC-PRIME-PHASE15-080

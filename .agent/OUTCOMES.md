@@ -2311,3 +2311,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-031, DOD-005, remaining external/provider/legitimate-target requirements, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
 - Blockers: none for DOD-032; browser daemon redirection prevented a clean post-restart second DOM snapshot, while exact persisted Core context was verified after restart.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-CONSOLIDATED-081 - PARTIAL
+
+- Outcome ID: O-PRIME-081
+- Supersedes outcome: O-PRIME-080
+- Closed: 2026-08-17T08:33:00-04:00
+- Acceptance: PARTIAL
+- Summary: The consolidated local sweep used the real persistent Atlas product and enrolled Node. A minimal Progress repair made reassessment follow the live canonical Node revision, reconcile the binding, preserve stale history, and link the open correction to the new assessment. DOD-026 and DOD-076 were promoted to USER_USABLE_VERIFIED. DOD-024, DOD-054, DOD-057, and DOD-077 remain PARTIAL after honest negative and bounded operator qualification. The queue reconciles to 61 complete / 20 open.
+- Changed areas: live-Node Progress refresh, focused Continuation 081 tests, persistent Core image `animus-prime-core:continuation-081-final`, evidence, audit/burndown/traceability/matrix/ledger, and append-only records. Existing unrelated dirty files and untracked artifacts were preserved.
+- Validation:
+  - focused Continuation 081 checks - PASSED; 2 passed
+  - Phase 15 suite - PASSED; 52 passed, 10 skipped
+  - full supported Atlas regression - PASSED; 115 passed, 29 skipped
+  - persistent Core rebuild/health/listener uniqueness/build provenance - PASSED
+  - compileall and git diff --check - PASSED
+  - governance and burndown validation - PASSED
+  - product alignment audit - PASSED; V1 gate remains FAILED/incomplete
+  - deployment/public exposure - NOT PERFORMED
+- DOD/R result: DOD-026 and DOD-076 promoted; DOD-024/054/057/077 reconciled partial; DOD-005 remains parked; external target rows, DOD-081, R-056, Phase 15, and V1 remain open or gated.
+- Remaining risks: backup/usage/upgrade/second-target/destructive positive clauses, external Notion/Hindsight/provider/Windows/Tailscale resources, DOD-005, DOD-081, R-056, and Phase 15/V1.
+- Blockers: legitimate target and external-environment prerequisites remain unavailable; no blocker remains for the bounded Progress repair.
+- Follow-up directive: none

@@ -8,7 +8,7 @@ purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 5
-  LOCAL_BROWSER_QUALIFICATION: 12
+  LOCAL_BROWSER_QUALIFICATION: 10
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
   EXTERNAL_ENVIRONMENT: 5
@@ -115,11 +115,11 @@ items:
     depends_on: "R-048"
     acceptance_kind: "MIXED"
   - dod_id: DOD-024
-    current_status: "UI_SHELL_ONLY"
+    current_status: "PARTIAL"
     product_area: "lifecycle"
     owner_phase: 13
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Only a generic protected-action dialog is exposed and it safely refuses without a specific lifecycle workflow; PAUSED, COMPLETION_REVIEW, and operator-confirmed COMPLETED remain unqualified."
+    exact_missing_behavior: "Persistent PAUSED, RESUME, COMPLETION_REVIEW, and cancellation paths passed through the real UI; operator-confirmed terminal COMPLETED was not executed against the canonical project and remains open."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -133,36 +133,11 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Projects support PAUSED, COMPLETION_REVIEW, and operator-confirmed COMPLETED.' still lacks data-backed behavior at 'Open lifecycle from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md"]
+    next_action: "Preserve the qualified reversible lifecycle evidence; only a legitimate approved terminal-completion target can close the remaining COMPLETED clause."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-026
-    current_status: "PARTIAL"
-    product_area: "Progress/Alignment"
-    owner_phase: 8
-    mapped_r_requirements: ["R-055"]
-    exact_missing_behavior: "Browser showed GoalItems, per-item Alignment UNKNOWN, stable milestone identities, and append-only correction history; complete truthful correction/challenge acceptance remains unqualified."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Qualify the remaining Goal Alignment, milestone, and append-only correction/challenge clauses before promotion."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-044.md","evidence/phase15/qualification-continuation-045.md","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-055"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-031
     current_status: "BACKEND_ONLY"
@@ -340,11 +315,11 @@ items:
     depends_on: "R-036"
     acceptance_kind: "MIXED"
   - dod_id: DOD-054
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    current_status: "PARTIAL"
     product_area: "registration"
     owner_phase: 3
     mapped_r_requirements: ["R-046"]
-    exact_missing_behavior: "Node-constrained inspection/registration exists; the browser negative matrix was not safely exercised through the existing project's UI without creating a project or mutating the canonical binding, so duplicate/outside-root/traversal/nonexistent/confirm=false clauses remain."
+    exact_missing_behavior: "Existing canonical inspection and the complete safe refusal matrix passed through the authenticated UI/API; positive binding against a fresh legitimate target was intentionally not performed, so complete registration lifecycle qualification remains open."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "NO"
     requires_browser: "YES"
@@ -358,8 +333,8 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'Node-constrained inspection/registration exists; complete browser negative matrix and live enrolled-Node lifecycle qualification remain.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md"]
+    next_action: "Preserve the complete safe refusal matrix; qualify positive registration only when a legitimate unbound target exists."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-046"
@@ -390,11 +365,11 @@ items:
     depends_on: "R-036"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-057
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
+    current_status: "PARTIAL"
     product_area: "authority provisioning"
     owner_phase: 3
     mapped_r_requirements: ["R-003"]
-    exact_missing_behavior: "Current authority validity and source hash are visible; no supported non-overwriting idempotent provisioning action is exposed, and fresh provisioning remains unqualified."
+    exact_missing_behavior: "Authenticated review and adopt-current are idempotent and make no rewrite; fresh provisioning against an uninitialized legitimate target remains unqualified."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "NO"
     requires_browser: "YES"
@@ -408,8 +383,8 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'Explicit bootstrap/adopt/review API boundaries exist; manifest/hash/idempotency and complete browser qualification remain.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/authority.py","evidence/phase15/qualification-continuation-063.md"]
+    next_action: "Preserve the idempotent no-rewrite evidence; qualify fresh provisioning only against a legitimate uninitialized target."
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/authority.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-003"
@@ -439,37 +414,12 @@ items:
     blocked_by: "NONE"
     depends_on: "R-051"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-076
-    current_status: "UI_SHELL_ONLY"
-    product_area: "lifecycle safety"
-    owner_phase: 13
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Only a generic protected-action control exists; distinct remove/archive/delete behavior is not exposed and remains unqualified."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Remove, archive, and delete are distinct and safe.' still lacks data-backed behavior at 'Open lifecycle safety from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-077
-    current_status: "UI_SHELL_ONLY"
+    current_status: "PARTIAL"
     product_area: "delete"
     owner_phase: 13
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Generic protected-action dialog cancel/refusal is exercised, but no data-backed delete endpoint or step-up/audit matrix is exposed and no deletion was attempted."
+    exact_missing_behavior: "Delete preflight requires exact identity and recent step-up, and wrong-target confirmation was safely refused without mutation; authorized positive deletion and complete audit/recovery matrix remain unqualified."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -483,8 +433,8 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Destructive project deletion is protected and audited.' still lacks data-backed behavior at 'Open delete from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md"]
+    next_action: "Preserve the protected refusal evidence; only an explicitly authorized destructive qualification target may close positive deletion."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "NONE"
     depends_on: "R-056; aggregate R-056 gate"

@@ -910,3 +910,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 080 DOD-032 durable MCP AI Memory Activity only.
 - Supersedes learning: L-PRIME-WARM-START-MEMORY-SURFACES-079
+
+## L-PRIME-LIVE-NODE-PROGRESS-REASSESSMENT-081
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-LIVE-NODE-PROGRESS-REASSESSMENT-081
+- Fact or lesson: Progress truth must come from the enrolled repository Node's live canonical revision, not the PRIME Core checkout. Refresh must reconcile a changed binding before assessment, mark older assessments stale, and link an open stale-source correction to the new reassessment while preserving append-only history. This permits truthful operator reassessment after repository change without creating synthetic corrections or rewriting project history.
+- Evidence location: evidence/phase15/qualification-continuation-081.md; apps/core/main.py; src/prime_core/progress_service.py; tests/phase15/test_continuation_081_progress.py
+- Confidence: VERIFIED
+- Scope: Continuation 081 live-Node Progress and Goal Alignment qualification only.
+- Supersedes learning: none

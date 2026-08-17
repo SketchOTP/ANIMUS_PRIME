@@ -1114,3 +1114,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-CONSOLIDATED-081
+
+- Issued: 2026-08-17T08:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 081
+- Objective: Execute the consolidated Phase 15 local completion sweep against the persistent Atlas topology, qualify all safe actionable DODs, preserve truthful external/parked blockers, and publish one per-DOD evidence matrix.
+- Scope: DOD-004, DOD-024, DOD-026, DOD-047, DOD-049, DOD-050, DOD-053, DOD-054, DOD-057, DOD-058, DOD-076, DOD-077, DOD-080; reassess DOD-013, DOD-016, DOD-031, DOD-039, DOD-044, DOD-055, DOD-079; recompute DOD-081/R-056.
+- Exclusions: no synthetic targets; no DOD-005; no destructive canonical-project mutation; no public exposure/deployment/Phase 16; no automatic Continuation 082; direct Atlas SSH only.
+- Acceptance: Qualify complete safe local clauses only; preserve exact external and aggregate blockers; publish per-DOD evidence, reconciled governance, exact Git parity, and the living Notion journal/checkpoint without V1 or deployment claims.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-DURABLE-MCP-MEMORY-ACTIVITY-080
+- Status at issuance: ISSUED
