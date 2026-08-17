@@ -93,5 +93,8 @@ def test_rebind_and_workflow_contracts_are_exposed():
         assert symbol in service
     for table in ("repository_continuity_anchors", "repository_rebind_preflights", "repository_rebind_history", "workflow_steps", "workflow_resources"):
         assert f"prime_core.{table}" in migration
+    assert '"candidate_path": candidate["candidate_path"]' in service
+    assert '"candidate_location_fingerprint": candidate["candidate_location_fingerprint"]' in service
+    assert '"candidate_path", "candidate_location_fingerprint", "candidate_head"' in service
     assert "/v1/projects/{project_id}/repository/rebind/preflight" in main
     assert "/v1/projects/{project_id}/repository/rebind/confirm" in main

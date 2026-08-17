@@ -1141,3 +1141,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-CONSOLIDATED-081
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-GOAL-REALIZATION-LAB-083
+- Issued: 2026-08-17T12:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 083
+- Objective: Exhaust safe local and explicitly authorized isolated qualification-fixture work toward the frozen PRIME V1 goal, then normalize every remaining requirement into verified state or a concrete external-resource gate.
+- Scope: DOD-004, DOD-005, DOD-013, DOD-016, DOD-024, DOD-031, DOD-039, DOD-044, DOD-047, DOD-049, DOD-053, DOD-054, DOD-055, DOD-057, DOD-058, DOD-077, DOD-079, DOD-080, DOD-081, and R-056 prerequisites; one tracked durable `V1_QUALIFICATION_FIXTURE` lab only; full supported regression and governance reconciliation.
+- Exclusions: no destructive mutation of the canonical Qualification Project; no public exposure/deployment/Funnel; no Phase 16; no frozen-spec changes; no unapproved credentials; no additional fixture outside the tracked lab; no automatic Continuation 084.
+- Acceptance: Qualify complete frozen clauses only; preserve exact external blockers; publish the per-row evidence matrix, fixture ledger, full validation, exact Git parity, and living Notion journal/checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-LOCAL-RELEASE-CLOSURE-082
+- Status at issuance: ISSUED
