@@ -40,6 +40,17 @@ class CoreService:
     def __init__(self, settings: Settings):
         self.settings = settings
 
+    @staticmethod
+    def _authority_template_root() -> Path:
+        configured = os.getenv("PRIME_AUTHORITY_TEMPLATE_ROOT")
+        candidates = [Path(configured)] if configured else []
+        candidates.extend((Path("authority-template/v1"), Path("/home/sketch/Projects/ANIMUS_PRIME/authority-template/v1")))
+        for candidate in candidates:
+            resolved = candidate.expanduser().resolve()
+            if (resolved / "AGENTS.md").is_file():
+                return resolved
+        raise FileNotFoundError("authority-template/v1/AGENTS.md")
+
     def bootstrap(self, password: str) -> str:
         if len(password) < 12:
             raise ValueError("password must contain at least 12 characters")
@@ -712,11 +723,12 @@ class CoreService:
         root = Path(row["canonical_path"]).resolve(strict=True)
         if (root / ".agent").exists():
             raise FileExistsError("authority already exists; use explicit adopt or review flow")
-        result = provision_authority(Path("authority-template/v1").resolve(), root)
+        template_root = self._authority_template_root()
+        result = provision_authority(template_root, root)
         authority = validate_authority(root)
         with transaction(self.settings) as db:
             db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
-        self.record_authority_revision(project_id, ".agent", hashlib.sha256(json.dumps(authority, sort_keys=True).encode()).hexdigest(), "VALID", {"provenance": "operator-approved authority-template/v1", "template_manifest": str(Path("authority-template/v1/MANIFEST.sha256").resolve())}, canonical_commit=None)
+        self.record_authority_revision(project_id, ".agent", hashlib.sha256(json.dumps(authority, sort_keys=True).encode()).hexdigest(), "VALID", {"provenance": "operator-approved authority-template/v1", "template_manifest": str(template_root / "MANIFEST.sha256")}, canonical_commit=None)
         return {"project_id": project_id, "authority": result, "state": "CURRENT", "template": "authority-template/v1"}
 
     def review_or_adopt_project_authority(self, project_id: str, decision: str, confirm: bool = False) -> dict[str, Any]:
@@ -784,7 +796,7 @@ class CoreService:
         with connect(self.settings) as db:
             row = db.execute("SELECT canonical_path FROM prime_core.repositories WHERE project_id=%s", (project_id,)).fetchone()
         root = Path(row["canonical_path"]).resolve(strict=True)
-        result = migrate_authority(Path("authority-template/v1").resolve(), root, {
+        result = migrate_authority(self._authority_template_root(), root, {
             relative: (root / relative).read_text(encoding="utf-8", errors="replace")
             for relative in REQUIRED_AUTHORITY_FILES
             if (root / relative).is_file()
@@ -1036,7 +1048,7 @@ class CoreService:
                 candidate = target / relative
                 if candidate.is_file() or candidate.is_symlink():
                     candidate.unlink()
-            provision_authority(Path("authority-template/v1").resolve(), target)
+            provision_authority(self._authority_template_root(), target)
             inspection = self.inspect_repository_for_onboarding(project["project_id"], destination_node_id, str(target))
             binding = self.bind_verified_repository(inspection, confirm=True)
             if goal:
