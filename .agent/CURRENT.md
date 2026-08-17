@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-17T02:00:00-04:00
+- Last updated: 2026-08-16T22:30:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 078
-- Objective: Repair the shared retrieval/grounding boundary used by PRIME Unified Search and Ask.
+- Local directive ID: D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 079
+- Objective: Qualify Warm Start and persistent project-scoped Memory Inspector, Timeline, and AI Memory Activity.
 - Current status: `COMPLETE`
-- Acceptance: DOD-021 and DOD-022 complete frozen operator contracts passed for the bounded shared retrieval/grounding scope; no automatic follow-up directive.
-- Current phase: SHARED_RETRIEVAL_GROUNDING_REPAIR_078
-- Expected or actual touched areas: Repository search projection, canonical Git reads, Notion Search projection, PRIME-side Memory relevance filtering, shared retrieval hits, Ask source admission/citations, focused tests, persistent runtime, browser requalification, and governed records. No unrelated infrastructure or public exposure.
-- Immediate next action: Preserve the qualified persistent topology and await an explicit next directive; keep DOD-005, DOD-081, R-056, Phase 16, and deployment gated.
+- Acceptance: Warm Start is blocked by no legitimate non-empty selected Notion source. Memory surfaces render and survive restart, but DOD-032 remains IMPLEMENTED_NOT_PRODUCT_QUALIFIED because durable AI activity objective/query, returned memory IDs, and session/client identity are missing.
+- Current phase: WARM_START_MEMORY_SURFACES_079
+- Expected or actual touched areas: Memory projection/UI, Continuation 079 evidence, DOD-016/031/032/044 reconciliation, persistent Core image, and append-only records. No unrelated infrastructure or public exposure.
+- Immediate next action: Preserve the qualified topology and await an explicit directive; keep DOD-005, DOD-081, R-056, Phase 16, and deployment gated.
 
 ## Temporary task-relevant facts
 
@@ -25,12 +25,12 @@
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
 - Runtime image identity is `animus-prime-core:continuation-078-r9`; persistent Core build commit `ed6b9f8b5ffae8a4fe73532f10fc162013da10a0`; schema `0037_shared_retrieval_projection.sql`; the approved runtime Notion credential remains available only through Atlas secure configuration; no synthetic target, deployment, public exposure, Funnel change, or Phase 16 occurred.
 - Approved Notion sandbox parent is `3be833cb-27ff-814f-af89-ebfc3a2a8aed`; project record page is `3be833cb-27ff-8159-add6-e883c1cc54af`; controlled probe child is `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`.
-- Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart.
+- Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart. Continuation 079 Memory surfaces render existing project data with provenance/isolation; Warm Start lacks a legitimate non-empty selected Notion source.
 - Untracked .codebase-memory/, .prime-evidence/, and .vscode/ remain preserved.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 078 shared retrieval/grounding repair, persistent Core readiness, browser Search/Ask qualification, focused/full regression, governance, burndown, compile, diff, and secret checks
+- Command or check: Continuation 079 Memory surfaces, persistent Core readiness/restart, browser qualification, focused/full regression, compile, and governed reconciliation
 - Result: `PASSED`
 
 ## Risks

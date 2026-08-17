@@ -1087,3 +1087,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079
+- Issued: 2026-08-16T22:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 079
+- Objective: Qualify DOD-031 Warm Start and DOD-032 persistent Memory Inspector, Timeline, and AI Memory Activity against existing PRIME project, bank, Notion, and Atlas runtime.
+- Scope: Direct Atlas SSH; existing PRIME project/bank/Core/UI/PostgreSQL/Hindsight/Node; bounded Notion gate; minimal Memory UI repair; browser/restart evidence and governed closeout.
+- Exclusions: No synthetic targets, new backend/search/Hindsight architecture, DOD-016/044 promotion, DOD-005, lifecycle deletion/archive, DOD-081, R-056, Windows/second-device/Tailscale, Phase 16, deployment/public exposure, or automatic 080.
+- Acceptance: Promote only complete frozen contracts; record exact operator prerequisite for Warm Start and preserve DOD-032 partial if durable AI-activity identity fields are absent.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078
+- Status at issuance: ISSUED

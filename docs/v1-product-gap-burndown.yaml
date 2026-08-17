@@ -7,11 +7,11 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 5
+  LOCAL_CODE: 6
   LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 6
+  EXTERNAL_ENVIRONMENT: 5
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -111,7 +111,7 @@ items:
     next_action: "Complete browser fork completeness; separate LOCAL_COMPLETE from live Notion/Hindsight external evidence."
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-031.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","migrations/prime/0026_product_completion_wave3.sql"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    blocked_by: "LEGITIMATE_DISTINCT_CHILD_NOTION_PROJECT_RECORD_AND_CHILD_HINDSIGHT_TARGET_REQUIRED"
     depends_on: "R-048"
     acceptance_kind: "MIXED"
   - dod_id: DOD-024
@@ -169,7 +169,7 @@ items:
     product_area: "warm start"
     owner_phase: 9
     mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The frozen criterion requires: Warm start seeds high-value .agent and selected Notion knowledge without bulk ingestion.. The missing operator behavior is a qualified path at 'Open warm start from PRIME.'; backend capability alone is not sufficient."
+    exact_missing_behavior: "The frozen criterion requires a qualified PRIME warm-start path that seeds high-value .agent history and explicitly selected non-empty Notion knowledge without bulk ingestion. The existing managed record contains only PRIME-managed status/history metadata and the approved probe page is blank/retracted; no legitimate selected Notion knowledge payload is available."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "YES"
     requires_browser: "NO"
@@ -183,35 +183,35 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Warm start seeds high-value .agent and selected Notion knowledge without bulk ingestion.. The missing operator behavior is a qualified path at 'Open warm start from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
+    next_action: "Provide one operator-approved, legitimate, non-empty Notion knowledge source for the existing Qualification Project, then qualify the bounded .agent plus selected-Notion warm-start path without bulk ingestion."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    blocked_by: "LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START"
     depends_on: "R-054"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-032
-    current_status: "UI_SHELL_ONLY"
+    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "Memory UI"
     owner_phase: 9
     mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The named UI exists, but the criterion 'Memory Inspector, Timeline, and AI Memory Activity are usable and isolated.' still lacks data-backed behavior at 'Open Memory UI from PRIME.'."
-    work_class: "EXTERNAL_ENVIRONMENT"
+    exact_missing_behavior: "The persistent UI now exposes project-scoped Memory Inspector records, a durable event timeline, and AI Memory Activity with source-revision identities and token usage. The complete frozen activity contract remains unqualified because the current ai_runs/event schema does not retain/display the originating objective/query, returned memory IDs, or session/client identity."
+    work_class: "LOCAL_CODE"
     requires_code: "YES"
     requires_browser: "YES"
     requires_native_linux: "NO"
     requires_windows: "NO"
     requires_tailscale: "NO"
     requires_second_device: "NO"
-    requires_hindsight: "YES"
+    requires_hindsight: "NO"
     requires_external_at: "NO"
     requires_live_notion: "NO"
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The named UI exists, but the criterion 'Memory Inspector, Timeline, and AI Memory Activity are usable and isolated.' still lacks data-backed behavior at 'Open Memory UI from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    next_action: "Add or qualify only the missing durable AI Memory Activity identity fields (objective/query, returned memory IDs, session/client) against the existing project-scoped ledger; do not fabricate activity."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-079.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    blocked_by: "AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED"
     depends_on: "R-054"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-039
@@ -261,7 +261,7 @@ items:
     next_action: "Run the bounded qualification for 'Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains.'; promote only if every clause passes and append direct evidence."
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Approved Hindsight retain/bank environment is not currently qualified."
+    blocked_by: "LEGITIMATE_FRESH_INSTALL_BROWSER_TARGET_REQUIRED_FOR_COMPLETE_ONBOARDING"
     depends_on: "R-051"
     acceptance_kind: "MIXED"
   - dod_id: DOD-047

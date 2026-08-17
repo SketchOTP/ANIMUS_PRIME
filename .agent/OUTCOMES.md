@@ -2273,3 +2273,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-005, external/provider/legitimate-target clauses, DOD-081, R-056, Phase 15/V1, deployment.
 - Blockers: none for this bounded shared retrieval / grounding repair.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079 - PARTIAL
+- Outcome ID: O-PRIME-079
+- Supersedes outcome: O-PRIME-078
+- Closed: 2026-08-16T22:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Existing Qualification Project and PRIME Hindsight bank were reused without synthetic state. No legitimate non-empty operator-selected Notion source exists for Warm Start because the managed record contains only status/history metadata and the approved probe is blank with bindings detached/retracted. The persistent product exposes project-scoped Inspector, Timeline, AI Memory Activity, and the derived non-authoritative Mental Model with provenance, isolation, restart recovery, and truthful Notion degradation. DOD-032 remains unqualified because objective/query, returned memory IDs, and session/client identity are not persisted.
+- Changed areas: Memory projection/UI, DOD-016/031/032/044 reconciliation, Continuation 079 evidence, and append-only agent records; unrelated dirty files/untracked artifacts preserved.
+- Validation:
+  - focused Phase 15 suite - PASSED; 50 passed, 10 skipped
+  - full supported Atlas regression - PASSED; 113 passed, 28 skipped
+  - compileall, persistent image build, and user-systemd restart/recovery - PASSED
+  - authenticated browser Memory Inspector/Timeline/AI Activity and isolation - PASSED
+  - governance, burndown, diff, secret, and Git parity - PASSED at publication closeout
+  - deployment/public exposure - NOT PERFORMED
+- Remaining risks: legitimate non-empty operator-selected Notion source for DOD-031; missing durable AI activity objective/query, returned memory IDs, and session/client identity for DOD-032; DOD-005; DOD-081; R-056; remaining external/provider/target clauses; Phase 15/V1.
+- Blockers: LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START; AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED.
+- Follow-up directive: none

@@ -741,3 +741,12 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Real authenticated browser qualification on the persistent Atlas product proved content-aware Repository/.agent retrieval, canonical Git, attached and retracted Notion projection, Memory relevance flooring, Activity grouping, truthful all-group no-result behavior, grounded Ask citations with admitted revision/hash identity, and safe UNKNOWN behavior. The repair reused the existing persistent topology and did not create synthetic resources or public exposure.
 - Affected areas: shared retrieval contract, repository index migration, Git/Notion/Search/Memory adapters, Ask grounding/citation validation, persistent Core image `animus-prime-core:continuation-078-r9`, evidence, traceability, audit, burndown, and append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-077
+
+## DEC-PRIME-PHASE15-079
+- Date: 2026-08-16
+- Record or decision ID: DEC-PRIME-PHASE15-079
+- Status: CLOSED
+- Decision or event: Close Continuation 079 as PARTIAL without promoting DOD-031 or DOD-032; reconcile stale DOD-016 and DOD-044 blockers to legitimate-target prerequisites.
+- Rationale: No legitimate non-empty selected Notion source exists for Warm Start. The minimal repair exposes existing project-scoped Inspector, Timeline, and AI Activity data with provenance, isolation, restart recovery, and derived non-authoritative labeling. DOD-032 remains open because objective/query, returned memory IDs, and session/client identity are not persisted. No synthetic target, new backend, Hindsight change, public exposure, or unrelated service change was used.
+- Affected areas: Memory projection/UI, Continuation 079 evidence, DOD-016/031/032/044 records, persistent Core image animus-prime-core:continuation-079, and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-078

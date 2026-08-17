@@ -891,3 +891,12 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 078 shared retrieval and grounding repair only.
 - Supersedes learning: L-PRIME-ASK-SEARCH-REQUALIFICATION-077
+
+## L-PRIME-WARM-START-MEMORY-SURFACES-079
+- Date: 2026-08-16
+- Learning ID: L-PRIME-WARM-START-MEMORY-SURFACES-079
+- Fact or lesson: Warm Start requires an existing project and bank, high-value agent state, and an explicitly selected non-empty Notion source. Managed status/history metadata and a blank/retracted probe are not a truthful source. A persistent UI may expose existing inspector/timeline/activity data while the complete AI activity contract remains unqualified when query, returned memory IDs, and session/client identity are not durably persisted.
+- Evidence location: evidence/phase15/qualification-continuation-079.md; docs/v1-product-gap-burndown.yaml; apps/core/main.py; apps/web/index.html
+- Confidence: VERIFIED
+- Scope: Continuation 079 Warm Start and Memory surfaces.
+- Supersedes learning: none
