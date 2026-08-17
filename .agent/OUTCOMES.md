@@ -2407,7 +2407,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - burndown validation - PASSED
   - product alignment audit - PASSED; historical V1 alignment gate remains incomplete
   - persistent runtime and browser qualification for the bounded `.agent` path - PASSED
-- DOD/R result: no DOD/R promotion; DOD-031 remains BACKEND_ONLY / external because a legitimate non-empty operator-selected Notion knowledge source is unavailable. DOD-005 remains parked; DOD-081/R-056, Phase 15, V1, and deployment remain open.
+- DOD/R result: no new DOD/R promotion; DOD-031 remains BACKEND_ONLY / external because a legitimate non-empty operator-selected Notion knowledge source is unavailable. DOD-005 remains already PRODUCT_VERIFIED; DOD-081/R-056, Phase 15, V1, and deployment remain open.
 - Remaining risks: selected non-empty Notion knowledge, durable multi-system workflow breadth, provider cost attribution, independent restore target, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, remaining browser clauses, and aggregate release qualification.
 - Blockers: no blocker to the bounded Warm Start implementation; the complete frozen DOD-031 clause is blocked by the exact selected Notion resource state recorded in Continuation 085 evidence.
 - Follow-up directive: none
