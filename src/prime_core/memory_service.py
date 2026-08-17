@@ -63,25 +63,24 @@ class MemoryService:
             if document_id in allowed:
                 score = None
                 if isinstance(item, dict):
-                    for key in ("score", "relevance", "similarity"):
-                        value = item.get(key)
-                        if isinstance(value, (int, float)):
-                            score = float(value)
-                            break
-                    if score is None and isinstance(item.get("result"), dict):
-                        nested = item["result"]
-                        for key in ("score", "relevance", "similarity"):
-                            value = nested.get(key)
-                            if isinstance(value, (int, float)):
-                                score = float(value)
-                                break
-                        if score is None and isinstance(nested.get("scores"), dict):
-                            scores = nested["scores"]
-                            for key in ("final", "reranker", "semantic", "keyword"):
-                                value = scores.get(key)
-                                if isinstance(value, (int, float)):
+                    candidates = [item]
+                    nested = item.get("result")
+                    if isinstance(nested, dict):
+                        candidates.extend([nested, nested.get("scores")])
+                    candidates.append(item.get("scores"))
+                    for candidate in candidates:
+                        if not isinstance(candidate, dict):
+                            continue
+                        for key in ("score", "relevance", "similarity", "final", "reranker", "semantic", "keyword"):
+                            value = candidate.get(key)
+                            if value is not None:
+                                try:
                                     score = float(value)
-                                    break
+                                except (TypeError, ValueError):
+                                    continue
+                                break
+                        if score is not None:
+                            break
                 if min_relevance is not None and (score is None or score < min_relevance):
                     continue
                 results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "branch_context": allowed[document_id]["branch_context"], "metadata": allowed[document_id]["metadata"], "relevance": score, "result": item})
