@@ -23,6 +23,14 @@ class WarmStartService:
         ".agent/RECORD.md",
         ".agent/DIRECTIVES.md",
     )
+    AUTHORITY_CONTENT_CLASSES = {
+        ".agent/PROJECT_GOAL.md": "CONSTRAINT",
+        ".agent/CURRENT.md": "OBSERVATION",
+        ".agent/OUTCOMES.md": "OBSERVATION",
+        ".agent/LEARNINGS.md": "LEARNING",
+        ".agent/RECORD.md": "DECISION",
+        ".agent/DIRECTIVES.md": "DECISION",
+    }
     MAX_AUTHORITY_BYTES = 40_000
     MAX_NOTION_BYTES = 40_000
 
@@ -177,6 +185,12 @@ class WarmStartService:
         )
         return result
 
+    @classmethod
+    def _content_class(cls, source_class: str, locator: str) -> str:
+        if source_class == "AUTHORITY":
+            return cls.AUTHORITY_CONTENT_CLASSES.get(locator, "OBSERVATION")
+        return "OBSERVATION"
+
     def run(self, project_id: str, authority_paths: list[str], notion_source_binding_ids: list[str], confirm: bool = False) -> dict[str, Any]:
         if not confirm:
             raise ValueError("Warm Start requires explicit confirmation")
@@ -197,7 +211,7 @@ class WarmStartService:
             if SECRET_PATTERN.search(content):
                 rejected.append({**candidate, "status": "REJECTED", "reason": "secret-sensitive content rejected"})
                 continue
-            admitted.append(self._admit(project_id, content, "AUTHORITY", "AUTHORITY", relative_path, revision, candidate["content_hash"], {"authority_path": relative_path, "authority_classification": "AUTHORITATIVE"}))
+            admitted.append(self._admit(project_id, content, self._content_class("AUTHORITY", relative_path), "AUTHORITY", relative_path, revision, candidate["content_hash"], {"authority_path": relative_path, "authority_classification": "AUTHORITATIVE"}))
         selected = set(notion_source_binding_ids)
         for candidate in self._notion_candidates(project_id):
             if candidate.get("source_binding_id") not in selected:
@@ -220,6 +234,6 @@ class WarmStartService:
             if SECRET_PATTERN.search(content):
                 rejected.append({"source_class": "NOTION_KNOWLEDGE", "source_binding_id": candidate.get("source_binding_id"), "status": "REJECTED", "reason": "secret-sensitive content rejected"})
                 continue
-            admitted.append(self._admit(project_id, content, "KNOWLEDGE", "NOTION_KNOWLEDGE", candidate.get("page_url") or candidate.get("page_id") or candidate["source_binding_id"], str(candidate.get("observed_revision") or "UNKNOWN"), str(candidate.get("observed_hash") or hashlib.sha256(content.encode()).hexdigest()), {"notion_source_binding_id": candidate["source_binding_id"], "notion_page_id": candidate.get("page_id"), "authority_classification": "NON_AUTHORITATIVE_KNOWLEDGE"}))
+            admitted.append(self._admit(project_id, content, self._content_class("NOTION_KNOWLEDGE", candidate.get("page_url") or candidate.get("page_id") or candidate["source_binding_id"]), "NOTION_KNOWLEDGE", candidate.get("page_url") or candidate.get("page_id") or candidate["source_binding_id"], str(candidate.get("observed_revision") or "UNKNOWN"), str(candidate.get("observed_hash") or hashlib.sha256(content.encode()).hexdigest()), {"notion_source_binding_id": candidate["source_binding_id"], "notion_page_id": candidate.get("page_id"), "authority_classification": "NON_AUTHORITATIVE_KNOWLEDGE"}))
         status = "CURRENT" if not rejected and not any(item.get("status") in {"DEGRADED", "UNAVAILABLE"} for item in skipped) else "PARTIAL"
         return {"status": status, "project_id": project_id, "repository_revision": revision, "admitted": admitted, "skipped": skipped, "rejected": rejected, "selected_count": len(authority_paths) + len(notion_source_binding_ids), "admitted_count": len(admitted), "deduplicated_count": sum(1 for item in admitted if item.get("status") == "DUPLICATE"), "policy": {"selected_only": True, "repository_bulk_ingestion": False, "git_history_ingestion": False, "notion_bulk_ingestion": False}}
