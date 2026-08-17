@@ -2291,3 +2291,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: legitimate non-empty operator-selected Notion source for DOD-031; missing durable AI activity objective/query, returned memory IDs, and session/client identity for DOD-032; DOD-005; DOD-081; R-056; remaining external/provider/target clauses; Phase 15/V1.
 - Blockers: LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START; AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-DURABLE-MCP-MEMORY-ACTIVITY-080 - COMPLETE
+
+- Outcome ID: O-PRIME-080
+- Supersedes outcome: O-PRIME-079
+- Closed: 2026-08-17T08:45:00-04:00
+- Acceptance: MET
+- Summary: The bounded durable AI Memory Activity repair and qualification passed. PRIME now persists project-scoped MCP activity with bounded objective/query, returned memory IDs, source types, project/grant/client identity, budgets, status, response state, and provenance-safe redaction. The authenticated PRIME Memory UI labels the projection as project-bound MCP activity and keeps generic model runs separate. A real interaction against the existing Qualification Project succeeded and the activity projection survived persistent Core restart.
+- Changed areas: MCP activity migration/service, Core project context, Memory UI, focused MCP test scope, Continuation 080 evidence, R-054 supporting records, DOD-032 audit/burndown, persistent Core image `animus-prime-core:continuation-080`, and append-only records.
+- Validation:
+  - focused MCP checks - PASSED; approved persistent integration test is skipped unless an explicit `PRIME_MCP_TEST_PROJECT_ID` is supplied
+  - compileall and `git diff --check` - PASSED
+  - persistent image build and Core ready health before/after restart - PASSED
+  - real MCP recall/context/timeline/get and durable project context projection - PASSED
+  - temporary grant revocation and secret scan - PASSED
+  - governance, burndown, full regression, and Git parity - recorded at publication closeout
+- DOD/R result: DOD-032 promoted to USER_USABLE_VERIFIED; R-054 remains VERIFIED with Continuation 080 supporting evidence. DOD-031 remains BACKEND_ONLY and blocked by a legitimate non-empty selected Notion source prerequisite.
+- Remaining risks: DOD-031, DOD-005, remaining external/provider/legitimate-target requirements, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
+- Blockers: none for DOD-032; browser daemon redirection prevented a clean post-restart second DOM snapshot, while exact persisted Core context was verified after restart.
+- Follow-up directive: none

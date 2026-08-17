@@ -7,7 +7,7 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 6
+  LOCAL_CODE: 5
   LOCAL_BROWSER_QUALIFICATION: 12
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
@@ -189,31 +189,6 @@ items:
     blocked_by: "LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START"
     depends_on: "R-054"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
-  - dod_id: DOD-032
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "Memory UI"
-    owner_phase: 9
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The persistent UI now exposes project-scoped Memory Inspector records, a durable event timeline, and AI Memory Activity with source-revision identities and token usage. The complete frozen activity contract remains unqualified because the current ai_runs/event schema does not retain/display the originating objective/query, returned memory IDs, or session/client identity."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Add or qualify only the missing durable AI Memory Activity identity fields (objective/query, returned memory IDs, session/client) against the existing project-scoped ledger; do not fabricate activity."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-079.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED"
-    depends_on: "R-054"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-039
     current_status: "BACKEND_ONLY"
     product_area: "rebind"

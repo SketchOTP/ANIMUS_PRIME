@@ -900,3 +900,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 079 Warm Start and Memory surfaces.
 - Supersedes learning: none
+
+## L-PRIME-DURABLE-MCP-MEMORY-ACTIVITY-080
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-DURABLE-MCP-MEMORY-ACTIVITY-080
+- Fact or lesson: Generic model-run or event history is not sufficient for the frozen AI Memory Activity contract. The project-bound PRIME MCP boundary must persist bounded objective/query text, returned memory IDs, source types, grant/client identity, request budgets, response/status metadata, and safe redaction as a derived activity projection. The operator surface must label this projection separately from generic model executions, preserve project isolation, and retain the records through persistent Core restart. Temporary qualification grants should be revoked after a real bounded interaction while their activity records remain durable.
+- Evidence location: evidence/phase15/qualification-continuation-080.md; migrations/prime/0038_mcp_memory_activity.sql; src/prime_core/mcp_service.py; apps/core/main.py; apps/web/index.html
+- Confidence: VERIFIED
+- Scope: Continuation 080 DOD-032 durable MCP AI Memory Activity only.
+- Supersedes learning: L-PRIME-WARM-START-MEMORY-SURFACES-079

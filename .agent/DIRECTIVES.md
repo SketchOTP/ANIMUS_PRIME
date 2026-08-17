@@ -1100,3 +1100,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-DURABLE-MCP-MEMORY-ACTIVITY-080
+
+- Issued: 2026-08-17T04:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 080
+- Objective: Close only DOD-032 by making durable project-scoped AI Memory Activity usable through the existing PRIME MCP boundary and real persistent operator product.
+- Scope: Direct Atlas SSH/native execution; existing Qualification Project, PRIME bank, PostgreSQL, Hindsight, Core/UI, enrolled Node, bounded MCP interaction, activity persistence, browser surface, restart recovery, evidence, governance, GitHub parity, and Notion journal closeout.
+- Exclusions: No DOD-031 Notion-source manufacture; no synthetic targets; no DOD-005; no DOD-081; no R-056; no Phase 16; no deployment/public exposure; no PARAGON/Hindsight redesign; no unrelated qualification expansion; no automatic Continuation 081.
+- Acceptance: Promote DOD-032 only if the complete durable activity contract records objective/query, returned memory IDs, source types, project/grant/client identity, bounded budgets, status, provenance-safe UI rendering, persistence, restart recovery, and isolation.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079
+- Status at issuance: ISSUED

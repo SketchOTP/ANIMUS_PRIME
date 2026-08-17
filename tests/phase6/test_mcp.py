@@ -19,7 +19,7 @@ class FakeAdapter:
         return AdapterResult("CURRENT", {"results": self.documents})
 
 
-pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL") or not os.getenv("PRIME_MCP_TEST_PROJECT_ID"), reason="set PRIME_PHASE1_DB_URL and PRIME_MCP_TEST_PROJECT_ID for approved MCP integration")
+pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="set PRIME_PHASE1_DB_URL for approved MCP integration")
 
 
 def test_mcp_has_exact_six_tools_and_grant_scope(monkeypatch):
@@ -55,6 +55,7 @@ def test_mcp_has_exact_six_tools_and_grant_scope(monkeypatch):
     assert mcp.call(grant["token"], "prime_memory_context", {"objective": "x"})["error_code"] == "PROJECT_SCOPE_VIOLATION"
 
 
+@pytest.mark.skipif(not os.getenv("PRIME_MCP_TEST_PROJECT_ID"), reason="set PRIME_MCP_TEST_PROJECT_ID for approved MCP activity integration")
 def test_mcp_memory_activity_persists_bounded_request_result_and_scope(monkeypatch):
     monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
     from src.prime_core.config import Settings

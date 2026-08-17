@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-WARM-START-MEMORY-SURFACES-079
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 079
-- Objective: Qualify Warm Start and persistent project-scoped Memory Inspector, Timeline, and AI Memory Activity.
+- Local directive ID: D-PRIME-PHASE15-DURABLE-MCP-MEMORY-ACTIVITY-080
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 080
+- Objective: Close DOD-032 through durable project-scoped AI Memory Activity on the existing PRIME MCP boundary.
 - Current status: `COMPLETE`
-- Acceptance: Warm Start is blocked by no legitimate non-empty selected Notion source. Memory surfaces render and survive restart, but DOD-032 remains IMPLEMENTED_NOT_PRODUCT_QUALIFIED because durable AI activity objective/query, returned memory IDs, and session/client identity are missing.
-- Current phase: WARM_START_MEMORY_SURFACES_079
-- Expected or actual touched areas: Memory projection/UI, Continuation 079 evidence, DOD-016/031/032/044 reconciliation, persistent Core image, and append-only records. No unrelated infrastructure or public exposure.
-- Immediate next action: Preserve the qualified topology and await an explicit directive; keep DOD-005, DOD-081, R-056, Phase 16, and deployment gated.
+- Acceptance: DOD-032 is USER_USABLE_VERIFIED. The existing PRIME UI/API now exposes durable project-scoped MCP activity with bounded query/objective, returned memory IDs, source types, grant/client identity, budgets, status, and safe redaction; the projection survived persistent Core restart. DOD-031 remains blocked by no legitimate non-empty selected Notion source.
+- Current phase: DURABLE_MCP_MEMORY_ACTIVITY_080
+- Expected or actual touched areas: MCP activity migration/service, Core project context, Memory UI, focused test scope, Continuation 080 evidence, R-054/DOD-032 reconciliation, persistent Core image, and append-only records. No unrelated infrastructure or public exposure.
+- Immediate next action: Preserve the qualified topology and await an explicit directive; do not begin Continuation 081 automatically; keep DOD-005, DOD-081, R-056, Phase 16, and deployment gated.
 
 ## Temporary task-relevant facts
 
@@ -23,14 +23,14 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Runtime image identity is `animus-prime-core:continuation-078-r9`; persistent Core build commit `ed6b9f8b5ffae8a4fe73532f10fc162013da10a0`; schema `0037_shared_retrieval_projection.sql`; the approved runtime Notion credential remains available only through Atlas secure configuration; no synthetic target, deployment, public exposure, Funnel change, or Phase 16 occurred.
+- Runtime image identity is `animus-prime-core:continuation-080`; persistent Core build commit `6852fe643b9e820e52f43f35f43590ca5ec289eb`; schema `0038_mcp_memory_activity.sql`; the approved runtime Notion credential remains available only through Atlas secure configuration; no synthetic target, deployment, public exposure, Funnel change, or Phase 16 occurred.
 - Approved Notion sandbox parent is `3be833cb-27ff-814f-af89-ebfc3a2a8aed`; project record page is `3be833cb-27ff-8159-add6-e883c1cc54af`; controlled probe child is `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`.
 - Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart. Continuation 079 Memory surfaces render existing project data with provenance/isolation; Warm Start lacks a legitimate non-empty selected Notion source.
 - Untracked .codebase-memory/, .prime-evidence/, and .vscode/ remain preserved.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 079 Memory surfaces, persistent Core readiness/restart, browser qualification, focused/full regression, compile, and governed reconciliation
+- Command or check: Continuation 080 durable MCP AI Memory Activity, real MCP recall/context/timeline/get, authenticated Memory UI, persistent Core restart, focused/full regression, compile, and governed reconciliation
 - Result: `PASSED`
 
 ## Risks
@@ -42,10 +42,11 @@
 - ATLAS_PARAGON_SERVICE_RESTART_REQUIRES_INTERACTIVE_AUTH: RESOLVED by operator restart; new MainPID 607574 and private health verified.
 - PRIME_RUNTIME_NOTION_CREDENTIAL_UNAVAILABLE: RESOLVED for the approved bounded credential path; raw token remains Atlas-only and is not governed data.
 - PRIME_RUNTIME_NOTION_OPERATOR_WORKFLOW_UNQUALIFIED: RESOLVED by Continuation 076 persistent browser qualification and minimal lifecycle/idempotence repairs.
+- AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED: RESOLVED by Continuation 080 durable MCP activity projection and restart qualification.
 
 ## Pending decisions
 
-- Runtime Notion credential and backend lifecycle remain qualified; DOD-021/DOD-022 shared retrieval and grounding are qualified for this bounded continuation.
+- Runtime Notion credential and backend lifecycle remain qualified; DOD-021/DOD-022 shared retrieval and grounding remain qualified; DOD-032 durable MCP AI Memory Activity is now qualified for this bounded continuation.
 - Keep the qualified Notion lifecycle preserved, DOD-005 parked, remaining external/provider/legitimate-target rows pending, DOD-081/R-056 last, and Phase 16/deployment out of scope.
 
 ## Status vocabulary

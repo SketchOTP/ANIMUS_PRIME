@@ -750,3 +750,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: No legitimate non-empty selected Notion source exists for Warm Start. The minimal repair exposes existing project-scoped Inspector, Timeline, and AI Activity data with provenance, isolation, restart recovery, and derived non-authoritative labeling. DOD-032 remains open because objective/query, returned memory IDs, and session/client identity are not persisted. No synthetic target, new backend, Hindsight change, public exposure, or unrelated service change was used.
 - Affected areas: Memory projection/UI, Continuation 079 evidence, DOD-016/031/032/044 records, persistent Core image animus-prime-core:continuation-079, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-078
+
+## DEC-PRIME-PHASE15-080
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-080
+- Status: CLOSED
+- Decision or event: Close Continuation 080 as COMPLETE for its bounded DOD-032 durable AI Memory Activity scope and promote DOD-032 to USER_USABLE_VERIFIED.
+- Rationale: The existing Qualification Project and PRIME MCP boundary were used through the real persistent Core. Recall, context, timeline, and memory-get calls produced durable project-scoped activity rows containing bounded request identity, returned memory IDs, source types, grant/client identity, budgets, statuses, and response state. The authenticated Memory UI exposes the derived `PROJECT_BOUND_MCP_MEMORY_CALLS` surface separately from generic model runs. The exact projection remained present after a PRIME-owned service restart with a new MainPID/start time and the same persistent image/schema. Temporary grants were revoked. DOD-031 remains blocked by the legitimate non-empty selected Notion source prerequisite; no synthetic state or unrelated gate changed.
+- Affected areas: MCP memory activity migration/service, Core context, Memory UI, focused MCP test scope, Continuation 080 evidence, R-054 supporting records, DOD-032 audit/burndown, persistent Core image, and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-079
