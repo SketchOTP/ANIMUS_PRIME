@@ -78,11 +78,24 @@ class ProgressService:
                 "FROM prime_core.progress_assessments WHERE project_id=%s ORDER BY created_at DESC LIMIT 1",
                 (project_id,),
             ).fetchone()
-            binding = db.execute("SELECT canonical_revision FROM prime_core.project_bindings WHERE project_id=%s", (project_id,)).fetchone()
         if not latest:
             raise ValueError("no prior assessment exists to reassess")
-        if binding and binding["canonical_revision"] and binding["canonical_revision"] != repository_revision:
-            raise ValueError("repository changed before reassessment; retry")
+        with transaction(self.settings) as db:
+            binding = db.execute(
+                "SELECT canonical_revision FROM prime_core.project_bindings WHERE project_id=%s FOR UPDATE",
+                (project_id,),
+            ).fetchone()
+            if binding and binding["canonical_revision"] != repository_revision:
+                observed = now()
+                db.execute(
+                    "UPDATE prime_core.project_bindings SET canonical_revision=%s,updated_at=%s WHERE project_id=%s",
+                    (repository_revision, observed, project_id),
+                )
+                db.execute(
+                    "UPDATE prime_core.progress_assessments SET freshness_state='STALE' "
+                    "WHERE project_id=%s AND freshness_state='CURRENT' AND repository_revision<>%s",
+                    (project_id, repository_revision),
+                )
         results = latest["item_results"] if isinstance(latest["item_results"], list) else json.loads(latest["item_results"])
         refs = latest["evidence_refs"] if isinstance(latest["evidence_refs"], list) else json.loads(latest["evidence_refs"] or "[]")
         result = self.assess(

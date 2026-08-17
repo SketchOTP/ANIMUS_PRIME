@@ -17,3 +17,5 @@ def test_progress_refresh_links_open_correction_to_reassessment():
     assert "status='OPEN'" in refresh
     assert "reassessment_id=%s,status='REASSESSED'" in refresh
     assert 'result["correction_id"] = correction["correction_id"]' in refresh
+    assert "UPDATE prime_core.project_bindings SET canonical_revision=%s" in refresh
+    assert "UPDATE prime_core.progress_assessments SET freshness_state='STALE'" in refresh
