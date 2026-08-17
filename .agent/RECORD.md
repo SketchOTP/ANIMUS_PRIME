@@ -770,3 +770,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The real persistent Atlas product and enrolled Node qualified the live-revision Progress reassessment and bounded reversible workflow contract. The minimal Progress repair uses the live Node canonical revision, reconciles stale binding state, and preserves correction history. Other rows were either honestly partial or required legitimate external/secondary targets that were not available. The governed queue is 61 complete / 20 open. No synthetic state, public exposure, deployment, Funnel change, Phase 16, DOD-005, DOD-081, or R-056 closure was attempted.
 - Affected areas: live-Node Progress refresh, focused tests, persistent Core image `animus-prime-core:continuation-081-final`, evidence, audit/burndown/traceability/matrix/ledger, and append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-080
+
+## DEC-PRIME-PHASE15-082
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-082
+- Status: CLOSED
+- Decision or event: Close Continuation 082 as PARTIAL for its bounded local release-closure scope and promote DOD-050 to USER_USABLE_VERIFIED.
+- Rationale: The persistent Atlas product qualified Usage limit save/enforcement/disable, Upgrade status/no-op readiness/backup refusal/guarded recovery-required preflight, a durable encrypted backup export, and real-project workflow checkpoint/idempotent resume primitives. The remaining provider cost, restore-target, second-LAN-machine, Notion/Hindsight, parked DOD-005, DOD-081, and R-056 gates were preserved without manufacture or weakening.
+- Affected areas: usage-limit migration/service/API/UI, upgrade preflight service/API/UI, focused tests, Continuation 082 evidence, persistent Core image, audit/burndown/traceability/matrix/ledger, and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-081

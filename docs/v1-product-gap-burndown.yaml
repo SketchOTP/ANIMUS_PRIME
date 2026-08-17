@@ -7,11 +7,11 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 5
-  LOCAL_BROWSER_QUALIFICATION: 10
+  LOCAL_CODE: 4
+  LOCAL_BROWSER_QUALIFICATION: 9
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 5
+  EXTERNAL_ENVIRONMENT: 6
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -19,7 +19,7 @@ items:
     product_area: "workflows"
     owner_phase: 3
     mapped_r_requirements: ["R-012"]
-    exact_missing_behavior: "Generic workflow_steps and workflow_resources now cover bounded step checkpointing, resource references, resume planning, retry policy, and REPAIR_REQUIRED handling; Fork, Notion, Hindsight, restore, archive, and full interruption/orphan qualification remain."
+    exact_missing_behavior: "Continuation 082 directly qualified durable workflow identity, idempotent replay, step checkpoint/complete, a real repository resource reference, and resume planning on the Qualification Project; Fork, Notion, Hindsight, restore, archive, and full interruption/orphan qualification remain."
     work_class: "LOCAL_CODE"
     requires_code: "YES"
     requires_browser: "NO"
@@ -34,7 +34,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Convert the remaining multi-system lifecycle paths and qualify durable interruption, reconciliation, compensation, orphan visibility, and restart behavior before promotion."
-    evidence_already_available: ["src/prime_core/service.py","src/prime_core/workflow_primitives.py","migrations/prime/0001_core.sql","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md"]
+    evidence_already_available: ["src/prime_core/service.py","src/prime_core/workflow_primitives.py","migrations/prime/0001_core.sql","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md","evidence/phase15/qualification-continuation-082.md"]
     qualification_needed: "Direct qualification of Fork, Notion, Hindsight, restore, archive, and full interruption/orphan boundaries; no dedicated UI is required."
     blocked_by: "NONE"
     depends_on: "R-012"
@@ -219,8 +219,8 @@ items:
     product_area: "Usage"
     owner_phase: 13
     mapped_r_requirements: ["R-045"]
-    exact_missing_behavior: "Project-scoped usage records and truthful unavailable limits/cost states now render; configurable limits and provider-backed usage/cost enforcement remain open."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
+    exact_missing_behavior: "Continuation 082 qualified persistent project-scoped usage records, operator-configured daily limits, truthful over-limit refusal, and disabled-limit recovery. Provider-backed estimated cost remains UNAVAILABLE under the approved current provider/profile, so the complete frozen usage/cost clause remains open."
+    work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "YES"
     requires_browser: "YES"
     requires_native_linux: "NO"
@@ -233,10 +233,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Qualify configured provider usage/cost attribution and configurable limits when an approved provider/profile is available."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md"]
+    next_action: "Qualify authoritative provider-backed cost attribution when an approved provider/profile is available; preserve the locally qualified limit enforcement."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/usage_limits.py","migrations/prime/0039_usage_limits_and_upgrade_preflights.sql","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-082.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "APPROVED_PROVIDER_PROFILE_WITH_AUTHORITATIVE_COST_ATTRIBUTION_REQUIRED_FOR_REMAINING_CLAUSE"
     depends_on: "R-045"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-049
@@ -244,7 +244,7 @@ items:
     product_area: "Backup"
     owner_phase: 13
     mapped_r_requirements: ["R-042"]
-    exact_missing_behavior: "Verified backup metadata and guarded controls are visible; incomplete-input preflight refused HTTP 422 without mutation, but no approved destination export or destructive restore was run."
+    exact_missing_behavior: "Continuation 082 created and hash-verified an encrypted export of the real Qualification Project at an existing durable Atlas archive destination, and the browser showed verified backup state and guarded restore preflight. Destructive restore/recovery against an approved independent target remains intentionally unrun."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -258,43 +258,18 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Qualify user-visible versioned export, restore preflight, and recovery controls without destructive mutation of the governed installation."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md"]
+    next_action: "Qualify restore/recovery against an approved independent target without destructive mutation of the governed installation."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-082.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "APPROVED_INDEPENDENT_RESTORE_TARGET_REQUIRED"
     depends_on: "R-042"
     acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-050
-    current_status: "BACKEND_ONLY"
-    product_area: "Upgrades"
-    owner_phase: 14
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "The frozen criterion requires: Upgrade incompatibilities are visible and handled through preflight/migration/recovery.. The missing operator behavior is a qualified path at 'Open Upgrades from PRIME.'; backend capability alone is not sufficient."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Upgrade incompatibilities are visible and handled through preflight/migration/recovery.. The missing operator behavior is a qualified path at 'Open Upgrades from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-053
     current_status: "BACKEND_ONLY"
     product_area: "LAN projects"
     owner_phase: 12
     mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "The frozen criterion requires: Projects can be added from any enrolled LAN machine.. The missing operator behavior is a qualified path at 'Open LAN projects from PRIME.'; backend capability alone is not sufficient."
+    exact_missing_behavior: "The current product exposes the enrolled-Node boundary but no complete operator qualification exists for adding a project from a second enrolled LAN machine."
     work_class: "LOCAL_CODE"
     requires_code: "YES"
     requires_browser: "NO"
@@ -308,10 +283,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Projects can be added from any enrolled LAN machine.. The missing operator behavior is a qualified path at 'Open LAN projects from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    next_action: "Qualify project addition from a legitimate second enrolled LAN machine when that target becomes available; do not create a synthetic machine or project."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "LEGITIMATE_SECOND_ENROLLED_LAN_MACHINE_AND_PROJECT_TARGET_REQUIRED"
     depends_on: "R-036"
     acceptance_kind: "MIXED"
   - dod_id: DOD-054

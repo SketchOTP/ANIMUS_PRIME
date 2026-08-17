@@ -2333,3 +2333,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: backup/usage/upgrade/second-target/destructive positive clauses, external Notion/Hindsight/provider/Windows/Tailscale resources, DOD-005, DOD-081, R-056, and Phase 15/V1.
 - Blockers: legitimate target and external-environment prerequisites remain unavailable; no blocker remains for the bounded Progress repair.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-LOCAL-RELEASE-CLOSURE-082 - PARTIAL
+
+- Outcome ID: O-PRIME-082
+- Supersedes outcome: O-PRIME-081
+- Closed: 2026-08-17T10:09:12-04:00
+- Acceptance: PARTIAL
+- Summary: The bounded local release-closure wave qualified durable workflow primitives on the real Qualification Project, added and qualified persistent Usage limit controls, created and hash-verified a durable encrypted backup export, and exposed/qualified Upgrade no-op, refusal, and guarded recovery preflight states through the genuine browser. DOD-050 was promoted to USER_USABLE_VERIFIED. The 20-row starting open queue was normalized to 62 complete / 19 open with exact provider, restore-target, second-LAN-machine, and aggregate gates preserved.
+- Changed areas: usage-limit migration/service/API/UI, upgrade preflight service/API/UI, focused Continuation 082 tests, Continuation 082 evidence, audit/burndown/traceability/matrix/ledger reconciliation, persistent Core image `animus-prime-core:continuation-082`, and append-only records.
+- Validation:
+  - focused tests and compile/import checks - PASSED
+  - browser bounded controls - PASSED
+  - persistent Core/Hindsight/PostgreSQL/Node health - PASSED
+  - YAML governance and burndown validation - PASSED
+  - full regression - NOT RUN
+- DOD/R result: DOD-050 promoted; DOD-004 remains BACKEND_ONLY with local primitives qualified; DOD-047 and DOD-049 remain PARTIAL with exact provider/cost and restore-target gaps; DOD-053 remains BACKEND_ONLY with second-LAN-machine gate; DOD-005 remained parked; DOD-081/R-056/Phase 15/V1 remain open.
+- Remaining risks: provider-backed cost attribution and R-045 capacity boundaries, approved independent restore target, second enrolled LAN machine, runtime Notion prerequisite, Hindsight setup capability limits, DOD-005, DOD-081, R-056, Phase 15/V1, and deployment remain unresolved or gated.
+- Blockers: none for the bounded local changes; external/legitimate-target gates remain.
+- Follow-up directive: none

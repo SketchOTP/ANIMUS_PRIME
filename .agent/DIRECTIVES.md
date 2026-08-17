@@ -1128,3 +1128,16 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-DURABLE-MCP-MEMORY-ACTIVITY-080
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-LOCAL-RELEASE-CLOSURE-082
+- Issued: 2026-08-17T09:27:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 082
+- Objective: Complete the remaining genuinely local V1 product gaps, normalize target-only residuals into exact resource gates, recompute DOD-081/R-056, and publish truthful Phase 15 state.
+- Scope: DOD-004, DOD-047, DOD-050, DOD-080; safely resolve DOD-049, DOD-053, DOD-058, DOD-077; normalize all 20 starting open DODs; recompute DOD-081/R-056.
+- Exclusions: DOD-005 remains parked; no synthetic targets; no destructive canonical-project mutation; no public exposure/deployment/Funnel/Phase 16; no automatic Continuation 083; direct Atlas SSH only.
+- Acceptance: Exhaust local engineering for the named DODs, classify remaining target-only acceptance as exact resource gates, publish the per-row evidence matrix, and preserve truthful V1/release status.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-CONSOLIDATED-081
+- Status at issuance: ISSUED

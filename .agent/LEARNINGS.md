@@ -920,3 +920,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 081 live-Node Progress and Goal Alignment qualification only.
 - Supersedes learning: none
+
+## L-PRIME-LOCAL-RELEASE-CLOSURE-082
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-LOCAL-RELEASE-CLOSURE-082
+- Fact or lesson: A truthful local release wave can close the operator-facing Upgrade contract without applying a migration: the persistent UI must expose current build/schema, no-op readiness, backup-required refusal, and guarded interrupted-recovery guidance. Usage limits are a PRIME-side enforcement boundary and can be qualified even when provider cost attribution remains unavailable. A real durable backup export and workflow resume plan are useful bounded evidence, but neither substitutes for an approved independent restore target or the full multi-system interruption/orphan matrix.
+- Evidence location: evidence/phase15/qualification-continuation-082.md; src/prime_core/usage_limits.py; src/prime_core/upgrade_service.py; apps/core/main.py; apps/web/index.html; migrations/prime/0039_usage_limits_and_upgrade_preflights.sql
+- Confidence: VERIFIED
+- Scope: Continuation 082 local release closure only.
+- Supersedes learning: none
