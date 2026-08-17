@@ -10,6 +10,13 @@ from typing import Any
 
 from .service import _id, now
 
+SEARCH_STOPWORDS = {
+    "about", "after", "again", "also", "and", "are", "does", "for", "from", "how", "into",
+    "is", "its", "more", "no", "not", "of", "on", "or", "our", "please", "result", "say",
+    "some", "that", "the", "their", "there", "these", "this", "to", "was", "what", "when", "where",
+    "which", "who", "why", "with", "would", "you",
+}
+
 
 class RepositoryIndexer:
     def __init__(self, service: Any, max_files: int = 100_000):
@@ -225,7 +232,7 @@ class RepositoryIndexer:
         # "What does AGENTS.md say about code exploration?" miss the file
         # even though its content is indexed.  Build a sanitized OR query
         # for retrieval while retaining the original query for path matches.
-        tokens = re.findall(r"[A-Za-z0-9_]{2,}", query.lower())
+        tokens = [token for token in re.findall(r"[A-Za-z0-9_]{3,}", query.lower()) if token not in SEARCH_STOPWORDS]
         fts_query = " | ".join(f"{token}:*" for token in dict.fromkeys(tokens)) or "__prime_no_match__:*"
         normalized_query = query.lower()
         path_query = f"%{query}%"
