@@ -940,3 +940,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 083 authorized fixture/runtime qualification only.
 - Supersedes learning: none
+
+## L-PRIME-PERSISTENT-AUTHORITY-TEMPLATE-084
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-PERSISTENT-AUTHORITY-TEMPLATE-084
+- Fact or lesson: Persistent Core containers must resolve the approved authority template from a configured or mounted Atlas path; a repository-relative path resolves under `/app` in the image and fails closed. When Core-owned onboarding writes are required, preserve the read-only parent repository boundary and grant only the authorized lab target a narrowly scoped writable bind.
+- Evidence location: evidence/phase15/qualification-continuation-084.md; src/prime_core/service.py; apps/core/main.py; persistent v5 readiness and browser authority bootstrap.
+- Confidence: VERIFIED
+- Scope: Continuation 084 persistent authority provisioning and authorized Qualification Lab only.
+- Supersedes learning: none

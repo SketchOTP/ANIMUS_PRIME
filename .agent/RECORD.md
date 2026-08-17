@@ -790,3 +790,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The persistent Atlas product and authorized isolated fixtures qualified source retraction/history, real repository relocation/rebind after a minimal repair, durable workflow interruption/reconciliation, registration refusals, Goal/authority protection, encrypted backup/preflight safety, and live browser Ask/Search/repository/authority/lifecycle behavior. The supported regression recorded 112 passed, 29 skipped, and 6 failed; no V1 or release claim is permitted.
 - Affected areas: persistent Core parent-projects/Notion runtime configuration, `src/prime_core/service.py`, focused rebind test, 083 evidence, product-goal audit, burndown, and append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-082
+
+## DEC-PRIME-PHASE15-084
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-084
+- Status: CLOSED
+- Decision or event: Close Continuation 084 as PARTIAL for its bounded local closure scope; promote only DOD-024, DOD-054, DOD-057, and DOD-058.
+- Rationale: The persistent Atlas Core/UI and enrolled Node qualified terminal lifecycle completion, fresh positive repository registration, fresh authority provisioning, and guided Goal draft/approval with durable hash/restart recovery in the authorized lab. The supported regression is now 122 passed / 29 skipped / 0 failed. Remaining external, legitimate-target, creation-recovery, polish, DOD-081, R-056, Phase 15, and V1 gates remain open. No canonical destructive mutation, public exposure, deployment, Funnel change, frozen-spec change, or Phase 16 occurred.
+- Affected areas: AI Usage-policy test seam, authority-template runtime resolution, repository creation UI, completion workflow UI, narrow viewport CSS, persistent Core v5, Continuation 084 evidence, audit/burndown/matrix/ledger, and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-083

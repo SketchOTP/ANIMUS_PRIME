@@ -3,7 +3,7 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-17T15:10:00-04:00
+- Last updated: 2026-08-17T15:30:00-04:00
 
 ## Active state after adoption
 
@@ -11,10 +11,10 @@
 - External directive ID: ANIMUS PRIME - Phase 15 Continuation 083
 - Objective: Exhaust safe local and explicitly authorized isolated qualification-fixture work toward the frozen PRIME V1 goal, then normalize every remaining requirement into verified state or a concrete external-resource gate.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL — DOD-005 and DOD-039 promoted to PRODUCT_VERIFIED; the authorized fixture lab qualified lifecycle, registration refusals, authority/Goal protection, backup/preflight safety, durable workflow reconciliation, live Node repository visibility, grounded Ask/Search, and a real rebind repair. Final governed queue is 64 complete / 17 open; full regression remains 112 passed / 29 skipped / 6 failed; DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_V1_GOAL_REALIZATION_LAB_083
-- Expected or actual touched areas: isolated V1 qualification lab, persistent Core parent-projects read-only mount, secure runtime Notion credential reference, rebind preflight continuity snapshot, focused regression guard, evidence, and governed audit/burndown reconciliation. Canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
-- Immediate next action: Await Architect/user direction; do not begin Continuation 084 automatically.
+- Acceptance: PARTIAL — Continuation 084 repaired the AI Usage-policy test seam, exposed authorized persistent authority/repository workflows, promoted DOD-024/DOD-054/DOD-057/DOD-058 to USER_USABLE_VERIFIED, and brought full regression to 122 passed / 29 skipped / 0 failed. Governed queue is 68 complete / 13 open; DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Current phase: PHASE15_V1_LOCAL_CLOSURE_084
+- Expected or actual touched areas: AI service test seam, persistent authority-template resolution, authorized repository creation UI, narrow viewport CSS, v5 persistent Core image, Qualification Lab browser evidence, audit/burndown/matrix/ledger, and append-only records. Canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
+- Immediate next action: Await Architect/user direction; do not begin Continuation 085 automatically.
 
 ## Temporary task-relevant facts
 

@@ -1154,3 +1154,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-LOCAL-RELEASE-CLOSURE-082
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-CLOSURE-084
+
+- Issued: 2026-08-17T15:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 084
+- Objective: Repair the supported regression seam, exhaust safe local V1 closure in the authorized Atlas Qualification Lab, qualify complete operator workflows, assess external gates, and publish truthful governed state.
+- Scope: DOD-004, DOD-016, DOD-024, DOD-031, DOD-044, DOD-049, DOD-054, DOD-055, DOD-057, DOD-058, DOD-077, DOD-080; full regression, security/integration/recovery/isolation validation, and governance reconciliation.
+- Exclusions: no canonical destructive mutation; no synthetic non-lab targets; no public exposure/deployment/Funnel; no Phase 16; no DOD-005 change; no DOD-081/R-056 closure claim; direct Atlas SSH only.
+- Acceptance: Promote only complete frozen clauses supported by real browser/runtime evidence; preserve all external and incomplete gates; publish evidence, exact Git parity, and living Notion journal/checkpoint.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-GOAL-REALIZATION-LAB-083
+- Status at issuance: ISSUED

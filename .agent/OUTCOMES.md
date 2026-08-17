@@ -2371,3 +2371,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: six regression failures, independent restore target, provider cost attribution, complete browser-positive clauses, fresh install, second LAN machine, Windows/native service lifecycle, Tailscale/second device, and aggregate R-056.
 - Blockers: no blocker to the bounded lab; release remains blocked by the recorded regression and external/complete-operator gates.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-LOCAL-CLOSURE-084 - PARTIAL
+
+- Outcome ID: O-PRIME-084
+- Supersedes outcome: O-PRIME-083
+- Closed: 2026-08-17T15:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: The authorized persistent Atlas runtime completed the bounded 084 local closure wave. The AI Usage-policy test seam and stale Usage expectation were repaired; full supported regression is 122 passed / 29 skipped / 0 failed. Real browser/runtime qualification promoted DOD-024, DOD-054, DOD-057, and DOD-058 to USER_USABLE_VERIFIED. Fresh repository creation and authority bootstrap were exercised in the isolated lab, while DOD-055 remains partial because interrupted creation/recovery and its complete negative matrix were not completed. Narrow viewport overflow was repaired and rechecked at 375x812.
+- Changed areas: `src/prime_core/ai_service.py`, `tests/phase15/test_ai_execution.py`, `tests/phase15/test_continuation059_safe_wave.py`, `src/prime_core/service.py`, `apps/web/index.html`, `tests/phase15/test_continuation084.py`, evidence, audit/burndown/matrix/ledger, and append-only records.
+- Validation:
+  - focused tests - PASSED
+  - full regression - PASSED (122 passed / 29 skipped / 0 failed)
+  - persistent Core/Hindsight/PostgreSQL/Node health - PASSED
+  - browser lifecycle/registration/authority/Goal/creation/polish checks - PASSED for bounded clauses
+  - GitHub parity - NOT RUN pending final publication
+- DOD/R result: DOD-024, DOD-054, DOD-057, DOD-058 promoted; DOD-004, DOD-031, DOD-044, DOD-047, DOD-049, DOD-055, DOD-080 remain partial or externally gated; DOD-005 remains parked; DOD-081/R-056, Phase 15, V1, and deployment remain open.
+- Remaining risks: durable multi-system interruption/orphan breadth, selected non-empty Notion warm start, clean install, independent restore target, provider cost attribution, creation recovery negatives, complete polish, second LAN machine, Windows/native service lifecycle, Tailscale/second device, and aggregate release qualification.
+- Blockers: no blocker to the bounded local implementation/qualification work; external and legitimate-target gates remain.
+- Follow-up directive: none
