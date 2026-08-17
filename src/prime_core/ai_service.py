@@ -333,7 +333,7 @@ def _validate_output(function: str, output: dict[str, Any], source_ids: set[str]
                 raise AIInputError("citation is not in the admitted source set")
 
     if function == "ASK_PRIME":
-        category = str(output.get("category", "UNKNOWN")).upper()
+        category = str(output.get("category", "UNKNOWN")).upper().replace("_", " ")
         if category not in {"SOURCE FACT", "DERIVED INTERPRETATION", "UNKNOWN"}:
             raise AIInputError("Ask output has an invalid epistemic category")
         output["category"] = category

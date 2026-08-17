@@ -38,6 +38,13 @@ def test_grounded_ask_categories_require_citations():
     )
     assert valid["category"] == "DERIVED INTERPRETATION"
 
+    normalized = _validate_output(
+        "ASK_PRIME",
+        {"category": "SOURCE_FACT", "answer": "fact", "citations": [{"source_id": "source-1"}]},
+        {"source-1"},
+    )
+    assert normalized["category"] == "SOURCE FACT"
+
 
 def test_unknown_ask_remains_citation_optional_and_fail_closed():
     from src.prime_core.ai_service import _validate_output
