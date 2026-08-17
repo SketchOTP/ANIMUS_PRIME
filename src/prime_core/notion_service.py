@@ -316,6 +316,34 @@ class NotionLifecycleService:
             revision_id = _local_id("notionrev")
             db.execute("INSERT INTO prime_core.notion_projection_revisions(projection_revision_id,project_id,content_hash,source_set,sync_status,observed_at,metadata) VALUES (%s,%s,%s,%s,%s,now(),%s)", (revision_id, state.project_id, content_hash or "", json.dumps([]), "SYNCED" if status == "SYNCED" else ("CONFLICT" if status == "CONFLICT" else "DEGRADED"), json.dumps(metadata or {})))
 
+    def _sync_source_search_projection(self, binding: dict[str, Any], content: str = "") -> None:
+        """Project the lifecycle source into the derived Search representation."""
+        if not self.settings:
+            return
+        from .db import transaction
+        status = "RETRACTED" if binding.get("status") in {"DETACHED", "DELETED", "ACCESS_LOST", "UNAVAILABLE"} else "CURRENT"
+        redacted = self._redact(content or "")[:200_000]
+        metadata = {
+            "binding_id": binding.get("binding_id"),
+            "page_id": binding.get("page_id"),
+            "title": binding.get("title", ""),
+            "source_class": "NOTION_KNOWLEDGE",
+            "authority_class": "KNOWLEDGE",
+            "content_excerpt": redacted[:12_000],
+        }
+        page_id = binding["page_id"]
+        page_url = binding.get("page_url") or f"https://www.notion.so/{page_id.replace('-', '')}"
+        with transaction(self.settings) as db:
+            db.execute(
+                "INSERT INTO prime_core.notion_knowledge_sources(source_binding_id,project_id,page_id,page_url,access_mode,status,observed_revision,observed_hash,observed_at,detached_at,metadata) VALUES (%s,%s,%s,%s,'READ_ONLY',%s,%s,%s,now(),CASE WHEN %s='RETRACTED' THEN now() ELSE NULL END,%s) ON CONFLICT (project_id,page_id) DO UPDATE SET source_binding_id=EXCLUDED.source_binding_id,page_url=EXCLUDED.page_url,status=EXCLUDED.status,observed_revision=EXCLUDED.observed_revision,observed_hash=EXCLUDED.observed_hash,observed_at=EXCLUDED.observed_at,detached_at=EXCLUDED.detached_at,metadata=EXCLUDED.metadata",
+                (binding["binding_id"], binding["project_id"], page_id, page_url, status, binding.get("revision"), binding.get("content_hash"), status, json.dumps(metadata)),
+            )
+            if status == "CURRENT":
+                db.execute(
+                    "INSERT INTO prime_core.notion_source_observations(observation_id,project_id,source_binding_id,page_id,block_identity,observed_revision,content_hash,observed_at,availability_status,content) VALUES (%s,%s,%s,%s,%s,%s,%s,now(),'CURRENT',%s) ON CONFLICT (project_id,source_binding_id,page_id,observed_revision,content_hash) DO UPDATE SET observed_at=EXCLUDED.observed_at,availability_status='CURRENT',content=EXCLUDED.content",
+                    (_local_id("notionobs"), binding["project_id"], binding["binding_id"], page_id, page_id, binding.get("revision"), binding.get("content_hash"), json.dumps({"text": redacted})),
+                )
+
     def _persist(self) -> None:
         if not self.state_path:
             return
@@ -480,9 +508,10 @@ class NotionLifecycleService:
         except NotionProviderError as exc:
             state.sources[source_binding_id] = {"binding_id": source_binding_id, "page_id": page_id, "status": "ACCESS_LOST" if exc.code == "ACCESS_DENIED" else "UNAVAILABLE"}
             return state.sources[source_binding_id]
-        binding = {"binding_id": source_binding_id, "project_id": project_id, "page_id": page_id, "status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()}
+        binding = {"binding_id": source_binding_id, "project_id": project_id, "page_id": page_id, "page_url": f"https://www.notion.so/{page_id.replace('-', '')}", "title": page.title, "status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()}
         state.sources[source_binding_id] = binding
         self._persist()
+        self._sync_source_search_projection(binding, page.content)
         self._event("notion.source.attached", project_id, binding)
         return binding
 
@@ -497,10 +526,12 @@ class NotionLifecycleService:
             page = self.provider.get_page(binding["page_id"])
         except NotionProviderError as exc:
             binding["status"] = "ACCESS_LOST" if exc.code == "ACCESS_DENIED" else ("DELETED" if exc.code == "PAGE_MISSING" else "UNAVAILABLE")
+            self._sync_source_search_projection(binding)
             return {**binding, "retrieval": "RETRACTED"}
         content = page.content
-        binding.update({"status": "ATTACHED", "revision": str(page.revision), "content_hash": hashlib.sha256(content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()})
+        binding.update({"status": "ATTACHED", "title": page.title, "revision": str(page.revision), "content_hash": hashlib.sha256(content.encode()).hexdigest(), "observed_at": _utcnow().isoformat()})
         self._persist()
+        self._sync_source_search_projection(binding, content)
         return {**binding, "retrieval": "CURRENT", "content": content, "provenance": {"project_id": project_id, "source_binding_id": source_binding_id, "page_id": page.page_id, "block_identity": page.page_id, "observed_revision": str(page.revision), "content_hash": binding["content_hash"], "observed_at": binding["observed_at"]}}
 
     def detach_source(self, project_id: str, source_binding_id: str, purge_history: bool = False) -> dict[str, Any]:
@@ -513,6 +544,7 @@ class NotionLifecycleService:
             if memory.get("source_binding_id") == source_binding_id:
                 memory["reconciliation_status"] = "REVIEW_REQUIRED"
         self._persist()
+        self._sync_source_search_projection(binding)
         self._event("notion.source.detached", project_id, binding)
         return dict(binding)
 

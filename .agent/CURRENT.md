@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-16T23:45:00-04:00
+- Last updated: 2026-08-17T00:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 077
-- Objective: Requalify the real authenticated persistent PRIME Ask and Unified Search surfaces.
-- Current status: `COMPLETE`
-- Acceptance: Ask and Search bounded runtime gates passed, but complete frozen operator contracts failed; DOD-021 and DOD-022 remain unpromoted.
-- Current phase: ASK_SEARCH_REQUALIFICATION_077
-- Expected or actual touched areas: authenticated PRIME Ask/Search, existing approved Notion source lifecycle, Continuation 077 evidence, audit/burndown, and append-only .agent records. No product source or unrelated infrastructure changed.
-- Immediate next action: Await an explicit bounded repair directive for Ask current grounding/citations and Search indexing/no-result behavior; do not start automatically.
+- Local directive ID: D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 078
+- Objective: Repair the shared retrieval/grounding boundary used by PRIME Unified Search and Ask.
+- Current status: `IN_PROGRESS`
+- Acceptance: Promote DOD-021 and DOD-022 independently only if their complete frozen operator contracts pass; otherwise preserve exact defects.
+- Current phase: SHARED_RETRIEVAL_GROUNDING_REPAIR_078
+- Expected or actual touched areas: Repository search projection, canonical Git reads, Notion Search projection, PRIME-side Memory relevance filtering, shared retrieval hits, Ask source admission/citations, focused tests, persistent runtime, browser requalification, and governed records. No unrelated infrastructure or public exposure.
+- Immediate next action: Complete the bounded repair, rebuild/restart the existing persistent Core, reindex the existing Qualification Project, and requalify Ask/Search independently.
 
 ## Temporary task-relevant facts
 

@@ -1073,3 +1073,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-RUNTIME-NOTION-OPERATOR-WORKFLOW-076
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-SHARED-RETRIEVAL-GROUNDING-REPAIR-078
+
+- Issued: 2026-08-17T00:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 078
+- Objective: Repair the shared retrieval/grounding boundary used by PRIME Unified Search and Ask so both consume truthful, project-scoped, current evidence from the existing Repository, Authority, Git, Notion Knowledge, Memory, Activity, Progress, and Evidence stores.
+- Scope: Existing Atlas persistent PRIME Core/PostgreSQL/Hindsight/Notion/PARAGON path; derived PostgreSQL repository search projection; canonical Git provenance reads; Notion lifecycle Search projection; PRIME-side Memory relevance floor; shared typed retrieval hits; Ask source admission/citation validation; focused tests; persistent rebuild/restart; browser requalification; evidence and governed closeout.
+- Exclusions: No PARAGON redesign; no Hindsight upgrade/replacement; no Elasticsearch/vector search service; no synthetic project/repository/commit/memory/Notion page/Git checkpoint; no DOD-005; no DOD-081; no R-056; no Phase 16; no deployment/public exposure; no unrelated cleanup.
+- Acceptance: DOD-021 and DOD-022 are promoted independently only when their complete frozen operator contracts pass. Otherwise preserve each exact remaining defect and current status.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-ASK-SEARCH-STALE-BLOCKER-REQUALIFICATION-077
+- Status at issuance: ISSUED

@@ -96,6 +96,35 @@ def inspect_git_state(root: Path, canonical_ref: str | None = None, canonical_co
     }
 
 
+def search_git_history(root: Path, query: str, limit: int = 50) -> list[dict[str, Any]]:
+    """Read-only search of the bound repository's canonical Git history."""
+    needle = query.strip().casefold()
+    if not needle:
+        return []
+    state = inspect_git_state(root)
+    lines = _git(root, "log", "--all", "--date=iso-strict", "--format=%H%x09%aI%x09%s", "--max-count=500", check=False)
+    hits: list[dict[str, Any]] = []
+    for line in lines.splitlines():
+        commit, separator, rest = line.partition("\t")
+        captured_at, separator, subject = rest.partition("\t")
+        if not separator or needle not in "\t".join((commit, captured_at, subject)).casefold():
+            continue
+        hits.append({
+            "commit_id": commit,
+            "source_revision": commit,
+            "content_hash": commit,
+            "captured_at": captured_at,
+            "text": f"{commit} {subject}",
+            "subject": subject,
+            "canonical_ref": state.get("active_ref"),
+            "canonical_commit": state.get("canonical_commit"),
+            "relevance": 1.0,
+        })
+        if len(hits) >= min(max(limit, 1), 100):
+            break
+    return hits
+
+
 def inspect_repository_candidate(root: Path, canonical_ref: str, expected_commit: str) -> dict[str, Any]:
     """Inspect a possible rebind target without changing Git administrative state."""
     root = root.expanduser().resolve(strict=True)

@@ -52,7 +52,7 @@ class MemoryService:
             record_historical_snapshot(db, project_id, "MEMORY", memory_id, source_revision, {"memory_id": memory_id, "content": content, "content_class": content_class, "status": status, "source_revision": source_revision}, created, content_hash)
             return {"status": status, "memory_id": memory_id, "bank_id": bank_id, "adapter_status": result.status}
 
-    def recall(self, project_id: str, query: str, limit: int = 20) -> dict[str, Any]:
+    def recall(self, project_id: str, query: str, limit: int = 20, min_relevance: float | None = None) -> dict[str, Any]:
         adapter = self.adapter_factory(project_id)
         result: AdapterResult = adapter.recall(query)
         with connect(self.settings) as db:
@@ -61,7 +61,23 @@ class MemoryService:
         for item in result.payload.get("results", []) if isinstance(result.payload, dict) else []:
             document_id = item.get("document_id") if isinstance(item, dict) else None
             if document_id in allowed:
-                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "branch_context": allowed[document_id]["branch_context"], "metadata": allowed[document_id]["metadata"], "result": item})
+                score = None
+                if isinstance(item, dict):
+                    for key in ("score", "relevance", "similarity"):
+                        value = item.get(key)
+                        if isinstance(value, (int, float)):
+                            score = float(value)
+                            break
+                    if score is None and isinstance(item.get("result"), dict):
+                        nested = item["result"]
+                        for key in ("score", "relevance", "similarity"):
+                            value = nested.get(key)
+                            if isinstance(value, (int, float)):
+                                score = float(value)
+                                break
+                if min_relevance is not None and (score is None or score < min_relevance):
+                    continue
+                results.append({"memory_id": allowed[document_id]["memory_id"], "document_id": document_id, "content_class": allowed[document_id]["content_class"], "source_revision": allowed[document_id]["source_revision"], "source_reference_id": allowed[document_id]["source_reference_id"], "branch_context": allowed[document_id]["branch_context"], "metadata": allowed[document_id]["metadata"], "relevance": score, "result": item})
             if len(results) >= limit:
                 break
         return {"status": result.status, "results": results, "project_id": project_id}

@@ -46,8 +46,8 @@ class RepositoryIndexer:
                 data = path.read_bytes()
                 kind = mimetypes.guess_type(path.name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
                 db.execute(
-                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,'COMMITTED_CANONICAL',%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,observation_basis='COMMITTED_CANONICAL',canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
-                    (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, source_revision, source_revision, branch, str(root), observed),
+                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,content_text,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'COMMITTED_CANONICAL',%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,content_text=EXCLUDED.content_text,observation_basis='COMMITTED_CANONICAL',canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
+                    (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, self._search_text(data, kind), source_revision, source_revision, branch, str(root), observed),
                 )
                 count += 1
             db.execute(
@@ -130,8 +130,8 @@ class RepositoryIndexer:
                     continue
                 kind = mimetypes.guess_type(candidate.name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
                 db.execute(
-                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,observation_basis=EXCLUDED.observation_basis,canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
-                    (_id("file"), project_id, binding["repository_id"], relative, content_hash, len(data), kind, observation_revision, observation_basis, actual_head, branch, str(root), observed),
+                    "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,content_text,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,content_text=EXCLUDED.content_text,observation_basis=EXCLUDED.observation_basis,canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
+                    (_id("file"), project_id, binding["repository_id"], relative, content_hash, len(data), kind, self._search_text(data, kind), observation_revision, observation_basis, actual_head, branch, str(root), observed),
                 )
                 indexed += 1
             paths = [item[0] for item in normalized]
@@ -216,12 +216,30 @@ class RepositoryIndexer:
 
     def search(self, project_id: str, query: str, limit: int = 50) -> list[dict[str, Any]]:
         from .db import connect
+        if not query or not query.strip():
+            return []
         with connect(self.service.settings) as db:
             rows = db.execute(
-                "SELECT relative_path, content_hash, size_bytes, file_kind, source_revision, freshness_state FROM prime_core.repository_files WHERE project_id=%s AND freshness_state='CURRENT' AND relative_path ILIKE %s ORDER BY relative_path LIMIT %s",
-                (project_id, f"%{query}%", min(max(limit, 1), 100)),
+                "SELECT relative_path, content_hash, size_bytes, file_kind, content_text, source_revision, freshness_state, "
+                "CASE WHEN relative_path ILIKE %s THEN 1.0 ELSE ts_rank(to_tsvector('simple', COALESCE(content_text,'')), websearch_to_tsquery('simple', %s)) END AS relevance, "
+                "CASE WHEN content_text IS NULL OR content_text='' THEN '' ELSE ts_headline('simple', content_text, websearch_to_tsquery('simple', %s), 'MaxFragments=3,MaxWords=45,MinWords=8') END AS excerpt "
+                "FROM prime_core.repository_files WHERE project_id=%s AND freshness_state='CURRENT' AND (relative_path ILIKE %s OR to_tsvector('simple', COALESCE(content_text,'')) @@ websearch_to_tsquery('simple', %s)) "
+                "ORDER BY relevance DESC, relative_path LIMIT %s",
+                (f"%{query}%", query, query, project_id, f"%{query}%", query, min(max(limit, 1), 100)),
             ).fetchall()
-            return [dict(row) for row in rows]
+            result = []
+            for row in rows:
+                item = dict(row)
+                item["text"] = item.get("content_text") or ""
+                item.pop("content_text", None)
+                result.append(item)
+            return result
+
+    @staticmethod
+    def _search_text(data: bytes, kind: str, max_bytes: int = 200_000) -> str:
+        if kind == "binary" or b"\x00" in data[:8192] or len(data) > max_bytes:
+            return ""
+        return data.decode("utf-8", errors="replace")
 
     @staticmethod
     def _revision(root: Path) -> str:
