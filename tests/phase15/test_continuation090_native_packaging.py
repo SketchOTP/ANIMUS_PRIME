@@ -29,3 +29,25 @@ def test_core_image_contains_the_frozen_authority_template():
     dockerfile = (ROOT / "Dockerfile.core").read_text(encoding="utf-8")
 
     assert "COPY authority-template ./authority-template" in dockerfile
+
+
+def test_remote_repository_reads_do_not_resolve_the_node_path_on_core():
+    app = (ROOT / "apps/core/main.py").read_text(encoding="utf-8")
+    tree = app[app.index("def repository_tree("):app.index("def repository_file(")]
+    file_view = app[app.index("def repository_file("):app.index("def authority_view(")]
+    git_state = app[app.index("def _git_state("):app.index("def _context_markdown(")]
+
+    assert tree.index("node_client_for_project") < tree.index("_safe_repository_path")
+    assert file_view.index("node_client_for_project") < file_view.index("_safe_repository_path")
+    assert git_state.index("node_client_for_project") < git_state.index("_safe_repository_path")
+    assert '".." in relative.parts' in app
+
+
+def test_remote_agent_chain_uses_bounded_node_reads():
+    service = (ROOT / "src/prime_core/service.py").read_text(encoding="utf-8")
+    chain = service[service.index("def agent_instruction_chain("):service.index("def _safe_archive_extract(")]
+
+    assert chain.index("node_client_for_project") < chain.index("Path(row")
+    assert "client.list_directory" in chain
+    assert "client.read_file" in chain
+    assert '"source": "LIVE_NODE"' in chain

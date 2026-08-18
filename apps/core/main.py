@@ -23,7 +23,7 @@ from src.prime_core.authority import validate_authority, provision_authority
 from src.prime_core.indexer import RepositoryIndexer
 from src.prime_core.memory_service import MemoryService
 from src.prime_core.mcp_service import MCPService
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
 from src.prime_core.node_client import NodeClientError
@@ -1395,6 +1395,15 @@ def _safe_repository_path(project_id: str, relative_path: str = "") -> tuple[Pat
     return root, candidate
 
 
+def _remote_repository_path(binding: dict[str, Any], relative_path: str = "") -> tuple[str, str]:
+    relative = PurePosixPath(relative_path or ".")
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError("repository path escapes the canonical repository root")
+    normalized = "" if str(relative) == "." else relative.as_posix()
+    candidate = PurePosixPath(str(binding["canonical_path"])) / normalized
+    return str(candidate), normalized
+
+
 def _git(root: Path, *args: str) -> str:
     try:
         result = subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, text=True, timeout=8)
@@ -1404,11 +1413,9 @@ def _git(root: Path, *args: str) -> str:
 
 
 def _git_state(project_id: str) -> dict[str, Any]:
-    try:
-        root, _ = _safe_repository_path(project_id)
-    except (KeyError, OSError, ValueError):
-        return {"status": "UNAVAILABLE", "repository_path": "UNKNOWN"}
     binding = _repository_binding(project_id) or {}
+    if not binding:
+        return {"status": "UNAVAILABLE", "repository_path": "UNKNOWN"}
     live_node = service.node_client_for_project(project_id)
     if live_node:
         node, client = live_node
@@ -1416,7 +1423,11 @@ def _git_state(project_id: str) -> dict[str, Any]:
             snapshot = client.repository_snapshot(binding["canonical_path"])
             return {"status": "AVAILABLE", "repository_path": snapshot.get("canonical_path", binding["canonical_path"]), "canonical_revision": snapshot.get("head", "UNKNOWN"), "branch": snapshot.get("branch", "UNKNOWN"), "identity_fingerprint": snapshot.get("identity_fingerprint", binding.get("identity_fingerprint")), "dirty": bool(snapshot.get("status")), "worktrees": [], "recent_commits": [], "node_id": node["node_id"], "source": "LIVE_NODE"}
         except NodeClientError:
-            return {"status": "NODE_UNAVAILABLE", "repository_path": str(root), "node_id": node["node_id"], "source": "LIVE_NODE"}
+            return {"status": "NODE_UNAVAILABLE", "repository_path": binding["canonical_path"], "node_id": node["node_id"], "source": "LIVE_NODE"}
+    try:
+        root, _ = _safe_repository_path(project_id)
+    except (KeyError, OSError, ValueError):
+        return {"status": "UNAVAILABLE", "repository_path": binding["canonical_path"]}
     try:
         state = inspect_git_state(root, binding.get("canonical_ref"), binding.get("canonical_ref_commit"))
     except GitProvenanceError:
@@ -1582,16 +1593,22 @@ def repository_state(project_id: str, request: Request, prime_session: str | Non
 def repository_tree(project_id: str, request: Request, path: str = "", prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        root, candidate = _safe_repository_path(project_id, path)
+        binding = _repository_binding(project_id)
+        if not binding:
+            raise KeyError("project has no repository binding")
         live_node = service.node_client_for_project(project_id)
         if live_node:
             node, client = live_node
+            candidate, normalized = _remote_repository_path(binding, path)
             try:
-                listed = client.list_directory(str(candidate))
+                listed = client.list_directory(candidate)
+                snapshot = client.repository_snapshot(binding["canonical_path"])
             except NodeClientError as exc:
                 return error("NODE_UNAVAILABLE", str(exc), request_id(request), status_code=503)
-            entries = [{**entry, "path": str(Path(entry.get("path", "")).relative_to(root))} for entry in listed.get("entries", [])]
-            return {"project_id": project_id, "path": candidate.relative_to(root).as_posix() if candidate != root else "", "root": str(root), "entries": entries, "source_revision": _git(root, "rev-parse", "HEAD"), "source": "LIVE_NODE", "node_id": node["node_id"]}
+            root = PurePosixPath(binding["canonical_path"])
+            entries = [{**entry, "path": PurePosixPath(entry.get("path", "")).relative_to(root).as_posix()} for entry in listed.get("entries", [])]
+            return {"project_id": project_id, "path": normalized, "root": str(root), "entries": entries, "source_revision": snapshot.get("head", "UNKNOWN"), "source": "LIVE_NODE", "node_id": node["node_id"]}
+        root, candidate = _safe_repository_path(project_id, path)
         if not candidate.is_dir():
             return error("REPOSITORY_PATH_NOT_DIRECTORY", "requested repository path is not a directory", request_id(request), status_code=400)
         entries = []
@@ -1614,15 +1631,20 @@ def repository_tree(project_id: str, request: Request, path: str = "", prime_ses
 def repository_file(project_id: str, path: str, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        root, candidate = _safe_repository_path(project_id, path)
+        binding = _repository_binding(project_id)
+        if not binding:
+            raise KeyError("project has no repository binding")
         live_node = service.node_client_for_project(project_id)
         if live_node:
             node, client = live_node
+            candidate, normalized = _remote_repository_path(binding, path)
             try:
-                result = client.read_file(str(candidate))
+                result = client.read_file(candidate)
+                snapshot = client.repository_snapshot(binding["canonical_path"])
             except NodeClientError as exc:
                 return error("NODE_UNAVAILABLE", str(exc), request_id(request), status_code=503)
-            return {"project_id": project_id, "path": path, "availability": "EXACT", "content": result.get("content", ""), "content_hash": result.get("content_hash", "UNKNOWN"), "size_bytes": len(result.get("content", "").encode("utf-8")), "source_revision": _git(root, "rev-parse", "HEAD"), "source": "LIVE_NODE", "node_id": node["node_id"]}
+            return {"project_id": project_id, "path": normalized, "availability": "EXACT", "content": result.get("content", ""), "content_hash": result.get("content_hash", "UNKNOWN"), "size_bytes": len(result.get("content", "").encode("utf-8")), "source_revision": snapshot.get("head", "UNKNOWN"), "source": "LIVE_NODE", "node_id": node["node_id"]}
+        root, candidate = _safe_repository_path(project_id, path)
         if not candidate.is_file():
             return error("REPOSITORY_FILE_NOT_FOUND", "requested repository file was not found", request_id(request), status_code=404)
         size = candidate.stat().st_size

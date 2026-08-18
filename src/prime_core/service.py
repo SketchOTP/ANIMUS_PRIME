@@ -11,7 +11,7 @@ import subprocess
 import tarfile
 import secrets
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from .config import Settings
@@ -983,6 +983,31 @@ class CoreService:
             row = db.execute("SELECT r.canonical_path FROM prime_core.repositories r WHERE r.project_id=%s", (project_id,)).fetchone()
         if not row:
             raise KeyError("project has no repository binding")
+        live_node = self.node_client_for_project(project_id)
+        if live_node:
+            _, client = live_node
+            root = PurePosixPath(row["canonical_path"])
+            relative = PurePosixPath(relative_path or ".")
+            if relative.is_absolute() or ".." in relative.parts:
+                raise PermissionError("agent-chain path is outside the bound repository")
+            target = root / relative
+            directory = target if relative_path.endswith("/") or not relative.suffix else target.parent
+            levels = [root]
+            current = root
+            for part in directory.relative_to(root).parts:
+                current /= part
+                levels.append(current)
+            instructions = []
+            for candidate_dir in levels:
+                try:
+                    listed = client.list_directory(str(candidate_dir))
+                except NodeClientError:
+                    continue
+                candidate = next((entry for entry in listed.get("entries", []) if entry.get("name") == "AGENTS.md" and entry.get("kind") == "file"), None)
+                if candidate:
+                    result = client.read_file(candidate["path"])
+                    instructions.append({"path": PurePosixPath(candidate["path"]).relative_to(root).as_posix(), "scope": candidate_dir.relative_to(root).as_posix() or ".", "content_hash": result.get("content_hash", "UNKNOWN")})
+            return {"project_id": project_id, "target": target.relative_to(root).as_posix(), "instructions": instructions, "precedence": "EXPOSED_FOR_CODER_REVIEW; PRIME_DOES_NOT_INVENT_EXTERNAL_AGENT_SEMANTICS", "authority_relationship": ".agent is project authority; AGENTS.md is coding-agent instruction input", "mcp_relationship": "MCP/project context remains bounded by the project grant and exported provenance", "source": "LIVE_NODE"}
         root = Path(row["canonical_path"]).resolve(strict=True)
         target = (root / relative_path).resolve(strict=False)
         if target != root and root not in target.parents:
