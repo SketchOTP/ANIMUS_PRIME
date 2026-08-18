@@ -7,6 +7,7 @@ After adoption, use this append-only record for major durable project events and
 Use it for architectural decisions, governance changes, releases, qualification or certification events, major reversals, important milestones, and decision supersessions.
 
 - 2026-08-18 — DEC-PRIME-087: Preserve governed baseline `8b4efaf380285a9712bceab452ce11f1d4dfc00a`; record the stale 086 SHA as an append-only correction; accept 087 as PARTIAL with no product promotion, exact 69/12 queue, and external-resource gates for the remaining non-local targets. Public exposure, deployment, Phase 16, DOD-005, DOD-081, and R-056 remain out of scope/open.
+
 - 2026-08-18 — DEC-PRIME-088: Close Continuation 088 as PARTIAL. The authorized A/B appliance proved bounded fresh setup, restore-negative behavior, lifecycle security negatives, and terminal deletion on an expendable fixture through the protected PURGE API. Preserve the real clean-install zero-Node/project-bound Hindsight boundary, browser PURGE-surface gap, all external gates, DOD-005, DOD-081, R-056, Phase 15, V1, deployment, and public exposure as open/out of scope; do not begin Continuation 089.
 
 Each live entry should include:
@@ -824,3 +825,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Affected areas: Warm Start current Notion admission repair, focused test, persistent Core runtime image, Continuation 086 evidence, qualification fixtures, external-resource ledger, audit/burndown/matrix/ledger/traceability, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-085
 - 2026-08-18 — DEC-PRIME-087: Preserve governed baseline `8b4efaf380285a9712bceab452ce11f1d4dfc00a`; record the stale 086 SHA as an append-only correction; accept 087 as PARTIAL with no product promotion, exact 69/12 queue, and external-resource gates for the remaining non-local targets. Public exposure, deployment, Phase 16, DOD-005, DOD-081, and R-056 remain out of scope/open.
+
+## DEC-PRIME-PHASE15-089
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-089
+- Status: CLOSED
+- Decision or event: Stop Continuation 089 at the qualification-machine boundary because Atlas has KVM capability but no installed approved VM/equivalent runtime or safe LAN-equivalent guest network boundary.
+- Rationale: The frozen specification permits a genuinely independent VM interpretation, but a VM cannot be truthfully established by a second container or process. Installing the simulated 92-package QEMU/libvirt stack and changing host networking would be a new infrastructure decision outside the already-approved environment. Existing Node packaging was corrected in derived governance from “absent” to “present but unqualified.”
+- Affected areas: Continuation 089 evidence and external-resource ledger, DOD-079 audit/burndown wording, R-056 derived evidence references, and append-only project records. No product implementation, canonical Node, persistent database, network exposure, or Phase 16 state changed.
+- Supersedes record: DEC-PRIME-PHASE15-086

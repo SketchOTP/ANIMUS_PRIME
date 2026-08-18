@@ -1224,3 +1224,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-QUALIFICATION-MACHINE-089
+
+- Issued: 2026-08-18T04:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 089
+- Objective: Determine whether Atlas can safely provide a genuinely independent Linux qualification VM/Node, then exhaust the Node-dependent V1 qualification cluster only if the machine boundary is real.
+- Scope: Read-only virtualization/resource/network discovery, frozen-spec interpretation, existing Node packaging inspection, approved VM or equivalent qualification-machine establishment if available, fresh Node enrollment, DOD-044/DOD-055/DOD-049/DOD-053/DOD-079 qualification, derived governance correction, evidence, and exact GitHub/Notion parity.
+- Exclusions: no blind installation of a new virtualization stack; no canonical Node/trust/state mutation; no synthetic machine/Node/project/repository/bank/device; no host bridge/Funnel/firewall changes; no DOD-005, Phase 16, deployment, DOD-081/R-056 closure, or Continuation 090.
+- Acceptance: Establish a legitimate independent machine and qualify all locally unlocked rows, or return the exact Atlas/VM blocker and operator prerequisite without manufacturing evidence.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-RELEASE-APPLIANCE-088
+- Status at issuance: ISSUED

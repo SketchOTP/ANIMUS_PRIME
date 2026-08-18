@@ -244,7 +244,7 @@ items:
     product_area: "native nodes"
     owner_phase: 2
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Linux and Windows native node support must be separately qualified: Linux requires supported service/install/restart evidence with safe privilege; Windows requires an actual supported Windows host. Direct Atlas SSH proves Linux host availability but not service qualification."
+    exact_missing_behavior: "Repository Linux and Windows native installer/service files exist, but Linux still requires live install/restart/reboot/repair evidence with safe privilege; Windows requires an actual supported Windows host. Direct Atlas SSH proves Linux host availability but not native lifecycle qualification."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "NO"
     requires_browser: "YES"
@@ -258,10 +258,10 @@ items:
     requires_privilege: "YES"
     requires_packaging: "NO"
     requires_clean_install: "YES"
-    next_action: "Acquire a clean supported Linux install target and an actual supported Windows host; qualify each native lifecycle independently."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    next_action: "Provide an operator-approved independent Linux VM/install target or already-approved Linux machine, plus an actual supported Windows host; qualify each native lifecycle independently."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "CLEAN_NATIVE_LINUX_INSTALL_TARGET_REQUIRED; ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
+    blocked_by: "APPROVED_INDEPENDENT_LINUX_VM_OR_NATIVE_INSTALL_TARGET_REQUIRED; ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-080

@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T03:00:00-04:00
+- Last updated: 2026-08-18T04:30:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-RELEASE-APPLIANCE-088
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 088
-- Objective: Establish and exercise the authorized isolated V1 Release Qualification Appliance, exhaust evidence-backed local boundaries, and normalize all twelve open DODs without mutating canonical state.
+- Local directive ID: D-PRIME-PHASE15-QUALIFICATION-MACHINE-089
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 089
+- Objective: Resolve the independent qualification-machine boundary and qualify Node-dependent V1 rows only if Atlas provides a legitimate isolated VM or independent target.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL — Continuation 088 qualified clean A/B appliance setup, restore-negative behavior, and expendable terminal deletion; no complete frozen DOD clause was promoted. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_RELEASE_QUALIFICATION_APPLIANCE_088
-- Expected or actual touched areas: appliance helper, evidence, derived burndown/matrix/ledger/traceability, and append-only records. No PRIME product implementation change; canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
-- Immediate next action: Stop this continuation. The remaining gates are exact Node-backed onboarding, bound-project restore, provider cost, second device/machine, native Windows/Linux qualification, browser terminal PURGE surface, and DOD-080/R-056 closure.
+- Acceptance: BLOCKED — Atlas has KVM capability but no already-installed approved VM/equivalent runtime or safe LAN-equivalent guest network boundary. No DOD was promoted. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Current phase: PHASE15_QUALIFICATION_MACHINE_089
+- Expected or actual touched areas: read-only Atlas capacity/virtualization/network discovery, packaging inspection, Continuation 089 evidence, derived DOD-079 correction, external-resource ledger, and append-only records. No PRIME product implementation change; canonical project, Node, public exposure, deployment, and Phase 16 were preserved out of scope.
+- Immediate next action: Obtain an operator-approved installed VM runtime with bounded storage/network allocation, or provide an already-approved independent Linux machine/VM for PRIME Node enrollment. Do not install the simulated QEMU/libvirt set or begin Continuation 090 without that decision.
 
 ## Temporary task-relevant facts
 
@@ -30,8 +30,8 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 088 isolated A/B appliance, bounded persistent browser qualification, supported full regression, governance and burndown reconciliation
-- Result: PASSED
+- Command or check: Continuation 089 Atlas virtualization/resource/network discovery, frozen-spec review, packaging inspection, and derived-governance reconciliation
+- Result: BLOCKED
 
 ## Risks
 
@@ -44,11 +44,12 @@
 - PRIME_RUNTIME_NOTION_OPERATOR_WORKFLOW_UNQUALIFIED: RESOLVED by Continuation 076 persistent browser qualification and minimal lifecycle/idempotence repairs.
 - AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED: RESOLVED by Continuation 080 durable MCP activity projection and restart qualification.
 - PRIME_WARM_START_SELECTED_NOTION_SOURCE_UNAVAILABLE: RESOLVED for bounded Continuation 086 — explicit selected Notion fixture admitted through the real browser with source/revision/hash provenance; fixture remains non-authoritative.
+- PRIME_QUALIFICATION_VM_RUNTIME_UNAVAILABLE: BLOCKED — `/dev/kvm` is present, but no approved QEMU/libvirt/LXD/equivalent guest runtime or existing safe LAN-equivalent guest network is installed; no host infrastructure was changed.
 
 ## Pending decisions
 
 - Runtime Notion credential and backend lifecycle remain qualified; DOD-021/DOD-022 shared retrieval and grounding remain qualified; DOD-026 and DOD-076 remain promoted from 081; DOD-050 is promoted by 082; DOD-005 and DOD-039 are promoted by 083; DOD-031 is promoted by 086. Keep DOD-081/R-056 last and preserve exact external-resource gates.
-- Keep the persistent topology preserved, provider/restore/second-LAN/fresh-install/Windows/Tailscale and selected-Notion gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope.
+- Keep the persistent topology preserved, provider/restore/second-LAN/fresh-install/Windows/Tailscale and VM gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope.
 
 ## Status vocabulary
 

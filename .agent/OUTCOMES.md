@@ -2470,3 +2470,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: exact Node-backed clean onboarding, bound-project restore/restart, provider cost attribution, second Tailscale/LAN targets, creation recovery, fork child resources, native installation/Windows, browser PURGE surface, DOD-080, and aggregate release qualification.
 - Blockers: exact product/resource gates are recorded in `evidence/phase15/qualification-continuation-088.md` and the derived governed views.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-QUALIFICATION-MACHINE-089 - BLOCKED
+
+- Outcome ID: O-PRIME-089
+- Supersedes outcome: O-PRIME-088
+- Closed: 2026-08-18T04:30:00-04:00
+- Acceptance: PARTIAL
+- Summary: Atlas exposes hardware virtualization through `/dev/kvm`, but no approved QEMU/libvirt/LXD/equivalent guest runtime or existing safe LAN-equivalent guest network is installed. The simulated QEMU/libvirt installation would add 92 packages and was not performed. Existing Linux/Windows Node packaging was verified in the repository, but no clean guest existed on which to run live installation or enrollment. No VM, Node, DOD promotion, host infrastructure change, or canonical mutation occurred.
+- Changed areas: Continuation 089 evidence, external-resource ledger, DOD-079 derived audit/burndown correction, R-056 evidence references, and append-only `.agent` records. No PRIME product implementation changed.
+- Validation:
+  - read-only Atlas virtualization/resource/network/service inventory - PASSED
+  - frozen-spec and primary documentation review - PASSED with freedesktop-page access limitation recorded
+  - packaging/static inspection - PASSED
+  - VM/Node/browser qualification - BLOCKED by missing approved VM/runtime/network boundary
+  - regression - NOT RUN; no product code or runtime changed
+  - deployment/public exposure/Phase 16 - NOT PERFORMED
+- DOD/R result: no DOD/R promotion; queue remains 69 complete / 12 open. DOD-079 remains BLOCKED_BY_ENVIRONMENT with packaging-exists/live-qualification-missing wording. DOD-081/R-056, Phase 15, V1, and deployment remain open.
+- Remaining risks: approved independent VM or Linux target, Windows host, second LAN/Tailscale device, provider cost, bound-project restore, creation recovery, terminal browser PURGE, DOD-080, DOD-004, and aggregate release qualification.
+- Blockers: `ATLAS_APPROVED_VM_RUNTIME_UNAVAILABLE`. Provide an operator-approved installed VM runtime with bounded storage/network allocation or an already-approved independent Linux machine/VM. Do not begin Continuation 090.
+- Follow-up directive: none
