@@ -67,3 +67,12 @@ def test_continuity_backup_omits_installation_local_capability_rows():
     ):
         assert f'"{table}"' in backup
     assert "Reissue them after restore" in backup
+
+
+def test_warm_start_reads_remote_authority_through_the_enrolled_node():
+    source = (ROOT / "src/prime_core/warm_start_service.py").read_text(encoding="utf-8")
+
+    assert "node_client_for_project" in source
+    assert "client.repository_snapshot" in source
+    assert "client.read_file" in source
+    assert source.index("node_client_for_project") < source.index("self._root(project_id)")

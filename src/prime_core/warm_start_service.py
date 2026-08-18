@@ -4,12 +4,13 @@ import hashlib
 import json
 import re
 import subprocess
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from .db import connect
 from .history_service import HistoryService
 from .memory_service import MemoryService, SECRET_PATTERN
+from .node_client import NodeClientError
 
 
 class WarmStartService:
@@ -60,6 +61,16 @@ class WarmStartService:
             raise ValueError("project repository root is not a directory")
         return root, binding
 
+    def _repository_context(self, project_id: str) -> tuple[Path | None, dict[str, Any], Any | None, str]:
+        binding = self._binding(project_id)
+        live_node = self.service.node_client_for_project(project_id)
+        if live_node:
+            _, client = live_node
+            snapshot = client.repository_snapshot(binding["canonical_path"])
+            return None, binding, client, snapshot.get("head") or binding.get("canonical_revision") or "UNKNOWN"
+        root, binding = self._root(project_id)
+        return root, binding, None, self._revision(root, binding.get("canonical_revision"))
+
     @staticmethod
     def _revision(root: Path, configured: str | None) -> str:
         try:
@@ -75,19 +86,43 @@ class WarmStartService:
             return configured or "UNKNOWN"
 
     @classmethod
-    def _authority_candidate(cls, root: Path, relative_path: str, revision: str) -> dict[str, Any]:
+    def _authority_content(cls, root: Path | None, binding: dict[str, Any], client: Any | None, relative_path: str) -> str | None:
         if relative_path not in cls.AUTHORITY_PATHS:
             raise ValueError(f"authority path is not selectable: {relative_path}")
+        if client:
+            repository_root = PurePosixPath(binding["canonical_path"])
+            relative = PurePosixPath(relative_path)
+            if relative.is_absolute() or ".." in relative.parts:
+                raise ValueError("authority path escapes repository root")
+            try:
+                result = client.read_file(str(repository_root / relative))
+            except NodeClientError:
+                return None
+            content = str(result.get("content", ""))
+            if len(content.encode("utf-8")) > cls.MAX_AUTHORITY_BYTES:
+                raise OverflowError("bounded file size exceeded")
+            return content
+        if root is None:
+            return None
         path = (root / relative_path).resolve()
         try:
             path.relative_to(root)
         except ValueError as exc:
             raise ValueError("authority path escapes repository root") from exc
         if not path.is_file():
-            return {"source_class": "AUTHORITY", "locator": relative_path, "status": "UNAVAILABLE"}
+            return None
         if path.stat().st_size > cls.MAX_AUTHORITY_BYTES:
+            raise OverflowError("bounded file size exceeded")
+        return path.read_text(encoding="utf-8", errors="replace")
+
+    @classmethod
+    def _authority_candidate(cls, root: Path | None, binding: dict[str, Any], client: Any | None, relative_path: str, revision: str) -> dict[str, Any]:
+        try:
+            content = cls._authority_content(root, binding, client, relative_path)
+        except OverflowError:
             return {"source_class": "AUTHORITY", "locator": relative_path, "status": "SKIPPED", "reason": "bounded file size exceeded"}
-        content = path.read_text(encoding="utf-8", errors="replace")
+        if content is None:
+            return {"source_class": "AUTHORITY", "locator": relative_path, "status": "UNAVAILABLE"}
         return {
             "source_class": "AUTHORITY",
             "locator": relative_path,
@@ -126,11 +161,10 @@ class WarmStartService:
         return candidates
 
     def preview(self, project_id: str, authority_paths: list[str] | None = None, notion_source_binding_ids: list[str] | None = None) -> dict[str, Any]:
-        root, binding = self._root(project_id)
-        revision = self._revision(root, binding.get("canonical_revision"))
+        root, binding, client, revision = self._repository_context(project_id)
         requested_authority = authority_paths if authority_paths is not None else list(self.AUTHORITY_PATHS)
         requested_notion = set(notion_source_binding_ids or [])
-        authority = [self._authority_candidate(root, path, revision) for path in requested_authority]
+        authority = [self._authority_candidate(root, binding, client, path, revision) for path in requested_authority]
         notion = [item for item in self._notion_candidates(project_id) if not requested_notion or item.get("source_binding_id") in requested_notion]
         return {
             "status": "READY",
@@ -199,18 +233,16 @@ class WarmStartService:
             raise ValueError("Warm Start requires explicit confirmation")
         if not authority_paths and not notion_source_binding_ids:
             raise ValueError("Warm Start requires at least one selected source")
-        root, binding = self._root(project_id)
-        revision = self._revision(root, binding.get("canonical_revision"))
+        root, binding, client, revision = self._repository_context(project_id)
         admitted: list[dict[str, Any]] = []
         skipped: list[dict[str, Any]] = []
         rejected: list[dict[str, Any]] = []
         for relative_path in list(dict.fromkeys(authority_paths)):
-            candidate = self._authority_candidate(root, relative_path, revision)
+            candidate = self._authority_candidate(root, binding, client, relative_path, revision)
             if candidate["status"] != "CURRENT":
                 skipped.append(candidate)
                 continue
-            path = root / relative_path
-            content = path.read_text(encoding="utf-8", errors="replace")
+            content = self._authority_content(root, binding, client, relative_path) or ""
             if SECRET_PATTERN.search(content):
                 rejected.append({**candidate, "status": "REJECTED", "reason": "secret-sensitive content rejected"})
                 continue
