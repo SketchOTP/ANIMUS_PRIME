@@ -131,6 +131,9 @@ target; and a browser/restart target for complete restore qualification.
 - Full supported regression: **PASSED — 125 passed / 29 skipped / 0 failed**
 - Governance and burndown validation: **PASSED**
 - Compile/static and diff checks: **PASSED**
-- Secret scan and final Git parity: **PENDING final publication check**
+- Secret scan: **PASSED** — no raw credential values detected; pattern hits were repository detection logic or historical non-secret text
+- Final Git parity: **PASSED** after publication; local HEAD, `origin/main`, and GitHub `main` matched
+
+Notion checkpoint: [Phase 15 Product Completion Checkpoint 087 — 66bfc52](https://app.notion.com/p/3c0833cb27ff813c84a7f6a8b17225a5?pvs=204). The checkpoint and main SOT were updated and read back before this final evidence-only publication correction.
 
 No raw credentials, tokens, or secret values are present in this evidence.
