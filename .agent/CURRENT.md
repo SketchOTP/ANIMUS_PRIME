@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T04:30:00-04:00
+- Last updated: 2026-08-18T14:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-QUALIFICATION-MACHINE-089
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 089
-- Objective: Resolve the independent qualification-machine boundary and qualify Node-dependent V1 rows only if Atlas provides a legitimate isolated VM or independent target.
+- Local directive ID: D-PRIME-PHASE15-FIRECRACKER-QUALIFICATION-090
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 090
+- Objective: Establish a bounded independent Firecracker Linux guest and exhaust the unlocked Node-backed onboarding, repository-creation/recovery, restore, and native-Linux qualification cluster.
 - Current status: `COMPLETE`
-- Acceptance: BLOCKED — Atlas has KVM capability but no already-installed approved VM/equivalent runtime or safe LAN-equivalent guest network boundary. No DOD was promoted. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_QUALIFICATION_MACHINE_089
-- Expected or actual touched areas: read-only Atlas capacity/virtualization/network discovery, packaging inspection, Continuation 089 evidence, derived DOD-079 correction, external-resource ledger, and append-only records. No PRIME product implementation change; canonical project, Node, public exposure, deployment, and Phase 16 were preserved out of scope.
-- Immediate next action: Obtain an operator-approved installed VM runtime with bounded storage/network allocation, or provide an already-approved independent Linux machine/VM for PRIME Node enrollment. Do not install the simulated QEMU/libvirt set or begin Continuation 090 without that decision.
+- Acceptance: PASS for the bounded 090 objective, PARTIAL for Phase 15 — independent Firecracker guest and native Node qualified; DOD-044, DOD-049, and DOD-055 promoted; DOD-079 Linux half passed and Windows remains blocked. Governed queue is 72 complete / 9 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Current phase: PHASE15_FIRECRACKER_QUALIFICATION_090
+- Expected or actual touched areas: bounded Firecracker qualification infrastructure on /mnt/storage1tb, private TAP/nft/proxy with complete rollback, native Linux Node packaging and enrollment, Node-backed Core repository/authority/Goal/Warm Start repairs, continuity-backup repair, browser onboarding/creation/restore qualification, governed evidence, and append-only records. Canonical project, canonical Node, public exposure, deployment, and Phase 16 were preserved.
+- Immediate next action: Awaiting reset and Architect review of the 9-row queue. DOD-004 is the expected next bounded engineering bottleneck; do not start Continuation 091 automatically.
 
 ## Temporary task-relevant facts
 
@@ -23,19 +23,19 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Runtime image identity is `animus-prime-core:continuation-086-warm-start-notion`; qualified implementation is `1d1f421e0c6201a49bc2b305c73bd41547237577`; the approved runtime Notion credential remains available only through Atlas secure configuration; the Core container has a read-only `/home/sketch/Projects` mount for enrolled Node paths; no public exposure, Funnel change, or Phase 16 occurred.
+- Canonical runtime image remains `animus-prime-core:continuation-086-warm-start-notion` at `1d1f421e0c6201a49bc2b305c73bd41547237577`. Qualification Appliances A/B ran exact bounded implementation `d882d9e0442be66f689911dec9379f8285b446b8`; no public exposure, Funnel change, canonical runtime replacement, or Phase 16 occurred.
 - Approved Notion sandbox parent is `3be833cb-27ff-814f-af89-ebfc3a2a8aed`; project record page is `3be833cb-27ff-8159-add6-e883c1cc54af`; controlled probe child is `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`.
 - Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart. Continuation 079 Memory surfaces render existing project data with provenance/isolation. Continuation 086 qualified Warm Start selected `.agent` plus selected Notion fixture admission; Hindsight service/retain/recall are current while Reflect is currently unavailable and Mental Models unsupported.
-- The real Qualification Project and enrolled Atlas Node were reused. Untracked .codebase-memory/, .prime-evidence/, and .vscode/ remain preserved.
+- Continuation 090 established independent guest `prime090-fc`, Node `node-090-firecracker-linux`, approved root `/srv/prime-projects`, project `project_fc46bf826a24410b851ddc860eeb3b49`, repository `repo_760a4120576f4ac7b1c774ffbb0d2497`, and restore `restore_0b0bc75412bf4a85892c84b7b8baab55`. The guest is stopped after rollback; its disk/evidence remain preserved. Untracked `.codebase-memory/`, `.prime-evidence/`, and `.vscode/` remain preserved.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 089 Atlas virtualization/resource/network discovery, frozen-spec review, packaging inspection, and derived-governance reconciliation
-- Result: BLOCKED
+- Command or check: Continuation 090 Firecracker/native Node/browser qualification plus supported regression
+- Result: `PASSED`
 
 ## Risks
 
-- Durable multi-system workflows; current Hindsight Reflect/Mental Model degradation; R-045/DOD-047; independent restore; fresh install; second LAN machine; Windows/native lifecycle; Tailscale/second device; creation recovery; positive deletion target; DOD-005; DOD-081; R-056; Phase 15/V1.
+- Durable multi-system workflows; R-045/DOD-047 provider cost; second LAN machine; Windows native lifecycle; Tailscale/second device; child Notion/Hindsight fork resources; terminal browser PURGE; complete polish; DOD-081; R-056; Phase 15/V1.
 
 ## Blockers
 
@@ -44,12 +44,13 @@
 - PRIME_RUNTIME_NOTION_OPERATOR_WORKFLOW_UNQUALIFIED: RESOLVED by Continuation 076 persistent browser qualification and minimal lifecycle/idempotence repairs.
 - AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED: RESOLVED by Continuation 080 durable MCP activity projection and restart qualification.
 - PRIME_WARM_START_SELECTED_NOTION_SOURCE_UNAVAILABLE: RESOLVED for bounded Continuation 086 — explicit selected Notion fixture admitted through the real browser with source/revision/hash provenance; fixture remains non-authoritative.
-- PRIME_QUALIFICATION_VM_RUNTIME_UNAVAILABLE: BLOCKED — `/dev/kvm` is present, but no approved QEMU/libvirt/LXD/equivalent guest runtime or existing safe LAN-equivalent guest network is installed; no host infrastructure was changed.
+- PRIME_QUALIFICATION_VM_RUNTIME_UNAVAILABLE: RESOLVED for Linux qualification by the bounded Firecracker 1.16.1 guest; no QEMU/libvirt stack was installed.
+- PRIME_NATIVE_WINDOWS_QUALIFICATION_HOST_UNAVAILABLE: BLOCKED — DOD-079 requires an actual supported Windows host for native lifecycle qualification.
 
 ## Pending decisions
 
 - Runtime Notion credential and backend lifecycle remain qualified; DOD-021/DOD-022 shared retrieval and grounding remain qualified; DOD-026 and DOD-076 remain promoted from 081; DOD-050 is promoted by 082; DOD-005 and DOD-039 are promoted by 083; DOD-031 is promoted by 086. Keep DOD-081/R-056 last and preserve exact external-resource gates.
-- Keep the persistent topology preserved, provider/restore/second-LAN/fresh-install/Windows/Tailscale and VM gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope.
+- Keep the persistent topology preserved, provider/second-LAN/Windows/Tailscale gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope. The independent restore, fresh Node-backed onboarding, repository-creation recovery, and Linux-native gates are now closed.
 
 ## Status vocabulary
 

@@ -1238,3 +1238,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-RELEASE-APPLIANCE-088
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-FIRECRACKER-QUALIFICATION-090
+
+- Issued: 2026-08-18T05:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 090
+- Objective: Establish a minimal isolated Firecracker/KVM Linux qualification machine on Atlas, enroll a genuinely independent PRIME Node, and exhaust DOD-044, DOD-055, DOD-049, and the Linux half of DOD-079.
+- Scope: Official Firecracker acquisition/integrity, bounded non-root storage, independent guest identity/filesystem, private TAP network and rollback, unchanged-first Linux Node install, real enrollment, browser onboarding/repository creation/recovery/restore, native Linux lifecycle, full validation, governed evidence, GitHub parity, and Notion closeout.
+- Exclusions: no QEMU/libvirt fallback; no canonical Node/project/database mutation; no physical bridge, Tailscale/Funnel, public exposure, DOD-053 promotion from TAP/NAT, DOD-005, Phase 16, deployment, DOD-081/R-056 closure, or Continuation 091.
+- Acceptance: Attempt the complete unlocked Node-backed chain, promote only fully satisfied frozen clauses, preserve exact external gates, roll back host networking, publish evidence and exact GitHub/Notion parity.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-QUALIFICATION-MACHINE-089
+- Status at issuance: ISSUED

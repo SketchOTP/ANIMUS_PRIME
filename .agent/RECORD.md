@@ -835,3 +835,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The frozen specification permits a genuinely independent VM interpretation, but a VM cannot be truthfully established by a second container or process. Installing the simulated 92-package QEMU/libvirt stack and changing host networking would be a new infrastructure decision outside the already-approved environment. Existing Node packaging was corrected in derived governance from “absent” to “present but unqualified.”
 - Affected areas: Continuation 089 evidence and external-resource ledger, DOD-079 audit/burndown wording, R-056 derived evidence references, and append-only project records. No product implementation, canonical Node, persistent database, network exposure, or Phase 16 state changed.
 - Supersedes record: DEC-PRIME-PHASE15-086
+
+## DEC-PRIME-PHASE15-090
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-090
+- Status: CLOSED
+- Decision or event: Accept Continuation 090 as PASS for its bounded Firecracker/Node-backed qualification scope and PARTIAL for Phase 15; promote DOD-044, DOD-049, and DOD-055 while retaining DOD-079 as Windows-blocked.
+- Rationale: The independent guest passed machine identity, native Node lifecycle, clean onboarding, durable repository creation/recovery, encrypted independent restore/restart, and Linux power-cycle qualification. The complete frozen DOD-079 clause still explicitly requires Windows, and aggregate DOD-081/R-056 prerequisites remain open.
+- Affected areas: qualification-only Firecracker/TAP infrastructure with completed rollback; bounded PRIME Node/Core/backup repairs; Appliance A/B qualification; 090 evidence and governed queue; append-only records. Canonical Node/Core/project state, public exposure, deployment, and Phase 16 were not changed.
+- Supersedes record: DEC-PRIME-PHASE15-089

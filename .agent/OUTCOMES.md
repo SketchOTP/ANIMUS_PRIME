@@ -2490,3 +2490,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: approved independent VM or Linux target, Windows host, second LAN/Tailscale device, provider cost, bound-project restore, creation recovery, terminal browser PURGE, DOD-080, DOD-004, and aggregate release qualification.
 - Blockers: `ATLAS_APPROVED_VM_RUNTIME_UNAVAILABLE`. Provide an operator-approved installed VM runtime with bounded storage/network allocation or an already-approved independent Linux machine/VM. Do not begin Continuation 090.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-FIRECRACKER-QUALIFICATION-090 - PARTIAL
+
+- Outcome ID: O-PRIME-090
+- Supersedes outcome: O-PRIME-089
+- Closed: 2026-08-18T14:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: An official integrity-verified Firecracker 1.16.1 microVM provided a genuinely independent Ubuntu machine and native Node. Clean onboarding, approved-root repository creation with real interrupted/idempotent recovery, independent encrypted backup restore/restart, and Linux native service/power-cycle qualification passed. DOD-044, DOD-049, and DOD-055 are promoted; DOD-079 now lacks only Windows qualification.
+- Changed areas: Linux Node installer/systemd boundary, Node-backed repository/authority/Goal/Warm Start Core paths, continuity backup secret-capability omission, focused tests, Appliance A/B image, Continuation 090 evidence/ledgers, derived audit/burndown/R-056 evidence links, and append-only records.
+- Validation:
+  - official Firecracker/runtime/hash and independent-machine gate - PASSED
+  - native Node install/enrollment/restart/power-cycle/repair - PASSED
+  - DOD-044 browser onboarding/restart/Warm Start - PASSED
+  - DOD-055 browser creation/interruption/recovery/negatives - PASSED
+  - DOD-049 browser protected restore/fidelity/restart/refusal - PASSED
+  - supported full regression - PASSED (`134 passed / 29 skipped / 0 failed`)
+  - network rollback and canonical-service preservation - PASSED
+- DOD/R result: DOD-044, DOD-049, and DOD-055 promoted; DOD-079 remains `BLOCKED_BY_ENVIRONMENT` only for Windows. Queue is 72 complete / 9 open. R-056, DOD-081, Phase 15, V1, and deployment remain open or gated.
+- Remaining risks: DOD-004 workflow breadth, provider cost, fork child resources, second LAN/tailnet device, terminal browser PURGE, Windows native qualification, complete polish, and aggregate release qualification.
+- Blockers: `ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED` for DOD-079; other exact gates remain in the 090 external-resource ledger.
+- Follow-up directive: none

@@ -8,10 +8,10 @@ purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
   LOCAL_CODE: 1
-  LOCAL_BROWSER_QUALIFICATION: 5
+  LOCAL_BROWSER_QUALIFICATION: 3
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 6
+  EXTERNAL_ENVIRONMENT: 5
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -89,31 +89,6 @@ items:
     blocked_by: "LEGITIMATE_DISTINCT_CHILD_NOTION_PROJECT_RECORD_AND_CHILD_HINDSIGHT_TARGET_REQUIRED"
     depends_on: "R-048"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-044
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "onboarding"
-    owner_phase: 14
-    mapped_r_requirements: ["R-051"]
-    exact_missing_behavior: "Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "PRIME_CLEAN_APPLIANCE_NODE_ENROLLMENT_AND_PROJECT_BOUND_HINDSIGHT_PATH_REQUIRED"
-    depends_on: "R-051"
-    acceptance_kind: "MIXED"
   - dod_id: DOD-047
     current_status: "PARTIAL"
     product_area: "Usage"
@@ -138,31 +113,6 @@ items:
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "APPROVED_PROVIDER_PROFILE_WITH_AUTHORITATIVE_COST_ATTRIBUTION_REQUIRED_FOR_REMAINING_CLAUSE"
     depends_on: "R-045"
-    acceptance_kind: "OPERATOR_WORKFLOW"
-  - dod_id: DOD-049
-    current_status: "PARTIAL"
-    product_area: "Backup"
-    owner_phase: 13
-    mapped_r_requirements: ["R-042"]
-    exact_missing_behavior: "The authorized isolated restore/recovery harness passed, but the complete browser restore journey and restart/requalification of the restored Core remain unqualified."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Qualify restore/recovery against an approved independent target without destructive mutation of the governed installation."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "PROJECT_BOUND_BACKUP_SOURCE_AND_CLEAN_NODE_BACKED_RESTORE_REQUALIFICATION_REQUIRED"
-    depends_on: "R-042"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-053
     current_status: "BACKEND_ONLY"
@@ -189,31 +139,6 @@ items:
     blocked_by: "ACTUAL_SECOND_ENROLLED_LAN_MACHINE_REQUIRED"
     depends_on: "R-036"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-055
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "creation"
-    owner_phase: 3
-    mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "Durable creation and repair-required failure state exist; no legitimate interrupted-creation browser journey was completed in 087, so recovery and complete browser negative qualification remain."
-    work_class: "LOCAL_BROWSER_QUALIFICATION"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "YES"
-    next_action: "Run the bounded qualification for 'Durable creation and repair-required failure state exist; interrupted creation/recovery and complete browser negative qualification remain.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-087.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "PRIME_CLEAN_APPLIANCE_NODE_ENROLLMENT_REQUIRED_FOR_APPROVED_REPOSITORY_CREATION_AND_INTERRUPTION"
-    depends_on: "R-036"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-077
     current_status: "PARTIAL"
     product_area: "delete"
@@ -244,11 +169,11 @@ items:
     product_area: "native nodes"
     owner_phase: 2
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Repository Linux and Windows native installer/service files exist, but Linux still requires live install/restart/reboot/repair evidence with safe privilege; Windows requires an actual supported Windows host. Direct Atlas SSH proves Linux host availability but not native lifecycle qualification."
+    exact_missing_behavior: "The independent Firecracker Ubuntu guest qualified clean Linux install, native systemd lifecycle, enrollment, allowed-root repository operations, restart/power-cycle persistence, and idempotent repair. Windows still requires an actual supported host."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "NO"
     requires_browser: "YES"
-    requires_native_linux: "YES"
+    requires_native_linux: "NO"
     requires_windows: "YES"
     requires_tailscale: "NO"
     requires_second_device: "NO"
@@ -258,10 +183,10 @@ items:
     requires_privilege: "YES"
     requires_packaging: "NO"
     requires_clean_install: "YES"
-    next_action: "Provide an operator-approved independent Linux VM/install target or already-approved Linux machine, plus an actual supported Windows host; qualify each native lifecycle independently."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "APPROVED_INDEPENDENT_LINUX_VM_OR_NATIVE_INSTALL_TARGET_REQUIRED; ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
+    next_action: "Provide an actual supported Windows host and qualify native Windows installation, service, restart/reboot, repair, enrollment, allowed-root operations, and reconnect behavior."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md","evidence/phase15/qualification-continuation-090.md"]
+    qualification_needed: "Direct authenticated Windows qualification with before/after state, service identity, repository operation, restart/reboot, repair, and reconnect evidence."
+    blocked_by: "ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-080
