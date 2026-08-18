@@ -48,10 +48,13 @@ def test_node_quarantine_rejects_allowed_root_and_unrecorded_purge(tmp_path: Pat
 def test_destructive_ui_has_separate_repository_confirmation_and_disclosure():
     web = (Path(__file__).parents[2] / "apps/web/index.html").read_text(encoding="utf-8")
     assert 'data-workflow-action="PURGE"' in web
+    assert '<dialog id="lifecycle-dialog"' in web
     assert "repository_erasure_confirmation" in web
     assert "include_repository_erasure" in web
     assert "External copies PRIME cannot erase" in web
     assert "preserve_recovery_snapshot" in web
+    assert web.index('id="lifecycle-cancel"') < web.index('id="lifecycle-confirm-submit"')
+    assert "$('#lifecycle-cancel')?.focus()" in web
 
 
 def test_lifecycle_declares_delete_and_purge_saga_steps():
