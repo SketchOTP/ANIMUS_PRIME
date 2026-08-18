@@ -219,15 +219,19 @@ class LifecycleService:
         return {"deleted_rows_by_table": deleted, "preserved": ["current purge workflow", "minimum audit tombstone", "resource disposition ledger"]}
 
     def _purge(self, project_id: str, preflight: dict[str, Any], project: dict[str, Any], binding: dict[str, Any] | None, confirmation: str, repository_confirmation: str | None, erase_repository: bool) -> dict[str, Any]:
-        expected = f"{project['name']}::{binding['canonical_path']}" if binding else None
-        if erase_repository and repository_confirmation != expected:
-            raise PermissionError("exact project name and repository path confirmation is required for repository erasure")
         steps = [{"step_key": "PURGE_PLAN_VERIFIED"}, {"step_key": "HINDSIGHT_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "REPOSITORY_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "LOCAL_RESOURCES_PURGED"}, {"step_key": "MINIMAL_TOMBSTONE_WRITTEN"}, {"step_key": "PURGE_COMPLETED"}]
         workflow = self._start_or_resume("PROJECT_PURGE", project_id, preflight["preflight_id"], steps)
         with connect(self.settings) as db:
+            completed_plan = db.execute("SELECT status,result_metadata FROM prime_core.workflow_steps WHERE workflow_id=%s AND step_key='PURGE_PLAN_VERIFIED'", (workflow["workflow_id"],)).fetchone()
+        if not completed_plan or completed_plan["status"] != "SUCCEEDED":
+            expected = f"{project['name']}::{binding['canonical_path']}" if binding else None
+            if erase_repository and repository_confirmation != expected:
+                raise PermissionError("exact project name and repository path confirmation is required for repository erasure")
+        with connect(self.settings) as db:
             backup = self._backup_disclosure(db, project_id)
-        plan = {"repository_erasure": erase_repository, "external_survival": ["Notion page", "remote Git", "external Evidence URLs", "provider logs"], "backup": backup}
-        self._step(workflow, "PURGE_PLAN_VERIFIED", lambda: plan)
+        requested_plan = {"repository_erasure": erase_repository, "external_survival": ["Notion page", "remote Git", "external Evidence URLs", "provider logs"], "backup": backup}
+        plan = self._step(workflow, "PURGE_PLAN_VERIFIED", lambda: requested_plan)
+        erase_repository = bool(plan.get("repository_erasure"))
         def memory_action() -> dict[str, Any]:
             if not self.memory:
                 raise RuntimeError("memory adapter is unavailable")

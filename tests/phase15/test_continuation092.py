@@ -119,9 +119,25 @@ def test_delete_refusals_do_not_mutate_and_workflow_completes(monkeypatch, tmp_p
             return Adapter()
 
     purge = LifecycleService(settings, core, Memory())
+    active_purge = core.start_or_get_workflow(
+        "PROJECT_PURGE",
+        f"interrupted-purge:{project['project_id']}",
+        project["project_id"],
+        [
+            {"step_key": "PURGE_PLAN_VERIFIED"},
+            {"step_key": "HINDSIGHT_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REPOSITORY_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "LOCAL_RESOURCES_PURGED"}, {"step_key": "MINIMAL_TOMBSTONE_WRITTEN"},
+            {"step_key": "PURGE_COMPLETED"},
+        ],
+    )
+    core.begin_step(active_purge["workflow_id"], "PURGE_PLAN_VERIFIED")
+    durable_plan = {"repository_erasure": False, "external_survival": ["Notion page"], "backup": {"matching_backups": []}}
+    core.complete_step(active_purge["workflow_id"], "PURGE_PLAN_VERIFIED", durable_plan, durable_plan)
     purge_preflight = purge.preflight(project["project_id"], "PURGE", True)
-    terminal = purge.execute(project["project_id"], "PURGE", purge_preflight["preflight_token"], project["project_id"], True)
+    terminal = purge.execute(project["project_id"], "PURGE", purge_preflight["preflight_token"], project["project_id"], True, "stale-path-confirmation", True)
     assert terminal["to_state"] == "DELETED"
+    assert terminal["workflow_id"] == active_purge["workflow_id"]
     assert project["project_id"] not in {item["project_id"] for item in core.list_projects()}
     with connect(settings) as db:
         assert db.execute("SELECT content_retained FROM (SELECT false AS content_retained) x").fetchone()["content_retained"] is False
