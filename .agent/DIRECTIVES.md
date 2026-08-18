@@ -1182,3 +1182,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-LOCAL-CLOSURE-084
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-086
+
+- Issued: 2026-08-17T18:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 086
+- Objective: Exhaust the remaining bounded V1 qualification boundary using explicitly authorized, isolated fixtures and convert every other unresolved row into an exact external-resource disposition without manufacturing state.
+- Scope: Qualification Lab fixtures, real persistent Atlas Core/UI browser qualification, Warm Start selected `.agent` plus selected Notion knowledge, remaining DOD/R reconciliation, regression, governance, parity, and living Notion journal closeout.
+- Exclusions: Reopen DOD-005, public exposure, Funnel changes, destructive canonical reset, synthetic non-fixture resources, Phase 16, deployment, V1 declaration, and premature R-056/DOD-081 closure.
+- Acceptance: Promote only complete frozen clauses supported by real evidence; publish truthful evidence and exact GitHub/Notion parity with remaining resource gates explicit.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-085
+- Status at issuance: ISSUED

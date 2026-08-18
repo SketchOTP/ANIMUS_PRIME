@@ -960,3 +960,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 085 bounded Warm Start admission and persistent Hindsight interaction only.
 - Supersedes learning: none
+
+## L-PRIME-WARM-START-NOTION-CURRENT-086
+
+- Date: 2026-08-17
+- Learning ID: L-PRIME-WARM-START-NOTION-CURRENT-086
+- Fact or lesson: The live Notion lifecycle projection can report an attached source as `CURRENT` after refresh even though the source was attached through PRIME. Warm Start content admission must accept the canonical current lifecycle state as well as the transient `ATTACHED` state; otherwise a real non-empty selected source is falsely treated as unavailable. Qualification tests should use an isolated authorized lab `TMPDIR` because Atlas host `/tmp` quota can otherwise obscure supported regression results.
+- Evidence location: `src/prime_core/warm_start_service.py`; `tests/phase15/test_continuation085_warm_start.py`; `evidence/phase15/qualification-continuation-086.md`; persistent browser Warm Start and durable memory/activity records.
+- Confidence: VERIFIED
+- Scope: Continuation 086 selected Notion Warm Start admission and supported validation only.
+- Supersedes learning: none

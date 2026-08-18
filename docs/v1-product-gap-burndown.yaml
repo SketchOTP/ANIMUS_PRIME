@@ -11,7 +11,7 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 5
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 6
+  EXTERNAL_ENVIRONMENT: 5
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -89,31 +89,6 @@ items:
     blocked_by: "LEGITIMATE_DISTINCT_CHILD_NOTION_PROJECT_RECORD_AND_CHILD_HINDSIGHT_TARGET_REQUIRED"
     depends_on: "R-048"
     acceptance_kind: "MIXED"
-  - dod_id: DOD-031
-    current_status: "BACKEND_ONLY"
-    product_area: "warm start"
-    owner_phase: 9
-    mapped_r_requirements: ["R-054"]
-    exact_missing_behavior: "The bounded PRIME warm-start path now admits explicitly selected .agent history through the real Core/UI and preserves source/revision/provenance boundaries. The frozen criterion still requires explicitly selected non-empty Notion knowledge without bulk ingestion; the approved probe page is blank/retracted, so no legitimate selected Notion knowledge payload is available."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "YES"
-    requires_external_at: "NO"
-    requires_live_notion: "YES"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Provide one operator-approved, legitimate, non-empty Notion knowledge source for the existing Qualification Project, then qualify the bounded .agent plus selected-Notion warm-start path without bulk ingestion."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/warm_start_service.py","evidence/phase15/qualification-continuation-085.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "LEGITIMATE_NONEMPTY_OPERATOR_SELECTED_NOTION_KNOWLEDGE_SOURCE_REQUIRED_FOR_WARM_START"
-    depends_on: "R-054"
-    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-044
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "onboarding"

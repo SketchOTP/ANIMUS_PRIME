@@ -810,3 +810,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The real persistent Atlas PRIME Core/UI now exercises a bounded Warm Start path for explicitly selected `.agent` history with source identity, revision, provenance, project isolation, duplicate handling, and honest degraded behavior. The only candidate Notion source available to the Qualification Project is RETRACTED/blank, so the complete frozen selected-Notion clause cannot be promoted without an operator-approved non-empty resource. The supported full regression is 124 passed / 29 skipped / 0 failed. No synthetic state, canonical destructive mutation, public exposure, deployment, Funnel change, frozen-spec change, new DOD-005 work, DOD-081, R-056 closure, or Phase 16 was attempted.
 - Affected areas: bounded Warm Start service/API/UI, focused tests, persistent Core image `animus-prime-core:continuation-085-warm-start-final`, Continuation 085 evidence, audit/burndown/matrix/ledger/traceability, and append-only project records.
 - Supersedes record: DEC-PRIME-PHASE15-084
+
+## DEC-PRIME-PHASE15-086
+
+- Date: 2026-08-17
+- Record or decision ID: DEC-PRIME-PHASE15-086
+- Status: CLOSED
+- Decision or event: Close Continuation 086 as PARTIAL and promote DOD-031 to USER_USABLE_VERIFIED.
+- Rationale: A real persistent Core/UI operator run admitted bounded selected `.agent` authority history and one explicitly marked non-authoritative selected Notion knowledge source with durable source identity, revision, hash, provenance, isolation, and honest degraded Hindsight status. No synthetic canonical state or destructive target was used. All other open DODs remain at their evidence-supported partial/resource-gated statuses and DOD-081/R-056 remain last.
+- Affected areas: Warm Start current Notion admission repair, focused test, persistent Core runtime image, Continuation 086 evidence, qualification fixtures, external-resource ledger, audit/burndown/matrix/ledger/traceability, and append-only records.
+- Supersedes record: DEC-PRIME-PHASE15-085

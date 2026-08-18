@@ -2411,3 +2411,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: selected non-empty Notion knowledge, durable multi-system workflow breadth, provider cost attribution, independent restore target, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, remaining browser clauses, and aggregate release qualification.
 - Blockers: no blocker to the bounded Warm Start implementation; the complete frozen DOD-031 clause is blocked by the exact selected Notion resource state recorded in Continuation 085 evidence.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-086 - PARTIAL
+
+- Outcome ID: O-PRIME-086
+- Supersedes outcome: O-PRIME-085
+- Closed: 2026-08-17T20:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: The real persistent Atlas PRIME Core/UI qualified bounded Warm Start admission for selected high-value `.agent` records and one explicitly marked, operator-selected non-empty Notion fixture. Source identity, revision, hash, provenance, isolation, durable admission, duplicate handling, and truthful Hindsight degradation were verified. DOD-031 is promoted to USER_USABLE_VERIFIED; remaining rows stay partial, externally gated, or aggregate-gated.
+- Changed areas: `src/prime_core/warm_start_service.py`, focused Warm Start test, persistent Core image `animus-prime-core:continuation-086-warm-start-notion`, evidence, and governed status records.
+- Validation:
+  - focused Warm Start tests (3 passed) - PASSED
+  - Phase 15 suite (62 passed / 10 skipped) - PASSED
+  - supported full regression (125 passed / 29 skipped / 0 failed) - PASSED
+  - browser/runtime bounded Warm Start qualification - PASSED
+  - governance and parity closeout - NOT RUN pending final publication
+- DOD/R result: DOD-031 promoted; queue is 69 complete / 12 open. DOD-005 remains closed and untouched. DOD-081/R-056, Phase 15, V1, and deployment remain open or gated.
+- Remaining risks: durable multi-system workflow breadth, independent restore, provider cost attribution, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, creation recovery, deletion-positive target, complete polish, current Hindsight Reflect/Mental Model degradation, and aggregate release qualification.
+- Blockers: legitimate external or durable targets remain required for several rows; no blocker to the bounded 086 Warm Start qualification.
+- Follow-up directive: none
