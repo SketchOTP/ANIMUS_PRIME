@@ -665,11 +665,23 @@ class CoreService:
         try:
             started = self.begin_step(workflow["workflow_id"], "DIRECTORY_CREATED")
             remote = None
-            if started.get("decision") != "SKIP_COMPLETED":
+            if started.get("decision") == "REPAIR_REQUIRED":
                 try:
                     remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
                 except NodeClientError as exc:
                     raise ValueError(str(exc)) from exc
+                self.mark_workflow_repaired(
+                    workflow["workflow_id"],
+                    "DIRECTORY_CREATED",
+                    {"node_operation_id": workflow["workflow_id"], "reconciliation": "NODE_IDEMPOTENCY_CONFIRMED"},
+                )
+                started = self.begin_step(workflow["workflow_id"], "DIRECTORY_CREATED")
+            if started.get("decision") != "SKIP_COMPLETED":
+                if remote is None:
+                    try:
+                        remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
+                    except NodeClientError as exc:
+                        raise ValueError(str(exc)) from exc
                 self.complete_step(workflow["workflow_id"], "DIRECTORY_CREATED", side_effect_state={"path": remote["canonical_path"], "node_operation_id": workflow["workflow_id"]})
             current_step = "GIT_INITIALIZED"
             started = self.begin_step(workflow["workflow_id"], "GIT_INITIALIZED")
@@ -695,7 +707,7 @@ class CoreService:
             return {"workflow": workflow["workflow_id"], "repository": bound, "inspection": inspection}
         except Exception as exc:
             try:
-                self.fail_step(workflow["workflow_id"], current_step, str(exc), retryable=False, ambiguous_external_effect=True)
+                self.fail_step(workflow["workflow_id"], current_step, str(exc), retryable=True, ambiguous_external_effect=False)
             except Exception:
                 pass
             with transaction(self.settings) as db:

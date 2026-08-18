@@ -15,3 +15,11 @@ def test_linux_node_installer_grants_only_service_identity_required_access():
     assert 'readwrite_paths="$DATA"' in installer
     assert 'readwrite_paths+=" $root"' in installer
     assert "configured allowed root does not exist" in installer
+
+
+def test_remote_repository_creation_reconciles_only_through_node_idempotency():
+    service = (ROOT / "src/prime_core/service.py").read_text(encoding="utf-8")
+
+    assert "NODE_IDEMPOTENCY_CONFIRMED" in service
+    assert 'create_repository(str(parent), repository_name, workflow["workflow_id"])' in service
+    assert "ambiguous_external_effect=False" in service
