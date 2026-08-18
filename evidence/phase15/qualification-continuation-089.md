@@ -10,6 +10,7 @@
 - Starting governed HEAD: `5d0e8dd2d1d4a8cf9adb433f95ebb27fb6695e5c`.
 - Starting qualified implementation: `1d1f421e0c6201a49bc2b305c73bd41547237577`.
 - Local/origin parity at intake: exact parity.
+- Qualification/governance commit: `efed6a9` (final publication metadata commit follows).
 - Preserved untracked artifacts: `.codebase-memory/`, `.prime-evidence/`, `.vscode/`.
 - Canonical Node: `node-041-atlas-native`, user service `animus-prime-node`, active before and after inspection. No canonical trust, certificate, state, database, project, repository, or network configuration was changed.
 
@@ -78,3 +79,7 @@ Provide one of:
 2. a legitimately approved independent Linux machine/VM already available for PRIME Node enrollment.
 
 The next run must re-check the resource boundary before creating a guest. Do not install the simulated QEMU/libvirt package set, configure a bridge, enroll a new Node, or begin Continuation 090 without that explicit environment decision.
+
+## Publication closeout
+
+The governed evidence state was first committed as `efed6a9`; the subsequent closeout commit records final publication metadata and parity. GitHub `main` must resolve to that final closeout commit before this continuation is considered published.
