@@ -972,6 +972,16 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 086 selected Notion Warm Start admission and supported validation only.
 - Supersedes learning: none
+
+## L-PRIME-DURABLE-EXTERNAL-RECONCILIATION-091
+
+- Date: 2026-08-18
+- Learning ID: L-PRIME-DURABLE-EXTERNAL-RECONCILIATION-091
+- Fact or lesson: Durable workflow identity must be keyed to the external operation, and restart decisions must inspect the actual side-effect identity rather than adjacent configuration state. For live Notion, a persisted credential/project entry without `page_id` is incomplete and must re-enter marker-based page reconciliation. Restore requires a separate surviving ledger because canonical schema replacement intentionally removes the generic workflow rows it is restoring.
+- Evidence location: `evidence/phase15/qualification-continuation-091.md`; `evidence/phase15/qualification-continuation-091-interruption-matrix.md`; `apps/core/main.py`; `src/prime_core/notion_service.py`; `src/prime_core/backup_service.py`.
+- Confidence: VERIFIED
+- Scope: Continuation 091 DOD-004/R-012 durable multi-system workflow qualification.
+- Supersedes learning: none
 - 2026-08-18 — Continuation 087: An isolated restore harness can truthfully verify component fidelity, outage recovery, source-ledger rebuild, and refusal behavior without closing the complete browser restore/restart contract. A fixture reaching DELETION_PENDING proves protected initiation and step-up, not terminal deletion or cleanup. Reclassify a row to EXTERNAL_ENVIRONMENT when its missing behavior requires a real second machine or other durable operator resource; do not manufacture that target.
 - 2026-08-18 — Continuation 088: An isolated clean-install appliance is a valid qualification target only when its Node and project-bound Hindsight dependencies are real. A and B can prove setup/authentication, truthful degraded state, restore-input refusal, and lifecycle security without inventing a second Node. The current UI exposes DELETE to DELETION_PENDING but not the protected terminal PURGE action; API terminal evidence must therefore remain separate from complete browser qualification.
 - 2026-08-18 — Continuation 089: Atlas hardware virtualization is not the same as an available qualification machine. A legitimate VM run requires an installed approved guest runtime, bounded storage/memory, independent guest identity and filesystem, and a safe network path. With only `/dev/kvm`, no QEMU/libvirt/LXD/equivalent runtime, constrained root capacity, and no existing physical LAN bridge, do not install a large host stack or claim a second machine. Repository Node installer/service files exist, but live native qualification remains unverified until an approved independent target exists.

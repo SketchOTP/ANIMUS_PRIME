@@ -2511,3 +2511,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-004 workflow breadth, provider cost, fork child resources, second LAN/tailnet device, terminal browser PURGE, Windows native qualification, complete polish, and aggregate release qualification.
 - Blockers: `ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED` for DOD-079; other exact gates remain in the 090 external-resource ledger.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-DURABLE-WORKFLOWS-091 - COMPLETE
+
+- Outcome ID: O-PRIME-091
+- Supersedes outcome: O-PRIME-090
+- Closed: 2026-08-18T14:45:00-04:00
+- Acceptance: MET
+- Summary: Existing durable workflow primitives now cover every current V1 operation with actual non-transactional side effects. Fork, live Notion Project Record, Hindsight bank, repository creation, authority/Goal provisioning, MCP scope, and restore passed replay/reconciliation qualification. A live Notion process death exposed and drove the minimal missing-page retry repair; restart adopted exactly one existing page and completed the durable workflow.
+- Validation:
+  - supported regression - PASSED (`137 passed / 34 skipped / 0 failed`)
+  - focused persistent suite before final route-only retry fix - PASSED (`8 passed`)
+  - final focused default suite - PASSED (`3 passed / 5 skipped`)
+  - live canonical crash/restart/one-marker reconciliation - PASSED
+  - governance, YAML, burndown, alignment, diff, secret, and Git parity checks - PASSED at publication closeout
+- DOD/R result: DOD-004 promoted to PRODUCT_VERIFIED; R-012 Phase 15 VERIFIED; queue 73 complete / 8 open. DOD-016 and aggregate release gates remain open.
+- Changed areas: Core workflow services, Notion/Hindsight/restore integrations, diagnostics API, focused tests, runtime image, Continuation 091 evidence/matrices, audit/burndown/traceability, and append-only records.
+- Remaining risks: DOD-016 complete child-resource contract, provider cost, second LAN/tailnet device, Windows native qualification, terminal browser PURGE, final polish, DOD-081, R-056, Phase 15, and V1 remain open or gated.
+- Blockers: none for Continuation 091 acceptance; exact remaining gates stay in the eight-row burndown.
+- Follow-up directive: none

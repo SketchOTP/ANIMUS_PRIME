@@ -845,3 +845,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The independent guest passed machine identity, native Node lifecycle, clean onboarding, durable repository creation/recovery, encrypted independent restore/restart, and Linux power-cycle qualification. The complete frozen DOD-079 clause still explicitly requires Windows, and aggregate DOD-081/R-056 prerequisites remain open.
 - Affected areas: qualification-only Firecracker/TAP infrastructure with completed rollback; bounded PRIME Node/Core/backup repairs; Appliance A/B qualification; 090 evidence and governed queue; append-only records. Canonical Node/Core/project state, public exposure, deployment, and Phase 16 were not changed.
 - Supersedes record: DEC-PRIME-PHASE15-089
+
+## DEC-PRIME-PHASE15-091
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-091
+- Status: CLOSED
+- Decision or event: Accept Continuation 091 as PASS for its bounded durable-workflow scope; promote DOD-004 to PRODUCT_VERIFIED and record R-012 Phase 15 VERIFIED.
+- Rationale: Actual multi-system side effects now use stable workflow identities, ordered durable steps, explicit replay policies, expected/created resource ledgers, compensation or operator-visible repair, and restart-safe reconciliation. Live Notion process death exited 91 after external success, then the repaired product adopted exactly one marker-matched page and completed the same workflow. Atomic database-only lifecycle transitions were not misrepresented as external workflows.
+- Affected areas: Core workflow primitives and services, Notion/Hindsight/restore paths, diagnostics, focused tests, persistent Core image, Continuation 091 evidence, audit/burndown/traceability, and append-only records. No public exposure, deployment, Phase 16, canonical project mutation, or history rewrite occurred.
+- Supersedes record: DEC-PRIME-PHASE15-090

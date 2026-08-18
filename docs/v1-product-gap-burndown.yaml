@@ -7,38 +7,13 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 1
+  LOCAL_CODE: 0
   LOCAL_BROWSER_QUALIFICATION: 3
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
   EXTERNAL_ENVIRONMENT: 5
   AGGREGATE_RELEASE_GATE: 0
 items:
-  - dod_id: DOD-004
-    current_status: "BACKEND_ONLY"
-    product_area: "workflows"
-    owner_phase: 3
-    mapped_r_requirements: ["R-012"]
-    exact_missing_behavior: "Continuation 082 directly qualified durable workflow identity, idempotent replay, step checkpoint/complete, a real repository resource reference, and resume planning on the Qualification Project; Fork, Notion, Hindsight, restore, archive, and full interruption/orphan qualification remain."
-    work_class: "LOCAL_CODE"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Convert the remaining multi-system lifecycle paths and qualify durable interruption, reconciliation, compensation, orphan visibility, and restart behavior before promotion."
-    evidence_already_available: ["src/prime_core/service.py","src/prime_core/workflow_primitives.py","migrations/prime/0001_core.sql","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md","evidence/phase15/qualification-continuation-082.md"]
-    qualification_needed: "Direct qualification of Fork, Notion, Hindsight, restore, archive, and full interruption/orphan boundaries; no dedicated UI is required."
-    blocked_by: "FULL_DURABLE_MULTI_SYSTEM_INTERRUPTION_RECONCILIATION_REQUIRED"
-    depends_on: "R-012"
-    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-013
     current_status: "BACKEND_ONLY"
     product_area: "remote access"
