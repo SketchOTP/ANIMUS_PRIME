@@ -2446,7 +2446,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - governance and burndown validation - PASSED
   - compile/static and diff checks - PASSED
   - secret scan - PASSED; no raw credential values detected
-  - final Git parity - PASSED at publication SHA `66bfc5247a1ebec7a1338ba15dd6d323ecd2446f`
+  - final Git parity - PASSED at publication SHA `8f99ceca9754fb5e851255c309b9d79dd389c838`
 - DOD/R result: no new DOD/R promotion; queue remains 69 complete / 12 open. R-056, DOD-081, Phase 15, V1, and deployment remain open or gated.
 - Remaining risks: durable multi-system interruption/reconciliation, provider cost attribution, independent restore browser restart, fresh onboarding, second Tailscale/LAN targets, creation interruption, terminal deletion, native Linux/Windows installation, complete polish, and aggregate release qualification.
 - Blockers: exact resource and bounded local gates are recorded in Continuation 087 evidence and the derived burndown.

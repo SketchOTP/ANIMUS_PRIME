@@ -12,9 +12,10 @@ authorized, explicitly marked Qualification Lab fixtures. The canonical
 Qualification Project and enrolled Atlas Node were not replaced or reset.
 
 The 086 evidence body contained a stale final-publication SHA (`8e36ab5...`).
-The append-only correction for this continuation is that the actual governed
-baseline and final publication below are `8b4efaf380285a9712bceab452ce11f1d4dfc00a`.
-The historical 086 record is not rewritten.
+The append-only correction for this continuation is that the actual 086
+governed baseline was `8b4efaf380285a9712bceab452ce11f1d4dfc00a`; the final
+087 publication is the SHA recorded in the final closeout below. The historical
+086 record is not rewritten.
 
 ## Baseline and topology
 
@@ -134,6 +135,6 @@ target; and a browser/restart target for complete restore qualification.
 - Secret scan: **PASSED** — no raw credential values detected; pattern hits were repository detection logic or historical non-secret text
 - Final Git parity: **PASSED** after publication; local HEAD, `origin/main`, and GitHub `main` matched
 
-Notion checkpoint: [Phase 15 Product Completion Checkpoint 087 — 66bfc52](https://app.notion.com/p/3c0833cb27ff813c84a7f6a8b17225a5?pvs=204). The checkpoint and main SOT were updated and read back before this final evidence-only publication correction.
+Notion checkpoint: [Phase 15 Product Completion Checkpoint 087 — 8f99cec](https://app.notion.com/p/3c0833cb27ff813c84a7f6a8b17225a5?pvs=204). The checkpoint and main SOT were updated and read back against the final governed publication.
 
 No raw credentials, tokens, or secret values are present in this evidence.
