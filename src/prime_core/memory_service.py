@@ -11,6 +11,7 @@ from .db import connect, transaction
 from .service import _id, now
 from .history_primitives import record_historical_snapshot
 from .git_provenance import capture_provenance
+from .workflow_primitives import qualification_interrupt
 
 SECRET_PATTERN = re.compile(r"(?i)(api[_-]?key|secret|password|token|private[_-]?key)\s*[:=]\s*[^\s]+")
 
@@ -19,12 +20,57 @@ class MemoryService:
     def __init__(self, settings: Any, adapter_factory: Callable[[str], Any] | None = None):
         self.settings = settings
         self.adapter_factory = adapter_factory or (lambda project_id: PrimeMemoryAdapter(self.settings.hindsight_base_url, project_id, timeout_seconds=self.settings.hindsight_timeout_seconds))
+
+    def ensure_bank(self, project_id: str, parent_workflow_id: str | None = None) -> dict[str, Any]:
+        """Create/reconcile the stable project bank through the durable ledger."""
+        from .service import CoreService
+
+        core = CoreService(self.settings)
+        bank_id = f"prime-{project_id}"
+        if parent_workflow_id:
+            core.record_workflow_resource(parent_workflow_id, "HINDSIGHT_BANK", bank_id, bank_id, {"project_id": project_id, "creation": "STABLE_PUT"}, "EXPECTED")
+            qualification_interrupt("FORK_PROJECT", "HINDSIGHT_BOUND", "BEFORE_EXTERNAL_CALL")
+            result = self.adapter_factory(project_id).create_bank()
+            qualification_interrupt("FORK_PROJECT", "HINDSIGHT_BOUND", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+            status = "CREATED" if result.status == "CURRENT" else "RECONCILIATION_REQUIRED"
+            core.record_workflow_resource(parent_workflow_id, "HINDSIGHT_BANK", bank_id, bank_id, {"project_id": project_id, "adapter_status": result.status, "reason": result.reason, "replay": "IDEMPOTENT_STABLE_PUT"}, status)
+            return {"status": result.status, "project_id": project_id, "bank_id": bank_id, "reason": result.reason}
+
+        workflow = core.start_or_get_workflow("ENSURE_HINDSIGHT_BANK", f"hindsight-bank:{project_id}", project_id, [
+            {"step_key": "BANK_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "BANK_CREATED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "BANK_BOUND", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ])
+        step = core.begin_step(workflow["workflow_id"], "BANK_EXPECTED")
+        if step["decision"] != "SKIP_COMPLETED":
+            core.record_workflow_resource(workflow["workflow_id"], "HINDSIGHT_BANK", bank_id, bank_id, {"project_id": project_id, "creation": "STABLE_PUT"}, "EXPECTED")
+            core.complete_step(workflow["workflow_id"], "BANK_EXPECTED")
+        step = core.begin_step(workflow["workflow_id"], "BANK_CREATED")
+        result = AdapterResult("CURRENT", {})
+        if step["decision"] != "SKIP_COMPLETED":
+            qualification_interrupt("ENSURE_HINDSIGHT_BANK", "BANK_CREATED", "BEFORE_EXTERNAL_CALL")
+            result = self.adapter_factory(project_id).create_bank()
+            if result.status != "CURRENT":
+                core.fail_step(workflow["workflow_id"], "BANK_CREATED", result.reason or "Hindsight bank unavailable", retryable=True)
+                return {"status": result.status, "project_id": project_id, "bank_id": bank_id, "reason": result.reason, "workflow_id": workflow["workflow_id"]}
+            qualification_interrupt("ENSURE_HINDSIGHT_BANK", "BANK_CREATED", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+            core.record_workflow_resource(workflow["workflow_id"], "HINDSIGHT_BANK", bank_id, bank_id, {"project_id": project_id, "adapter_status": result.status, "replay": "IDEMPOTENT_STABLE_PUT"}, "CREATED")
+            core.complete_step(workflow["workflow_id"], "BANK_CREATED", side_effect_state={"bank_id": bank_id})
+        step = core.begin_step(workflow["workflow_id"], "BANK_BOUND")
+        if step["decision"] != "SKIP_COMPLETED":
+            core.complete_step(workflow["workflow_id"], "BANK_BOUND", {"bank_id": bank_id})
+        core.complete_workflow(workflow["workflow_id"], "BANK_BOUND")
+        return {"status": "CURRENT", "project_id": project_id, "bank_id": bank_id, "workflow_id": workflow["workflow_id"], "reconciled": step["decision"] == "SKIP_COMPLETED"}
+
     def store(self, project_id: str, content: str, content_class: str, source_revision: str | None = None,
               source_reference_id: str | None = None, branch_context: str | None = None,
               supersedes_memory_id: str | None = None, correction_reason: str | None = None,
               metadata: dict[str, Any] | None = None) -> dict[str, Any]:
         if SECRET_PATTERN.search(content):
             return {"status": "REJECTED", "reason": "secret-sensitive content rejected"}
+        bank = self.ensure_bank(project_id)
+        if bank["status"] != "CURRENT":
+            return {"status": "DEGRADED", "reason": bank.get("reason") or "Hindsight bank unavailable", "bank_id": bank["bank_id"]}
         content_hash = hashlib.sha256(content.encode()).hexdigest()
         with transaction(self.settings) as db:
             duplicate = db.execute("SELECT * FROM prime_core.memory_records WHERE project_id=%s AND content_hash=%s AND status NOT IN ('TOMBSTONED','SUPERSEDED')", (project_id, content_hash)).fetchone()

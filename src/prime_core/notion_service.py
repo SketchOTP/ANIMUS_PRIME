@@ -17,6 +17,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
 
+from .workflow_primitives import qualification_interrupt
+
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
@@ -414,28 +416,66 @@ class NotionLifecycleService:
         state = self._state(project_id)
         if not state.credential_ref:
             raise NotionProviderError("UNCONFIGURED", "Notion provider is not configured")
-        if state.page_id:
+        already_bound = bool(state.page_id)
+        if already_bound and not self.settings:
             return {"status": "BOUND", "page_id": state.page_id, "idempotent": True}
         key = idempotency_key or f"project-record/{project_id}"
+        core = None
+        workflow = None
+        page_step = None
+        if self.settings:
+            from .service import CoreService
+            core = CoreService(self.settings)
+            workflow = core.start_or_get_workflow("CREATE_NOTION_PROJECT_RECORD", f"notion:{key}", project_id, [
+                {"step_key": "PAGE_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                {"step_key": "PAGE_CREATED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+                {"step_key": "PAGE_BOUND", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            ])
+            expected = core.begin_step(workflow["workflow_id"], "PAGE_EXPECTED")
+            if expected["decision"] != "SKIP_COMPLETED":
+                core.record_workflow_resource(workflow["workflow_id"], "NOTION_PAGE", key, None, {"project_id": project_id, "parent_id": parent_id, "title": title, "discovery": "PRIME_IDEMPOTENCY_MARKER"}, "EXPECTED")
+                core.complete_step(workflow["workflow_id"], "PAGE_EXPECTED")
+            page_step = core.begin_step(workflow["workflow_id"], "PAGE_CREATED")
+            if page_step["decision"] == "SKIP_COMPLETED":
+                plan = core.workflow_resume_plan(workflow["workflow_id"])
+                resource = next((item for item in plan["recorded_resource_refs"] if item["resource_type"] == "NOTION_PAGE" and item["resource_key"] == key), None)
+                if resource and resource.get("resource_locator"):
+                    state.page_id = resource["resource_locator"]
         state.status = "BINDING"
         try:
-            page = self.provider.create_page(parent_id, title, self._markers(), key)
+            if not state.page_id:
+                qualification_interrupt("CREATE_NOTION_PROJECT_RECORD", "PAGE_CREATED", "BEFORE_EXTERNAL_CALL")
+            page = self.provider.get_page(state.page_id) if state.page_id else self.provider.create_page(parent_id, title, self._markers(), key)
         except NotionProviderError as exc:
             if exc.code == "LOST_RESPONSE":
                 try:
                     page = self.provider.create_page(parent_id, title, self._markers(), key)
                 except NotionProviderError as retry:
                     state.status = "DEGRADED" if retry.retryable else "CONFLICT"
+                    if core and workflow:
+                        core.fail_step(workflow["workflow_id"], "PAGE_CREATED", retry.code, retryable=retry.retryable)
                     return {"status": state.status, "retryable": retry.retryable, "error_code": retry.code}
             else:
                 state.status = "DEGRADED" if exc.retryable else ("REAUTH_REQUIRED" if exc.code == "ACCESS_DENIED" else "CONFLICT")
+                if core and workflow:
+                    core.fail_step(workflow["workflow_id"], "PAGE_CREATED", exc.code, retryable=exc.retryable)
                 return {"status": state.status, "retryable": exc.retryable, "error_code": exc.code}
+        if core and workflow:
+            qualification_interrupt("CREATE_NOTION_PROJECT_RECORD", "PAGE_CREATED", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+            core.record_workflow_resource(workflow["workflow_id"], "NOTION_PAGE", key, page.page_id, {"project_id": project_id, "parent_id": parent_id, "page_revision": page.revision, "discovery": "PRIME_IDEMPOTENCY_MARKER"}, "CREATED")
+            if page_step and page_step["decision"] != "SKIP_COMPLETED":
+                core.complete_step(workflow["workflow_id"], "PAGE_CREATED", side_effect_state={"page_id": page.page_id, "page_revision": page.revision})
         state.page_id, state.parent_id, state.status = page.page_id, parent_id, "BOUND"
         state.projection_revisions.append({"source_revision": "initial", "provider_revision": page.revision, "content_hash": hashlib.sha256(page.content.encode()).hexdigest(), "self_write": True})
         self._persist()
         self._record_binding(state, "BOUND", page.page_id, state.projection_revisions[-1]["content_hash"], {"source_revision": "initial", "page_revision": page.revision})
         self._event("notion.project_record.bound", project_id, {"page_id": page.page_id, "status": "BOUND"})
-        return {"status": "BOUND", "page_id": page.page_id, "page_revision": page.revision, "idempotent": False}
+        if core and workflow:
+            bound = core.begin_step(workflow["workflow_id"], "PAGE_BOUND")
+            if bound["decision"] != "SKIP_COMPLETED":
+                core.complete_step(workflow["workflow_id"], "PAGE_BOUND", {"page_id": page.page_id, "state": "BOUND"})
+            core.complete_workflow(workflow["workflow_id"], "PAGE_BOUND")
+        return {"status": "BOUND", "page_id": page.page_id, "page_revision": page.revision, "idempotent": already_bound}
 
     def bind_existing(self, project_id: str, page_id: str, expected_parent_id: str | None = None) -> dict[str, Any]:
         state = self._state(project_id)

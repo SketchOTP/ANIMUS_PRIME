@@ -1252,3 +1252,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-QUALIFICATION-MACHINE-089
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-DURABLE-WORKFLOWS-091
+
+- Issued: 2026-08-18T09:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 091
+- Objective: Close DOD-004 / R-012 by extending PRIME's existing durable workflow substrate across every genuinely multi-system V1 lifecycle path and qualifying interruption, restart, replay, reconciliation, compensation, and orphan-resource visibility.
+- Scope: Authoritative side-effect inventory; Fork-first durable conversion; Notion and Hindsight resource creation; restore phases; external lifecycle effects; diagnostics; deterministic qualification seams; process-restart qualification; regression; governed GitHub and Notion closeout.
+- Exclusions: no new workflow framework; no canonical project or Node mutation; no public exposure, Funnel, deployment, Phase 16, DOD-005, DOD-013, DOD-047, DOD-053, DOD-079, DOD-081/R-056 closure, or Continuation 092.
+- Acceptance: Promote DOD-004 only when all twenty frozen acceptance checks pass against legitimate persistent resources; otherwise close PARTIAL with exact residuals and no fabricated state.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-FIRECRACKER-QUALIFICATION-090
+- Status at issuance: ISSUED

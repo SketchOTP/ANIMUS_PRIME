@@ -484,6 +484,9 @@ def test_r048_r050_historical_abcd_ask_brain_and_return_to_now(
     from src.prime_core.service import CoreService
 
     class QualificationMemory:
+        def create_bank(self):
+            return AdapterResult("CURRENT", {})
+
         def retain_verified(self, content, document_id):
             return AdapterResult("CURRENT", {"document_id": document_id})
 

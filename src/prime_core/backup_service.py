@@ -287,6 +287,118 @@ class BackupCoordinator:
         storage_root: Path | None = None,
         fail_after_tables: int | None = None,
     ) -> dict[str, Any]:
+        """Run restore through the shared durable workflow ledger.
+
+        The canonical database application remains one atomic transaction.
+        Its step is non-idempotent because a successful commit followed by a
+        lost response must be reconciled, not blindly replayed.
+        """
+        from .service import CoreService
+        from .db import connect
+        from .workflow_primitives import qualification_interrupt
+
+        preflight = self.preflight_restore(bundle, passphrase)
+        backup_id = preflight["manifest"]["backup_id"]
+        core = CoreService(settings)
+        workflow_key = f"restore:{backup_id}:{bundle.resolve()}"
+        deterministic_workflow_id = "workflow_restore_" + hashlib.sha256(workflow_key.encode()).hexdigest()[:32]
+        workflow = core.start_or_get_workflow("RESTORE_CONTINUITY", workflow_key, None, [
+            {"step_key": "INPUT_VALIDATED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "TARGET_VALIDATED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "CANONICAL_STATE_APPLIED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
+            {"step_key": "SOURCE_LEDGER_RECOVERY_RECORDED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "LOCAL_CAPABILITY_BOUNDARY_RECORDED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "POST_RESTORE_VERIFIED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "FINALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ], workflow_id=deterministic_workflow_id)
+        step = core.begin_step(workflow["workflow_id"], "INPUT_VALIDATED")
+        if step["decision"] != "SKIP_COMPLETED":
+            core.record_workflow_resource(workflow["workflow_id"], "BACKUP_BUNDLE", backup_id, str(bundle.resolve()), {"content_hash": hashlib.sha256(bundle.read_bytes()).hexdigest(), "verified": True}, "CREATED")
+            core.complete_step(workflow["workflow_id"], "INPUT_VALIDATED", {"backup_id": backup_id})
+        step = core.begin_step(workflow["workflow_id"], "TARGET_VALIDATED")
+        if step["decision"] != "SKIP_COMPLETED":
+            with connect(settings) as db:
+                existing = int(db.execute("SELECT count(*) AS count FROM prime_core.projects").fetchone()["count"])
+            if existing and not replace:
+                core.fail_step(workflow["workflow_id"], "TARGET_VALIDATED", "restore collision", retryable=False)
+                raise BackupError("restore collision: target PRIME already contains projects")
+            core.complete_step(workflow["workflow_id"], "TARGET_VALIDATED", {"existing_projects": existing, "replace": replace})
+
+        result: dict[str, Any] | None = None
+        step = core.begin_step(workflow["workflow_id"], "CANONICAL_STATE_APPLIED")
+        with connect(settings) as db:
+            completed_restore = db.execute("SELECT restore_id FROM prime_core.restore_workflows WHERE bundle_locator=%s AND status='SUCCEEDED' ORDER BY completed_at DESC LIMIT 1", (str(bundle),)).fetchone()
+        if completed_restore and step["decision"] != "SKIP_COMPLETED":
+            result = {"status": "RESTORED", "restore_id": completed_restore["restore_id"], "backup_id": backup_id}
+        if step["decision"] == "REPAIR_REQUIRED":
+            with connect(settings) as db:
+                project_count = int(db.execute("SELECT count(*) AS count FROM prime_core.projects").fetchone()["count"])
+            if completed_restore:
+                core.mark_workflow_repaired(workflow["workflow_id"], "CANONICAL_STATE_APPLIED", {"reconciliation": "SUCCEEDED_RESTORE_DISCOVERED", "restore_id": completed_restore["restore_id"]})
+                step = core.begin_step(workflow["workflow_id"], "CANONICAL_STATE_APPLIED")
+            elif project_count == 0 and not replace:
+                core.mark_workflow_repaired(workflow["workflow_id"], "CANONICAL_STATE_APPLIED", {"reconciliation": "EMPTY_TARGET_SAFE_TO_RETRY"})
+                step = core.begin_step(workflow["workflow_id"], "CANONICAL_STATE_APPLIED")
+            else:
+                core.record_workflow_resource(workflow["workflow_id"], "RESTORE_TARGET", "prime-postgresql", None, {"project_count": project_count, "reason": "RESTORE_OUTCOME_AMBIGUOUS"}, "RECONCILIATION_REQUIRED")
+                raise BackupError("restore outcome requires operator reconciliation")
+        if step["decision"] != "SKIP_COMPLETED":
+            qualification_interrupt("RESTORE_CONTINUITY", "CANONICAL_STATE_APPLIED", "BEFORE_EXTERNAL_CALL")
+            if result is None:
+                result = self._restore_bundle_once(settings, bundle, passphrase, replace=replace, safety_destination=safety_destination, storage_root=storage_root, fail_after_tables=fail_after_tables)
+            qualification_interrupt("RESTORE_CONTINUITY", "CANONICAL_STATE_APPLIED", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+            # A destructive replace truncates project-dependent workflow rows.
+            # Recreate the same deterministic workflow identity and checkpoint
+            # its prior pure steps before recording the reconciled restore.
+            with connect(settings) as db:
+                workflow_present = db.execute("SELECT 1 FROM prime_core.workflows WHERE workflow_id=%s", (deterministic_workflow_id,)).fetchone()
+            if not workflow_present:
+                workflow = core.start_or_get_workflow("RESTORE_CONTINUITY", workflow_key, None, [
+                    {"step_key": "INPUT_VALIDATED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                    {"step_key": "TARGET_VALIDATED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                    {"step_key": "CANONICAL_STATE_APPLIED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
+                    {"step_key": "SOURCE_LEDGER_RECOVERY_RECORDED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                    {"step_key": "LOCAL_CAPABILITY_BOUNDARY_RECORDED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                    {"step_key": "POST_RESTORE_VERIFIED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                    {"step_key": "FINALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+                ], workflow_id=deterministic_workflow_id)
+                for restored_step, restored_metadata in (("INPUT_VALIDATED", {"backup_id": backup_id, "recovered_after_target_reset": True}), ("TARGET_VALIDATED", {"replace": replace, "recovered_after_target_reset": True})):
+                    recovered = core.begin_step(workflow["workflow_id"], restored_step)
+                    if recovered["decision"] != "SKIP_COMPLETED":
+                        core.complete_step(workflow["workflow_id"], restored_step, restored_metadata)
+                step = core.begin_step(workflow["workflow_id"], "CANONICAL_STATE_APPLIED")
+            core.record_workflow_resource(workflow["workflow_id"], "RESTORE_TARGET", "prime-postgresql", result["restore_id"], {"backup_id": backup_id, "status": "RESTORED"}, "CREATED")
+            core.complete_step(workflow["workflow_id"], "CANONICAL_STATE_APPLIED", {"restore_id": result["restore_id"]})
+        if result is None:
+            with connect(settings) as db:
+                completed = db.execute("SELECT restore_id FROM prime_core.restore_workflows WHERE bundle_locator=%s AND status='SUCCEEDED' ORDER BY completed_at DESC LIMIT 1", (str(bundle),)).fetchone()
+            result = {"status": "RESTORED", "restore_id": completed["restore_id"] if completed else "UNKNOWN", "backup_id": backup_id}
+
+        for step_key, metadata in (
+            ("SOURCE_LEDGER_RECOVERY_RECORDED", {"hindsight": "SOURCE_LEDGER_REBUILD", "authoritative_source": "prime_core.memory_records"}),
+            ("LOCAL_CAPABILITY_BOUNDARY_RECORDED", {"configuration": "REPROVISION_REQUIRED_FOR_SECRETS"}),
+            ("POST_RESTORE_VERIFIED", {"restore_id": result["restore_id"], "status": "RESTORED"}),
+            ("FINALIZED", {"backup_id": backup_id}),
+        ):
+            current = core.begin_step(workflow["workflow_id"], step_key)
+            if current["decision"] != "SKIP_COMPLETED":
+                core.complete_step(workflow["workflow_id"], step_key, metadata)
+        core.complete_workflow(workflow["workflow_id"], "FINALIZED")
+        return {**result, "workflow_id": workflow["workflow_id"], "component_fidelity": {
+            "prime_postgresql": "EXACT", "hindsight": "SOURCE_LEDGER_REBUILD", "evidence": "EXACT_FOR_MANAGED_BYTES", "historical_state": "EXACT", "git_checkpoints": "EXACT_FOR_RETAINED_BUNDLES", "configuration": "REPROVISION_REQUIRED_FOR_SECRETS",
+        }}
+
+    def _restore_bundle_once(
+        self,
+        settings: Any,
+        bundle: Path,
+        passphrase: str,
+        *,
+        replace: bool = False,
+        safety_destination: Path | None = None,
+        storage_root: Path | None = None,
+        fail_after_tables: int | None = None,
+    ) -> dict[str, Any]:
         preflight = self.preflight_restore(bundle, passphrase)
         components = preflight["components"]
         rows = components["prime_postgresql"]["tables"]

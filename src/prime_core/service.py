@@ -20,7 +20,7 @@ from .security import constant_time_equal, new_token, password_hash, password_ve
 from .history_primitives import record_historical_snapshot
 from .authority import REQUIRED_AUTHORITY_FILES, authority_migration_plan, classify_authority_snapshot, migrate_authority, provision_authority, validate_authority
 from .git_provenance import GitProvenanceError, inspect_repository_candidate, resolve_canonical_ref
-from .workflow_primitives import REPLAY_POLICIES, resume_plan_payload, step_resume_decision
+from .workflow_primitives import QualificationInterruption, REPLAY_POLICIES, qualification_interrupt, resume_plan_payload, step_resume_decision
 from .node_client import NodeClient, NodeClientSettings, NodeClientError
 from .node_trust import NodeTrustSettings, csr_fingerprint, digest, issue_bootstrap, sign_node_certificate
 
@@ -661,6 +661,7 @@ class CoreService:
             {"step_key": "GIT_INITIALIZED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
             {"step_key": "BOUND", "replay_policy": "PURE_OR_DB_TRANSACTION"},
         ])
+        self.record_workflow_resource(workflow["workflow_id"], "REPOSITORY", "onboarding-repository", str(target), {"project_id": project_id, "node_id": node_id, "node_operation_id": workflow["workflow_id"]}, "EXPECTED")
         current_step = "DIRECTORY_CREATED"
         try:
             started = self.begin_step(workflow["workflow_id"], "DIRECTORY_CREATED")
@@ -682,6 +683,7 @@ class CoreService:
                         remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
                     except NodeClientError as exc:
                         raise ValueError(str(exc)) from exc
+                self.record_workflow_resource(workflow["workflow_id"], "REPOSITORY", "onboarding-repository", remote["canonical_path"], {"project_id": project_id, "node_id": node_id, "node_operation_id": workflow["workflow_id"]}, "CREATED")
                 self.complete_step(workflow["workflow_id"], "DIRECTORY_CREATED", side_effect_state={"path": remote["canonical_path"], "node_operation_id": workflow["workflow_id"]})
             current_step = "GIT_INITIALIZED"
             started = self.begin_step(workflow["workflow_id"], "GIT_INITIALIZED")
@@ -702,8 +704,7 @@ class CoreService:
                 inspection = self.inspect_repository_for_onboarding(project_id, node_id, str(target))
                 bound = self.bind_verified_repository(inspection, confirm=True)
                 self.complete_step(workflow["workflow_id"], "BOUND", result_metadata={"repository_id": bound.get("repository_id")})
-            with transaction(self.settings) as db:
-                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED', current_step='BOUND', updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
+            self.complete_workflow(workflow["workflow_id"], "BOUND")
             return {"workflow": workflow["workflow_id"], "repository": bound, "inspection": inspection}
         except Exception as exc:
             try:
@@ -725,11 +726,39 @@ class CoreService:
         template_root = self._authority_template_root()
         files = {relative: (template_root / relative).read_text(encoding="utf-8") for relative in REQUIRED_AUTHORITY_FILES}
         operation_id = f"authority-bootstrap:{project_id}"
-        authority = self._node_client(dict(row)).bootstrap_authority(row["canonical_path"], files, operation_id)
-        with transaction(self.settings) as db:
-            db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
-        self.record_authority_revision(project_id, ".agent", hashlib.sha256(json.dumps(authority["files"], sort_keys=True).encode()).hexdigest(), "VALID", {"provenance": "operator-approved authority-template/v1", "template_manifest": str(template_root / "MANIFEST.sha256"), "node_id": row["node_id"]}, canonical_commit=None)
-        return {"project_id": project_id, "authority": authority, "state": "CURRENT", "template": "authority-template/v1"}
+        source_hash = hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest()
+        workflow = self.start_or_get_workflow("PROVISION_PROJECT_AUTHORITY", operation_id, project_id, [
+            {"step_key": "AUTHORITY_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "AUTHORITY_WRITTEN", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REVISION_RECORDED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "ONBOARDING_ADVANCED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ])
+        step = self.begin_step(workflow["workflow_id"], "AUTHORITY_EXPECTED")
+        if step["decision"] != "SKIP_COMPLETED":
+            self.record_workflow_resource(workflow["workflow_id"], "AUTHORITY", "project-authority", str(Path(row["canonical_path"]) / ".agent"), {"template": "authority-template/v1", "source_hash": source_hash, "node_id": row["node_id"]}, "EXPECTED")
+            self.complete_step(workflow["workflow_id"], "AUTHORITY_EXPECTED")
+        authority: dict[str, Any] = {"files": sorted(files), "reconciled": True}
+        step = self.begin_step(workflow["workflow_id"], "AUTHORITY_WRITTEN")
+        if step["decision"] != "SKIP_COMPLETED":
+            qualification_interrupt("PROVISION_PROJECT_AUTHORITY", "AUTHORITY_WRITTEN", "BEFORE_EXTERNAL_CALL")
+            authority = self._node_client(dict(row)).bootstrap_authority(row["canonical_path"], files, operation_id)
+            qualification_interrupt("PROVISION_PROJECT_AUTHORITY", "AUTHORITY_WRITTEN", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+            self.record_workflow_resource(workflow["workflow_id"], "AUTHORITY", "project-authority", str(Path(row["canonical_path"]) / ".agent"), {"template": "authority-template/v1", "source_hash": source_hash, "node_id": row["node_id"], "node_operation_id": operation_id}, "CREATED")
+            self.complete_step(workflow["workflow_id"], "AUTHORITY_WRITTEN", side_effect_state={"source_hash": source_hash, "node_operation_id": operation_id})
+        step = self.begin_step(workflow["workflow_id"], "REVISION_RECORDED")
+        if step["decision"] != "SKIP_COMPLETED":
+            with connect(self.settings) as db:
+                revision = db.execute("SELECT authority_revision_id FROM prime_core.authority_revisions WHERE project_id=%s AND source_path='.agent' AND source_hash=%s ORDER BY observed_at DESC LIMIT 1", (project_id, source_hash)).fetchone()
+            if not revision:
+                revision = self.record_authority_revision(project_id, ".agent", source_hash, "VALID", {"provenance": "operator-approved authority-template/v1", "template_manifest": str(template_root / "MANIFEST.sha256"), "node_id": row["node_id"]}, canonical_commit=None)
+            self.complete_step(workflow["workflow_id"], "REVISION_RECORDED", {"authority_revision_id": revision["authority_revision_id"]})
+        step = self.begin_step(workflow["workflow_id"], "ONBOARDING_ADVANCED")
+        if step["decision"] != "SKIP_COMPLETED":
+            with transaction(self.settings) as db:
+                db.execute("UPDATE prime_core.projects SET onboarding_step='GOAL', onboarding_state='IN_PROGRESS', updated_at=%s WHERE project_id=%s", (now(), project_id))
+            self.complete_step(workflow["workflow_id"], "ONBOARDING_ADVANCED")
+        self.complete_workflow(workflow["workflow_id"], "ONBOARDING_ADVANCED")
+        return {"project_id": project_id, "workflow_id": workflow["workflow_id"], "authority": authority, "state": "CURRENT", "template": "authority-template/v1"}
 
     def review_or_adopt_project_authority(self, project_id: str, decision: str, confirm: bool = False) -> dict[str, Any]:
         if decision not in {"REVIEW", "ADOPT"}:
@@ -1059,35 +1088,178 @@ class CoreService:
         if not parent.is_dir() or not self._within_allowed_root(parent, roots):
             raise PermissionError("fork destination is outside the enrolled Node allowed roots")
         target = parent / repository_name
-        if target.exists() or target.is_symlink():
+        idempotency_key = f"fork:{source_project_id}:{source_revision}:{target}"
+        with connect(self.settings) as db:
+            existing_workflow = db.execute("SELECT * FROM prime_core.workflows WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
+            existing_project = db.execute("SELECT * FROM prime_core.projects WHERE project_id=%s", (existing_workflow["project_id"],)).fetchone() if existing_workflow and existing_workflow["project_id"] else None
+        if (target.exists() or target.is_symlink()) and not existing_workflow:
             raise FileExistsError("fork destination already exists")
-        project = self.create_project(repository_name, source.get("description", ""), source.get("image_url"))
-        workflow = self.create_workflow("FORK_PROJECT", f"fork:{source_project_id}:{source_revision}:{target}", project["project_id"])
+        project = dict(existing_project) if existing_project else self.create_project(repository_name, source.get("description", ""), source.get("image_url"))
+        workflow = self.start_or_get_workflow("FORK_PROJECT", idempotency_key, project["project_id"], [
+            {"step_key": "PROJECT_RESERVED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "TARGET_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "REPOSITORY_CLONED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REVISION_CHECKED_OUT", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REPOSITORY_SANITIZED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "AUTHORITY_PROVISIONED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REPOSITORY_BOUND", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "GOAL_DRAFTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "INDEXED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "MCP_SCOPE_ISSUED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
+            {"step_key": "HINDSIGHT_BOUND", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "FINALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ])
+        current_step = "PROJECT_RESERVED"
         try:
-            subprocess.run(["git", "clone", "--no-hardlinks", str(source_root), str(target)], check=True, capture_output=True, text=True, timeout=60)
-            subprocess.run(["git", "-C", str(target), "checkout", "--detach", source_revision], check=True, capture_output=True, text=True, timeout=30)
-            remotes = subprocess.run(["git", "-C", str(target), "remote"], check=True, capture_output=True, text=True, timeout=10).stdout.split()
-            for remote in remotes:
-                subprocess.run(["git", "-C", str(target), "remote", "remove", remote], check=True, capture_output=True, text=True, timeout=10)
-            for relative in REQUIRED_AUTHORITY_FILES:
-                candidate = target / relative
-                if candidate.is_file() or candidate.is_symlink():
-                    candidate.unlink()
-            provision_authority(self._authority_template_root(), target)
-            inspection = self.inspect_repository_for_onboarding(project["project_id"], destination_node_id, str(target))
-            binding = self.bind_verified_repository(inspection, confirm=True)
-            if goal:
-                self.create_goal_revision(project["project_id"], goal["content"], approve=False)
-            indexed = __import__("src.prime_core.indexer", fromlist=["RepositoryIndexer"]).RepositoryIndexer(self).build(project["project_id"])
-            grant = __import__("src.prime_core.mcp_service", fromlist=["MCPService"]).MCPService(self.settings).issue_grant(project["project_id"], "fork-initial-coder")
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                self.complete_step(workflow["workflow_id"], current_step, {"project_id": project["project_id"]})
+
+            current_step = "TARGET_EXPECTED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                self.record_workflow_resource(workflow["workflow_id"], "REPOSITORY", "child-repository", str(target), {"source_project_id": source_project_id, "source_revision": source_revision}, "EXPECTED")
+                self.complete_step(workflow["workflow_id"], current_step)
+
+            current_step = "REPOSITORY_CLONED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            adopted_clone = False
+            if started["decision"] == "REPAIR_REQUIRED":
+                if target.is_dir():
+                    inspected_commit = subprocess.run(["git", "-C", str(target), "rev-parse", "HEAD"], check=False, capture_output=True, text=True, timeout=10)
+                    if inspected_commit.returncode != 0:
+                        self.record_workflow_resource(workflow["workflow_id"], "REPOSITORY", "child-repository", str(target), {"reason": "TARGET_EXISTS_BUT_IS_NOT_A_RECONCILABLE_GIT_REPOSITORY"}, "RECONCILIATION_REQUIRED")
+                        raise ValueError("fork target requires operator reconciliation")
+                    adopted_clone = True
+                    self.mark_workflow_repaired(workflow["workflow_id"], current_step, {"reconciliation": "EXISTING_CLONE_DISCOVERED", "observed_head": inspected_commit.stdout.strip()})
+                elif not target.exists():
+                    self.mark_workflow_repaired(workflow["workflow_id"], current_step, {"reconciliation": "TARGET_ABSENT_SAFE_TO_RETRY"})
+                started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                qualification_interrupt("FORK_PROJECT", current_step, "BEFORE_EXTERNAL_CALL")
+                if not adopted_clone:
+                    subprocess.run(["git", "clone", "--no-hardlinks", str(source_root), str(target)], check=True, capture_output=True, text=True, timeout=60)
+                qualification_interrupt("FORK_PROJECT", current_step, "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+                self.record_workflow_resource(workflow["workflow_id"], "REPOSITORY", "child-repository", str(target), {"source_project_id": source_project_id, "source_revision": source_revision}, "CREATED")
+                self.complete_step(workflow["workflow_id"], current_step, side_effect_state={"path": str(target), "reconciled": adopted_clone})
+
+            current_step = "REVISION_CHECKED_OUT"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                subprocess.run(["git", "-C", str(target), "checkout", "--detach", source_revision], check=True, capture_output=True, text=True, timeout=30)
+                self.complete_step(workflow["workflow_id"], current_step, side_effect_state={"revision": source_revision})
+
+            current_step = "REPOSITORY_SANITIZED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                remotes = subprocess.run(["git", "-C", str(target), "remote"], check=True, capture_output=True, text=True, timeout=10).stdout.split()
+                for remote in remotes:
+                    subprocess.run(["git", "-C", str(target), "remote", "remove", remote], check=True, capture_output=True, text=True, timeout=10)
+                self.complete_step(workflow["workflow_id"], current_step, {"remote_status": "CLEARED"})
+
+            current_step = "AUTHORITY_PROVISIONED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] == "REPAIR_REQUIRED":
+                present = all((target / relative).is_file() for relative in REQUIRED_AUTHORITY_FILES)
+                if not present:
+                    self.record_workflow_resource(workflow["workflow_id"], "AUTHORITY", "child-authority", str(target), {"reason": "PARTIAL_AUTHORITY_REQUIRES_REVIEW"}, "RECONCILIATION_REQUIRED")
+                    raise ValueError("child authority requires operator reconciliation")
+                self.mark_workflow_repaired(workflow["workflow_id"], current_step, {"reconciliation": "AUTHORITY_FILES_DISCOVERED"})
+                started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                for relative in REQUIRED_AUTHORITY_FILES:
+                    candidate = target / relative
+                    if candidate.is_file() or candidate.is_symlink():
+                        candidate.unlink()
+                provision_authority(self._authority_template_root(), target)
+                qualification_interrupt("FORK_PROJECT", current_step, "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+                self.record_workflow_resource(workflow["workflow_id"], "AUTHORITY", "child-authority", str(target), {"template": "authority-template/v1", "relationship": "CHILD_SPECIFIC"}, "CREATED")
+                self.complete_step(workflow["workflow_id"], current_step)
+
+            current_step = "REPOSITORY_BOUND"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            with connect(self.settings) as db:
+                existing_binding = db.execute("SELECT r.* FROM prime_core.repositories r WHERE r.project_id=%s", (project["project_id"],)).fetchone()
+            if started["decision"] == "SKIP_COMPLETED" or existing_binding:
+                binding = dict(existing_binding)
+                if started["decision"] != "SKIP_COMPLETED":
+                    self.complete_step(workflow["workflow_id"], current_step, {"repository_id": binding["repository_id"], "reconciled": True})
+            else:
+                inspection = self.inspect_repository_for_onboarding(project["project_id"], destination_node_id, str(target))
+                binding = self.bind_verified_repository(inspection, confirm=True)
+                self.complete_step(workflow["workflow_id"], current_step, {"repository_id": binding.get("repository_id")})
+
+            current_step = "GOAL_DRAFTED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                if goal:
+                    with connect(self.settings) as db:
+                        draft = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status='DRAFT' ORDER BY revision_number LIMIT 1", (project["project_id"],)).fetchone()
+                    if not draft:
+                        draft = self.create_goal_revision(project["project_id"], goal["content"], approve=False)
+                    self.complete_step(workflow["workflow_id"], current_step, {"goal_revision_id": draft["goal_revision_id"]})
+                else:
+                    self.complete_step(workflow["workflow_id"], current_step, {"goal": "ABSENT"})
+
+            current_step = "INDEXED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] == "SKIP_COMPLETED":
+                with connect(self.settings) as db:
+                    revision = db.execute("SELECT source_revision FROM prime_core.source_snapshots WHERE project_id=%s AND source_class='REPOSITORY' AND freshness_state='CURRENT' ORDER BY observed_at DESC LIMIT 1", (project["project_id"],)).fetchone()
+                indexed = {"source_revision": revision["source_revision"] if revision else source_revision, "reconciled": True}
+            else:
+                indexed = __import__("src.prime_core.indexer", fromlist=["RepositoryIndexer"]).RepositoryIndexer(self).build(project["project_id"])
+                self.complete_step(workflow["workflow_id"], current_step, {"source_revision": indexed["source_revision"]})
+
+            current_step = "MCP_SCOPE_ISSUED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            grant = None
+            if started["decision"] == "REPAIR_REQUIRED":
+                with connect(self.settings) as db:
+                    existing_grant = db.execute("SELECT grant_id,client_id,project_id,expires_at FROM prime_core.mcp_grants WHERE project_id=%s AND client_id='fork-initial-coder' AND revoked_at IS NULL ORDER BY created_at DESC LIMIT 1", (project["project_id"],)).fetchone()
+                if existing_grant:
+                    self.record_workflow_resource(workflow["workflow_id"], "MCP_GRANT", "fork-initial-coder", existing_grant["grant_id"], {"reason": "ONE_TIME_SECRET_RESPONSE_WAS_NOT_PERSISTED; ROTATION_REQUIRED"}, "RECONCILIATION_REQUIRED")
+                raise ValueError("fork MCP credential requires operator rotation after interrupted issuance")
+            if started["decision"] != "SKIP_COMPLETED":
+                grant = __import__("src.prime_core.mcp_service", fromlist=["MCPService"]).MCPService(self.settings).issue_grant(project["project_id"], "fork-initial-coder")
+                qualification_interrupt("FORK_PROJECT", current_step, "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+                self.record_workflow_resource(workflow["workflow_id"], "MCP_GRANT", "fork-initial-coder", grant["grant_id"], {"secret": "ONE_TIME_ISSUE_ONLY"}, "CREATED")
+                self.complete_step(workflow["workflow_id"], current_step, {"grant_id": grant["grant_id"]})
+
+            current_step = "HINDSIGHT_BOUND"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                hindsight = __import__("src.prime_core.memory_service", fromlist=["MemoryService"]).MemoryService(self.settings).ensure_bank(project["project_id"], parent_workflow_id=workflow["workflow_id"])
+                if hindsight["status"] != "CURRENT":
+                    raise ValueError("child Hindsight bank is unavailable")
+                self.complete_step(workflow["workflow_id"], current_step, {"bank_id": hindsight["bank_id"]})
+
+            current_step = "FINALIZED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                with transaction(self.settings) as db:
+                    existing_fork = db.execute("SELECT * FROM prime_core.project_forks WHERE new_project_id=%s", (project["project_id"],)).fetchone()
+                    if existing_fork:
+                        fork = existing_fork
+                    else:
+                        fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], indexed["source_revision"], json.dumps({"source": "git clone", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NOT_COPIED", "hindsight": "INDEPENDENT_BANK"}), now())).fetchone()
+                self.complete_step(workflow["workflow_id"], current_step, {"fork_id": fork["fork_id"]})
+            else:
+                with connect(self.settings) as db:
+                    fork = db.execute("SELECT * FROM prime_core.project_forks WHERE new_project_id=%s", (project["project_id"],)).fetchone()
+            self.complete_workflow(workflow["workflow_id"], current_step)
             destination_revision = indexed["source_revision"]
+            return {"workflow_id": workflow["workflow_id"], "fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "INDEPENDENT_BANK", "goal_status": "DRAFT", "authority_provenance": "CURRENT_TEMPLATE_NOT_PARENT_AUTHORITY", "remote_status": "CLEARED", "destination_revision": destination_revision}
+        except QualificationInterruption:
             with transaction(self.settings) as db:
-                fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], destination_revision, json.dumps({"source": "git archive", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NOT_COPIED", "hindsight": "DEGRADED_OR_UNAVAILABLE"}), now())).fetchone()
-                db.execute("UPDATE prime_core.workflows SET status='SUCCEEDED',current_step='INDEXED',completed_steps='[\"CLONED\",\"REMOTES_CLEARED\",\"AUTHORITY_TEMPLATE\",\"BOUND\",\"GOAL_DRAFT\",\"INDEXED\"]'::jsonb,updated_at=%s WHERE workflow_id=%s", (now(), workflow["workflow_id"]))
-            return {"fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "DEGRADED_OR_UNAVAILABLE", "goal_status": "DRAFT", "authority_provenance": "CURRENT_TEMPLATE_NOT_PARENT_AUTHORITY", "remote_status": "CLEARED"}
+                db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING',work_condition='REVIEW_REQUIRED',onboarding_state='REPAIR_REQUIRED',updated_at=%s WHERE project_id=%s", (now(), project["project_id"]))
+            raise
         except Exception as exc:
             with transaction(self.settings) as db:
-                db.execute("UPDATE prime_core.workflows SET status='REPAIR_REQUIRED',current_step='RECONCILIATION_REQUIRED',last_error=%s,updated_at=%s WHERE workflow_id=%s", (type(exc).__name__, now(), workflow["workflow_id"]))
+                step = db.execute("SELECT status,replay_policy FROM prime_core.workflow_steps WHERE workflow_id=%s AND step_key=%s", (workflow["workflow_id"], current_step)).fetchone()
+                ambiguous = bool(step and step["status"] == "RUNNING" and step["replay_policy"] == "NON_IDEMPOTENT_EXTERNAL")
+                db.execute("UPDATE prime_core.workflow_steps SET status=%s,last_error=%s WHERE workflow_id=%s AND step_key=%s AND status='RUNNING'", ("REPAIR_REQUIRED" if ambiguous else "FAILED_RETRYABLE", type(exc).__name__, workflow["workflow_id"], current_step))
+                db.execute("UPDATE prime_core.workflows SET status=%s,current_step=%s,last_error=%s,updated_at=%s WHERE workflow_id=%s", ("REPAIR_REQUIRED" if ambiguous else "RUNNING", current_step, type(exc).__name__, now(), workflow["workflow_id"]))
                 db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING',work_condition='REVIEW_REQUIRED',onboarding_state='REPAIR_REQUIRED',updated_at=%s WHERE project_id=%s", (now(), project["project_id"]))
             raise
 
@@ -1170,24 +1342,50 @@ class CoreService:
     def approve_goal_revision(self, project_id: str, goal_revision_id: str) -> dict[str, Any]:
         timestamp = now()
         with connect(self.settings) as db:
-            candidate = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s AND status='DRAFT'", (project_id, goal_revision_id)).fetchone()
+            candidate = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s", (project_id, goal_revision_id)).fetchone()
             binding = db.execute("SELECT r.canonical_path,n.* FROM prime_core.repositories r JOIN prime_core.nodes n ON n.node_id=r.node_id WHERE r.project_id=%s", (project_id,)).fetchone()
         if not candidate:
-            raise ValueError("draft GoalRevision not found")
+            raise ValueError("GoalRevision not found")
+        if candidate["status"] not in {"DRAFT", "APPROVED"}:
+            raise ValueError("GoalRevision is not approvable")
         self.validate_goal_content(candidate["content"])
-        if binding:
-            self._node_client(dict(binding)).write_project_goal(binding["canonical_path"], candidate["content"], candidate["content_hash"])
-        with transaction(self.settings) as db:
-            row = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s AND status='DRAFT' FOR UPDATE", (project_id, goal_revision_id)).fetchone()
-            if not row:
-                raise ValueError("draft GoalRevision not found")
-            self.validate_goal_content(row["content"])
-            db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND status='APPROVED'", (project_id,))
-            approved = db.execute("UPDATE prime_core.goal_revisions SET status='APPROVED',approved_by='operator',approved_at=%s WHERE goal_revision_id=%s RETURNING *", (timestamp, goal_revision_id)).fetchone()
-            db.execute("UPDATE prime_core.projects SET work_condition='NORMAL',onboarding_step='INDEX',onboarding_state='IN_PROGRESS',updated_at=%s WHERE project_id=%s", (timestamp, project_id))
-            record_historical_snapshot(db, project_id, "GOAL", goal_revision_id, row["content_hash"], {"goal_revision_id": goal_revision_id, "revision_number": row["revision_number"], "content": row["content"], "status": "APPROVED"}, row["created_at"], row["content_hash"])
-            self._audit(db, "operator", "operator", "goal.revision_approved", project_id=project_id, target_id=goal_revision_id)
-            return dict(approved)
+        workflow = self.start_or_get_workflow("APPROVE_PROJECT_GOAL", f"goal-approval:{project_id}:{goal_revision_id}", project_id, [
+            {"step_key": "GOAL_FILE_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "GOAL_FILE_WRITTEN", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "GOAL_APPROVED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+        ])
+        step = self.begin_step(workflow["workflow_id"], "GOAL_FILE_EXPECTED")
+        if step["decision"] != "SKIP_COMPLETED":
+            if binding:
+                self.record_workflow_resource(workflow["workflow_id"], "PROJECT_GOAL_FILE", "PROJECT_GOAL.md", str(Path(binding["canonical_path"]) / "PROJECT_GOAL.md"), {"content_hash": candidate["content_hash"], "node_id": binding["node_id"]}, "EXPECTED")
+            self.complete_step(workflow["workflow_id"], "GOAL_FILE_EXPECTED")
+        step = self.begin_step(workflow["workflow_id"], "GOAL_FILE_WRITTEN")
+        if step["decision"] != "SKIP_COMPLETED":
+            if binding:
+                qualification_interrupt("APPROVE_PROJECT_GOAL", "GOAL_FILE_WRITTEN", "BEFORE_EXTERNAL_CALL")
+                written = self._node_client(dict(binding)).write_project_goal(binding["canonical_path"], candidate["content"], candidate["content_hash"])
+                qualification_interrupt("APPROVE_PROJECT_GOAL", "GOAL_FILE_WRITTEN", "EXTERNAL_SUCCESS_BEFORE_PERSIST")
+                self.record_workflow_resource(workflow["workflow_id"], "PROJECT_GOAL_FILE", "PROJECT_GOAL.md", str(Path(binding["canonical_path"]) / "PROJECT_GOAL.md"), {"content_hash": candidate["content_hash"], "node_id": binding["node_id"], "write_result": written.get("status", "CURRENT")}, "CREATED")
+            self.complete_step(workflow["workflow_id"], "GOAL_FILE_WRITTEN", side_effect_state={"content_hash": candidate["content_hash"], "repository_bound": bool(binding)})
+        step = self.begin_step(workflow["workflow_id"], "GOAL_APPROVED")
+        if step["decision"] != "SKIP_COMPLETED":
+            with transaction(self.settings) as db:
+                row = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s FOR UPDATE", (project_id, goal_revision_id)).fetchone()
+                if row["status"] == "DRAFT":
+                    self.validate_goal_content(row["content"])
+                    db.execute("UPDATE prime_core.goal_revisions SET status='SUPERSEDED' WHERE project_id=%s AND status='APPROVED'", (project_id,))
+                    approved = db.execute("UPDATE prime_core.goal_revisions SET status='APPROVED',approved_by='operator',approved_at=%s WHERE goal_revision_id=%s RETURNING *", (timestamp, goal_revision_id)).fetchone()
+                    db.execute("UPDATE prime_core.projects SET work_condition='NORMAL',onboarding_step='INDEX',onboarding_state='IN_PROGRESS',updated_at=%s WHERE project_id=%s", (timestamp, project_id))
+                    record_historical_snapshot(db, project_id, "GOAL", goal_revision_id, row["content_hash"], {"goal_revision_id": goal_revision_id, "revision_number": row["revision_number"], "content": row["content"], "status": "APPROVED"}, row["created_at"], row["content_hash"])
+                    self._audit(db, "operator", "operator", "goal.revision_approved", project_id=project_id, target_id=goal_revision_id)
+                else:
+                    approved = row
+            self.complete_step(workflow["workflow_id"], "GOAL_APPROVED", {"goal_revision_id": goal_revision_id})
+        else:
+            with connect(self.settings) as db:
+                approved = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND goal_revision_id=%s", (project_id, goal_revision_id)).fetchone()
+        self.complete_workflow(workflow["workflow_id"], "GOAL_APPROVED")
+        return {**dict(approved), "workflow_id": workflow["workflow_id"]}
 
     def record_authority_revision(self, project_id: str, source_path: str, source_hash: str, validation_status: str, metadata: dict[str, Any] | None = None, content_snapshot: str | None = None, canonical_commit: str | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:
@@ -1199,7 +1397,7 @@ class CoreService:
             self._audit(db, "system", "authority-observer", "authority.observed", project_id=project_id, target_id=row["authority_revision_id"])
             return dict(row)
 
-    def create_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None = None) -> dict[str, Any]:
+    def create_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None = None, workflow_id: str | None = None) -> dict[str, Any]:
         timestamp = now()
         with transaction(self.settings) as db:
             existing = db.execute("SELECT * FROM prime_core.workflows WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
@@ -1210,13 +1408,13 @@ class CoreService:
             row = db.execute(
                 "INSERT INTO prime_core.workflows(workflow_id, project_id, workflow_type, status, idempotency_key, created_at, updated_at) "
                 "VALUES (%s,%s,%s,'RUNNING',%s,%s,%s) RETURNING *",
-                (_id("workflow"), project_id, workflow_type, idempotency_key, timestamp, timestamp),
+                (workflow_id or _id("workflow"), project_id, workflow_type, idempotency_key, timestamp, timestamp),
             ).fetchone()
             self._audit(db, "operator", "operator", "workflow.created", project_id=project_id, target_id=row["workflow_id"])
             return dict(row)
 
-    def start_or_get_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None, steps: list[dict[str, Any]]) -> dict[str, Any]:
-        workflow = self.create_workflow(workflow_type, idempotency_key, project_id)
+    def start_or_get_workflow(self, workflow_type: str, idempotency_key: str, project_id: str | None, steps: list[dict[str, Any]], workflow_id: str | None = None) -> dict[str, Any]:
+        workflow = self.create_workflow(workflow_type, idempotency_key, project_id, workflow_id)
         with transaction(self.settings) as db:
             if project_id and workflow.get("project_id") is None:
                 db.execute("UPDATE prime_core.workflows SET project_id=%s,updated_at=now() WHERE workflow_id=%s", (project_id, workflow["workflow_id"]))
@@ -1278,9 +1476,35 @@ class CoreService:
             raise ValueError("invalid workflow resource status")
         with transaction(self.settings) as db:
             row = db.execute(
-                "INSERT INTO prime_core.workflow_resources(resource_id,workflow_id,resource_type,resource_key,resource_locator,status,metadata,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,now(),now()) ON CONFLICT (workflow_id,resource_type,resource_key) DO UPDATE SET resource_locator=COALESCE(EXCLUDED.resource_locator,prime_core.workflow_resources.resource_locator),status=EXCLUDED.status,metadata=EXCLUDED.metadata,updated_at=now() RETURNING *",
+                "INSERT INTO prime_core.workflow_resources(resource_id,workflow_id,resource_type,resource_key,resource_locator,status,metadata,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,now(),now()) ON CONFLICT (workflow_id,resource_type,resource_key) DO UPDATE SET resource_locator=COALESCE(EXCLUDED.resource_locator,prime_core.workflow_resources.resource_locator),status=CASE WHEN prime_core.workflow_resources.status IN ('CREATED','RECONCILIATION_REQUIRED','RELEASED') AND EXCLUDED.status='EXPECTED' THEN prime_core.workflow_resources.status ELSE EXCLUDED.status END,metadata=CASE WHEN prime_core.workflow_resources.status IN ('CREATED','RECONCILIATION_REQUIRED','RELEASED') AND EXCLUDED.status='EXPECTED' THEN prime_core.workflow_resources.metadata ELSE EXCLUDED.metadata END,updated_at=now() RETURNING *",
                 (_id("resource"), workflow_id, resource_type, resource_key, resource_locator, status, json.dumps(metadata or {})),
             ).fetchone()
+            return dict(row)
+
+    def complete_workflow(self, workflow_id: str, final_step: str | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            incomplete = db.execute(
+                "SELECT step_key,status FROM prime_core.workflow_steps WHERE workflow_id=%s AND status NOT IN ('SUCCEEDED','COMPENSATED') ORDER BY step_order LIMIT 1",
+                (workflow_id,),
+            ).fetchone()
+            if incomplete:
+                raise ValueError(f"workflow step {incomplete['step_key']} is {incomplete['status']}")
+            row = db.execute(
+                "UPDATE prime_core.workflows SET status='SUCCEEDED',current_step=COALESCE(%s,current_step),last_error=NULL,updated_at=now() WHERE workflow_id=%s RETURNING *",
+                (final_step, workflow_id),
+            ).fetchone()
+            if not row:
+                raise KeyError("workflow not found")
+            return dict(row)
+
+    def compensate_step(self, workflow_id: str, step_key: str, result: dict[str, Any] | None = None) -> dict[str, Any]:
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "UPDATE prime_core.workflow_steps SET status='COMPENSATED',completed_at=now(),result_metadata=%s,last_error=NULL WHERE workflow_id=%s AND step_key=%s AND status IN ('RUNNING','SUCCEEDED','FAILED_RETRYABLE','REPAIR_REQUIRED') RETURNING *",
+                (json.dumps(result or {}), workflow_id, step_key),
+            ).fetchone()
+            if not row:
+                raise ValueError("workflow step cannot be compensated")
             return dict(row)
 
     def workflow_resume_plan(self, workflow_id: str) -> dict[str, Any]:
@@ -1291,6 +1515,38 @@ class CoreService:
             steps = [dict(row) for row in db.execute("SELECT * FROM prime_core.workflow_steps WHERE workflow_id=%s ORDER BY step_order", (workflow_id,)).fetchall()]
             resources = [dict(row) for row in db.execute("SELECT resource_type,resource_key,resource_locator,status,metadata FROM prime_core.workflow_resources WHERE workflow_id=%s ORDER BY created_at", (workflow_id,)).fetchall()]
         return resume_plan_payload(dict(workflow), steps, resources)
+
+    def workflow_reconciliation_report(self, project_id: str | None = None) -> dict[str, Any]:
+        where = "WHERE w.status <> 'SUCCEEDED'"
+        params: list[Any] = []
+        if project_id:
+            where += " AND w.project_id=%s"
+            params.append(project_id)
+        with connect(self.settings) as db:
+            workflows = [dict(row) for row in db.execute(
+                f"SELECT w.* FROM prime_core.workflows w {where} ORDER BY w.updated_at,w.workflow_id",
+                params,
+            ).fetchall()]
+            workflow_ids = [row["workflow_id"] for row in workflows]
+            steps: list[dict[str, Any]] = []
+            resources: list[dict[str, Any]] = []
+            if workflow_ids:
+                steps = [dict(row) for row in db.execute(
+                    "SELECT * FROM prime_core.workflow_steps WHERE workflow_id=ANY(%s) AND status NOT IN ('SUCCEEDED','COMPENSATED') ORDER BY workflow_id,step_order",
+                    (workflow_ids,),
+                ).fetchall()]
+                resources = [dict(row) for row in db.execute(
+                    "SELECT * FROM prime_core.workflow_resources WHERE workflow_id=ANY(%s) AND status IN ('EXPECTED','CREATED','RECONCILIATION_REQUIRED') ORDER BY workflow_id,created_at",
+                    (workflow_ids,),
+                ).fetchall()]
+        action_required = any(row["status"] == "REPAIR_REQUIRED" for row in workflows) or any(row["status"] == "RECONCILIATION_REQUIRED" for row in resources)
+        return {
+            "status": "ACTION_REQUIRED" if action_required else ("INCOMPLETE" if workflows else "CLEAR"),
+            "incomplete_workflows": workflows,
+            "incomplete_steps": steps,
+            "accounted_resources": resources,
+            "operator_action_required": action_required,
+        }
 
     def mark_workflow_repaired(self, workflow_id: str, step_key: str, resolution: dict[str, Any] | None = None) -> dict[str, Any]:
         with transaction(self.settings) as db:

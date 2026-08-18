@@ -1029,6 +1029,12 @@ def create_workflow(body: WorkflowRequest, request: Request, prime_session: str 
         return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
 
 
+@app.get("/v1/workflows/reconciliation")
+def workflow_reconciliation(request: Request, project_id: str | None = None, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    return service.workflow_reconciliation_report(project_id)
+
+
 @app.post("/v1/nodes")
 def register_node(body: NodeRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)

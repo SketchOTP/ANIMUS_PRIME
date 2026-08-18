@@ -18,6 +18,9 @@ class FakeAdapter:
     def recall(self, query: str):
         return AdapterResult("CURRENT", {"results": self.documents})
 
+    def create_bank(self):
+        return AdapterResult("CURRENT", {})
+
 
 pytestmark = pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="set PRIME_PHASE1_DB_URL for approved MCP integration")
 

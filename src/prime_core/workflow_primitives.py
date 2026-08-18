@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 
@@ -13,6 +14,26 @@ STEP_STATUSES = {
     "COMPENSATED",
 }
 REPLAY_POLICIES = {"PURE_OR_DB_TRANSACTION", "IDEMPOTENT_EXTERNAL", "NON_IDEMPOTENT_EXTERNAL"}
+
+
+class QualificationInterruption(RuntimeError):
+    """Disabled-by-default deterministic interruption at a durable boundary."""
+
+
+def qualification_interrupt(workflow_type: str, step_key: str, boundary: str) -> None:
+    """Interrupt only when an exact qualification marker is explicitly armed.
+
+    `PRIME_QUALIFICATION_INTERRUPT` must equal
+    ``WORKFLOW_TYPE:STEP_KEY:BOUNDARY``. Unit/integration tests receive a
+    catchable exception. A disposable qualification Core may additionally set
+    `PRIME_QUALIFICATION_PROCESS_EXIT=1` to exercise a real process death.
+    """
+    marker = f"{workflow_type}:{step_key}:{boundary}"
+    if os.getenv("PRIME_QUALIFICATION_INTERRUPT") != marker:
+        return
+    if os.getenv("PRIME_QUALIFICATION_PROCESS_EXIT") == "1":
+        os._exit(91)
+    raise QualificationInterruption(marker)
 
 
 def step_resume_decision(status: str, replay_policy: str) -> str:
