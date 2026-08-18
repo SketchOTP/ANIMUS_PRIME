@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
 
 from src.prime_core.service import CoreService
 
@@ -60,3 +61,18 @@ def test_fork_preflight_is_invalidated_when_any_material_input_changes():
 def test_fork_remote_display_removes_embedded_http_credentials():
     assert CoreService._display_remote_url("https://operator:secret@example.test/org/repo.git?ref=main") == "https://example.test/org/repo.git?ref=main"
     assert CoreService._display_remote_url("git@example.test:org/repo.git") == "git@example.test:org/repo.git"
+
+
+def test_fork_cleanliness_rejects_tracked_changes_but_preserves_untracked_tool_state(tmp_path):
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    subprocess.run(["git", "-C", str(tmp_path), "config", "user.email", "qualification@example.invalid"], check=True)
+    subprocess.run(["git", "-C", str(tmp_path), "config", "user.name", "Qualification"], check=True)
+    tracked = tmp_path / "tracked.txt"
+    tracked.write_text("committed\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "tracked.txt"], check=True)
+    subprocess.run(["git", "-C", str(tmp_path), "commit", "-qm", "baseline"], check=True)
+    (tmp_path / ".tool-local").mkdir()
+    (tmp_path / ".tool-local" / "state.json").write_text("{}\n", encoding="utf-8")
+    assert CoreService._tracked_worktree_changes(tmp_path) == ""
+    tracked.write_text("changed\n", encoding="utf-8")
+    assert "tracked.txt" in CoreService._tracked_worktree_changes(tmp_path)

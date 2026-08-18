@@ -53,6 +53,17 @@ class CoreService:
         return urlunsplit((parsed.scheme, hostname, parsed.path, parsed.query, parsed.fragment))
 
     @staticmethod
+    def _tracked_worktree_changes(repository_root: Path) -> str:
+        """Report tracked changes while preserving tool-local untracked state."""
+        return subprocess.run(
+            ["git", "-C", str(repository_root), "status", "--porcelain", "--untracked-files=no"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        ).stdout.strip()
+
+    @staticmethod
     def _authority_template_root() -> Path:
         configured = os.getenv("PRIME_AUTHORITY_TEMPLATE_ROOT")
         candidates = [Path(configured)] if configured else []
@@ -1135,8 +1146,7 @@ class CoreService:
         if not goal:
             raise ValueError("fork requires an approved source Goal to present as a child draft")
         source_root = Path(source["canonical_path"]).resolve(strict=True)
-        clean = subprocess.run(["git", "-C", str(source_root), "status", "--porcelain"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
-        if clean:
+        if self._tracked_worktree_changes(source_root):
             raise ValueError("fork requires a clean source working tree")
         resolved_revision = subprocess.run(["git", "-C", str(source_root), "rev-parse", f"{source_revision}^{{commit}}"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
         roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
@@ -1242,8 +1252,7 @@ class CoreService:
         if node["status"] in {"OFFLINE", "REVOKED"}:
             raise ValueError(f"Node is {node['status']}")
         source_root = Path(source["canonical_path"]).resolve(strict=True)
-        clean = subprocess.run(["git", "-C", str(source_root), "status", "--porcelain"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
-        if clean:
+        if self._tracked_worktree_changes(source_root):
             raise ValueError("fork requires a clean source working tree")
         subprocess.run(["git", "-C", str(source_root), "cat-file", "-e", f"{source_revision}^{{commit}}"], check=True, capture_output=True, text=True, timeout=10)
         roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
