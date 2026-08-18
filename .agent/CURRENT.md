@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-17T20:00:00-04:00
+- Last updated: 2026-08-18T01:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-086
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 086
-- Objective: Exhaust bounded V1 qualification with isolated authorized fixtures, qualify selected Notion Warm Start, and normalize remaining rows into truthful local or external-resource gates.
+- Local directive ID: D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 087
+- Objective: Exhaust the remaining locally actionable V1 qualification boundary with authorized isolated fixtures and normalize every unresolved row into a truthful exact local or external-resource gate.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL — Continuation 086 qualified the real persistent Warm Start path for bounded selected agent history plus one explicitly marked non-empty Notion knowledge fixture. DOD-031 is promoted; governed queue is 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_V1_FINAL_SOFTWARE_CLOSURE_086
-- Expected or actual touched areas: bounded Warm Start service/API/UI, focused tests, persistent Core image, browser evidence, audit/burndown/matrix/ledger, and append-only records. Canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
-- Immediate next action: Awaiting reset; next bounded action is to normalize and deliberately acquire only the exact remaining external/legitimate targets, without inventing another local feature wave.
+- Acceptance: PARTIAL — Continuation 087 completed the authorized isolated restore harness and bounded browser/security/UI checks; no new DOD/R promotion. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Current phase: PHASE15_V1_LOCAL_EXHAUSTION_087
+- Expected or actual touched areas: qualification evidence and fixtures, derived burndown/matrix/ledger/traceability, and append-only records. No PRIME product implementation change was required; canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
+- Immediate next action: Await explicit Continuation 088 after publication; acquire only the exact remaining legitimate external/durable targets, without inventing another local feature wave.
 
 ## Temporary task-relevant facts
 
@@ -30,8 +30,8 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 086 focused Warm Start tests, supported full regression, persistent runtime/browser requalification, and governance reconciliation
-- Result: PASSED
+- Command or check: Continuation 087 isolated restore harness, bounded persistent browser qualification, supported full regression, governance and burndown reconciliation
+- Result: PASSED — 125 passed / 29 skipped / 0 failed; product-alignment release gate remains incomplete by design
 
 ## Risks
 

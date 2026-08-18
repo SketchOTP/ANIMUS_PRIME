@@ -7,11 +7,11 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 2
+  LOCAL_CODE: 1
   LOCAL_BROWSER_QUALIFICATION: 5
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 5
+  EXTERNAL_ENVIRONMENT: 6
   AGGREGATE_RELEASE_GATE: 0
 items:
   - dod_id: DOD-004
@@ -36,7 +36,7 @@ items:
     next_action: "Convert the remaining multi-system lifecycle paths and qualify durable interruption, reconciliation, compensation, orphan visibility, and restart behavior before promotion."
     evidence_already_available: ["src/prime_core/service.py","src/prime_core/workflow_primitives.py","migrations/prime/0001_core.sql","migrations/prime/0030_rebind_and_workflow_steps.sql","tests/phase15/test_continuation050.py","scripts/phase15_qualify_continuation_050.py","evidence/phase15/qualification-continuation-050.md","evidence/phase15/qualification-continuation-082.md"]
     qualification_needed: "Direct qualification of Fork, Notion, Hindsight, restore, archive, and full interruption/orphan boundaries; no dedicated UI is required."
-    blocked_by: "NONE"
+    blocked_by: "FULL_DURABLE_MULTI_SYSTEM_INTERRUPTION_RECONCILIATION_REQUIRED"
     depends_on: "R-012"
     acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-013
@@ -144,7 +144,7 @@ items:
     product_area: "Backup"
     owner_phase: 13
     mapped_r_requirements: ["R-042"]
-    exact_missing_behavior: "Continuation 082 created and hash-verified an encrypted export of the real Qualification Project at an existing durable Atlas archive destination, and the browser showed verified backup state and guarded restore preflight. Destructive restore/recovery against an approved independent target remains intentionally unrun."
+    exact_missing_behavior: "The authorized isolated restore/recovery harness passed, but the complete browser restore journey and restart/requalification of the restored Core remain unqualified."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -159,9 +159,9 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Qualify restore/recovery against an approved independent target without destructive mutation of the governed installation."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-082.md"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "APPROVED_INDEPENDENT_RESTORE_TARGET_REQUIRED"
+    blocked_by: "RESTORE_BROWSER_RESTART_OPERATOR_REQUALIFICATION_REQUIRED"
     depends_on: "R-042"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-053
@@ -169,14 +169,14 @@ items:
     product_area: "LAN projects"
     owner_phase: 12
     mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "The current product exposes the enrolled-Node boundary but no complete operator qualification exists for adding a project from a second enrolled LAN machine."
-    work_class: "LOCAL_CODE"
+    exact_missing_behavior: "The current product exposes the enrolled-Node boundary, but no complete operator qualification exists for adding a project from a second enrolled LAN machine; the required machine and project target are external resources."
+    work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "YES"
     requires_browser: "NO"
     requires_native_linux: "NO"
     requires_windows: "NO"
     requires_tailscale: "NO"
-    requires_second_device: "NO"
+    requires_second_device: "YES"
     requires_hindsight: "NO"
     requires_external_at: "NO"
     requires_live_notion: "NO"
@@ -184,9 +184,9 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Qualify project addition from a legitimate second enrolled LAN machine when that target becomes available; do not create a synthetic machine or project."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "LEGITIMATE_SECOND_ENROLLED_LAN_MACHINE_AND_PROJECT_TARGET_REQUIRED"
+    blocked_by: "ACTUAL_SECOND_ENROLLED_LAN_MACHINE_REQUIRED"
     depends_on: "R-036"
     acceptance_kind: "MIXED"
   - dod_id: DOD-055
@@ -194,7 +194,7 @@ items:
     product_area: "creation"
     owner_phase: 3
     mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "Durable creation and repair-required failure state exist; no legitimate creation target exists for 063, so interrupted creation/recovery and complete browser negative qualification remain."
+    exact_missing_behavior: "Durable creation and repair-required failure state exist; no legitimate interrupted-creation browser journey was completed in 087, so recovery and complete browser negative qualification remain."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "NO"
     requires_browser: "YES"
@@ -209,9 +209,9 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "YES"
     next_action: "Run the bounded qualification for 'Durable creation and repair-required failure state exist; interrupted creation/recovery and complete browser negative qualification remain.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-063.md"]
+    evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "LEGITIMATE_BROWSER_CREATION_INTERRUPTION_TARGET_REQUIRED"
     depends_on: "R-036"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-077
@@ -219,7 +219,7 @@ items:
     product_area: "delete"
     owner_phase: 13
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Delete preflight requires exact identity and recent step-up, and wrong-target confirmation was safely refused without mutation; authorized positive deletion and complete audit/recovery matrix remain unqualified."
+    exact_missing_behavior: "Delete preflight requires exact identity and recent step-up, and the expendable marked fixture reached DELETION_PENDING; terminal authorized deletion, downstream cleanup, and complete audit/recovery matrix remain unqualified."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -234,9 +234,9 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Preserve the protected refusal evidence; only an explicitly authorized destructive qualification target may close positive deletion."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "PRODUCT_TERMINAL_DESTRUCTIVE_DELETE_COMPLETION_REQUIRED_ON_EXPENDABLE_FIXTURE"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-079
@@ -258,10 +258,10 @@ items:
     requires_privilege: "YES"
     requires_packaging: "NO"
     requires_clean_install: "YES"
-    next_action: "Inspect and qualify the Linux half if safe privilege/install capability exists; keep Windows separately blocked."
+    next_action: "Acquire a clean supported Linux install target and an actual supported Windows host; qualify each native lifecycle independently."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Atlas Linux host and systemd are available, but no deterministic native service installer/unit is exposed for Linux qualification; Windows still requires a separate supported host."
+    blocked_by: "CLEAN_NATIVE_LINUX_INSTALL_TARGET_REQUIRED; ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-080
@@ -269,7 +269,7 @@ items:
     product_area: "polish"
     owner_phase: 14
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Responsive no-overflow, keyboard focus, clean console, refusal dialog, and empty correction validation passed; the complete frozen visual/operator polish acceptance remains open."
+    exact_missing_behavior: "Responsive no-overflow, keyboard focus, clean console, refusal dialog, and empty correction validation passed; the complete frozen visual/operator polish acceptance remains open, with the current installation containing 734 historical records that prevent a clean full visual matrix."
     work_class: "LOCAL_BROWSER_QUALIFICATION"
     requires_code: "YES"
     requires_browser: "YES"
@@ -284,9 +284,9 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Run the bounded qualification for 'The frozen criterion requires: UI is polished, modern, responsive, and avoids unnecessary subsystem complexity.. Current evidence does not yet demonstrate the complete operator behavior at 'Open polish from PRIME.'.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "NONE"
+    blocked_by: "COMPLETE_FROZEN_VISUAL_OPERATOR_POLISH_ACCEPTANCE_REQUIRED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-081

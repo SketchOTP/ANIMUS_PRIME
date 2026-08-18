@@ -1196,3 +1196,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-085
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087
+
+- Issued: 2026-08-17T21:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 087
+- Objective: Exhaust the remaining locally actionable V1 qualification boundary using only authorized isolated lab fixtures, then normalize every unresolved row into a truthful exact external-resource or bounded local gate.
+- Scope: Reconcile the 086 SHA correction; process all 12 open DOD rows; qualify safe local/browser/security/recovery behavior; run complete validation; publish evidence, governed records, exact Git parity, and the living Notion SOT/checkpoint.
+- Exclusions: no canonical destructive mutation; no synthetic non-lab resources; no public exposure, deployment, or Funnel changes; no frozen-spec edits; no DOD-005 change; no Phase 16; no premature DOD-081/R-056 closure; direct Atlas SSH only.
+- Acceptance: Promote only complete frozen clauses supported by real evidence; preserve incomplete and external gates exactly; do not begin Continuation 088.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-086
+- Status at issuance: ISSUED

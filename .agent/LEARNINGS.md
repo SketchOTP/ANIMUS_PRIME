@@ -6,6 +6,8 @@ After adoption, use this append-only file for durable, verified project knowledg
 
 Each live entry should include:
 
+- 2026-08-18 — Continuation 087: An isolated restore harness can truthfully verify component fidelity, outage recovery, source-ledger rebuild, and refusal behavior without closing the complete browser restore/restart contract. A fixture reaching `DELETION_PENDING` proves protected initiation and step-up, not terminal deletion or cleanup. Reclassify a row to `EXTERNAL_ENVIRONMENT` when its missing behavior requires a real second machine or other durable operator resource; do not manufacture that target.
+
 - Learning ID.
 - Date.
 - Fact or lesson.
@@ -970,3 +972,4 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 086 selected Notion Warm Start admission and supported validation only.
 - Supersedes learning: none
+- 2026-08-18 — Continuation 087: An isolated restore harness can truthfully verify component fidelity, outage recovery, source-ledger rebuild, and refusal behavior without closing the complete browser restore/restart contract. A fixture reaching DELETION_PENDING proves protected initiation and step-up, not terminal deletion or cleanup. Reclassify a row to EXTERNAL_ENVIRONMENT when its missing behavior requires a real second machine or other durable operator resource; do not manufacture that target.

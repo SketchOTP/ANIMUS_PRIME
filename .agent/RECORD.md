@@ -6,6 +6,8 @@ After adoption, use this append-only record for major durable project events and
 
 Use it for architectural decisions, governance changes, releases, qualification or certification events, major reversals, important milestones, and decision supersessions.
 
+- 2026-08-18 — DEC-PRIME-087: Preserve governed baseline `8b4efaf380285a9712bceab452ce11f1d4dfc00a`; record the stale 086 SHA as an append-only correction; accept 087 as PARTIAL with no product promotion, exact 69/12 queue, and external-resource gates for the remaining non-local targets. Public exposure, deployment, Phase 16, DOD-005, DOD-081, and R-056 remain out of scope/open.
+
 Each live entry should include:
 
 - Date.
@@ -820,3 +822,4 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: A real persistent Core/UI operator run admitted bounded selected `.agent` authority history and one explicitly marked non-authoritative selected Notion knowledge source with durable source identity, revision, hash, provenance, isolation, and honest degraded Hindsight status. No synthetic canonical state or destructive target was used. All other open DODs remain at their evidence-supported partial/resource-gated statuses and DOD-081/R-056 remain last.
 - Affected areas: Warm Start current Notion admission repair, focused test, persistent Core runtime image, Continuation 086 evidence, qualification fixtures, external-resource ledger, audit/burndown/matrix/ledger/traceability, and append-only records.
 - Supersedes record: DEC-PRIME-PHASE15-085
+- 2026-08-18 — DEC-PRIME-087: Preserve governed baseline `8b4efaf380285a9712bceab452ce11f1d4dfc00a`; record the stale 086 SHA as an append-only correction; accept 087 as PARTIAL with no product promotion, exact 69/12 queue, and external-resource gates for the remaining non-local targets. Public exposure, deployment, Phase 16, DOD-005, DOD-081, and R-056 remain out of scope/open.

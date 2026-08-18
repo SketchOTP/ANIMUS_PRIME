@@ -2430,3 +2430,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: durable multi-system workflow breadth, independent restore, provider cost attribution, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, creation recovery, deletion-positive target, complete polish, current Hindsight Reflect/Mental Model degradation, and aggregate release qualification.
 - Blockers: legitimate external or durable targets remain required for several rows; no blocker to the bounded 086 Warm Start qualification.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087 - PARTIAL
+
+- Outcome ID: O-PRIME-087
+- Supersedes outcome: O-PRIME-086
+- Closed: 2026-08-18T01:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Authorized isolated restore/recovery qualification passed within its harness boundary; the real persistent browser qualified route, focus, responsive, console, identity, step-up, and deletion-initiation behavior. No complete frozen DOD clause was promoted. The remaining 12 open rows were reconciled into exact local or external gates; DOD-053 was correctly reclassified from local code to external environment because it requires an actual second enrolled LAN machine.
+- Changed areas: `docs/v1-product-gap-burndown.yaml`, `docs/phase15-remediation-matrix.yaml`, `docs/phase15-remediation-qualification-ledger.yaml`, `docs/requirements-traceability.yaml`, `evidence/phase15/qualification-continuation-087.md`, `evidence/phase15/qualification-continuation-087-fixtures.md`, and append-only `.agent` records.
+- Validation:
+  - isolated restore/recovery harness - PASSED within its fixture boundary
+  - bounded browser route, security, responsive and console qualification - PASSED
+  - supported full regression - PASSED (125 passed / 29 skipped / 0 failed)
+  - governance and burndown validation - PASSED
+  - compile/static and diff checks - PASSED
+  - secret and final parity closeout - PENDING
+- DOD/R result: no new DOD/R promotion; queue remains 69 complete / 12 open. R-056, DOD-081, Phase 15, V1, and deployment remain open or gated.
+- Remaining risks: durable multi-system interruption/reconciliation, provider cost attribution, independent restore browser restart, fresh onboarding, second Tailscale/LAN targets, creation interruption, terminal deletion, native Linux/Windows installation, complete polish, and aggregate release qualification.
+- Blockers: exact resource and bounded local gates are recorded in Continuation 087 evidence and the derived burndown.
+- Follow-up directive: none
