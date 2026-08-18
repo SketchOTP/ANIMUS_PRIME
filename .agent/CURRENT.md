@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T01:00:00-04:00
+- Last updated: 2026-08-18T03:00:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 087
-- Objective: Exhaust the remaining locally actionable V1 qualification boundary with authorized isolated fixtures and normalize every unresolved row into a truthful exact local or external-resource gate.
+- Local directive ID: D-PRIME-PHASE15-RELEASE-APPLIANCE-088
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 088
+- Objective: Establish and exercise the authorized isolated V1 Release Qualification Appliance, exhaust evidence-backed local boundaries, and normalize all twelve open DODs without mutating canonical state.
 - Current status: `COMPLETE`
-- Acceptance: PARTIAL — Continuation 087 completed the authorized isolated restore harness and bounded browser/security/UI checks; no new DOD/R promotion. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_V1_LOCAL_EXHAUSTION_087
-- Expected or actual touched areas: qualification evidence and fixtures, derived burndown/matrix/ledger/traceability, and append-only records. No PRIME product implementation change was required; canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
-- Immediate next action: Await explicit Continuation 088 after publication; acquire only the exact remaining legitimate external/durable targets, without inventing another local feature wave.
+- Acceptance: PARTIAL — Continuation 088 qualified clean A/B appliance setup, restore-negative behavior, and expendable terminal deletion; no complete frozen DOD clause was promoted. Governed queue remains 69 complete / 12 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Current phase: PHASE15_RELEASE_QUALIFICATION_APPLIANCE_088
+- Expected or actual touched areas: appliance helper, evidence, derived burndown/matrix/ledger/traceability, and append-only records. No PRIME product implementation change; canonical project, public exposure, deployment, and Phase 16 were preserved out of scope.
+- Immediate next action: Stop this continuation. The remaining gates are exact Node-backed onboarding, bound-project restore, provider cost, second device/machine, native Windows/Linux qualification, browser terminal PURGE surface, and DOD-080/R-056 closure.
 
 ## Temporary task-relevant facts
 
@@ -30,7 +30,7 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 087 isolated restore harness, bounded persistent browser qualification, supported full regression, governance and burndown reconciliation
+- Command or check: Continuation 088 isolated A/B appliance, bounded persistent browser qualification, supported full regression, governance and burndown reconciliation
 - Result: PASSED
 
 ## Risks

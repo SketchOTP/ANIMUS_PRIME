@@ -2451,3 +2451,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: durable multi-system interruption/reconciliation, provider cost attribution, independent restore browser restart, fresh onboarding, second Tailscale/LAN targets, creation interruption, terminal deletion, native Linux/Windows installation, complete polish, and aggregate release qualification.
 - Blockers: exact resource and bounded local gates are recorded in Continuation 087 evidence and the derived burndown.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-RELEASE-APPLIANCE-088 - PARTIAL
+
+- Outcome ID: O-PRIME-088
+- Supersedes outcome: O-PRIME-087
+- Closed: 2026-08-18T03:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: The authorized A/B Release Qualification Appliance ran on Atlas with isolated databases, state/evidence roots, ports, and fixture labels. A completed fresh setup/authentication, created an expendable fixture, qualified protected deletion negatives, and reached terminal DELETED through the protected PURGE API. B completed fresh setup/authentication and refused empty/nonexistent restore inputs. The clean appliance exposed the real zero-enrolled-Node and project-bound Hindsight boundary, so the complete onboarding, bound-project restore, creation interruption, fork, and aggregate release clauses remain open.
+- Changed areas: `scripts/phase15_qualification_appliance_088.py`, Continuation 088 evidence, derived audit/burndown/matrix/ledger/traceability, and append-only project records. No PRIME product implementation changed.
+- Validation:
+  - supported full regression (125 passed / 29 skipped / 0 failed) - PASSED
+  - compileall - PASSED
+  - governance, burndown, and diff checks - PASSED
+  - product alignment release gate remains incomplete - NOT RUN
+  - bounded browser/runtime appliance qualification - PASSED
+- DOD/R result: no new DOD/R promotion; DOD-077 gained terminal fixture evidence but remains partial because the browser does not expose PURGE and the complete audit/recovery matrix is open. Queue remains 69 complete / 12 open. DOD-005 remains parked; DOD-081/R-056, Phase 15, V1, and deployment remain open.
+- Remaining risks: exact Node-backed clean onboarding, bound-project restore/restart, provider cost attribution, second Tailscale/LAN targets, creation recovery, fork child resources, native installation/Windows, browser PURGE surface, DOD-080, and aggregate release qualification.
+- Blockers: exact product/resource gates are recorded in `evidence/phase15/qualification-continuation-088.md` and the derived governed views.
+- Follow-up directive: none

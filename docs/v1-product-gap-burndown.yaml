@@ -111,7 +111,7 @@ items:
     next_action: "Run the bounded qualification for 'Setup status is production-backed and resumable; complete fresh-install browser qualification across every step and restart/failure correction path remains.'; promote only if every clause passes and append direct evidence."
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "LEGITIMATE_FRESH_INSTALL_BROWSER_TARGET_REQUIRED_FOR_COMPLETE_ONBOARDING"
+    blocked_by: "PRIME_CLEAN_APPLIANCE_NODE_ENROLLMENT_AND_PROJECT_BOUND_HINDSIGHT_PATH_REQUIRED"
     depends_on: "R-051"
     acceptance_kind: "MIXED"
   - dod_id: DOD-047
@@ -161,7 +161,7 @@ items:
     next_action: "Qualify restore/recovery against an approved independent target without destructive mutation of the governed installation."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "RESTORE_BROWSER_RESTART_OPERATOR_REQUALIFICATION_REQUIRED"
+    blocked_by: "PROJECT_BOUND_BACKUP_SOURCE_AND_CLEAN_NODE_BACKED_RESTORE_REQUALIFICATION_REQUIRED"
     depends_on: "R-042"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-053
@@ -211,7 +211,7 @@ items:
     next_action: "Run the bounded qualification for 'Durable creation and repair-required failure state exist; interrupted creation/recovery and complete browser negative qualification remain.'; promote only if every clause passes and append direct evidence."
     evidence_already_available: ["evidence/phase15/product-goal-alignment-continuation-030.md","apps/web/index.html","apps/core/main.py","src/prime_core/service.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "LEGITIMATE_BROWSER_CREATION_INTERRUPTION_TARGET_REQUIRED"
+    blocked_by: "PRIME_CLEAN_APPLIANCE_NODE_ENROLLMENT_REQUIRED_FOR_APPROVED_REPOSITORY_CREATION_AND_INTERRUPTION"
     depends_on: "R-036"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-077
@@ -236,7 +236,7 @@ items:
     next_action: "Preserve the protected refusal evidence; only an explicitly authorized destructive qualification target may close positive deletion."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-063.md","evidence/phase15/qualification-continuation-081.md","evidence/phase15/qualification-continuation-087.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "PRODUCT_TERMINAL_DESTRUCTIVE_DELETE_COMPLETION_REQUIRED_ON_EXPENDABLE_FIXTURE"
+    blocked_by: "BROWSER_TERMINAL_PURGE_AND_COMPLETE_AUDIT_RECOVERY_MATRIX_REQUIRED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-079

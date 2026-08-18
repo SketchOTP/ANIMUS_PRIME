@@ -1210,3 +1210,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-V1-FINAL-SOFTWARE-CLOSURE-086
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-RELEASE-APPLIANCE-088
+
+- Issued: 2026-08-18T01:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 088
+- Objective: Establish and exercise an explicitly isolated V1 Release Qualification Appliance on Atlas, process all twelve open DODs, and publish truthful evidence without canonical mutation or synthetic external resources.
+- Scope: Authorized A/B PRIME fixture containers, fresh setup, restore target, browser lifecycle/security/recovery qualification, Hindsight/Node capability assessment, Linux/native packaging inspection, full validation, governed records, exact Git parity, and living Notion journal/checkpoint.
+- Exclusions: no canonical destructive mutation; no duplicate or synthetic Node, project, repository, Notion resource, bank, machine, or device; no public exposure, deployment, Funnel change, frozen-spec edit, DOD-005 change, Phase 16, or premature DOD-081/R-056 closure; direct Atlas SSH only.
+- Acceptance: Promote only complete frozen clauses supported by real evidence; update all governed views and preserve exact product/resource blockers; do not begin Continuation 089.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-V1-LOCAL-EXHAUSTION-087
+- Status at issuance: ISSUED
