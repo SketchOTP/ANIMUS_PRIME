@@ -172,6 +172,8 @@ def test_fork_adopts_clone_after_interruption_without_duplicate_project_or_repos
     monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
     from src.prime_core.config import Settings
     from src.prime_core.db import connect, migrate
+    from src.prime_core.notion_service import InMemoryNotionProvider, NotionLifecycleService
+    from src.prime_core.progress_service import ProgressService
     from src.prime_core.service import CoreService
 
     def git(root: Path, *args: str) -> str:
@@ -202,20 +204,44 @@ def test_fork_adopts_clone_after_interruption_without_duplicate_project_or_repos
                 "authority_state": "PROVISIONED",
             }
 
+        def write_project_goal(self, path: str, content: str, content_hash: str):
+            target = Path(path) / "PROJECT_GOAL.md"
+            target.write_text(content, encoding="utf-8")
+            return {"status": "CURRENT", "content_hash": content_hash}
+
     monkeypatch.setattr(CoreService, "_node_client", lambda self, node: LocalNode())
     source_project = core.create_project("Continuation 091 Fork source")
     node_id = f"node-091-{source_project['project_id']}"
     core.register_node(node_id, "Continuation 091 local Node", "linux", source_project["project_id"].replace("project_", "")[:64], [str(tmp_path)], {})
     core.bind_repository(source_project["project_id"], node_id, f"identity-{source_project['project_id']}", str(source))
+    goal_content = """# Project Goal
+What and why: preserve a durable qualification fork.
+Target user and operator: the PRIME operator.
+Desired end state and outcome: an isolated child project.
+Functional requirements: clone the selected revision.
+Constraints and non-functional requirements: no shared mutable state.
+Success and acceptance: child resources are independently identified.
+Validation and evidence: verify identities and restart recovery.
+Non-goals and out of scope: no external device qualification.
+Failure and stop rules: stop on ambiguous external state.
+"""
+    goal = core.create_goal_revision(source_project["project_id"], goal_content, approve=True)
+    baseline_items = [{"title": "isolated child", "description": "Verify child isolation", "weight": 1.0, "required": True, "acceptance_expectations": ["identity evidence"]}]
+    review = ProgressService(settings).propose_baseline(source_project["project_id"], goal["goal_revision_id"], baseline_items)
+    ProgressService(settings).approve_baseline(review["review_id"])
+    notion = NotionLifecycleService(InMemoryNotionProvider(), settings=settings)
+    request = dict(source_project_id=source_project["project_id"], source_revision=revision, destination_node_id=node_id, parent_path=str(tmp_path), repository_name="child", project_name="Continuation 091 child", remote_action="CLEAR", notion_parent_id="qualification-parent", progress_items=baseline_items)
+    preflight = core.fork_preflight(**request)
+    invoke = lambda instance: instance.fork_project(**request, preflight_fingerprint=preflight["preflight_fingerprint"], approve_child_goal=True, approve_progress_baseline=True, notion_lifecycle=notion, confirm=True)
 
     monkeypatch.setenv("PRIME_QUALIFICATION_INTERRUPT", "FORK_PROJECT:REPOSITORY_CLONED:EXTERNAL_SUCCESS_BEFORE_PERSIST")
     with pytest.raises(QualificationInterruption):
-        core.fork_project(source_project["project_id"], revision, node_id, str(tmp_path), "child", confirm=True)
+        invoke(core)
     assert (tmp_path / "child" / ".git").is_dir()
     monkeypatch.delenv("PRIME_QUALIFICATION_INTERRUPT")
 
-    resumed = CoreService(Settings()).fork_project(source_project["project_id"], revision, node_id, str(tmp_path), "child", confirm=True)
-    repeated = CoreService(Settings()).fork_project(source_project["project_id"], revision, node_id, str(tmp_path), "child", confirm=True)
+    resumed = invoke(CoreService(Settings()))
+    repeated = invoke(CoreService(Settings()))
     assert resumed["workflow_id"] == repeated["workflow_id"]
     assert resumed["project"]["project_id"] == repeated["project"]["project_id"]
     assert resumed["destination_revision"] == revision

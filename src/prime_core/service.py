@@ -13,6 +13,7 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 from .config import Settings
 from .db import connect, transaction
@@ -39,6 +40,17 @@ def _id(prefix: str) -> str:
 class CoreService:
     def __init__(self, settings: Settings):
         self.settings = settings
+
+    @staticmethod
+    def _display_remote_url(remote_url: str) -> str:
+        """Return an operator-useful remote locator without embedded credentials."""
+        parsed = urlsplit(remote_url)
+        if not parsed.scheme or not parsed.netloc or "@" not in parsed.netloc:
+            return remote_url
+        hostname = parsed.hostname or ""
+        if parsed.port is not None:
+            hostname = f"{hostname}:{parsed.port}"
+        return urlunsplit((parsed.scheme, hostname, parsed.path, parsed.query, parsed.fragment))
 
     @staticmethod
     def _authority_template_root() -> Path:
@@ -1084,15 +1096,145 @@ class CoreService:
                     raise ValueError("fork archive contains an unsafe link")
                 bundle.extract(member, target)
 
-    def fork_project(self, source_project_id: str, source_revision: str, destination_node_id: str, parent_path: str, repository_name: str, confirm: bool = False) -> dict[str, Any]:
-        if not confirm:
-            raise ValueError("operator confirmation is required before fork")
+    def fork_preflight(
+        self,
+        source_project_id: str,
+        source_revision: str,
+        destination_node_id: str,
+        parent_path: str,
+        repository_name: str,
+        project_name: str,
+        remote_action: str,
+        notion_parent_id: str,
+        remap_remote_url: str | None = None,
+        progress_items: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
         if not repository_name or repository_name in {".", ".."} or Path(repository_name).name != repository_name:
             raise ValueError("repository name must be one directory name")
+        if not project_name.strip():
+            raise ValueError("child project name is required")
+        if not notion_parent_id.strip():
+            raise ValueError("approved Notion parent is required for the child Project Record")
+        remote_action = remote_action.upper()
+        if remote_action not in {"CLEAR", "RETAIN_READ_ONLY", "REMAP"}:
+            raise ValueError("remote action must be CLEAR, RETAIN_READ_ONLY, or REMAP")
+        if remote_action == "REMAP":
+            if not remap_remote_url or any(character in remap_remote_url for character in "\r\n\0"):
+                raise ValueError("REMAP requires one explicit safe remote URL")
         with connect(self.settings) as db:
             source = db.execute("SELECT p.*,r.canonical_path,r.node_id FROM prime_core.projects p JOIN prime_core.repositories r ON r.project_id=p.project_id WHERE p.project_id=%s", (source_project_id,)).fetchone()
             node = db.execute("SELECT node_id,name,status,allowed_roots FROM prime_core.nodes WHERE node_id=%s", (destination_node_id,)).fetchone()
-            goal = db.execute("SELECT content FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (source_project_id,)).fetchone()
+            goal = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (source_project_id,)).fetchone()
+            goal_items = db.execute("SELECT title,description,weight,required,acceptance_expectations FROM prime_core.goal_items WHERE project_id=%s AND goal_revision_id=%s ORDER BY title", (source_project_id, goal["goal_revision_id"] if goal else "")).fetchall()
+        if not source:
+            raise KeyError("source project not found")
+        if not node:
+            raise KeyError("destination node not found")
+        if node["status"] in {"OFFLINE", "REVOKED"}:
+            raise ValueError(f"Node is {node['status']}")
+        if not goal:
+            raise ValueError("fork requires an approved source Goal to present as a child draft")
+        source_root = Path(source["canonical_path"]).resolve(strict=True)
+        clean = subprocess.run(["git", "-C", str(source_root), "status", "--porcelain"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+        if clean:
+            raise ValueError("fork requires a clean source working tree")
+        resolved_revision = subprocess.run(["git", "-C", str(source_root), "rev-parse", f"{source_revision}^{{commit}}"], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+        roots = node["allowed_roots"] if isinstance(node["allowed_roots"], list) else json.loads(node["allowed_roots"] or "[]")
+        parent = Path(parent_path).expanduser().resolve(strict=True)
+        if not parent.is_dir() or not self._within_allowed_root(parent, roots):
+            raise PermissionError("fork destination is outside the enrolled Node allowed roots")
+        target = parent / repository_name
+        resolved_target = target.resolve(strict=False)
+        if not self._within_allowed_root(resolved_target, roots):
+            raise PermissionError("fork target resolves outside the enrolled Node allowed roots")
+        idempotency_key = f"fork:{source_project_id}:{resolved_revision}:{target}"
+        with connect(self.settings) as db:
+            existing_workflow = db.execute("SELECT workflow_id FROM prime_core.workflows WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
+        if (target.exists() or target.is_symlink()) and not existing_workflow:
+            raise FileExistsError("fork destination already exists")
+        remote_names = subprocess.run(["git", "-C", str(source_root), "remote"], check=True, capture_output=True, text=True, timeout=10).stdout.split()
+        remotes = []
+        for name in remote_names:
+            fetch_url = subprocess.run(["git", "-C", str(source_root), "remote", "get-url", name], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+            push_url = subprocess.run(["git", "-C", str(source_root), "remote", "get-url", "--push", name], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+            remotes.append({"name": name, "fetch_url": self._display_remote_url(fetch_url), "push_url": self._display_remote_url(push_url), "write_capability": "UNPROVEN"})
+        proposed_items = list(progress_items or [])
+        if not proposed_items:
+            for item in goal_items:
+                expectations = item["acceptance_expectations"]
+                if isinstance(expectations, str):
+                    expectations = json.loads(expectations)
+                proposed_items.append({"title": item["title"], "description": item["description"], "weight": float(item["weight"]), "required": bool(item["required"]), "acceptance_expectations": expectations or []})
+        if not proposed_items:
+            raise ValueError("fork requires operator-reviewed child Progress baseline items")
+        weights = sum(float(item.get("weight", 0)) for item in proposed_items)
+        if any(float(item.get("weight", 0)) <= 0 for item in proposed_items) or abs(weights - 1.0) > 1e-6:
+            raise ValueError("child Progress baseline items require positive weights summing to 1.0")
+        fingerprint_payload = {
+            "source_project_id": source_project_id,
+            "source_revision": resolved_revision,
+            "destination_node_id": destination_node_id,
+            "target": str(target),
+            "project_name": project_name.strip(),
+            "remote_action": remote_action,
+            "remap_remote_url": remap_remote_url if remote_action == "REMAP" else None,
+            "notion_parent_id": notion_parent_id,
+            "goal_revision_id": goal["goal_revision_id"],
+            "goal_content_hash": goal["content_hash"],
+            "progress_items": proposed_items,
+            "remotes": remotes,
+        }
+        preflight_fingerprint = hashlib.sha256(json.dumps(fingerprint_payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        return {
+            **fingerprint_payload,
+            "preflight_fingerprint": preflight_fingerprint,
+            "source_project_name": source["name"],
+            "source_goal_content": goal["content"],
+            "source_goal_status": goal["status"],
+            "destination_path": str(target),
+            "destination_exists": target.exists() or target.is_symlink(),
+            "existing_workflow_id": existing_workflow["workflow_id"] if existing_workflow else None,
+            "memory_copy_status": "NONE",
+            "notion_copy_status": "NONE_NEW_CHILD_RECORD_REQUIRED",
+            "remote_policy": "WRITE_CAPABILITY_UNPROVEN_DEFAULT_CLEAR" if remote_action == "CLEAR" else remote_action,
+            "confirmation_required": True,
+        }
+
+    def fork_project(
+        self,
+        source_project_id: str,
+        source_revision: str,
+        destination_node_id: str,
+        parent_path: str,
+        repository_name: str,
+        project_name: str,
+        remote_action: str,
+        notion_parent_id: str,
+        preflight_fingerprint: str,
+        progress_items: list[dict[str, Any]],
+        approve_child_goal: bool,
+        approve_progress_baseline: bool,
+        notion_lifecycle: Any,
+        remap_remote_url: str | None = None,
+        image_url: str | None = None,
+        confirm: bool = False,
+    ) -> dict[str, Any]:
+        if not confirm:
+            raise ValueError("operator confirmation is required before fork")
+        if not approve_child_goal:
+            raise ValueError("operator approval of the child Goal draft is required")
+        if not approve_progress_baseline:
+            raise ValueError("operator approval of the child Progress baseline is required")
+        preflight = self.fork_preflight(source_project_id, source_revision, destination_node_id, parent_path, repository_name, project_name, remote_action, notion_parent_id, remap_remote_url, progress_items)
+        if not preflight_fingerprint or not constant_time_equal(preflight_fingerprint, preflight["preflight_fingerprint"]):
+            raise ValueError("fork preflight is stale or does not match the confirmed target")
+        source_revision = preflight["source_revision"]
+        remote_action = preflight["remote_action"]
+        progress_items = preflight["progress_items"]
+        with connect(self.settings) as db:
+            source = db.execute("SELECT p.*,r.canonical_path,r.node_id FROM prime_core.projects p JOIN prime_core.repositories r ON r.project_id=p.project_id WHERE p.project_id=%s", (source_project_id,)).fetchone()
+            node = db.execute("SELECT node_id,name,status,allowed_roots FROM prime_core.nodes WHERE node_id=%s", (destination_node_id,)).fetchone()
+            goal = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status='APPROVED' ORDER BY revision_number DESC LIMIT 1", (source_project_id,)).fetchone()
         if not source:
             raise KeyError("source project not found")
         if not node:
@@ -1109,13 +1251,16 @@ class CoreService:
         if not parent.is_dir() or not self._within_allowed_root(parent, roots):
             raise PermissionError("fork destination is outside the enrolled Node allowed roots")
         target = parent / repository_name
+        resolved_target = target.resolve(strict=False)
+        if not self._within_allowed_root(resolved_target, roots):
+            raise PermissionError("fork target resolves outside the enrolled Node allowed roots")
         idempotency_key = f"fork:{source_project_id}:{source_revision}:{target}"
         with connect(self.settings) as db:
             existing_workflow = db.execute("SELECT * FROM prime_core.workflows WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
             existing_project = db.execute("SELECT * FROM prime_core.projects WHERE project_id=%s", (existing_workflow["project_id"],)).fetchone() if existing_workflow and existing_workflow["project_id"] else None
         if (target.exists() or target.is_symlink()) and not existing_workflow:
             raise FileExistsError("fork destination already exists")
-        project = dict(existing_project) if existing_project else self.create_project(repository_name, source.get("description", ""), source.get("image_url"))
+        project = dict(existing_project) if existing_project else self.create_project(project_name.strip(), source.get("description", ""), image_url)
         workflow = self.start_or_get_workflow("FORK_PROJECT", idempotency_key, project["project_id"], [
             {"step_key": "PROJECT_RESERVED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
             {"step_key": "TARGET_EXPECTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
@@ -1125,9 +1270,14 @@ class CoreService:
             {"step_key": "AUTHORITY_PROVISIONED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
             {"step_key": "REPOSITORY_BOUND", "replay_policy": "PURE_OR_DB_TRANSACTION"},
             {"step_key": "GOAL_DRAFTED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "GOAL_APPROVED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "PROGRESS_BASELINE_CREATED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
             {"step_key": "INDEXED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "NOTION_PROJECT_RECORD_BOUND", "replay_policy": "IDEMPOTENT_EXTERNAL"},
             {"step_key": "MCP_SCOPE_ISSUED", "replay_policy": "NON_IDEMPOTENT_EXTERNAL"},
             {"step_key": "HINDSIGHT_BOUND", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "PROJECT_BRAIN_INITIALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
+            {"step_key": "EVENT_STREAM_INITIALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
             {"step_key": "FINALIZED", "replay_policy": "PURE_OR_DB_TRANSACTION"},
         ])
         current_step = "PROJECT_RESERVED"
@@ -1176,7 +1326,14 @@ class CoreService:
                 remotes = subprocess.run(["git", "-C", str(target), "remote"], check=True, capture_output=True, text=True, timeout=10).stdout.split()
                 for remote in remotes:
                     subprocess.run(["git", "-C", str(target), "remote", "remove", remote], check=True, capture_output=True, text=True, timeout=10)
-                self.complete_step(workflow["workflow_id"], current_step, {"remote_status": "CLEARED"})
+                if remote_action == "RETAIN_READ_ONLY":
+                    for remote in preflight["remotes"]:
+                        retained_fetch_url = subprocess.run(["git", "-C", str(source_root), "remote", "get-url", remote["name"]], check=True, capture_output=True, text=True, timeout=10).stdout.strip()
+                        subprocess.run(["git", "-C", str(target), "remote", "add", remote["name"], retained_fetch_url], check=True, capture_output=True, text=True, timeout=10)
+                        subprocess.run(["git", "-C", str(target), "remote", "set-url", "--push", remote["name"], "disabled-by-prime://write-capability-unproven"], check=True, capture_output=True, text=True, timeout=10)
+                elif remote_action == "REMAP":
+                    subprocess.run(["git", "-C", str(target), "remote", "add", "origin", str(remap_remote_url)], check=True, capture_output=True, text=True, timeout=10)
+                self.complete_step(workflow["workflow_id"], current_step, {"remote_status": remote_action, "source_remotes_reviewed": len(preflight["remotes"]), "write_capability": "DISABLED" if remote_action == "RETAIN_READ_ONLY" else "OPERATOR_EXPLICIT" if remote_action == "REMAP" else "CLEARED"})
 
             current_step = "AUTHORITY_PROVISIONED"
             started = self.begin_step(workflow["workflow_id"], current_step)
@@ -1215,12 +1372,34 @@ class CoreService:
             if started["decision"] != "SKIP_COMPLETED":
                 if goal:
                     with connect(self.settings) as db:
-                        draft = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status='DRAFT' ORDER BY revision_number LIMIT 1", (project["project_id"],)).fetchone()
+                        draft = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status IN ('DRAFT','APPROVED') ORDER BY revision_number LIMIT 1", (project["project_id"],)).fetchone()
                     if not draft:
                         draft = self.create_goal_revision(project["project_id"], goal["content"], approve=False)
-                    self.complete_step(workflow["workflow_id"], current_step, {"goal_revision_id": draft["goal_revision_id"]})
+                    self.complete_step(workflow["workflow_id"], current_step, {"goal_revision_id": draft["goal_revision_id"], "source_goal_revision_id": goal["goal_revision_id"], "relationship": "CHILD_DRAFT_FROM_PARENT_CONTENT"})
                 else:
                     self.complete_step(workflow["workflow_id"], current_step, {"goal": "ABSENT"})
+
+            with connect(self.settings) as db:
+                child_goal = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s ORDER BY revision_number LIMIT 1", (project["project_id"],)).fetchone()
+
+            current_step = "GOAL_APPROVED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                child_goal = self.approve_goal_revision(project["project_id"], child_goal["goal_revision_id"])
+                self.complete_step(workflow["workflow_id"], current_step, {"goal_revision_id": child_goal["goal_revision_id"], "status": "APPROVED", "operator_approval": True})
+
+            current_step = "PROGRESS_BASELINE_CREATED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            with connect(self.settings) as db:
+                baseline = db.execute("SELECT * FROM prime_core.progress_baseline_reviews WHERE project_id=%s AND goal_revision_id=%s AND status='APPROVED' ORDER BY created_at LIMIT 1", (project["project_id"], child_goal["goal_revision_id"])).fetchone()
+            if started["decision"] != "SKIP_COMPLETED":
+                if not baseline:
+                    progress_service = __import__("src.prime_core.progress_service", fromlist=["ProgressService"]).ProgressService(self.settings)
+                    proposed = progress_service.propose_baseline(project["project_id"], child_goal["goal_revision_id"], progress_items)
+                    progress_service.approve_baseline(proposed["review_id"])
+                    with connect(self.settings) as db:
+                        baseline = db.execute("SELECT * FROM prime_core.progress_baseline_reviews WHERE review_id=%s", (proposed["review_id"],)).fetchone()
+                self.complete_step(workflow["workflow_id"], current_step, {"review_id": baseline["review_id"], "goal_revision_id": child_goal["goal_revision_id"], "status": "APPROVED", "operator_approval": True, "source_relationship": "COPIED_AS_REVIEWED_DRAFT_NOT_SHARED"})
 
             current_step = "INDEXED"
             started = self.begin_step(workflow["workflow_id"], current_step)
@@ -1231,6 +1410,20 @@ class CoreService:
             else:
                 indexed = __import__("src.prime_core.indexer", fromlist=["RepositoryIndexer"]).RepositoryIndexer(self).build(project["project_id"])
                 self.complete_step(workflow["workflow_id"], current_step, {"source_revision": indexed["source_revision"]})
+
+            current_step = "NOTION_PROJECT_RECORD_BOUND"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            notion_result = None
+            if started["decision"] != "SKIP_COMPLETED":
+                notion_lifecycle.configure(project["project_id"], "env/myassistant/notion-readonly")
+                notion_result = notion_lifecycle.create_project_record(project["project_id"], notion_parent_id, project["name"], idempotency_key=f"fork-project-record:{workflow['workflow_id']}")
+                if notion_result.get("status") != "BOUND":
+                    raise ValueError(f"child Notion Project Record is {notion_result.get('status', 'UNAVAILABLE')}")
+                self.record_workflow_resource(workflow["workflow_id"], "NOTION_PAGE", "child-project-record", notion_result["page_id"], {"project_id": project["project_id"], "parent_id": notion_parent_id, "ownership": "CHILD_MANAGED_REGION"}, "CREATED")
+                self.complete_step(workflow["workflow_id"], current_step, {"page_id": notion_result["page_id"], "status": "BOUND"})
+            else:
+                notion_state = notion_lifecycle.projects.get(project["project_id"])
+                notion_result = {"status": notion_state.status if notion_state else "UNAVAILABLE", "page_id": notion_state.page_id if notion_state else None, "idempotent": True}
 
             current_step = "MCP_SCOPE_ISSUED"
             started = self.begin_step(workflow["workflow_id"], current_step)
@@ -1255,6 +1448,20 @@ class CoreService:
                     raise ValueError("child Hindsight bank is unavailable")
                 self.complete_step(workflow["workflow_id"], current_step, {"bank_id": hindsight["bank_id"]})
 
+            current_step = "PROJECT_BRAIN_INITIALIZED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                brain = __import__("src.prime_core.brain_service", fromlist=["BrainService"]).BrainService(self.settings).build(project["project_id"], indexed["source_revision"])
+                if brain.get("availability") == "UNAVAILABLE":
+                    raise ValueError("child Project Brain initialization is unavailable")
+                self.complete_step(workflow["workflow_id"], current_step, {"source_revision": brain["source_revision"], "nodes": len(brain.get("nodes", [])), "classification": "DERIVED_NON_AUTHORITATIVE"})
+
+            current_step = "EVENT_STREAM_INITIALIZED"
+            started = self.begin_step(workflow["workflow_id"], current_step)
+            if started["decision"] != "SKIP_COMPLETED":
+                event = self.emit_event("PROJECT_FORKED", {"source_project_id": source_project_id, "source_revision": source_revision, "repository_id": binding["repository_id"], "memory_copy_status": "NONE", "notion_page_id": notion_result["page_id"], "progress_baseline_id": baseline["review_id"]}, project_id=project["project_id"], source_revision=indexed["source_revision"], dedupe_key=f"fork-finalized:{workflow['workflow_id']}")
+                self.complete_step(workflow["workflow_id"], current_step, {"event_id": event["event_id"], "project_sequence": event.get("project_sequence")})
+
             current_step = "FINALIZED"
             started = self.begin_step(workflow["workflow_id"], current_step)
             if started["decision"] != "SKIP_COMPLETED":
@@ -1263,14 +1470,14 @@ class CoreService:
                     if existing_fork:
                         fork = existing_fork
                     else:
-                        fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], indexed["source_revision"], json.dumps({"source": "git clone", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NOT_COPIED", "hindsight": "INDEPENDENT_BANK"}), now())).fetchone()
+                        fork = db.execute("INSERT INTO prime_core.project_forks(fork_id,source_project_id,new_project_id,source_revision,memory_copy_status,destination_node_id,destination_repository_id,destination_revision,provenance,created_at) VALUES (%s,%s,%s,%s,'NONE',%s,%s,%s,%s,%s) RETURNING *", (_id("fork"), source_project_id, project["project_id"], source_revision, destination_node_id, binding["repository_id"], indexed["source_revision"], json.dumps({"source": "git clone", "source_revision": source_revision, "memory": "NOT_COPIED", "notion": "NEW_CHILD_PROJECT_RECORD", "progress": "NEW_CHILD_APPROVED_BASELINE", "goal": "CHILD_APPROVED_REVISION_FROM_REVIEWED_PARENT_DRAFT", "hindsight": "INDEPENDENT_BANK", "brain": "DERIVED_CHILD_PROJECTION"}), now())).fetchone()
                 self.complete_step(workflow["workflow_id"], current_step, {"fork_id": fork["fork_id"]})
             else:
                 with connect(self.settings) as db:
                     fork = db.execute("SELECT * FROM prime_core.project_forks WHERE new_project_id=%s", (project["project_id"],)).fetchone()
             self.complete_workflow(workflow["workflow_id"], current_step)
             destination_revision = indexed["source_revision"]
-            return {"workflow_id": workflow["workflow_id"], "fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NOT_COPIED", "hindsight_status": "INDEPENDENT_BANK", "goal_status": "DRAFT", "authority_provenance": "CURRENT_TEMPLATE_NOT_PARENT_AUTHORITY", "remote_status": "CLEARED", "destination_revision": destination_revision}
+            return {"workflow_id": workflow["workflow_id"], "fork": dict(fork), "project": project, "binding": binding, "indexed": indexed, "mcp_grant": grant, "memory_copy_status": "NONE", "notion_status": "NEW_CHILD_PROJECT_RECORD", "notion": notion_result, "hindsight_status": "INDEPENDENT_BANK", "goal_status": "APPROVED_CHILD_REVISION", "goal_revision_id": child_goal["goal_revision_id"], "progress_baseline_id": baseline["review_id"], "progress_status": "APPROVED_CHILD_BASELINE", "brain_status": "DERIVED_CHILD_PROJECTION", "event_status": "CHILD_SCOPED", "authority_provenance": "CURRENT_TEMPLATE_NOT_PARENT_AUTHORITY", "remote_status": remote_action, "destination_revision": destination_revision}
         except QualificationInterruption:
             with transaction(self.settings) as db:
                 db.execute("UPDATE prime_core.projects SET lifecycle_state='PROVISIONING',work_condition='REVIEW_REQUIRED',onboarding_state='REPAIR_REQUIRED',updated_at=%s WHERE project_id=%s", (now(), project["project_id"]))

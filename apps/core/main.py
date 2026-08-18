@@ -275,11 +275,23 @@ class GrantRequest(BaseModel):
     client_id: str = Field(min_length=1, max_length=160)
 
 
-class ForkRequest(BaseModel):
+class ForkPreflightRequest(BaseModel):
     source_revision: str = Field(min_length=7, max_length=200)
     destination_node_id: str = Field(min_length=1, max_length=160)
     parent_path: str = Field(min_length=1, max_length=4096)
     repository_name: str = Field(min_length=1, max_length=160)
+    project_name: str = Field(min_length=1, max_length=200)
+    image_url: str | None = Field(default=None, max_length=2048)
+    remote_action: Literal["CLEAR", "RETAIN_READ_ONLY", "REMAP"] = "CLEAR"
+    remap_remote_url: str | None = Field(default=None, max_length=2048)
+    notion_parent_id: str = Field(min_length=1, max_length=160)
+    progress_items: list[dict[str, Any]] = Field(default_factory=list, max_length=128)
+
+
+class ForkRequest(ForkPreflightRequest):
+    preflight_fingerprint: str = Field(min_length=64, max_length=64)
+    approve_child_goal: bool = False
+    approve_progress_baseline: bool = False
     confirm: bool = False
 
 
@@ -2079,14 +2091,25 @@ def revoke_ai_connection(project_id: str, grant_id: str, request: Request, prime
         return error("AI_CONNECTION_REJECTED", str(exc), request_id(request), status_code=404)
 
 
+@app.post("/v1/projects/{project_id}/fork/preflight")
+def fork_project_preflight(project_id: str, body: ForkPreflightRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        return service.fork_preflight(project_id, body.source_revision, body.destination_node_id, body.parent_path, body.repository_name, body.project_name, body.remote_action, body.notion_parent_id, body.remap_remote_url, body.progress_items)
+    except KeyError as exc:
+        return error("FORK_NOT_FOUND", str(exc), request_id(request), status_code=404)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError, subprocess.CalledProcessError) as exc:
+        return error("FORK_PREFLIGHT_REJECTED", str(exc), request_id(request), status_code=400)
+
+
 @app.post("/v1/projects/{project_id}/fork")
 def fork_project(project_id: str, body: ForkRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     try:
-        return service.fork_project(project_id, body.source_revision, body.destination_node_id, body.parent_path, body.repository_name, body.confirm)
+        return service.fork_project(project_id, body.source_revision, body.destination_node_id, body.parent_path, body.repository_name, body.project_name, body.remote_action, body.notion_parent_id, body.preflight_fingerprint, body.progress_items, body.approve_child_goal, body.approve_progress_baseline, _live_notion_lifecycle(), body.remap_remote_url, body.image_url, body.confirm)
     except KeyError as exc:
         return error("FORK_NOT_FOUND", str(exc), request_id(request), status_code=404)
-    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError, subprocess.CalledProcessError) as exc:
+    except (LookupError, PermissionError, ValueError, FileNotFoundError, FileExistsError, OSError, subprocess.CalledProcessError) as exc:
         return error("FORK_REJECTED", str(exc), request_id(request), status_code=400)
 
 
