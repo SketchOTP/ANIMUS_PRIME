@@ -1266,3 +1266,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-FIRECRACKER-QUALIFICATION-090
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092
+
+- Issued: 2026-08-18T15:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 092
+- Objective: Correct the frozen-spec destructive lifecycle omission found after Continuation 091; implement durable DELETE/quarantine/PURGE orchestration and complete DOD-077.
+- Scope: append-only 091 governance correction; lifecycle matrix; Node-scoped repository quarantine/recovery/purge; Notion disposition; jobs/watchers and project credential shutdown; Hindsight/local resource purge; backup/external survival disclosure; protected browser flow; deterministic process-death recovery; full regression and governed GitHub/Notion publication.
+- Exclusions: no canonical project/repository/Node destruction; no DOD-013/016/047/053/079/080/081 or R-056 aggregate closure; no public exposure, Funnel, deployment, Phase 16, frozen-spec edit, or Continuation 093.
+- Acceptance: DOD-004/R-012 return to verified only after complete lifecycle saga qualification with no hidden orphan; DOD-077 promotes only if its full protected destructive browser/security/recovery contract passes; expected successful queue 74 complete / 7 open.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-DURABLE-WORKFLOWS-091
+- Status at issuance: ISSUED

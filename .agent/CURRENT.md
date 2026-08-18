@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-DURABLE-WORKFLOWS-091
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 091
-- Objective: Close DOD-004/R-012 through durable workflow integration, interruption, restart reconciliation, compensation/resource visibility, and orphan diagnostics across actual V1 multi-system boundaries.
-- Current status: `COMPLETE`
-- Acceptance: PASS for the bounded 091 objective, PARTIAL for Phase 15 — DOD-004 is PRODUCT_VERIFIED and R-012 Phase 15 is VERIFIED. Governed queue is 73 complete / 8 open. DOD-016 was not automatically promoted; DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
-- Current phase: PHASE15_DURABLE_WORKFLOWS_091
+- Local directive ID: D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 092
+- Objective: Correct the destructive lifecycle omission in 091 by implementing and qualifying durable DELETE/quarantine/PURGE orchestration and the complete protected DOD-077 browser contract.
+- Current status: `IN_PROGRESS`
+- Acceptance: Architect correction applied append-only. DOD-004 is reopened PARTIAL and R-012 Phase 15 is REOPENED pending 092; effective queue is 72 complete / 9 open. All other valid 091 workflow evidence remains preserved.
+- Current phase: PHASE15_LIFECYCLE_SAGA_CORRECTION_092
 - Expected or actual touched areas: existing workflow primitives, Fork/Clone, live Notion Project Record, Hindsight bank, repository/authority/Goal/MCP provisioning, restore reconciliation, diagnostics endpoint, focused tests, exact runtime image, governed evidence, and append-only records. Canonical project/Node, public exposure, deployment, and Phase 16 were preserved.
-- Immediate next action: Await Architect review of the remaining 8-row queue. Do not begin another continuation automatically.
+- Immediate next action: Complete the authorized expendable-fixture DELETE/PURGE interruption and browser matrix; restore DOD-004/R-012 and promote DOD-077 only if every frozen clause passes. Do not begin 093.
 
 ## Temporary task-relevant facts
 

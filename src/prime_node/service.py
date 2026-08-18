@@ -5,6 +5,7 @@ import json
 import os
 import secrets
 import subprocess
+import shutil
 import uuid
 import time
 from pathlib import Path
@@ -246,6 +247,88 @@ class NodeService:
         operations[operation_id] = result
         self.state["repository_operations"] = dict(list(operations.items())[-128:])
         self._record_audit("REPOSITORY_CREATED")
+        self._save()
+        return result
+
+    def quarantine_repository(self, repository_path: str, operation_id: str) -> dict[str, Any]:
+        operations = dict(self.state.get("quarantine_operations") or {})
+        existing = operations.get(operation_id)
+        if existing:
+            source = Path(existing["original_path"])
+            target = Path(existing["quarantine_path"])
+            if target.is_dir() and not source.exists():
+                return {**existing, "newly_performed": False, "reconciled": True}
+            raise RuntimeError("recorded quarantine operation no longer matches filesystem state")
+        source = self.safe_path(repository_path)
+        identity = self.inspect_repository(str(source))
+        if source != Path(identity["canonical_path"]).resolve(strict=True):
+            raise PermissionError("repository quarantine requires the exact bound Git root")
+        roots = tuple(Path(item).resolve(strict=True) for item in (self.state.get("allowed_roots") or [str(root) for root in self.settings.allowed_roots]))
+        owner_root = next((root for root in roots if source == root or root in source.parents), None)
+        if owner_root is None or source == owner_root:
+            raise PermissionError("an allowed root itself cannot be quarantined")
+        quarantine_root = owner_root / ".prime-quarantine"
+        if quarantine_root.exists() and (quarantine_root.is_symlink() or not quarantine_root.is_dir()):
+            raise PermissionError("configured quarantine root is unsafe")
+        quarantine_root.mkdir(mode=0o700, exist_ok=True)
+        if quarantine_root.resolve(strict=True).parent != owner_root:
+            raise PermissionError("quarantine root escaped the approved Node root")
+        target = quarantine_root / f"{source.name}-{hashlib.sha256(operation_id.encode()).hexdigest()[:16]}"
+        if target.exists() or target.is_symlink():
+            raise FileExistsError("quarantine target already exists without a matching operation record")
+        source.replace(target)
+        result = {
+            "operation_id": operation_id,
+            "original_path": str(source),
+            "quarantine_path": str(target),
+            "identity_fingerprint": identity["identity_fingerprint"],
+            "newly_performed": True,
+            "reconciled": False,
+        }
+        operations[operation_id] = result
+        self.state["quarantine_operations"] = dict(list(operations.items())[-128:])
+        self._record_audit("REPOSITORY_QUARANTINED")
+        self._save()
+        return result
+
+    def restore_quarantined_repository(self, operation_id: str) -> dict[str, Any]:
+        operations = dict(self.state.get("quarantine_operations") or {})
+        operation = operations.get(operation_id)
+        if not operation:
+            raise KeyError("quarantine operation is not recorded")
+        source = Path(operation["original_path"])
+        target = Path(operation["quarantine_path"])
+        if source.is_dir() and not target.exists():
+            return {**operation, "restored": True, "reconciled": True}
+        if source.exists() or source.is_symlink() or not target.is_dir() or target.is_symlink():
+            raise RuntimeError("quarantined repository cannot be restored safely")
+        target.replace(source)
+        self._record_audit("REPOSITORY_QUARANTINE_RESTORED")
+        self._save()
+        return {**operation, "restored": True, "reconciled": False}
+
+    def purge_quarantined_repository(self, operation_id: str) -> dict[str, Any]:
+        operations = dict(self.state.get("quarantine_operations") or {})
+        operation = operations.get(operation_id)
+        if not operation:
+            raise KeyError("quarantine operation is not recorded")
+        original = Path(operation["original_path"])
+        target = Path(operation["quarantine_path"])
+        if original.exists():
+            raise PermissionError("original repository path exists; refusing quarantine purge")
+        if not target.exists():
+            prior = dict(self.state.get("purge_operations") or {}).get(operation_id)
+            if prior:
+                return {**prior, "newly_performed": False, "reconciled": True}
+            raise FileNotFoundError("quarantined repository is absent without a purge record")
+        if target.is_symlink() or target.parent.name != ".prime-quarantine":
+            raise PermissionError("repository purge target is not a recorded quarantine directory")
+        shutil.rmtree(target)
+        result = {**operation, "purged": True, "newly_performed": True, "reconciled": False}
+        purges = dict(self.state.get("purge_operations") or {})
+        purges[operation_id] = result
+        self.state["purge_operations"] = dict(list(purges.items())[-128:])
+        self._record_audit("QUARANTINED_REPOSITORY_PURGED")
         self._save()
         return result
 

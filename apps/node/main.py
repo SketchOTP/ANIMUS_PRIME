@@ -28,6 +28,15 @@ class RepositoryCreateRequest(BaseModel):
     operation_id: str = Field(min_length=1, max_length=200)
 
 
+class RepositoryLifecycleRequest(BaseModel):
+    repository_path: str = Field(min_length=1, max_length=4096)
+    operation_id: str = Field(min_length=1, max_length=200)
+
+
+class RecordedRepositoryOperationRequest(BaseModel):
+    operation_id: str = Field(min_length=1, max_length=200)
+
+
 class AuthorityBootstrapRequest(BaseModel):
     repository_path: str = Field(min_length=1, max_length=4096)
     files: dict[str, str]
@@ -136,6 +145,33 @@ def bootstrap_authority(body: AuthorityBootstrapRequest, authorization: str | No
     try:
         return service.bootstrap_authority(body.repository_path, body.files, body.operation_id)
     except (PermissionError, ValueError, FileNotFoundError, FileExistsError, NotADirectoryError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/quarantine")
+def quarantine_repository(body: RepositoryLifecycleRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.quarantine_repository(body.repository_path, body.operation_id)
+    except (PermissionError, ValueError, OSError, RuntimeError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/quarantine/restore")
+def restore_quarantined_repository(body: RecordedRepositoryOperationRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.restore_quarantined_repository(body.operation_id)
+    except (PermissionError, KeyError, OSError, RuntimeError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/quarantine/purge")
+def purge_quarantined_repository(body: RecordedRepositoryOperationRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.purge_quarantined_repository(body.operation_id)
+    except (PermissionError, KeyError, OSError, RuntimeError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 

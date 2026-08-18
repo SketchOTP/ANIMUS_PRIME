@@ -66,7 +66,7 @@ upgrades = UpgradeService(settings)
 warm_start = WarmStartService(settings, service)
 brain = BrainService(settings)
 progress = ProgressService(settings)
-lifecycle = LifecycleService(settings)
+lifecycle = LifecycleService(settings, service, memory, lambda: _live_notion_lifecycle())
 notifications = NotificationService(settings)
 notion_credentials = NotionCredentialRegistry(Path(settings.notion_credential_state_path))
 startup_state: dict[str, Any] = {"database": "UNKNOWN", "migrations": "UNKNOWN"}
@@ -214,6 +214,9 @@ class LifecycleActionRequest(BaseModel):
     action: str = Field(min_length=1, max_length=40)
     preflight_token: str = Field(min_length=1, max_length=240)
     confirmation: str = Field(default="", max_length=240)
+    repository_confirmation: str = Field(default="", max_length=8192)
+    include_repository_erasure: bool = False
+    preserve_recovery_snapshot: bool = False
 
 
 class AuthorityRequest(BaseModel):
@@ -414,7 +417,7 @@ def require_session(request: Request, token: str | None) -> dict[str, Any]:
 
 def project_exists(project_id: str) -> bool:
     with connect(settings) as db:
-        return db.execute("SELECT 1 FROM prime_core.projects WHERE project_id=%s", (project_id,)).fetchone() is not None
+        return db.execute("SELECT 1 FROM prime_core.projects WHERE project_id=%s AND lifecycle_state <> 'DELETED'", (project_id,)).fetchone() is not None
 
 
 @asynccontextmanager
@@ -1012,7 +1015,7 @@ def lifecycle_preflight(project_id: str, body: LifecyclePreflightRequest, reques
 def lifecycle_action(project_id: str, body: LifecycleActionRequest, request: Request, prime_session: str | None = Cookie(default=None)):
     session = require_session(request, prime_session)
     try:
-        return lifecycle.execute(project_id, body.action, body.preflight_token, body.confirmation, service.step_up_is_recent(session))
+        return lifecycle.execute(project_id, body.action, body.preflight_token, body.confirmation, service.step_up_is_recent(session), body.repository_confirmation, body.include_repository_erasure, body.preserve_recovery_snapshot)
     except KeyError as exc:
         return error("PROJECT_NOT_FOUND", str(exc), request_id(request), status_code=404)
     except PermissionError as exc:

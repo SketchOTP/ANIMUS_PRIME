@@ -855,3 +855,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Actual multi-system side effects now use stable workflow identities, ordered durable steps, explicit replay policies, expected/created resource ledgers, compensation or operator-visible repair, and restart-safe reconciliation. Live Notion process death exited 91 after external success, then the repaired product adopted exactly one marker-matched page and completed the same workflow. Atomic database-only lifecycle transitions were not misrepresented as external workflows.
 - Affected areas: Core workflow primitives and services, Notion/Hindsight/restore paths, diagnostics, focused tests, persistent Core image, Continuation 091 evidence, audit/burndown/traceability, and append-only records. No public exposure, deployment, Phase 16, canonical project mutation, or history rewrite occurred.
 - Supersedes record: DEC-PRIME-PHASE15-090
+
+## DEC-PRIME-PHASE15-091-ARCHITECT-CORRECTION
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-091-ARCHITECT-CORRECTION
+- Status: ACTIVE
+- Decision or event: Reopen DOD-004 and R-012 Phase 15 append-only because frozen §13.4 explicitly includes archive/delete/purge durable workflows, while 091 treated current destructive lifecycle actions as database-only transitions.
+- Rationale: The 091 Fork/Notion/Hindsight/repository/provisioning/MCP/restore evidence remains valid, but it cannot satisfy the complete frozen workflow class without real destructive lifecycle orchestration and interruption recovery.
+- Affected areas: current audit, burndown, R-012 traceability, Continuation 092 implementation and qualification. Historical 091 evidence remains unchanged.
+- Supersedes record: DEC-PRIME-PHASE15-091

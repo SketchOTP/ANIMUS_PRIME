@@ -17,8 +17,7 @@ def test_lifecycle_completion_and_destructive_step_up(monkeypatch):
     settings = Settings()
     migrate(settings)
     project = CoreService(settings).create_project("Lifecycle Project")
-    service = LifecycleService(settings)
-    service.transition(project["project_id"], "PROVISIONING")
+    service = LifecycleService(settings, CoreService(settings))
     with pytest.raises(PermissionError):
         service.transition(project["project_id"], "DELETION_PENDING", confirmation=project["project_id"], step_up_recent=False)
     result = service.transition(project["project_id"], "DELETION_PENDING", confirmation=project["project_id"], step_up_recent=True)

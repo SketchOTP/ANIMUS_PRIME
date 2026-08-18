@@ -838,7 +838,28 @@ class CoreService:
 
     def list_projects(self) -> list[dict[str, Any]]:
         with connect(self.settings) as db:
-            return [dict(row) for row in db.execute("SELECT * FROM prime_core.projects ORDER BY created_at").fetchall()]
+            return [dict(row) for row in db.execute("SELECT * FROM prime_core.projects WHERE lifecycle_state <> 'DELETED' ORDER BY created_at").fetchall()]
+
+    def bound_repository_lifecycle(self, project_id: str, operation_id: str, action: str) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            row = db.execute(
+                "SELECT r.repository_id,r.canonical_path,r.identity_fingerprint,n.* "
+                "FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id "
+                "JOIN prime_core.nodes n ON n.node_id=b.node_id WHERE b.project_id=%s",
+                (project_id,),
+            ).fetchone()
+        if not row:
+            return {"status": "NOT_APPLICABLE", "reason": "PROJECT_HAS_NO_BOUND_REPOSITORY"}
+        client = self._node_client(dict(row))
+        if action == "QUARANTINE":
+            result = client.quarantine_repository(row["canonical_path"], operation_id)
+        elif action == "RESTORE":
+            result = client.restore_quarantined_repository(operation_id)
+        elif action == "PURGE":
+            result = client.purge_quarantined_repository(operation_id)
+        else:
+            raise ValueError("unsupported bound repository lifecycle action")
+        return {**result, "repository_id": row["repository_id"], "node_id": row["node_id"]}
 
     def register_node(self, node_id: str, name: str, platform: str, identity_fingerprint: str, allowed_roots: list[str], capabilities: dict[str, Any]) -> dict[str, Any]:
         timestamp = now()

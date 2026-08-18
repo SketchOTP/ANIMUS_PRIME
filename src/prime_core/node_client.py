@@ -51,6 +51,15 @@ class NodeClient:
             {"parent_path": parent_path, "repository_name": repository_name, "operation_id": operation_id},
         )
 
+    def quarantine_repository(self, repository_path: str, operation_id: str) -> dict[str, Any]:
+        return self._request("POST", "/v1/repositories/quarantine", {"repository_path": repository_path, "operation_id": operation_id})
+
+    def restore_quarantined_repository(self, operation_id: str) -> dict[str, Any]:
+        return self._request("POST", "/v1/repositories/quarantine/restore", {"operation_id": operation_id})
+
+    def purge_quarantined_repository(self, operation_id: str) -> dict[str, Any]:
+        return self._request("POST", "/v1/repositories/quarantine/purge", {"operation_id": operation_id})
+
     def bootstrap_authority(self, repository_path: str, files: dict[str, str], operation_id: str) -> dict[str, Any]:
         return self._request(
             "POST",

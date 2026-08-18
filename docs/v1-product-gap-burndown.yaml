@@ -7,13 +7,38 @@ derived_from:
 purpose: actionable release execution queue; derived view only
 required_fields: [dod_id, current_status, acceptance_kind, product_area, owner_phase, mapped_r_requirements, exact_missing_behavior, work_class, requires_code, requires_browser, requires_native_linux, requires_windows, requires_tailscale, requires_second_device, requires_hindsight, requires_external_at, requires_live_notion, requires_privilege, requires_packaging, requires_clean_install, next_action, evidence_already_available, qualification_needed, blocked_by, depends_on]
 totals_by_work_class:
-  LOCAL_CODE: 0
+  LOCAL_CODE: 1
   LOCAL_BROWSER_QUALIFICATION: 3
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
   EXTERNAL_ENVIRONMENT: 5
   AGGREGATE_RELEASE_GATE: 0
 items:
+  - dod_id: DOD-004
+    current_status: "PARTIAL"
+    product_area: "workflows"
+    owner_phase: 3
+    mapped_r_requirements: ["R-012"]
+    exact_missing_behavior: "Architect review reopened the 091 promotion because frozen §13.4 and §17 require durable destructive lifecycle orchestration, not only PostgreSQL lifecycle transitions. Retain all valid 091 workflow evidence and qualify DELETE/PURGE quarantine, disposition, restart, and orphan handling in Continuation 092."
+    work_class: "LOCAL_CODE"
+    requires_code: "YES"
+    requires_browser: "YES"
+    requires_native_linux: "YES"
+    requires_windows: "NO"
+    requires_tailscale: "NO"
+    requires_second_device: "NO"
+    requires_hindsight: "YES"
+    requires_external_at: "NO"
+    requires_live_notion: "YES"
+    requires_privilege: "NO"
+    requires_packaging: "NO"
+    requires_clean_install: "NO"
+    next_action: "Complete and qualify Continuation 092 destructive lifecycle sagas, then re-evaluate DOD-004/R-012 without rewriting 091 evidence."
+    evidence_already_available: ["evidence/phase15/qualification-continuation-091.md", "evidence/phase15/qualification-continuation-091-workflow-matrix.md", "evidence/phase15/qualification-continuation-091-interruption-matrix.md"]
+    qualification_needed: "Real expendable fixture DELETE/PURGE, Node quarantine, Notion disposition, Hindsight/local purge, browser protection, process-death recovery, and zero hidden orphan evidence."
+    blocked_by: "NONE"
+    depends_on: "R-012"
+    acceptance_kind: "ARCHITECTURAL_INVARIANT"
   - dod_id: DOD-013
     current_status: "BACKEND_ONLY"
     product_area: "remote access"
