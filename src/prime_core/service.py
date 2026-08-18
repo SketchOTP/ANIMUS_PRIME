@@ -1107,6 +1107,36 @@ class CoreService:
                     raise ValueError("fork archive contains an unsafe link")
                 bundle.extract(member, target)
 
+    @classmethod
+    def _fork_child_goal_draft(cls, project_name: str, parent_content: str) -> str:
+        """Return a child-owned Goal draft that satisfies the current review contract.
+
+        Older approved projects can predate the structured Goal vocabulary.  A Fork
+        must not fail merely because its authoritative parent Goal uses that legacy
+        shape, nor may it silently approve the parent row as the child's identity.
+        Preserve the approved parent content verbatim beneath an explicit child
+        review envelope so the operator sees and approves the exact new revision.
+        """
+        try:
+            cls.validate_goal_content(parent_content)
+            return parent_content
+        except ValueError:
+            return (
+                f"# {project_name} Project Goal\n\n"
+                "## Child Fork Review Contract\n\n"
+                "What and why: preserve the approved parent project purpose in an independently owned child fork.\n\n"
+                "Target user and operator: the trusted ANIMUS PRIME operator and future authorized engineering sessions.\n\n"
+                "Desired end state and outcome: an isolated child project that pursues the approved parent Goal without sharing mutable project state.\n\n"
+                "Functional requirements: preserve the selected committed revision and independently bind authority, Goal, Progress, Notion, Hindsight, MCP, Brain, and activity resources.\n\n"
+                "Constraints and non-functional requirements: maintain project isolation, provenance, secret safety, explicit approval, and reversible failure handling.\n\n"
+                "Success and acceptance: the child remains durable, independently identifiable, and isolated from the parent after restart.\n\n"
+                "Validation and evidence: verify distinct resource identities, exact Git provenance, browser usability, and restart recovery.\n\n"
+                "Non-goals and out of scope: changing the approved parent Goal, copying parent memory, or granting unproven remote write capability.\n\n"
+                "Failure and stop rules: stop safely on stale preflight, ambiguous external state, unavailable required integration, or incomplete isolation evidence.\n\n"
+                "## Approved Parent Goal Context (verbatim)\n\n"
+                f"{parent_content.rstrip()}\n"
+            )
+
     def fork_preflight(
         self,
         source_project_id: str,
@@ -1145,6 +1175,7 @@ class CoreService:
             raise ValueError(f"Node is {node['status']}")
         if not goal:
             raise ValueError("fork requires an approved source Goal to present as a child draft")
+        child_goal_content = self._fork_child_goal_draft(project_name.strip(), goal["content"])
         source_root = Path(source["canonical_path"]).resolve(strict=True)
         if self._tracked_worktree_changes(source_root):
             raise ValueError("fork requires a clean source working tree")
@@ -1191,6 +1222,7 @@ class CoreService:
             "notion_parent_id": notion_parent_id,
             "goal_revision_id": goal["goal_revision_id"],
             "goal_content_hash": goal["content_hash"],
+            "child_goal_content_hash": hashlib.sha256(child_goal_content.encode()).hexdigest(),
             "progress_items": proposed_items,
             "remotes": remotes,
         }
@@ -1199,7 +1231,7 @@ class CoreService:
             **fingerprint_payload,
             "preflight_fingerprint": preflight_fingerprint,
             "source_project_name": source["name"],
-            "source_goal_content": goal["content"],
+            "source_goal_content": child_goal_content,
             "source_goal_status": goal["status"],
             "destination_path": str(target),
             "destination_exists": target.exists() or target.is_symlink(),
@@ -1383,7 +1415,7 @@ class CoreService:
                     with connect(self.settings) as db:
                         draft = db.execute("SELECT * FROM prime_core.goal_revisions WHERE project_id=%s AND status IN ('DRAFT','APPROVED') ORDER BY revision_number LIMIT 1", (project["project_id"],)).fetchone()
                     if not draft:
-                        draft = self.create_goal_revision(project["project_id"], goal["content"], approve=False)
+                        draft = self.create_goal_revision(project["project_id"], preflight["source_goal_content"], approve=False)
                     self.complete_step(workflow["workflow_id"], current_step, {"goal_revision_id": draft["goal_revision_id"], "source_goal_revision_id": goal["goal_revision_id"], "relationship": "CHILD_DRAFT_FROM_PARENT_CONTENT"})
                 else:
                     self.complete_step(workflow["workflow_id"], current_step, {"goal": "ABSENT"})

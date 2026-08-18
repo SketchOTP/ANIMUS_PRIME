@@ -76,3 +76,27 @@ def test_fork_cleanliness_rejects_tracked_changes_but_preserves_untracked_tool_s
     assert CoreService._tracked_worktree_changes(tmp_path) == ""
     tracked.write_text("changed\n", encoding="utf-8")
     assert "tracked.txt" in CoreService._tracked_worktree_changes(tmp_path)
+
+
+def test_fork_child_goal_wraps_legacy_approved_content_for_independent_review():
+    legacy = "# Existing approved Goal\n\nBuild the frozen V1 safely.\n" * 3
+    child = CoreService._fork_child_goal_draft("Qualification Child", legacy)
+    CoreService.validate_goal_content(child)
+    assert child.startswith("# Qualification Child Project Goal")
+    assert "## Approved Parent Goal Context (verbatim)" in child
+    assert legacy.rstrip() in child
+
+
+def test_fork_child_goal_preserves_already_structured_content_verbatim():
+    structured = """# Project Goal
+What and why: preserve continuity.
+Target user and operator: the operator.
+Desired end state and outcome: an isolated child.
+Functional requirements: retain provenance.
+Constraints and non-functional requirements: remain private.
+Success and acceptance: isolation is verified.
+Validation and evidence: inspect durable identities.
+Non-goals and out of scope: no deployment.
+Failure and stop rules: stop on ambiguity.
+"""
+    assert CoreService._fork_child_goal_draft("Child", structured) == structured
