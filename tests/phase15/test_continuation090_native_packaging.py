@@ -51,3 +51,19 @@ def test_remote_agent_chain_uses_bounded_node_reads():
     assert "client.list_directory" in chain
     assert "client.read_file" in chain
     assert '"source": "LIVE_NODE"' in chain
+
+
+def test_continuity_backup_omits_installation_local_capability_rows():
+    backup = (ROOT / "src/prime_core/backup_service.py").read_text(encoding="utf-8")
+
+    for table in (
+        "operators",
+        "sessions",
+        "auth_challenges",
+        "lifecycle_preflights",
+        "mcp_grants",
+        "node_enrollment_challenges",
+        "repository_rebind_preflights",
+    ):
+        assert f'"{table}"' in backup
+    assert "Reissue them after restore" in backup

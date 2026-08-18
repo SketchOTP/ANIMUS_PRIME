@@ -38,7 +38,20 @@ class BackupCoordinator:
     PRIME_VERSION = "1.0.0"
     AAD = b"ANIMUS-PRIME-CONTINUITY-V2"
     PBKDF2_ITERATIONS = 600_000
-    OMITTED_TABLES = {"schema_migrations", "operators", "sessions"}
+    # Authentication material and short-lived preflight/challenge rows are
+    # installation-local capabilities, not continuity state.  Redacting their
+    # hashes while retaining the rows makes a restore both unusable and, for
+    # NOT NULL columns, structurally impossible.  Reissue them after restore.
+    OMITTED_TABLES = {
+        "schema_migrations",
+        "operators",
+        "sessions",
+        "auth_challenges",
+        "lifecycle_preflights",
+        "mcp_grants",
+        "node_enrollment_challenges",
+        "repository_rebind_preflights",
+    }
     SECRET_NAMES = {"password", "passphrase", "secret", "token", "api_key", "private_key", "credential", "recovery"}
 
     def build_bundle(
