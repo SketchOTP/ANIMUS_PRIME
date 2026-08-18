@@ -113,6 +113,15 @@ class LifecycleService:
         with transaction(self.settings) as db:
             db.execute("INSERT INTO prime_core.lifecycle_resource_dispositions(disposition_id,project_id,workflow_id,resource_type,resource_key,locator,status,details) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(project_id,resource_type,resource_key) DO UPDATE SET workflow_id=EXCLUDED.workflow_id,locator=EXCLUDED.locator,status=EXCLUDED.status,details=EXCLUDED.details,updated_at=now()", (_id("disp"), project_id, workflow_id, resource_type, resource_key, locator, status, json.dumps(details)))
 
+    def _start_or_resume(self, workflow_type: str, project_id: str, preflight_id: str, steps: list[dict[str, Any]]) -> dict[str, Any]:
+        with connect(self.settings) as db:
+            active = db.execute(
+                "SELECT idempotency_key FROM prime_core.workflows WHERE project_id=%s AND workflow_type=%s AND status='RUNNING' ORDER BY created_at LIMIT 1",
+                (project_id, workflow_type),
+            ).fetchone()
+        key = active["idempotency_key"] if active else f"lifecycle:{preflight_id}"
+        return self.core.start_or_get_workflow(workflow_type, key, project_id, steps)
+
     def _step(self, workflow: dict[str, Any], key: str, action: Callable[[], dict[str, Any]], resource: tuple[str, str] | None = None) -> dict[str, Any]:
         step = self.core.begin_step(workflow["workflow_id"], key)
         if step.get("decision") == "SKIP_COMPLETED":
@@ -144,7 +153,7 @@ class LifecycleService:
 
     def _delete(self, project_id: str, preflight: dict[str, Any], project: dict[str, Any], binding: dict[str, Any] | None, confirmation: str, preserve_snapshot: bool) -> dict[str, Any]:
         steps = [{"step_key": "PREFLIGHT_VERIFIED"}, {"step_key": "SNAPSHOT_DISPOSITION"}, {"step_key": "NOTION_DISPOSITION", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "REPOSITORY_QUARANTINED", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "ACTIVE_WORK_STOPPED"}, {"step_key": "CREDENTIALS_REVOKED"}, {"step_key": "RESOURCE_DISPOSITION_RECORDED"}, {"step_key": "STATE_TRANSITIONED"}]
-        workflow = self.core.start_or_get_workflow("PROJECT_DELETE", f"lifecycle:{preflight['preflight_id']}", project_id, steps)
+        workflow = self._start_or_resume("PROJECT_DELETE", project_id, preflight["preflight_id"], steps)
         self._step(workflow, "PREFLIGHT_VERIFIED", lambda: {"project_id": project_id, "state": project["lifecycle_state"], "step_up": "VERIFIED"})
         payload = {"project_id": project_id, "project_name": project["name"], "repository": binding, "captured_at": now().isoformat()}
         snap = self._step(workflow, "SNAPSHOT_DISPOSITION", lambda: {"preserved": preserve_snapshot, "snapshot_hash": hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest() if preserve_snapshot else None, "mode": "METADATA_RECOVERY_SNAPSHOT" if preserve_snapshot else "OPERATOR_DECLINED"})
@@ -214,7 +223,7 @@ class LifecycleService:
         if erase_repository and repository_confirmation != expected:
             raise PermissionError("exact project name and repository path confirmation is required for repository erasure")
         steps = [{"step_key": "PURGE_PLAN_VERIFIED"}, {"step_key": "HINDSIGHT_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "REPOSITORY_PURGED", "replay_policy": "IDEMPOTENT_EXTERNAL"}, {"step_key": "LOCAL_RESOURCES_PURGED"}, {"step_key": "MINIMAL_TOMBSTONE_WRITTEN"}, {"step_key": "PURGE_COMPLETED"}]
-        workflow = self.core.start_or_get_workflow("PROJECT_PURGE", f"lifecycle:{preflight['preflight_id']}", project_id, steps)
+        workflow = self._start_or_resume("PROJECT_PURGE", project_id, preflight["preflight_id"], steps)
         with connect(self.settings) as db:
             backup = self._backup_disclosure(db, project_id)
         plan = {"repository_erasure": erase_repository, "external_survival": ["Notion page", "remote Git", "external Evidence URLs", "provider logs"], "backup": backup}

@@ -84,6 +84,18 @@ def test_delete_refusals_do_not_mutate_and_workflow_completes(monkeypatch, tmp_p
     page = notion.create_project_record(project["project_id"], "qualification-parent", "Continuation 092")
     notion_provider.archive_page(page["page_id"])  # lost response: effect happened before the checkpoint
     lifecycle = LifecycleService(settings, core, notion_resolver=lambda: notion)
+    prior = core.start_or_get_workflow(
+        "PROJECT_DELETE",
+        f"expired-preflight:{project['project_id']}",
+        project["project_id"],
+        [
+            {"step_key": "PREFLIGHT_VERIFIED"}, {"step_key": "SNAPSHOT_DISPOSITION"},
+            {"step_key": "NOTION_DISPOSITION", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "REPOSITORY_QUARANTINED", "replay_policy": "IDEMPOTENT_EXTERNAL"},
+            {"step_key": "ACTIVE_WORK_STOPPED"}, {"step_key": "CREDENTIALS_REVOKED"},
+            {"step_key": "RESOURCE_DISPOSITION_RECORDED"}, {"step_key": "STATE_TRANSITIONED"},
+        ],
+    )
     preflight = lifecycle.preflight(project["project_id"], "DELETE", True)
     with pytest.raises(PermissionError):
         lifecycle.execute(project["project_id"], "DELETE", preflight["preflight_token"], "wrong", True)
@@ -91,6 +103,7 @@ def test_delete_refusals_do_not_mutate_and_workflow_completes(monkeypatch, tmp_p
         assert db.execute("SELECT lifecycle_state FROM prime_core.projects WHERE project_id=%s", (project["project_id"],)).fetchone()["lifecycle_state"] == "DRAFT"
     result = lifecycle.execute(project["project_id"], "DELETE", preflight["preflight_token"], project["project_id"], True)
     assert result["to_state"] == "DELETION_PENDING"
+    assert result["workflow_id"] == prior["workflow_id"]
     assert core.workflow_resume_plan(result["workflow_id"])["next_safe_action"] == "COMPLETE"
     with pytest.raises(ValueError):
         lifecycle.execute(project["project_id"], "DELETE", preflight["preflight_token"], project["project_id"], True)
