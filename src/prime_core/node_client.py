@@ -44,6 +44,27 @@ class NodeClient:
     def inspect_repository(self, path: str) -> dict[str, Any]:
         return self._request("POST", "/v1/repositories/inspect", {"path": path})
 
+    def create_repository(self, parent_path: str, repository_name: str, operation_id: str) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/v1/repositories/create",
+            {"parent_path": parent_path, "repository_name": repository_name, "operation_id": operation_id},
+        )
+
+    def bootstrap_authority(self, repository_path: str, files: dict[str, str], operation_id: str) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/v1/repositories/authority/bootstrap",
+            {"repository_path": repository_path, "files": files, "operation_id": operation_id},
+        )
+
+    def write_project_goal(self, repository_path: str, content: str, content_hash: str) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/v1/repositories/goal",
+            {"repository_path": repository_path, "content": content, "content_hash": content_hash},
+        )
+
     def read_file(self, path: str) -> dict[str, Any]:
         return self._request("POST", "/v1/files/read", {"path": path})
 

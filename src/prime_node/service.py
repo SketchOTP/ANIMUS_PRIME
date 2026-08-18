@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import NodeSettings
+from src.prime_core.authority import REQUIRED_AUTHORITY_FILES
 from src.prime_core.node_trust import csr_fingerprint, verify_bootstrap
 
 
@@ -213,6 +214,100 @@ class NodeService:
         fingerprint = hashlib.sha256(str(common).encode("utf-8")).hexdigest()
         branch = self._git(path, ["symbolic-ref", "--short", "HEAD"], allow_failure=True) or "UNBORN"
         return {"canonical_path": str(top), "git_common_dir": str(common), "is_bare": False, "branch": branch, "identity_fingerprint": fingerprint}
+
+    def create_repository(self, parent_path: str, repository_name: str, operation_id: str) -> dict[str, Any]:
+        if not repository_name or repository_name in {".", ".."} or Path(repository_name).name != repository_name:
+            raise ValueError("repository name must be one directory name")
+        operations = dict(self.state.get("repository_operations") or {})
+        existing = operations.get(operation_id)
+        if existing:
+            return {**existing, "idempotent_replay": True}
+        parent = self.safe_path(parent_path)
+        if not parent.is_dir():
+            raise NotADirectoryError("repository parent is not a directory")
+        target = parent / repository_name
+        if target.exists() or target.is_symlink():
+            raise FileExistsError("repository target already exists")
+        try:
+            target.mkdir()
+            subprocess.run(
+                ["git", "-C", str(target), "init", "--initial-branch=main"],
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            result = self.inspect_repository(str(target))
+        except Exception:
+            if target.is_dir() and not any(target.iterdir()):
+                target.rmdir()
+            raise
+        result = {**result, "operation_id": operation_id, "created": True, "idempotent_replay": False}
+        operations[operation_id] = result
+        self.state["repository_operations"] = dict(list(operations.items())[-128:])
+        self._record_audit("REPOSITORY_CREATED")
+        self._save()
+        return result
+
+    def bootstrap_authority(self, repository_path: str, files: dict[str, str], operation_id: str) -> dict[str, Any]:
+        if set(files) != set(REQUIRED_AUTHORITY_FILES):
+            raise ValueError("authority bootstrap must contain the exact authority-file-contract-v1 file set")
+        if sum(len(content.encode("utf-8")) for content in files.values()) > 1024 * 1024:
+            raise ValueError("authority bootstrap exceeds the bounded payload size")
+        repository = self.safe_path(repository_path)
+        self.inspect_repository(str(repository))
+        operations = dict(self.state.get("authority_operations") or {})
+        if operation_id in operations:
+            return {**operations[operation_id], "idempotent_replay": True}
+        mismatched = []
+        for relative, content in files.items():
+            target = repository / relative
+            if target.exists() and (not target.is_file() or target.read_text(encoding="utf-8") != content):
+                mismatched.append(relative)
+        if mismatched:
+            raise FileExistsError("authority provisioning would overwrite existing authority")
+        written = []
+        for relative, content in files.items():
+            target = repository / relative
+            if target.exists():
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            temporary = target.with_suffix(target.suffix + ".prime-new")
+            temporary.write_text(content, encoding="utf-8")
+            os.chmod(temporary, 0o644)
+            temporary.replace(target)
+            written.append(relative)
+        hashes = {relative: hashlib.sha256((repository / relative).read_bytes()).hexdigest() for relative in REQUIRED_AUTHORITY_FILES}
+        result = {
+            "repository_path": str(repository),
+            "contract_version": "authority-file-contract-v1",
+            "valid": True,
+            "files": hashes,
+            "written_files": written,
+            "operation_id": operation_id,
+            "idempotent_replay": False,
+        }
+        operations[operation_id] = result
+        self.state["authority_operations"] = dict(list(operations.items())[-128:])
+        self._record_audit("AUTHORITY_BOOTSTRAPPED")
+        self._save()
+        return result
+
+    def write_project_goal(self, repository_path: str, content: str, content_hash: str) -> dict[str, Any]:
+        if hashlib.sha256(content.encode("utf-8")).hexdigest() != content_hash:
+            raise ValueError("PROJECT_GOAL.md content hash mismatch")
+        repository = self.safe_path(repository_path)
+        self.inspect_repository(str(repository))
+        goal_path = repository / ".agent" / "PROJECT_GOAL.md"
+        if not goal_path.parent.is_dir():
+            raise FileNotFoundError("authority must be provisioned before PROJECT_GOAL.md approval")
+        temporary = goal_path.with_suffix(".md.prime-new")
+        temporary.write_text(content, encoding="utf-8")
+        os.chmod(temporary, 0o644)
+        temporary.replace(goal_path)
+        self._record_audit("PROJECT_GOAL_APPROVED")
+        self._save()
+        return {"path": str(goal_path), "content_hash": content_hash, "written": True}
 
     @staticmethod
     def _git(path: Path, args: list[str], allow_failure: bool = False) -> str:

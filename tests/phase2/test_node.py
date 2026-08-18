@@ -51,6 +51,57 @@ def test_node_enrollment_path_boundary_and_git_identity(tmp_path: Path, monkeypa
         identity = client.post("/v1/repositories/inspect", json={"path": str(repo)}, headers=headers)
         assert identity.status_code == 200
         assert identity.json()["is_bare"] is False
+        created = client.post(
+            "/v1/repositories/create",
+            json={"parent_path": str(tmp_path), "repository_name": "created", "operation_id": "create-1"},
+            headers=headers,
+        )
+        assert created.status_code == 200
+        assert created.json()["canonical_path"] == str((tmp_path / "created").resolve())
+        replay = client.post(
+            "/v1/repositories/create",
+            json={"parent_path": str(tmp_path), "repository_name": "created", "operation_id": "create-1"},
+            headers=headers,
+        )
+        assert replay.status_code == 200
+        assert replay.json()["idempotent_replay"] is True
+        from src.prime_core.authority import REQUIRED_AUTHORITY_FILES
+        authority_files = {relative: f"# {relative}\n" for relative in REQUIRED_AUTHORITY_FILES}
+        authority = client.post(
+            "/v1/repositories/authority/bootstrap",
+            json={"repository_path": str(tmp_path / "created"), "files": authority_files, "operation_id": "authority-1"},
+            headers=headers,
+        )
+        assert authority.status_code == 200
+        assert authority.json()["valid"] is True
+        authority_replay = client.post(
+            "/v1/repositories/authority/bootstrap",
+            json={"repository_path": str(tmp_path / "created"), "files": authority_files, "operation_id": "authority-1"},
+            headers=headers,
+        )
+        assert authority_replay.json()["idempotent_replay"] is True
+        goal_content = "# Goal\nPreserve a real approved project objective with validation evidence.\n"
+        goal_hash = hashes.Hash(hashes.SHA256())
+        goal_hash.update(goal_content.encode())
+        goal = client.post(
+            "/v1/repositories/goal",
+            json={"repository_path": str(tmp_path / "created"), "content": goal_content, "content_hash": goal_hash.finalize().hex()},
+            headers=headers,
+        )
+        assert goal.status_code == 200
+        assert (tmp_path / "created" / ".agent" / "PROJECT_GOAL.md").read_text() == goal_content
+        duplicate = client.post(
+            "/v1/repositories/create",
+            json={"parent_path": str(tmp_path), "repository_name": "created", "operation_id": "create-2"},
+            headers=headers,
+        )
+        assert duplicate.status_code == 400
+        outside_create = client.post(
+            "/v1/repositories/create",
+            json={"parent_path": str(tmp_path.parent), "repository_name": "denied", "operation_id": "create-3"},
+            headers=headers,
+        )
+        assert outside_create.status_code == 400
         denied = client.post("/v1/files/read", json={"path": str(tmp_path / "missing")}, headers=headers)
         assert denied.status_code == 400
         rotated = client.post("/v1/credentials/rotate", headers=headers)

@@ -22,6 +22,24 @@ class PathRequest(BaseModel):
     path: str = Field(min_length=1, max_length=4096)
 
 
+class RepositoryCreateRequest(BaseModel):
+    parent_path: str = Field(min_length=1, max_length=4096)
+    repository_name: str = Field(min_length=1, max_length=160)
+    operation_id: str = Field(min_length=1, max_length=200)
+
+
+class AuthorityBootstrapRequest(BaseModel):
+    repository_path: str = Field(min_length=1, max_length=4096)
+    files: dict[str, str]
+    operation_id: str = Field(min_length=1, max_length=200)
+
+
+class ProjectGoalWriteRequest(BaseModel):
+    repository_path: str = Field(min_length=1, max_length=4096)
+    content: str = Field(min_length=20, max_length=200000)
+    content_hash: str = Field(min_length=64, max_length=64)
+
+
 class ApprovalRequest(BaseModel):
     certificate_pem: str = Field(min_length=100, max_length=20000)
     token: str = Field(min_length=32, max_length=512)
@@ -100,6 +118,33 @@ def inspect(body: PathRequest, authorization: str | None = Header(default=None),
     try:
         return service.inspect_repository(body.path)
     except (PermissionError, ValueError, FileNotFoundError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/create")
+def create_repository(body: RepositoryCreateRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.create_repository(body.parent_path, body.repository_name, body.operation_id)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, NotADirectoryError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/authority/bootstrap")
+def bootstrap_authority(body: AuthorityBootstrapRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.bootstrap_authority(body.repository_path, body.files, body.operation_id)
+    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, NotADirectoryError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/v1/repositories/goal")
+def write_project_goal(body: ProjectGoalWriteRequest, authorization: str | None = Header(default=None), x_prime_node_id: str | None = Header(default=None), x_prime_protocol: str | None = Header(default=None)):
+    require_node(authorization, x_prime_node_id, x_prime_protocol)
+    try:
+        return service.write_project_goal(body.repository_path, body.content, body.content_hash)
+    except (PermissionError, ValueError, FileNotFoundError, NotADirectoryError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
