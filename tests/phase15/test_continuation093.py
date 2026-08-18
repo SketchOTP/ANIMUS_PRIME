@@ -3,6 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 import subprocess
 
+import pytest
+from pydantic import ValidationError
+
+from apps.core.main import MemoryRequest
 from src.prime_core.service import CoreService
 
 
@@ -100,3 +104,11 @@ Non-goals and out of scope: no deployment.
 Failure and stop rules: stop on ambiguity.
 """
     assert CoreService._fork_child_goal_draft("Child", structured) == structured
+
+
+def test_memory_api_rejects_unknown_content_class_before_database_mutation():
+    with pytest.raises(ValidationError):
+        MemoryRequest(content="Safe qualification observation.", content_class="QUALIFICATION_EVIDENCE")
+
+    accepted = MemoryRequest(content="Safe qualification observation.", content_class="OBSERVATION")
+    assert accepted.content_class == "OBSERVATION"

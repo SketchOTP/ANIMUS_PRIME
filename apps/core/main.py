@@ -231,7 +231,19 @@ class AuthorityRequest(BaseModel):
 
 class MemoryRequest(BaseModel):
     content: str = Field(min_length=1, max_length=100000)
-    content_class: str = Field(min_length=1, max_length=40)
+    content_class: Literal[
+        "FACT",
+        "EXPERIENCE",
+        "OBSERVATION",
+        "DECISION",
+        "RATIONALE",
+        "FAILURE",
+        "PROCEDURE",
+        "ENVIRONMENT",
+        "CONSTRAINT",
+        "LEARNING",
+        "HYPOTHESIS",
+    ]
     source_revision: str | None = None
     source_reference_id: str | None = None
     branch_context: str | None = None
