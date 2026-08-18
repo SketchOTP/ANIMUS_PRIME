@@ -666,13 +666,19 @@ class CoreService:
             started = self.begin_step(workflow["workflow_id"], "DIRECTORY_CREATED")
             remote = None
             if started.get("decision") != "SKIP_COMPLETED":
-                remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
+                try:
+                    remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
+                except NodeClientError as exc:
+                    raise ValueError(str(exc)) from exc
                 self.complete_step(workflow["workflow_id"], "DIRECTORY_CREATED", side_effect_state={"path": remote["canonical_path"], "node_operation_id": workflow["workflow_id"]})
             current_step = "GIT_INITIALIZED"
             started = self.begin_step(workflow["workflow_id"], "GIT_INITIALIZED")
             if started.get("decision") != "SKIP_COMPLETED":
                 if remote is None:
-                    remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
+                    try:
+                        remote = self._node_client(dict(node)).create_repository(str(parent), repository_name, workflow["workflow_id"])
+                    except NodeClientError as exc:
+                        raise ValueError(str(exc)) from exc
                 self.complete_step(workflow["workflow_id"], "GIT_INITIALIZED", side_effect_state={"path": str(target), "git": "verified"})
             current_step = "BOUND"
             started = self.begin_step(workflow["workflow_id"], "BOUND")

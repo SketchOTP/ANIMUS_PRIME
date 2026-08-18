@@ -22,8 +22,21 @@ install -d -o root -g prime-node -m 0750 "$PREFIX"
 install -d -o prime-node -g prime-node -m 0750 "$DATA"
 install -d -o root -g root -m 0750 /etc/animus-prime
 install -m 0644 "$(dirname "$0")/prime-node.service" "/etc/systemd/system/${SERVICE}.service"
-sed -i "s#^WorkingDirectory=.*#WorkingDirectory=${PREFIX}#; s#^ExecStart=.*#ExecStart=${PREFIX}/.venv/bin/python -m apps.node.main#; s#^ReadWritePaths=.*#ReadWritePaths=${DATA}#" "/etc/systemd/system/${SERVICE}.service"
+allowed_roots="${PRIME_NODE_ALLOWED_ROOTS:-}"
+if [[ -z "$allowed_roots" && -f /etc/animus-prime/node.env ]]; then
+  allowed_roots="$(sed -n 's/^PRIME_NODE_ALLOWED_ROOTS=//p' /etc/animus-prime/node.env | tail -n 1)"
+fi
+readwrite_paths="$DATA"
+IFS=',' read -r -a configured_roots <<< "$allowed_roots"
+for root in "${configured_roots[@]}"; do
+  [[ -z "$root" ]] && continue
+  [[ "$root" == /* && "$root" != *[$'\n\r\t ']* ]] || { echo "allowed roots must be absolute paths without whitespace" >&2; exit 1; }
+  [[ -d "$root" ]] || { echo "configured allowed root does not exist: $root" >&2; exit 1; }
+  readwrite_paths+=" $root"
+done
+sed -i "s#^WorkingDirectory=.*#WorkingDirectory=${PREFIX}#; s#^ExecStart=.*#ExecStart=${PREFIX}/.venv/bin/python -m apps.node.main#; s#^ReadWritePaths=.*#ReadWritePaths=${readwrite_paths}#" "/etc/systemd/system/${SERVICE}.service"
 systemctl daemon-reload
 systemctl enable "$SERVICE"
 echo "Installed ${SERVICE} with automatic startup. Configure /etc/animus-prime/node.env with TLS/mTLS and allowed roots before starting."
+echo "Rerun this installer after changing PRIME_NODE_ALLOWED_ROOTS so the systemd write boundary stays synchronized."
 echo "Identity state is outside the repository at ${DATA}; rerunning this installer preserves it."

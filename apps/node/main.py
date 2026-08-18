@@ -126,7 +126,7 @@ def create_repository(body: RepositoryCreateRequest, authorization: str | None =
     require_node(authorization, x_prime_node_id, x_prime_protocol)
     try:
         return service.create_repository(body.parent_path, body.repository_name, body.operation_id)
-    except (PermissionError, ValueError, FileNotFoundError, FileExistsError, NotADirectoryError) as exc:
+    except (PermissionError, ValueError, OSError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
