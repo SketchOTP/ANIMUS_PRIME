@@ -992,6 +992,16 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 092 durable DELETE/quarantine/PURGE and DOD-077 operator qualification.
 - Supersedes learning: none
+
+## L-PRIME-FORK-IDENTITY-AND-BROWSER-TOOLING-093
+
+- Date: 2026-08-18
+- Learning ID: L-PRIME-FORK-IDENTITY-AND-BROWSER-TOOLING-093
+- Fact or lesson: A valid PRIME Fork is an independently durable product identity, not a filesystem copy: repository/revision, mutable authority, Goal/baseline, MCP grant, Notion record, Hindsight bank, Brain, memory, and activity must all be child-scoped and replay-idempotent. Source cleanliness must inspect tracked state while preserving unrelated untracked operator files. On quota-constrained Atlas, gstack Playwright can remain persistent and non-privileged by placing browsers and temporary extraction under `/mnt/storage1tb`; Chromium's supported no-sandbox path is required when the host denies the unprivileged sandbox.
+- Evidence location: `evidence/phase15/qualification-continuation-093.md`; `evidence/phase15/qualification-continuation-093-fork-isolation-matrix.md`; `evidence/phase15/qualification-continuation-093-polish-matrix.md`.
+- Confidence: VERIFIED
+- Scope: Continuation 093 Fork identity/isolation and persistent browser tooling only.
+- Supersedes learning: none
 - 2026-08-18 — Continuation 087: An isolated restore harness can truthfully verify component fidelity, outage recovery, source-ledger rebuild, and refusal behavior without closing the complete browser restore/restart contract. A fixture reaching DELETION_PENDING proves protected initiation and step-up, not terminal deletion or cleanup. Reclassify a row to EXTERNAL_ENVIRONMENT when its missing behavior requires a real second machine or other durable operator resource; do not manufacture that target.
 - 2026-08-18 — Continuation 088: An isolated clean-install appliance is a valid qualification target only when its Node and project-bound Hindsight dependencies are real. A and B can prove setup/authentication, truthful degraded state, restore-input refusal, and lifecycle security without inventing a second Node. The current UI exposes DELETE to DELETION_PENDING but not the protected terminal PURGE action; API terminal evidence must therefore remain separate from complete browser qualification.
 - 2026-08-18 — Continuation 089: Atlas hardware virtualization is not the same as an available qualification machine. A legitimate VM run requires an installed approved guest runtime, bounded storage/memory, independent guest identity and filesystem, and a safe network path. With only `/dev/kvm`, no QEMU/libvirt/LXD/equivalent runtime, constrained root capacity, and no existing physical LAN bridge, do not install a large host stack or claim a second machine. Repository Node installer/service files exist, but live native qualification remains unverified until an approved independent target exists.

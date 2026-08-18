@@ -2549,3 +2549,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016 complete child-resource contract, provider cost, second LAN/tailnet device, Windows native qualification, complete polish, DOD-081, R-056, Phase 15, and V1 remain open or gated.
 - Blockers: none for Continuation 092 acceptance; exact remaining gates stay in the seven-row burndown.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-FINAL-LOCAL-CLOSURE-093 - COMPLETE
+
+- Outcome ID: O-PRIME-093
+- Supersedes outcome: O-PRIME-092
+- Closed: 2026-08-18T20:05:00-04:00
+- Acceptance: MET
+- Summary: Implemented and qualified the genuine persistent Fork workflow on the existing Qualification Project and completed the frozen V1 browser/polish matrix. The child has distinct durable identity across repository/revision, authority, Goal/baseline, MCP, Notion, Hindsight, Brain, memory, and activity; replay and restart preserve exactly one child. Responsive, keyboard-focus, clean/empty, confirmation-cancel, console, and complexity boundaries passed through the persistent gstack browser.
+- Validation:
+  - focused Continuation 093 suite - PASSED (`8 passed`)
+  - affected focused suite - PASSED (`16 passed`)
+  - full supported regression - PASSED (`149 passed / 35 skipped / 0 failed`)
+  - persistent Core restart, replay, and parent/child isolation - PASSED
+  - real browser desktop/tablet/mobile, focus, refusal, empty-state, and console matrix - PASSED
+- DOD/R result: DOD-016 and DOD-080 promoted to USER_USABLE_VERIFIED; R-053 promoted to VERIFIED; queue 76 complete / 5 open. DOD-081/R-056 remain blocked by four explicit external prerequisites.
+- Changed areas: Fork services/routes/tests, child Goal compatibility, API memory-class validation, persistent runtime image, browser evidence, audit/burndown/traceability, and append-only records.
+- Remaining risks: DOD-013, DOD-047, DOD-053, DOD-079, aggregate DOD-081/R-056, Phase 15, and V1 remain open or gated.
+- Blockers: legitimate second/Tailscale device, approved authoritative-cost provider profile, legitimate second enrolled LAN machine, and supported Windows host.
+- Follow-up directive: none

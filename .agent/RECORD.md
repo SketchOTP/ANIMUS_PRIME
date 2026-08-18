@@ -875,3 +875,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The authorized expendable project completed real durable DELETE and PURGE across live Notion, the existing enrolled Node and repository, persistent Hindsight, project-bound grants/jobs, and local state. Five injected process deaths resumed the same durable workflows without duplicate resources or hidden orphan state. The genuine browser passed step-up, exact identity, refusal, disclosure, Cancel/focus, DELETE, PURGE, terminal clearing, refresh, clean-console, and responsive checks.
 - Affected areas: destructive lifecycle schema/Core/Node/UI, focused tests, exact persistent Core image, Continuation 092 evidence and interruption matrix, audit/burndown/traceability, and append-only records. Canonical project/repository/Node, public exposure, deployment, Funnel, and Phase 16 were preserved.
 - Supersedes record: DEC-PRIME-PHASE15-091-ARCHITECT-CORRECTION
+
+## DEC-PRIME-PHASE15-093
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-093
+- Status: CLOSED
+- Decision or event: Accept Continuation 093 as COMPLETE for its bounded Fork and polish scope; promote DOD-016 and DOD-080 to USER_USABLE_VERIFIED and R-053 to VERIFIED.
+- Rationale: The legitimate persistent child is distinct across every frozen Fork identity and integration boundary, survives restart, and is idempotent under exact replay. The supported real browser passed the remaining responsive, keyboard/focus, empty, confirmation/refusal, clean-console, and no-unnecessary-complexity acceptance matrix. Full supported regression passed with zero failures.
+- Affected areas: Fork workflow/Core routes and tests, child Goal compatibility, API input validation, exact persistent Core image, external gstack browser tooling, Continuation 093 evidence, governed queue, and append-only records. Parent canonical state, public exposure, deployment, Phase 16, and frozen specification were preserved.
+- Supersedes record: DEC-PRIME-PHASE15-092
