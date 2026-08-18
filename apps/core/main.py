@@ -702,7 +702,8 @@ def execute_product_ai(project_id: str, body: ProductAIRequest, request: Request
     require_session(request, prime_session)
     try:
         notion = _live_notion_lifecycle() if body.function.upper() == "DOCUMENTATION" and body.project_notion_parent_id else None
-        if notion is not None and not notion.projects.get(project_id, None):
+        notion_state = notion.projects.get(project_id) if notion is not None else None
+        if notion is not None and (not notion_state or not notion_state.page_id):
             notion.configure(project_id, "env/myassistant/notion-readonly")
             notion.create_project_record(project_id, body.project_notion_parent_id or "", f"PRIME Project {project_id}")
         return intelligence.execute_product(project_id, body.function, body.prompt_input, body.sources, notion=notion, source_revision=body.source_revision, source_rank=body.source_rank)

@@ -56,6 +56,7 @@ def test_all_converted_boundaries_declare_durable_steps_and_diagnostics():
     for step in ("INPUT_VALIDATED", "CANONICAL_STATE_APPLIED", "POST_RESTORE_VERIFIED"):
         assert step in backup
     assert "/v1/workflows/reconciliation" in api
+    assert "not notion_state.page_id" in api
 
 
 @pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="set PRIME_PHASE1_DB_URL for durable workflow integration")
