@@ -60,6 +60,9 @@ def test_fork_request_keeps_node_paths_opaque(parent_path: str) -> None:
         destination_node_id="atlas-node",
         parent_path=parent_path,
         repository_name="example",
+        project_name="Example child",
+        notion_parent_id="approved-notion-parent",
+        preflight_fingerprint="f" * 64,
         confirm=True,
     )
 
