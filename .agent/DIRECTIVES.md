@@ -1280,3 +1280,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-DURABLE-WORKFLOWS-091
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-FINAL-LOCAL-CLOSURE-093
+
+- Issued: 2026-08-18T17:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 093
+- Objective: Exhaust the final locally satisfiable V1 product requirements by completing the frozen Fork / Clone child-resource contract and qualifying whole-product browser/operator polish.
+- Scope: Correct DOD-016 derived classification; extend the existing durable FORK_PROJECT saga with independent approved child Goal/Progress, live child Notion Project Record, remote-safety review, Brain/event initialization, and complete parent/child isolation; execute the DOD-080 surface/state/viewport/keyboard/console matrix; reconcile DOD-081/R-056 without premature promotion; publish evidence, governed records, exact GitHub parity, and preservation-safe Notion closeout.
+- Exclusions: no frozen-spec change; no new workflow architecture or frontend framework; no canonical project/resource destruction; no synthetic external device/provider/Windows/LAN evidence; no public exposure, Funnel change, deployment, Phase 16, or Continuation 094.
+- Acceptance: Promote DOD-016 and DOD-080 only when their complete frozen contracts pass. If both close, record LOCAL V1 IMPLEMENTATION COMPLETE - EXTERNAL QUALIFICATION GATES REMAIN with exactly DOD-013, DOD-047, DOD-053, DOD-079, and gated DOD-081/R-056 open.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092
+- Status at issuance: ISSUED
