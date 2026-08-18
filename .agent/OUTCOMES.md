@@ -2530,3 +2530,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-016 complete child-resource contract, provider cost, second LAN/tailnet device, Windows native qualification, terminal browser PURGE, final polish, DOD-081, R-056, Phase 15, and V1 remain open or gated.
 - Blockers: none for Continuation 091 acceptance; exact remaining gates stay in the eight-row burndown.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092 - COMPLETE
+
+- Outcome ID: O-PRIME-092
+- Supersedes outcome: O-PRIME-091
+- Closed: 2026-08-18T16:35:00-04:00
+- Acceptance: MET
+- Summary: Implemented and qualified durable destructive lifecycle orchestration on one authorized expendable project. DELETE and PURGE now coordinate live Notion disposition, enrolled-Node repository quarantine/purge, Hindsight deletion, local cleanup, grant/job disposition, minimal tombstone retention, and exact browser protections. Five process-death seams resumed the same workflows without duplicate resources or hidden orphan state.
+- Validation:
+  - focused persistent destructive lifecycle suite - PASSED (`6 passed`)
+  - focused default/browser-support suite - PASSED (`4 passed / 1 skipped`)
+  - full supported regression - PASSED (`141 passed / 35 skipped / 0 failed`)
+  - live browser DELETE/PURGE, refusal, focus, refresh, console, and responsive checks - PASSED
+  - persistent Core readiness/build/schema provenance - PASSED
+- DOD/R result: DOD-004 PRODUCT_VERIFIED; R-012 Phase 15 VERIFIED; DOD-077 USER_USABLE_VERIFIED. Queue is 74 complete / 7 open. DOD-081, R-056, Phase 15, V1, and deployment remain open or gated.
+- Changed areas: destructive lifecycle schema/services/routes, Node quarantine/purge boundary, browser modal/terminal clearing, focused tests, runtime image, Continuation 092 evidence/matrix, audit/burndown/traceability, and append-only records.
+- Remaining risks: DOD-016 complete child-resource contract, provider cost, second LAN/tailnet device, Windows native qualification, complete polish, DOD-081, R-056, Phase 15, and V1 remain open or gated.
+- Blockers: none for Continuation 092 acceptance; exact remaining gates stay in the seven-row burndown.
+- Follow-up directive: none

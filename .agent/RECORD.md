@@ -865,3 +865,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The 091 Fork/Notion/Hindsight/repository/provisioning/MCP/restore evidence remains valid, but it cannot satisfy the complete frozen workflow class without real destructive lifecycle orchestration and interruption recovery.
 - Affected areas: current audit, burndown, R-012 traceability, Continuation 092 implementation and qualification. Historical 091 evidence remains unchanged.
 - Supersedes record: DEC-PRIME-PHASE15-091
+
+## DEC-PRIME-PHASE15-092
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-092
+- Status: CLOSED
+- Decision or event: Accept Continuation 092 as PASS for its bounded destructive-lifecycle correction; restore DOD-004 to PRODUCT_VERIFIED and R-012 Phase 15 to VERIFIED, and promote DOD-077 to USER_USABLE_VERIFIED.
+- Rationale: The authorized expendable project completed real durable DELETE and PURGE across live Notion, the existing enrolled Node and repository, persistent Hindsight, project-bound grants/jobs, and local state. Five injected process deaths resumed the same durable workflows without duplicate resources or hidden orphan state. The genuine browser passed step-up, exact identity, refusal, disclosure, Cancel/focus, DELETE, PURGE, terminal clearing, refresh, clean-console, and responsive checks.
+- Affected areas: destructive lifecycle schema/Core/Node/UI, focused tests, exact persistent Core image, Continuation 092 evidence and interruption matrix, audit/burndown/traceability, and append-only records. Canonical project/repository/Node, public exposure, deployment, Funnel, and Phase 16 were preserved.
+- Supersedes record: DEC-PRIME-PHASE15-091-ARCHITECT-CORRECTION

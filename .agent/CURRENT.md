@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T14:45:00-04:00
+- Last updated: 2026-08-18T16:35:00-04:00
 
 ## Active state after adoption
 
 - Local directive ID: D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092
 - External directive ID: ANIMUS PRIME - Phase 15 Continuation 092
 - Objective: Correct the destructive lifecycle omission in 091 by implementing and qualifying durable DELETE/quarantine/PURGE orchestration and the complete protected DOD-077 browser contract.
-- Current status: `IN_PROGRESS`
-- Acceptance: Architect correction applied append-only. DOD-004 is reopened PARTIAL and R-012 Phase 15 is REOPENED pending 092; effective queue is 72 complete / 9 open. All other valid 091 workflow evidence remains preserved.
+- Current status: `COMPLETE`
+- Acceptance: MET for Continuation 092. Durable DELETE/quarantine/PURGE, process-death recovery, protected browser DELETE/PURGE, explicit external disposition, and terminal cleanup passed. DOD-004 is PRODUCT_VERIFIED, R-012 Phase 15 is VERIFIED, DOD-077 is USER_USABLE_VERIFIED, and the queue is 74 complete / 7 open. All valid 091 workflow evidence remains preserved.
 - Current phase: PHASE15_LIFECYCLE_SAGA_CORRECTION_092
 - Expected or actual touched areas: existing workflow primitives, Fork/Clone, live Notion Project Record, Hindsight bank, repository/authority/Goal/MCP provisioning, restore reconciliation, diagnostics endpoint, focused tests, exact runtime image, governed evidence, and append-only records. Canonical project/Node, public exposure, deployment, and Phase 16 were preserved.
-- Immediate next action: Complete the authorized expendable-fixture DELETE/PURGE interruption and browser matrix; restore DOD-004/R-012 and promote DOD-077 only if every frozen clause passes. Do not begin 093.
+- Immediate next action: Await an independently issued next directive. Do not begin Continuation 093 automatically.
 
 ## Temporary task-relevant facts
 
@@ -23,20 +23,21 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Canonical runtime image is `animus-prime-core:continuation-091-f3772ee` at qualified implementation `f3772ee560651d998e31ff46bf373983894f0e94`; prior canonical containers remain recoverable. No public exposure, Funnel change, deployment, or Phase 16 occurred.
+- Canonical runtime image is `animus-prime-core:continuation-092-006258e` at qualified implementation `006258ee4e0fcaa2fb67b179b7ec99e87e551f69`; readiness reports the same build and schema `0040_destructive_lifecycle_sagas.sql`. Prior rollback containers remain recoverable. No public exposure, Funnel change, deployment, or Phase 16 occurred.
 - Approved Notion sandbox parent is `3be833cb-27ff-814f-af89-ebfc3a2a8aed`; project record page is `3be833cb-27ff-8159-add6-e883c1cc54af`; controlled probe child is `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`.
 - Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart. Continuation 079 Memory surfaces render existing project data with provenance/isolation. Continuation 086 qualified Warm Start selected `.agent` plus selected Notion fixture admission; Hindsight service/retain/recall are current while Reflect is currently unavailable and Mental Models unsupported.
 - Continuation 090 established independent guest `prime090-fc`, Node `node-090-firecracker-linux`, approved root `/srv/prime-projects`, project `project_fc46bf826a24410b851ddc860eeb3b49`, repository `repo_760a4120576f4ac7b1c774ffbb0d2497`, and restore `restore_0b0bc75412bf4a85892c84b7b8baab55`. The guest is stopped after rollback; its disk/evidence remain preserved. Untracked `.codebase-memory/`, `.prime-evidence/`, and `.vscode/` remain preserved.
 - Continuation 091 qualified live process-death recovery on fixture `project_cd318a4bb4234d99afabc20f2cc3e013`: exit 91 after one live Notion page creation, restart on exact image, exact marker count one, workflow `workflow_79ffaeba9a644fd59492aeac379d5519` SUCCEEDED through PAGE_BOUND.
+- Continuation 092 qualified one real expendable project through durable DELETE and PURGE. Live Notion archive, Node repository quarantine, credential revocation, Hindsight bank purge, and local-resource purge each survived injected Core exit 91 and resumed the same workflow without duplicate resources. The real browser also passed Cancel/focus, step-up, exact identity, disclosure, DELETE, PURGE, terminal clearing, refresh, and narrow-viewport checks.
 
 ## Last validation after adoption
 
-- Command or check: Continuation 091 focused/integration/live Notion crash-recovery qualification plus supported regression
-- Result: `PASSED`
+- Command or check: Continuation 092 focused persistent/default/browser qualification, process-death matrix, persistent readiness, and full supported regression
+- Result: PASSED
 
 ## Risks
 
-- R-045/DOD-047 provider cost; second LAN machine; Windows native lifecycle; Tailscale/second device; complete DOD-016 child-resource contract; terminal browser PURGE; complete polish; DOD-081; R-056; Phase 15/V1.
+- R-045/DOD-047 provider cost; second LAN machine; Windows native lifecycle; Tailscale/second device; complete DOD-016 child-resource contract; complete polish; DOD-081; R-056; Phase 15/V1.
 
 ## Blockers
 
