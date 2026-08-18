@@ -2425,7 +2425,7 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
   - Phase 15 suite (62 passed / 10 skipped) - PASSED
   - supported full regression (125 passed / 29 skipped / 0 failed) - PASSED
   - browser/runtime bounded Warm Start qualification - PASSED
-  - governance and parity closeout - NOT RUN pending final publication
+  - governance and parity closeout at governed HEAD `8e36ab5394eb70624fad3b3ddb7a504f5d31d973` - PASSED
 - DOD/R result: DOD-031 promoted; queue is 69 complete / 12 open. DOD-005 remains closed and untouched. DOD-081/R-056, Phase 15, V1, and deployment remain open or gated.
 - Remaining risks: durable multi-system workflow breadth, independent restore, provider cost attribution, fresh-install and second-LAN targets, Windows/native lifecycle, Tailscale/second-device, creation recovery, deletion-positive target, complete polish, current Hindsight Reflect/Mental Model degradation, and aggregate release qualification.
 - Blockers: legitimate external or durable targets remain required for several rows; no blocker to the bounded 086 Warm Start qualification.

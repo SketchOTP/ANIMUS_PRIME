@@ -10,6 +10,7 @@
 - Authoritative checkout: `/home/sketch/Projects/ANIMUS_PRIME` on Atlas.
 - Starting local and published baseline: `f072cfac39b012746a94426343a09e13f3bbd337`.
 - Product implementation commit: `1d1f421e0c6201a49bc2b305c73bd41547237577` (`fix warm start current Notion source admission`).
+- Final governed publication commit: `8e36ab5394eb70624fad3b3ddb7a504f5d31d973`.
 - Starting worktree: preserved untracked `.codebase-memory/`, `.prime-evidence/`, and `.vscode/`; no unrelated files were removed or staged.
 - This continuation used only the existing Qualification Project, the existing enrolled Atlas Node, and one explicitly marked qualification fixture.
 
@@ -84,4 +85,4 @@ An initial test invocation without the established Atlas environment failed coll
 
 ## Queue and closeout
 
-The governed queue changes from `68 complete / 13 open` to `69 complete / 12 open` by promoting only `DOD-031`. The external-environment class reduces from 6 to 5. Final governed parity and the publication SHA are recorded in the append-only publication closeout and the Continuation 086 Notion checkpoint.
+The governed queue changes from `68 complete / 13 open` to `69 complete / 12 open` by promoting only `DOD-031`. The external-environment class reduces from 6 to 5. Final governed parity is `8e36ab5394eb70624fad3b3ddb7a504f5d31d973 == origin/main == GitHub main`.
