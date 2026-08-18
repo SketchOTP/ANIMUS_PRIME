@@ -66,18 +66,24 @@ def test_lifecycle_declares_delete_and_purge_saga_steps():
 
 
 @pytest.mark.skipif(not os.getenv("PRIME_PHASE1_DB_URL"), reason="set PRIME_PHASE1_DB_URL for destructive lifecycle integration")
-def test_delete_refusals_do_not_mutate_and_workflow_completes(monkeypatch):
+def test_delete_refusals_do_not_mutate_and_workflow_completes(monkeypatch, tmp_path: Path):
     monkeypatch.setenv("PRIME_DATABASE_URL", os.environ["PRIME_PHASE1_DB_URL"])
     from src.prime_core.config import Settings
     from src.prime_core.db import connect, migrate
     from src.prime_core.lifecycle_service import LifecycleService
+    from src.prime_core.notion_service import InMemoryNotionProvider, NotionLifecycleService
     from src.prime_core.service import CoreService
 
     settings = Settings()
     migrate(settings)
     core = CoreService(settings)
     project = core.create_project("V1_QUALIFICATION_FIXTURE Continuation 092 unit delete")
-    lifecycle = LifecycleService(settings, core)
+    notion_provider = InMemoryNotionProvider()
+    notion = NotionLifecycleService(notion_provider, state_path=tmp_path / "notion.json", settings=settings)
+    notion.configure(project["project_id"], "qualification-reference")
+    page = notion.create_project_record(project["project_id"], "qualification-parent", "Continuation 092")
+    notion_provider.archive_page(page["page_id"])  # lost response: effect happened before the checkpoint
+    lifecycle = LifecycleService(settings, core, notion_resolver=lambda: notion)
     preflight = lifecycle.preflight(project["project_id"], "DELETE", True)
     with pytest.raises(PermissionError):
         lifecycle.execute(project["project_id"], "DELETE", preflight["preflight_token"], "wrong", True)

@@ -157,6 +157,7 @@ class LifecycleService:
             if not state or not state.page_id:
                 return {"status": "NOT_APPLICABLE", "reason": "NO_MANAGED_PROJECT_RECORD"}
             try:
+                notion.provider.get_page(state.page_id)
                 notion.provider.archive_page(state.page_id)
                 status = "ARCHIVED"
             except Exception as exc:
