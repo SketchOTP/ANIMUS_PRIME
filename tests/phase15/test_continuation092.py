@@ -55,6 +55,7 @@ def test_destructive_ui_has_separate_repository_confirmation_and_disclosure():
     assert "preserve_recovery_snapshot" in web
     assert web.index('id="lifecycle-cancel"') < web.index('id="lifecycle-confirm-submit"')
     assert "$('#lifecycle-cancel')?.focus()" in web
+    assert "The terminally deleted project is no longer active" in web
 
 
 def test_lifecycle_declares_delete_and_purge_saga_steps():
