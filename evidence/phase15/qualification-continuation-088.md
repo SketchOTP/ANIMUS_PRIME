@@ -8,7 +8,7 @@
 
 - Starting governed HEAD: `d20dc30e20532a4d1984a4b70baf8d4c59435142`
 - Starting qualified implementation: `1d1f421e0c6201a49bc2b305c73bd41547237577`
-- Final governed HEAD: `TO_BE_REPLACED`
+- Qualification/evidence commit: `3d3690a` (the final parity publication commit is the subsequent governed closeout commit).
 - Repository: `/home/sketch/Projects/ANIMUS_PRIME`
 - Worktree baseline: only preserved untracked `.codebase-memory/`, `.prime-evidence/`, `.vscode/`; the intentional appliance helper was added by this continuation.
 - Canonical PRIME Core, PostgreSQL, Hindsight, and `node-041-atlas-native` remained running and untouched. No canonical Qualification Project record or repository was mutated.
