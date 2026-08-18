@@ -32,7 +32,6 @@
 
 - Command or check: Continuation 087 isolated restore harness, bounded persistent browser qualification, supported full regression, governance and burndown reconciliation
 - Result: PASSED
-- Detail: 125 passed / 29 skipped / 0 failed; product-alignment release gate remains incomplete by design
 
 ## Risks
 
