@@ -23,3 +23,9 @@ def test_remote_repository_creation_reconciles_only_through_node_idempotency():
     assert "NODE_IDEMPOTENCY_CONFIRMED" in service
     assert 'create_repository(str(parent), repository_name, workflow["workflow_id"])' in service
     assert "ambiguous_external_effect=False" in service
+
+
+def test_core_image_contains_the_frozen_authority_template():
+    dockerfile = (ROOT / "Dockerfile.core").read_text(encoding="utf-8")
+
+    assert "COPY authority-template ./authority-template" in dockerfile

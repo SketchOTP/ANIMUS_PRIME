@@ -21,6 +21,7 @@ RUN apt-get update \
 COPY apps ./apps
 COPY src ./src
 COPY migrations ./migrations
+COPY authority-template ./authority-template
 # Preserve the non-root runtime contract when source files carry owner-only modes.
 RUN chmod -R a+rX /app
 
