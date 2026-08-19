@@ -11,67 +11,17 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 0
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 4
+  EXTERNAL_ENVIRONMENT: 2
   AGGREGATE_RELEASE_GATE: 1
 items:
-  - dod_id: DOD-013
-    current_status: "BACKEND_ONLY"
-    product_area: "remote access"
-    owner_phase: 12
-    mapped_r_requirements: ["R-035"]
-    exact_missing_behavior: "The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused. Continuation 095 repairs the backend ownership boundary and preserves unrelated routes; the missing operator behavior is still a qualified path at 'Open remote access from PRIME.' with a real second device."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "YES"
-    requires_second_device: "YES"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Run the bounded qualification for 'The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused.. The missing operator behavior is a qualified path at 'Open remote access from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/remote_access_service.py","tests/phase12/test_remote_access.py","evidence/phase15/qualification-continuation-095.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "Private Tailscale qualification requires an approved second device."
-    depends_on: "R-035"
-    acceptance_kind: "EXTERNAL_DEPENDENCY"
-  - dod_id: DOD-047
-    current_status: "PARTIAL"
-    product_area: "Usage"
-    owner_phase: 13
-    mapped_r_requirements: ["R-045"]
-    exact_missing_behavior: "Continuation 082 qualified persistent project-scoped usage records, operator-configured daily limits, truthful over-limit refusal, and disabled-limit recovery. Provider-backed estimated cost remains UNAVAILABLE under the approved current provider/profile, so the complete frozen usage/cost clause remains open."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Qualify authoritative provider-backed cost attribution when an approved provider/profile is available; preserve the locally qualified limit enforcement."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/usage_limits.py","migrations/prime/0039_usage_limits_and_upgrade_preflights.sql","evidence/phase15/qualification-continuation-059.md","evidence/phase15/qualification-continuation-082.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "APPROVED_PROVIDER_PROFILE_WITH_AUTHORITATIVE_COST_ATTRIBUTION_REQUIRED_FOR_REMAINING_CLAUSE"
-    depends_on: "R-045"
-    acceptance_kind: "OPERATOR_WORKFLOW"
   - dod_id: DOD-053
     current_status: "BACKEND_ONLY"
     product_area: "LAN projects"
     owner_phase: 12
     mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "The current product exposes the enrolled-Node boundary, but no complete operator qualification exists for adding a project from a second enrolled LAN machine; the required machine and project target are external resources."
+    exact_missing_behavior: "A genuine Windows second-machine project now passes enrollment, LAN binding, Goal/authority, repository reads, indexing, search, and isolation. The issued frozen lifecycle boundary still requires service offline/reconnect evidence, blocked when the Administrator/UAC prompt was cancelled."
     work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "YES"
+    requires_code: "NO"
     requires_browser: "NO"
     requires_native_linux: "NO"
     requires_windows: "NO"
@@ -80,13 +30,13 @@ items:
     requires_hindsight: "NO"
     requires_external_at: "NO"
     requires_live_notion: "NO"
-    requires_privilege: "NO"
+    requires_privilege: "YES"
     requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Qualify project addition from a legitimate second enrolled LAN machine when that target becomes available; do not create a synthetic machine or project."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md"]
-    qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
-    blocked_by: "ACTUAL_SECOND_ENROLLED_LAN_MACHINE_REQUIRED"
+    next_action: "With operator-approved Administrator/UAC elevation, stop AnimusPrimeNode, observe truthful offline state, start/restart it, and prove the same Windows project reconnects without identity or state drift."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md","evidence/phase15/qualification-continuation-096.md"]
+    qualification_needed: "One bounded Windows service offline/reconnect pass against the existing real project; no new machine/project required."
+    blocked_by: "WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
     depends_on: "R-036"
     acceptance_kind: "MIXED"
   - dod_id: DOD-079
@@ -94,7 +44,7 @@ items:
     product_area: "native nodes"
     owner_phase: 2
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "The independent Firecracker Ubuntu guest qualified clean Linux install, native systemd lifecycle, enrollment, allowed-root repository operations, restart/power-cycle persistence, and idempotent repair. Windows still requires an actual supported host."
+    exact_missing_behavior: "Linux remains qualified. Genuine Windows SCM install, Automatic/LocalSystem service, secure enrollment, final identity, listener, allowed roots, repository operations, indexing, and heartbeat pass. Frozen stop/start/restart/reconnect and installer Repair/idempotence remain unqualified after the Administrator/UAC prompt was cancelled; OS reboot is not required."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "NO"
     requires_browser: "YES"
@@ -107,11 +57,11 @@ items:
     requires_live_notion: "NO"
     requires_privilege: "YES"
     requires_packaging: "NO"
-    requires_clean_install: "YES"
-    next_action: "Provide an actual supported Windows host and qualify native Windows installation, service, restart/reboot, repair, enrollment, allowed-root operations, and reconnect behavior."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md","evidence/phase15/qualification-continuation-090.md"]
-    qualification_needed: "Direct authenticated Windows qualification with before/after state, service identity, repository operation, restart/reboot, repair, and reconnect evidence."
-    blocked_by: "ACTUAL_SUPPORTED_WINDOWS_HOST_REQUIRED"
+    requires_clean_install: "NO"
+    next_action: "With operator-approved Administrator/UAC elevation, execute the existing Windows service stop/start/restart and unchanged installer -Repair sequence; verify offline/reconnect and exact identity/state persistence."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md","evidence/phase15/qualification-continuation-090.md","evidence/phase15/qualification-continuation-096.md"]
+    qualification_needed: "One bounded privileged Windows lifecycle/Repair pass; no reboot or new host required."
+    blocked_by: "WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-081
@@ -119,7 +69,7 @@ items:
     product_area: "release"
     owner_phase: 15
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "All locally actionable frozen V1 product and browser clauses are complete. The aggregate release gate remains blocked by DOD-013 private Tailscale/second-device qualification, DOD-047 authoritative provider cost attribution, DOD-053 a legitimate second enrolled LAN machine, and DOD-079 native Windows qualification."
+    exact_missing_behavior: "DOD-013 private second-device access and DOD-047 frozen where-available usage/cost now pass. The aggregate gate remains blocked only by the Windows service lifecycle/Repair evidence shared by DOD-053 and DOD-079."
     work_class: "AGGREGATE_RELEASE_GATE"
     requires_code: "NO"
     requires_browser: "YES"
@@ -133,10 +83,10 @@ items:
     requires_privilege: "NO"
     requires_packaging: "YES"
     requires_clean_install: "NO"
-    next_action: "Acquire and qualify the four explicit external prerequisites in DOD-013, DOD-047, DOD-053, and DOD-079, then run the final integrated R-056/DOD-081 release qualification without weakening the frozen specification."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-093.md","evidence/phase15/qualification-continuation-093-external-gates.md"]
-    qualification_needed: "Final integrated security, integration, recovery, isolation, and release qualification after all four external prerequisite rows close."
-    blocked_by: "DOD-013; DOD-047; DOD-053; DOD-079"
+    next_action: "Complete the one operator-approved Windows service lifecycle/Repair boundary for DOD-053 and DOD-079, then run the final integrated R-056/DOD-081 release reconciliation."
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-093.md","evidence/phase15/qualification-continuation-093-external-gates.md","evidence/phase15/qualification-continuation-096.md"]
+    qualification_needed: "Final integrated release reconciliation after the shared Windows lifecycle blocker closes."
+    blocked_by: "DOD-053; DOD-079 — WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "AGGREGATE_RELEASE_GATE"
 reconciliation:

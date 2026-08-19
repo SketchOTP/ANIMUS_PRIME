@@ -905,3 +905,23 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The installed Atlas Tailscale route map contains unrelated Serve/Funnel endpoints and no PRIME route. The previous adapter could misclassify unrelated Funnel and globally reset Serve. Focused tests and live status now prove safe separation/refusal and scoped clear behavior. The real Windows installer still stops at Service Control Manager access denied without operator-approved UAC elevation, so no external requirement can be promoted.
 - Affected areas: remote access adapter/tests, persistent Core image/restart, Continuation 095 evidence, external-gate reconciliation, and append-only governance records. No public exposure, unrelated route change, canonical project/Node mutation, deployment, Phase 16, or frozen-spec change.
 - Supersedes record: DEC-PRIME-PHASE15-094
+
+## DEC-PRIME-PHASE15-095A
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-095A
+- Status: ACTIVE
+- Decision or event: Confirm the supported fresh-Node bootstrap boundary before Windows service start. Continuation 090 is evidence of a short-lived pre-enrollment certificate provisioned from the fresh CSR on the trusted Atlas side; it is not evidence that the final approval certificate can exist before first start.
+- Rationale: `apps.node.main` requires TLS/mTLS at listener startup, `/v1/enroll` is served by that listener, and approval later writes the final certificate. The preserved 090 bootstrap certificate and the repository trust-provisioning script resolve the apparent cycle without weakening mTLS or copying CA private material to the Node. Windows service/enrollment/LAN/reboot checks remain pending and no DOD was promoted.
+- Affected areas: append-only investigation evidence and governance records only. No PRIME product source, canonical Node, persistent database, Hindsight, Tailscale route, deployment, public exposure, Phase 16, or frozen specification changed.
+- Supersedes record: DEC-PRIME-PHASE15-095
+
+## DEC-PRIME-PHASE15-096
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096
+- Status: ACTIVE
+- Decision or event: Accept Continuation 096 as PARTIAL; promote DOD-013 and DOD-047, verify R-035/R-036, and preserve DOD-053/DOD-079 plus aggregate DOD-081/R-056 as open behind one cancelled Windows elevation boundary.
+- Rationale: Qualified implementation `6f7ef776c6fadc82771a952e81313ff18eee7295` establishes the genuine Windows Node/project over LAN and the authenticated private PRIME URL while preserving unrelated routes. Full regression passes. The frozen service stop/start/restart/reconnect and installer Repair evidence cannot be claimed because the operator cancelled UAC; no bypass is permitted.
+- Affected areas: Windows SCM packaging/enrollment/path/index/Git behavior, persistent Core image and private origin, PRIME-owned Tailscale Serve, SKETCH browser/LAN evidence, DOD-013/DOD-047 and R-035/R-036 governance, and append-only records. No public exposure, PRIME Funnel, deployment, Phase 16, reboot requirement, or fabricated monetary cost.
+- Supersedes record: DEC-PRIME-PHASE15-095A

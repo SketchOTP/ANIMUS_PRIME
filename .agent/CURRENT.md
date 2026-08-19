@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T22:05:00-04:00
+- Last updated: 2026-08-19T09:50:57-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-PRIVILEGED-WINDOWS-PRIVATE-SERVE-095
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 095
-- Objective: Repair PRIME-owned private Tailscale Serve ownership safely and resume genuine Windows/LAN qualification only from an operator-approved elevated PowerShell boundary.
+- Local directive ID: D-PRIME-PHASE15-PRODUCTION-READINESS-CLOSURE-096
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096
+- Objective: Finish the usable private V1 by qualifying the genuine Windows Node and LAN repository through the existing Core, establishing PRIME-owned private Tailscale Serve access from SKETCH, reconciling derived gates to the frozen specification, and executing final R-056/DOD-081 release qualification.
 - Current status: `BLOCKED`
-- Acceptance: PARTIAL at the bounded adapter/runtime repair; Windows service elevation and the actual PRIME private Serve/browser route remain blocked. No DOD/R row was promoted; the queue remains 76 complete / 5 open.
-- Current phase: PHASE15_PRIVILEGED_WINDOWS_PRIVATE_SERVE_095
-- Expected or actual touched areas: ownership-safe remote access adapter/tests, persistent Core image/restart, preserved Windows qualification root, Continuation 095 evidence, and append-only governance records. Canonical PRIME state, existing services, Funnel, and public boundary were preserved.
-- Immediate next action: Run the unchanged Windows installer from an interactive elevated PowerShell, then resume the same 095 Windows/LAN/private-route packages. Do not begin DOD-081/R-056 or Continuation 096.
+- Acceptance: All frozen V1 requirements directly verified or truthfully conditional by their normative wording; full release validation has no unexplained failures; R-056, DOD-081, Phase 15, and private V1 pass; the persistent private product remains operator-usable with no Funnel/public exposure.
+- Current phase: PHASE15_PRODUCTION_READINESS_CLOSURE_096
+- Expected or actual touched areas: Windows Node enrollment/service/LAN repository, PRIME-owned private Serve, usage/cost governance reconciliation, complete V1 ledgers, final qualification evidence, release validation, persistent runtime, GitHub parity, and Notion SOT.
+- Immediate next action: Obtain one operator-approved Administrator/UAC action for only AnimusPrimeNode stop/start/restart and the unchanged installer Repair; observe offline/reconnect and exact identity/project persistence, then perform final R-056/DOD-081 reconciliation.
 
 ## Temporary task-relevant facts
 
@@ -23,8 +23,10 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Canonical runtime image is `animus-prime-core:continuation-095-c9690cac` at implementation `c9690cac248173b7b3bcaaeb76994f583d0fddc5`, image ID `sha256:e65cb732d60f720edc7b5b1224ded44f6009d5677f808fb5ac5842bfd83a9a69`; readiness reports the same build and schema `0040_destructive_lifecycle_sagas.sql`. The 093 rollback container remains recoverable. No public exposure, Funnel change, deployment, or Phase 16 occurred.
-- The bounded remote-access repair now reports PRIME Serve/Funnel separately from unrelated Atlas routes and uses only the scoped `tailscale serve clear 443` operation for an owned endpoint. Atlas currently has no PRIME route; no route was configured by this continuation.
+- Canonical runtime image is `animus-prime-core:continuation-096-6f7ef77` at qualified implementation `6f7ef776c6fadc82771a952e81313ff18eee7295`; persistent PostgreSQL/state/mounts are preserved. Core remains loopback-only on `127.0.0.1:8000` and reports the exact build. No public exposure, deployment, or Phase 16 occurred.
+- PRIME owns the private tailnet-only route `https://atlas-2.tail1a5964.ts.net/` to Core loopback. SKETCH gstack Chromium passed protected entry, Atlas-approved trusted-host sign-in, authenticated Windows-project use, and logout protection. No PRIME Funnel exists; all unrelated Serve routes and the pre-existing unrelated port-10000 Funnel remain untouched.
+- Genuine Windows service `AnimusPrimeNode` is Automatic/LocalSystem/Running on SKETCH. Node `node-095-sketch-windows` is ACTIVE/ONLINE at LAN `192.168.254.5:18001`, with final enrollment identity and allowed root `C:\PRIME-V1-Qualification\WindowsRepos`.
+- Real Windows project `project_d95b88f969bc44caa9cf39818d0ae9b5` binds `C:\PRIME-V1-Qualification\WindowsRepos\V1_QUALIFICATION_FIXTURE_096_WINDOWS_LAN` at Git `2ccf8a2b3addd63b472722936130765e0117193c`; Goal, authority, tree/files, remote indexing/search, LAN transport, and outside-root refusal pass.
 - Approved Notion sandbox parent is `3be833cb-27ff-814f-af89-ebfc3a2a8aed`; project record page is `3be833cb-27ff-8159-add6-e883c1cc54af`; controlled probe child is `3be833cb-27ff-81aa-9fe2-ffb4fcf5f980`.
 - Runtime Notion capability read/write, production adapter lifecycle, and the complete persistent browser projection/conflict/detach/history operator surface passed. DOD-034/035/036/064/065/066 are USER_USABLE_VERIFIED; detached sources remain RETRACTED and history is idempotent after restart. Continuation 079 Memory surfaces render existing project data with provenance/isolation. Continuation 086 qualified Warm Start selected `.agent` plus selected Notion fixture admission; Hindsight service/retain/recall are current while Reflect is currently unavailable and Mental Models unsupported.
 - Continuation 090 established independent guest `prime090-fc`, Node `node-090-firecracker-linux`, approved root `/srv/prime-projects`, project `project_fc46bf826a24410b851ddc860eeb3b49`, repository `repo_760a4120576f4ac7b1c774ffbb0d2497`, and restore `restore_0b0bc75412bf4a85892c84b7b8baab55`. The guest is stopped after rollback; its disk/evidence remain preserved. Untracked `.codebase-memory/`, `.prime-evidence/`, and `.vscode/` remain preserved.
@@ -34,12 +36,12 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 095 remote-access ownership repair, focused tests, persistent Core rebuild/restart, Atlas route inspection, and Windows qualification resume preflight
-- Result: BLOCKED
+- Command or check: Continuation 096 focused Windows/remote-access suites, persistent runtime/browser/LAN qualification, complete supported regression, compile, governance, burndown, alignment, and secret/diff review
+- Result: `BLOCKED`
 
 ## Risks
 
-- R-045/DOD-047 authoritative provider cost; DOD-053 second enrolled LAN machine; DOD-079 Windows native lifecycle/elevation; DOD-013 PRIME-owned private Serve/second device; DOD-081/R-056; Phase 15/V1.
+- DOD-053 and DOD-079 share one remaining privileged Windows service lifecycle/Repair boundary; DOD-081/R-056, Phase 15, and V1 remain gated by that exact boundary. R-045 separately retains non-release capacity-pressure evidence gaps.
 
 ## Blockers
 
@@ -50,14 +52,23 @@
 - PRIME_WARM_START_SELECTED_NOTION_SOURCE_UNAVAILABLE: RESOLVED for bounded Continuation 086 — explicit selected Notion fixture admitted through the real browser with source/revision/hash provenance; fixture remains non-authoritative.
 - PRIME_QUALIFICATION_VM_RUNTIME_UNAVAILABLE: RESOLVED for Linux qualification by the bounded Firecracker 1.16.1 guest; no QEMU/libvirt stack was installed.
 - PRIME_NATIVE_WINDOWS_QUALIFICATION_HOST_UNAVAILABLE: RESOLVED as a host-discovery blocker — a genuine supported Windows host is identified; native qualification remains blocked by the separate elevation/service boundary.
-- PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE: BLOCKED — a genuine Windows host was identified, but the current Codex shell cannot cross the interactive UAC boundary; the unchanged installer failed at OpenSCManager with Access denied. An interactive elevated PowerShell remains required.
-- PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE: PARTIALLY RESOLVED — the adapter now distinguishes PRIME ownership and preserves unrelated Serve/Funnel; the current Tailscale Serve map still has no PRIME UI route, so DOD-013 remains unqualified.
-- PRIME_EXTERNAL_RELEASE_PREREQUISITES: BLOCKED — DOD-013, DOD-047, DOD-053, and DOD-079 require legitimate external resources; local code/browser qualification is exhausted.
+- PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE: RESOLVED — the genuine Windows service is registered with Automatic start; the service remains stopped pending the operator-approved corrected first-start sequence.
+- PRIME_NATIVE_WINDOWS_FIRST_ENROLLMENT_START_PAUSED: RESOLVED — genuine service, secure enrollment, final certificate/bearer, heartbeat, ACTIVE/ONLINE state, listener, and Windows-hosted project passed.
+- PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE: RESOLVED — PRIME-owned private HTTPS Serve is active and qualified from SKETCH with authentication and no PRIME Funnel/public listener.
+- DOD_047_AUTHORITATIVE_COST_HARD_GATE: RESOLVED AS DERIVED DRIFT — frozen monetary cost is conditional where available; truthful UNAVAILABLE plus usage attribution/limits/refusal/recovery pass.
+- WINDOWS_INTERACTIVE_ELEVATION_CANCELLED: ACTIVE — the operator cancelled the UAC prompt for service stop. No bypass/retry occurred; frozen stop/offline/start/reconnect/restart and installer Repair remain unqualified.
 
 ## Pending decisions
 
-- Runtime Notion credential and backend lifecycle remain qualified; DOD-016 and DOD-080 are promoted by 093. Keep DOD-081/R-056 last and preserve the four exact external-resource gates. Continuation 095 repairs the private-route ownership boundary, but the Windows candidate is not yet qualified because elevation and a real PRIME-owned Serve/browser path remain unavailable.
-- Keep the persistent topology preserved, provider/second-LAN/Windows/Tailscale gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope. The independent restore, fresh Node-backed onboarding, repository-creation recovery, and Linux-native gates are now closed.
+- Continuation 096 promotes DOD-013 and DOD-047 and verifies R-035/R-036. Governed queue is 78 complete / 3 open. DOD-053 and DOD-079 are not promoted until the same bounded Windows lifecycle/Repair proof passes; DOD-081/R-056 remain last.
+- Preserve the running private Core, Windows Node/project, and private Serve route. No reboot, third machine, fabricated cost, public exposure, Funnel change, Phase 16, or new continuation is required to close the one remaining operator boundary.
+
+- 095A correction: Continuation 090's Linux first-start mechanism is confirmed by preserved artifacts and the repository provisioning precedent: a fresh Node CSR was signed on the trusted Atlas side into a short-lived pre-enrollment server certificate, while the guest received only its own private key, that certificate, the Atlas CA public certificate, and the bootstrap-signing public key.
+- 095A correction: The Node then started with mandatory TLS/mTLS, used the Core-issued short-lived bootstrap credential over that channel, submitted CSR proof, and received the long-lived certificate and bearer credential only after operator approval.
+- 095A correction: The prepared Windows candidate has a distinct CSR-derived bootstrap certificate with SANs for `node-095-sketch-windows`, `SKETCH`, and `192.168.254.5`; no CA private key or Atlas/Firecracker private identity was copied to Windows.
+- 095A correction: This confirms the supported sequence is not circular, but the Windows service remains intentionally stopped in this session pending the operator's explicit corrected-start step. E3/E4 (Windows enrollment, restart, LAN project, and pre-reboot qualification) remain NOT RUN.
+- 096 correction: `REBOOT_DERIVED_GATE_REMOVED — NOT IN FROZEN SPEC`. Frozen Node/packaging acceptance requires startup/restart and disconnect/reconnect, not an operating-system reboot.
+- 096 correction: `AUTHORITATIVE_COST_HARD_GATE_REMOVED — FROZEN CONTRACT IS WHERE AVAILABLE`. Usage attribution, truthful unavailable monetary cost, and limits remain required; unavailable provider monetary data is not itself a frozen blocker.
 
 ## Status vocabulary
 

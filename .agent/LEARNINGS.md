@@ -1026,3 +1026,23 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 095 bounded private Serve ownership repair only.
 - Supersedes learning: none
+
+## L-PRIME-NATIVE-NODE-BOOTSTRAP-095A
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-NATIVE-NODE-BOOTSTRAP-095A
+- Fact or lesson: A fresh PRIME Node cannot reach its first TLS listener from only a CSR and the Core-issued bearer/bootstrap credential. The supported 090 sequence first provisions a short-lived server certificate signed on the trusted Atlas side from the fresh Node CSR; the Node receives its own key and certificate plus public CA/bootstrap-verification material, starts mandatory mTLS, then consumes the one-time bootstrap credential and submits proof. Operator approval subsequently installs the long-lived Node certificate and bearer credential. The Linux precedent is an out-of-band pre-enrollment certificate path, not the approval-issued final certificate and not insecure HTTP.
+- Evidence location: `evidence/phase15/qualification-continuation-090.md`; preserved `/mnt/storage1tb/ANIMUS_PRIME_V1_QUALIFICATION_LAB/090/guest/bootstrap-node.csr`; preserved `bootstrap-node.crt` and `appliance-a-node-bootstrap.crt`; `packaging/node/provision-atlas-trust.sh`; `src/prime_node/config.py`; `src/prime_node/service.py`; `src/prime_core/service.py`; `src/prime_core/node_trust.py`.
+- Confidence: VERIFIED
+- Scope: Continuation 095A bootstrap investigation only. Windows service/enrollment/reboot qualification remains unverified.
+- Supersedes learning: none
+
+## L-PRIME-PRIVATE-MULTIMACHINE-WINDOWS-096
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-PRIVATE-MULTIMACHINE-WINDOWS-096
+- Fact or lesson: The frozen Node gate requires service startup/restart and disconnect/reconnect, not an OS reboot, and monetary provider cost is conditional where available. A private Tailscale proxy origin must be allowlisted for trusted-host authentication while Core stays loopback-only. Windows repository paths must retain Windows semantics through authority, tree/file access, remote indexing, and Git snapshots. Tailscale 1.102.2 scoped disable uses `serve --https=<port> off` and must preserve unrelated routes. A cancelled UAC action must not be bypassed or silently retried.
+- Evidence location: `evidence/phase15/qualification-continuation-096.md`; `baseline/PRIME-SPEC-V1.0.0.notion.md`; `src/prime_core/remote_access_service.py`; Windows Node and SKETCH browser qualification records.
+- Confidence: VERIFIED
+- Scope: Continuation 096 Windows Node/LAN project, private Serve, derived-gate reconciliation, and exact release blocker.
+- Supersedes learning: none

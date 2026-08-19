@@ -2610,3 +2610,43 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: interactive elevated Windows session, approved host/reboot, PRIME-owned private Serve route and second device, provider cost, final aggregate release qualification.
 - Blockers: `PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE`; `PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE` remains for actual product/browser qualification.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-NATIVE-NODE-BOOTSTRAP-095A - PARTIAL
+
+- Outcome ID: O-PRIME-095A
+- Supersedes outcome: O-PRIME-095
+- Closed: 2026-08-19T00:00:00-04:00
+- Acceptance: PARTIAL
+- Summary: Reconstructed the Continuation 090 fresh-Node bootstrap sequence. Preserved guest artifacts prove a short-lived pre-enrollment certificate was signed from the fresh CSR on the trusted Atlas side and installed before the Linux Node's first mandatory mTLS start. The Node then used the one-time Core bootstrap credential, submitted proof, and received the final certificate and bearer credential only after operator approval. The prepared Windows candidate has an independently generated key/CSR and CSR-derived bootstrap certificate with Windows LAN SANs; its service remains stopped by instruction.
+- Changed areas: append-only bootstrap investigation records and Continuation 095 evidence only; no product source, persistent Core, canonical Node, database, Hindsight, Tailscale route, deployment, or public exposure changed.
+- Validation:
+  - 090 evidence/artifact reconstruction - PASSED
+  - current code-path/trust-boundary inspection - PASSED
+  - bootstrap circularity proof/refutation - PASSED
+  - Windows service start/enrollment/heartbeat - NOT RUN
+  - Windows stop/start/restart and LAN project qualification - NOT RUN
+  - Windows reboot persistence - NOT RUN
+  - product source change - NOT APPLICABLE
+- Remaining risks: operator-approved elevated Windows service configuration/start, real enrollment, Windows LAN project, private Serve/second-device path, reboot persistence, provider cost, and final aggregate release qualification.
+- Blockers: `PRIME_NATIVE_WINDOWS_FIRST_ENROLLMENT_START_PAUSED`; `PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE`; `DOD-047` provider cost remains open.
+- Follow-up directive: none
+
+## D-PRIME-PHASE15-PRODUCTION-READINESS-CLOSURE-096 - PARTIAL
+
+- Outcome ID: O-PRIME-096
+- Supersedes outcome: O-PRIME-095A
+- Closed: 2026-08-19T09:50:57-04:00
+- Acceptance: PARTIAL
+- Summary: Established the genuine Windows SCM Node and Windows-hosted LAN project through the persistent Atlas Core, configured and qualified PRIME-owned private Tailscale HTTPS from SKETCH, and corrected the reboot/cost derived-gate drift. DOD-013 and DOD-047 promote; R-035/R-036 verify. The operator cancelled the required Windows elevation prompt before service stop, so service offline/reconnect/restart and installer Repair remain the one exact frozen blocker.
+- Validation:
+  - focused Windows/remote-access/retrieval suites (all focused checks passed) - PASSED
+  - full supported regression (167 passed / 35 skipped / 0 failed) - PASSED
+  - persistent Core, Windows Node, LAN project, and private browser - PASSED
+  - compile, burndown structure, and diff/secret review after reconciliation - PASSED
+  - product alignment while three governed rows remain open - FAILED
+  - Windows service stop/start/restart and installer Repair due cancelled elevation - BLOCKED
+- DOD/R result: DOD-013 and DOD-047 are USER_USABLE_VERIFIED; R-035 and R-036 are VERIFIED. DOD-053 remains BACKEND_ONLY, DOD-079 remains BLOCKED_BY_ENVIRONMENT, and aggregate DOD-081/R-056 remain open. Queue is 78 complete / 3 open.
+- Changed areas: Windows SCM packaging/service, certificate enrollment SANs, Windows path/tree/index/Git retrieval, Tailscale scoped disable, persistent runtime origin/route configuration, browser/LAN evidence, governed ledgers, and append-only records.
+- Remaining risks: Until the privileged Windows lifecycle is observed, service recovery and installer idempotence are not release-qualified; the running Node and project state must be preserved.
+- Blockers: `WINDOWS_INTERACTIVE_ELEVATION_CANCELLED` blocks DOD-053, DOD-079, and aggregate DOD-081/R-056.
+- Follow-up directive: none

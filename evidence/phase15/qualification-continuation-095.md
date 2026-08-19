@@ -125,3 +125,42 @@ Do not bypass UAC, expose PRIME publicly, reset Tailscale Serve, or reboot until
 - DOD-081/R-056: remains gated
 - Phase 15/V1: incomplete
 - Deployment/public exposure: NOT PERFORMED
+
+## Append-only 095A — native first-enrollment bootstrap investigation
+
+### Disposition
+
+`PARTIAL / PAUSED` before Windows service start. The supported bootstrap sequence is reconstructed and the apparent TLS enrollment cycle is refuted for the Linux precedent. No Windows service, enrollment, LAN project, reboot, private Serve route, DOD promotion, or publication was performed in this bounded investigation.
+
+### E0 — Continuation 090 reconstruction
+
+Preserved Continuation 090 artifacts show a fresh guest CSR at `090/guest/bootstrap-node.csr`, a short-lived certificate at `090/guest/bootstrap-node.crt`, and the later guest copy `090/guest/appliance-a-node-bootstrap.crt`. The certificate was issued by `CN=ANIMUS PRIME Atlas Local CA`, had the fresh Node identity as subject/SAN, and existed before the Node's first mandatory TLS/mTLS service start. The guest retained only public CA/bootstrap-verification material and its own identity material; no CA private key was placed in the guest.
+
+The repository precedent is `packaging/node/provision-atlas-trust.sh`: trust is provisioned on the trusted host, the Node receives the CA public certificate and bootstrap-signing public key, and a short-lived Node certificate is present before service startup. This is classified as **C — direct out-of-band certificate provisioning through the approved product trust-provisioning path**, not insecure HTTP and not the later operator-approval certificate.
+
+### E1 — current code-path/trust-boundary map
+
+1. Core `issue_node_bootstrap()` creates the canonical Node challenge and one-time signed bootstrap credential.
+2. A pre-enrollment Node server certificate is required because `NodeSettings.uvicorn_kwargs()` refuses service mode without complete TLS files; the listener requires client certificates.
+3. Core's `NodeClient` uses the Core client certificate/key and the Atlas CA to call `/v1/enroll` over mTLS. The Node verifies the signed bootstrap credential and fresh Node identity/CSR, persists proof state, and consumes the bootstrap digest.
+4. Core `sync_node_proof()` records the CSR and moves the canonical record to pending operator approval.
+5. Core `approve_node_enrollment()` signs the final certificate, calls Node `/v1/enrollment/approve` over the still-running mTLS channel, and stores the bearer credential by secure reference.
+6. The Node atomically installs the final certificate, stores only its digest/state, and requires restart before normal active heartbeat. The first heartbeat then transitions the Node to ACTIVE/ONLINE.
+
+The initial bootstrap certificate and final approval certificate are therefore distinct trust artifacts. The one-time bootstrap credential is not a substitute for the server certificate.
+
+### E2 — circularity result
+
+`SUPPORTED_SEQUENCE_CONFIRMED` for the established Linux/native sequence: no circular deadlock exists when the approved pre-enrollment certificate is provisioned from the fresh CSR on the trusted Atlas side. The Windows candidate was prepared with a distinct Windows-local key/CSR and a CSR-derived short-lived certificate whose SANs are `node-095-sketch-windows`, `SKETCH`, and `192.168.254.5`; the CA private key was not copied to Windows.
+
+### E3/E4/E5 status
+
+- Real Windows first enrollment and heartbeat: **NOT RUN** — the user explicitly stopped the Administrator start step pending this investigation.
+- Windows service stop/start/restart, allowed-root checks, LAN-hosted project, and private Serve/second-device path: **NOT RUN**.
+- Windows reboot persistence: **NOT RUN** and remains a separate approval boundary.
+- Product code changes: **NONE**.
+- DOD/R promotions: **NONE**.
+
+### Next bounded action
+
+Resume the same Continuation 095 only after the operator authorizes the corrected elevated start using the already-prepared bootstrap certificate and machine-scoped environment. Start no service in this investigation; do not reboot, change Tailscale routes, expose PRIME publicly, promote DOD-013/DOD-053/DOD-079, or begin Continuation 096.

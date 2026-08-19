@@ -1322,3 +1322,31 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-EXTERNAL-MACHINE-CONSOLIDATION-094
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-NATIVE-NODE-BOOTSTRAP-095A
+
+- Issued: 2026-08-19T00:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 095A
+- Objective: Reconstruct the supported fresh native PRIME Node first-enrollment bootstrap sequence against Continuation 090, prove or refute a TLS/mTLS bootstrap deadlock, and only then resume the Windows service/LAN qualification.
+- Scope: Continuation 090 evidence/artifact reconstruction; current Node/Core trust-path inspection; bootstrap deadlock determination; no service start until the sequence is established; if confirmed, resume the same 095 pre-reboot Windows/LAN/private-Serve packages and stop before reboot.
+- Exclusions: no insecure HTTP; no copied CA private material; no final certificate fabrication outside the approved trust path; no frozen-spec change; no canonical Node/project mutation; no Tailscale route changes; no public exposure; no DOD-047; no DOD promotion; no reboot; no Phase 16; no Continuation 096.
+- Acceptance: Return `SUPPORTED_SEQUENCE_CONFIRMED` with exact trust-boundary evidence or `NATIVE_BOOTSTRAP_DEFECT_CONFIRMED` with the smallest repair and direct qualification; otherwise stop and report the exact blocker.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRIVILEGED-WINDOWS-PRIVATE-SERVE-095
+- Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRODUCTION-READINESS-CLOSURE-096
+
+- Issued: 2026-08-19T08:35:59-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096
+- Objective: Bring ANIMUS PRIME to a usable production-ready private V1 in one bounded closure wave by completing the genuine Windows/Linux multi-machine product, private Tailscale operator access, frozen-ledger reconciliation, full release validation, and final Phase-15 qualification.
+- Scope: Secure Windows Node first-start/enrollment, native service lifecycle, real Windows LAN repository/project, PRIME-owned private Tailscale Serve/browser path, DOD-047 frozen `where available` reconciliation, complete requirement/DoD audit, reproducible supported release validation, integrated R-056/DOD-081 qualification, governed publication, and Notion SOT closeout.
+- Exclusions: no frozen-spec edit; no OS reboot requirement; no third physical machine requirement; no fabricated provider cost; no added provider credential solely for qualification; no raw LAN Core Web bind; no public/Funnel exposure; no multi-user/RBAC; no Phase 16; no unrelated cleanup or reopened qualified requirement without contradictory evidence.
+- Acceptance: A genuine Windows repository and Linux repository operate through one Core; SKETCH reaches authenticated PRIME through private Tailscale Serve; all frozen requirements are verified or correctly conditional; complete release validation has no unexplained failures; R-056, DOD-081, and Phase 15 pass; private V1 remains running and usable.
+- Risk class: HIGH
+- Relationship: supersedes
+- Related directive: D-PRIME-PHASE15-NATIVE-NODE-BOOTSTRAP-095A
+- Status at issuance: ISSUED
