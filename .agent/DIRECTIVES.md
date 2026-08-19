@@ -1308,3 +1308,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-FINAL-LOCAL-CLOSURE-093
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-PRIVILEGED-WINDOWS-PRIVATE-SERVE-095
+
+- Issued: 2026-08-18T21:05:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 095
+- Objective: Resume genuine Windows Node/LAN qualification only with operator-approved elevated PowerShell, and repair PRIME-owned private Tailscale Serve ownership so unrelated Atlas Serve/Funnel routes remain untouched.
+- Scope: Elevation-gated unchanged-first Windows Node installation and lifecycle; independent Windows LAN project qualification; minimal ownership-safe PRIME Serve/Funnel adapter repair; private second-device browser qualification; outage/recovery; focused and full validation; governed evidence and exact GitHub/Notion parity.
+- Exclusions: no UAC bypass; no public Funnel; no unrelated Tailscale reset or route change; no canonical project/Node mutation; no DOD-047, DOD-005, DOD-081/R-056 closure, frozen-spec edit, deployment, Phase 16, or Continuation 096.
+- Acceptance: Promote DOD-079, DOD-053, and DOD-013 only on complete genuine Windows/LAN/private-tailnet evidence; otherwise preserve exact elevation or route blockers and close the bounded repair honestly.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-EXTERNAL-MACHINE-CONSOLIDATION-094
+- Status at issuance: ISSUED
