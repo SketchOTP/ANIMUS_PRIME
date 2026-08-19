@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +12,7 @@ from .indexer import RepositoryIndexer
 from .memory_service import MemoryService
 from .ai_service import AIExecutionService
 from .retrieval import RetrievalHit, retrieval_hit
-from .service import _id, now
+from .service import CoreService, _id, now
 
 
 # The pinned Hindsight 0.6.1 adapter does not expose a minimum-score request
@@ -150,7 +151,14 @@ class IntelligenceService:
         with connect(self.settings) as db:
             binding = db.execute("SELECT r.canonical_path FROM prime_core.project_bindings b JOIN prime_core.repositories r ON r.repository_id=b.repository_id WHERE b.project_id=%s", (project_id,)).fetchone()
         if binding and binding.get("canonical_path"):
-            for row in search_git_history(Path(binding["canonical_path"]), query, bounded_limit):
+            live_node = CoreService(self.settings).node_client_for_project(project_id)
+            if live_node:
+                _node, client = live_node
+                snapshot = client.repository_snapshot(binding["canonical_path"])
+                rows = self._search_remote_git_snapshot(snapshot, query)
+            else:
+                rows = search_git_history(Path(binding["canonical_path"]), query, bounded_limit)
+            for row in rows:
                 git.append(retrieval_hit(source_class="Git", source_group="Git", source_id=f"git:{row['commit_id']}", project_id=project_id, locator=f"git:{row['commit_id']}", text=row["text"], source_revision=row["source_revision"], content_hash=row["content_hash"], freshness_state="CURRENT", authority_class="AUTHORITATIVE", relevance=row.get("relevance"), commit_id=row["commit_id"], subject=row["subject"], captured_at=row["captured_at"], canonical_ref=row.get("canonical_ref"), canonical_commit=row.get("canonical_commit")))
 
         memory_rows = self.memory.recall(project_id, query, min(bounded_limit, 8), min_relevance=MEMORY_RELEVANCE_FLOOR).get("results", [])
@@ -160,6 +168,28 @@ class IntelligenceService:
 
         groups = {"Repository": repository, "Authority": authority, "Git": git, "Notion Knowledge": notion, "Activity": activity, "Progress": progress, "Memory": memory, "Evidence": evidence}
         return {"project_id": project_id, "groups": groups, "retrieval_policy": {"memory_relevance_floor": MEMORY_RELEVANCE_FLOOR, "revision": "prime-shared-retrieval-v1"}}
+
+    @staticmethod
+    def _search_remote_git_snapshot(snapshot: dict[str, Any], query: str) -> list[dict[str, Any]]:
+        head = snapshot.get("head")
+        if not head:
+            return []
+        branch = snapshot.get("branch") or "UNKNOWN"
+        text = f"{head} {branch} current remote Git state"
+        terms = [term for term in query.lower().split() if term]
+        if terms and not any(term in text.lower() for term in terms):
+            return []
+        return [{
+            "commit_id": head,
+            "source_revision": head,
+            "content_hash": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "text": text,
+            "subject": "Current remote Git state",
+            "captured_at": None,
+            "canonical_ref": branch,
+            "canonical_commit": head,
+            "relevance": 1.0,
+        }]
 
     def ask(self, project_id: str, question: str) -> dict[str, Any]:
         sources = self.search(project_id, question, 8)

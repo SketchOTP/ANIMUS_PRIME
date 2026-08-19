@@ -2,6 +2,7 @@ from contextlib import contextmanager
 
 from prime_core.service import CoreService
 from prime_core.indexer import RepositoryIndexer
+from prime_core.intelligence_service import IntelligenceService
 from apps.core.main import _remote_repository_path
 
 
@@ -101,3 +102,16 @@ def test_remote_windows_index_walks_node_tree_without_local_path_resolution():
     )
 
     assert [item[0] for item in files] == ["AGENTS.md", ".agent/PROJECT_GOAL.md"]
+
+
+def test_remote_git_snapshot_is_searchable_without_resolving_windows_path_locally():
+    rows = IntelligenceService._search_remote_git_snapshot(
+        {"head": "2ccf8a2b3addd63b472722936130765e0117193c", "branch": "main"},
+        "2ccf8a2",
+    )
+
+    assert rows[0]["commit_id"] == "2ccf8a2b3addd63b472722936130765e0117193c"
+    assert rows[0]["canonical_ref"] == "main"
+    assert IntelligenceService._search_remote_git_snapshot(
+        {"head": rows[0]["commit_id"], "branch": "main"}, "nonsense"
+    ) == []
