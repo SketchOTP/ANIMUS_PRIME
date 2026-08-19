@@ -270,6 +270,16 @@ class UsageLimitRequest(BaseModel):
     enabled: bool = True
 
 
+class CapacityPolicyRequest(BaseModel):
+    scope: str = Field(min_length=1, max_length=240)
+    queue_limit: int | None = Field(default=None, ge=1, le=1_000_000)
+    running_limit: int | None = Field(default=None, ge=1, le=10_000)
+    coalesce_window_ms: int = Field(default=1000, ge=1, le=3_600_000)
+    max_items: int | None = Field(default=None, ge=1)
+    max_bytes: int | None = Field(default=None, ge=1)
+    retention_days: int | None = Field(default=None, ge=1, le=36_500)
+
+
 class UpgradePreflightRequest(BaseModel):
     target_version: str = Field(min_length=1, max_length=80)
     target_schema: str | None = Field(default=None, max_length=120)
@@ -2254,6 +2264,24 @@ def disable_usage_limit(project_id: str, limit_id: str, request: Request, prime_
 def reliability_status(request: Request, prime_session: str | None = Cookie(default=None)):
     require_session(request, prime_session)
     return ReliabilityService(settings).diagnostics()
+
+
+@app.put("/v1/system/capacity/policies")
+def set_capacity_policy(body: CapacityPolicyRequest, request: Request, prime_session: str | None = Cookie(default=None)):
+    require_session(request, prime_session)
+    try:
+        policy = ReliabilityService(settings).configure_capacity_policy(
+            body.scope,
+            queue_limit=body.queue_limit,
+            running_limit=body.running_limit,
+            coalesce_window_ms=body.coalesce_window_ms,
+            max_items=body.max_items,
+            max_bytes=body.max_bytes,
+            retention_days=body.retention_days,
+        )
+    except ValueError as exc:
+        return error("CAPACITY_POLICY_REJECTED", str(exc), request_id(request), status_code=400)
+    return {"status": "CONFIGURED", "policy": policy}
 
 
 @app.get("/v1/system/upgrade")

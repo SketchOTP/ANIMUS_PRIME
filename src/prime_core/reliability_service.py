@@ -14,6 +14,32 @@ class ReliabilityService:
     def __init__(self, settings: Any):
         self.settings = settings
 
+    def configure_capacity_policy(
+        self,
+        scope: str,
+        *,
+        queue_limit: int | None = None,
+        running_limit: int | None = None,
+        coalesce_window_ms: int = 1000,
+        max_items: int | None = None,
+        max_bytes: int | None = None,
+        retention_days: int | None = None,
+    ) -> dict[str, Any]:
+        if scope != "GLOBAL" and not (scope.startswith("PROJECT:") or scope.startswith("RETENTION:")):
+            raise ValueError("unsupported capacity policy scope")
+        for value in (queue_limit, running_limit, coalesce_window_ms, max_items, max_bytes, retention_days):
+            if value is not None and value < 1:
+                raise ValueError("capacity policy values must be positive")
+        with transaction(self.settings) as db:
+            row = db.execute(
+                "INSERT INTO prime_core.capacity_policies(policy_id,scope,max_bytes,max_items,retention_days,queue_limit,running_limit,coalesce_window_ms,updated_at) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now()) ON CONFLICT (scope) DO UPDATE SET "
+                "max_bytes=EXCLUDED.max_bytes,max_items=EXCLUDED.max_items,retention_days=EXCLUDED.retention_days,"
+                "queue_limit=EXCLUDED.queue_limit,running_limit=EXCLUDED.running_limit,coalesce_window_ms=EXCLUDED.coalesce_window_ms,updated_at=now() RETURNING *",
+                (_id("capacity"), scope, max_bytes, max_items, retention_days, queue_limit, running_limit, coalesce_window_ms),
+            ).fetchone()
+        return dict(row)
+
     def record_backup(self, backup_type: str, locator: str, content_hash: str | None, verified: bool) -> dict[str, Any]:
         status = "VERIFIED" if verified else "STARTED"
         with transaction(self.settings) as db:
@@ -80,21 +106,61 @@ class ReliabilityService:
             )
 
     def capacity_status(self, root: Path | None = None) -> dict[str, Any]:
-        root = root or Path.cwd()
+        root = root or Path(os.getenv("PRIME_CAPACITY_ROOT", "."))
         warning_bytes = int(os.getenv("PRIME_DISK_WARNING_BYTES", str(2 * 1024 * 1024 * 1024)))
         critical_bytes = int(os.getenv("PRIME_DISK_CRITICAL_BYTES", str(512 * 1024 * 1024)))
         free = shutil.disk_usage(root).free
         with connect(self.settings) as db:
             queue_rows = db.execute("SELECT status,count(*) AS count FROM prime_core.jobs GROUP BY status").fetchall()
             queued = sum(int(row["count"]) for row in queue_rows if row["status"] in ("QUEUED", "RUNNING"))
-        queue_limit = int(os.getenv("PRIME_QUEUE_LIMIT", "1000"))
+            global_row = db.execute("SELECT queue_limit,running_limit,coalesce_window_ms FROM prime_core.capacity_policies WHERE scope='GLOBAL'").fetchone()
+            project_rows = db.execute(
+                "SELECT project_id,status,count(*) AS count FROM prime_core.jobs WHERE project_id IS NOT NULL AND status IN ('QUEUED','RUNNING') GROUP BY project_id,status ORDER BY project_id,status"
+            ).fetchall()
+            memory_records = int(db.execute("SELECT count(*) AS count FROM prime_core.memory_records WHERE status NOT IN ('TOMBSTONED','SUPERSEDED')").fetchone()["count"])
+            database_bytes = int(db.execute("SELECT pg_database_size(current_database()) AS bytes").fetchone()["bytes"])
+        queue_limit = int(global_row["queue_limit"] if global_row and global_row["queue_limit"] is not None else os.getenv("PRIME_QUEUE_LIMIT", "1000"))
         disk = "CRITICAL" if free < critical_bytes else ("WARNING" if free < warning_bytes else "HEALTHY")
+        per_project: dict[str, dict[str, int]] = {}
+        for row in project_rows:
+            per_project.setdefault(row["project_id"], {"queued": 0, "running": 0})[row["status"].lower()] = int(row["count"])
+        try:
+            from src.prime_memory_adapter import PrimeMemoryAdapter
+            hindsight = PrimeMemoryAdapter(self.settings.hindsight_base_url, "system-capacity", min(self.settings.hindsight_timeout_seconds, 2.0)).health().status
+        except Exception:
+            hindsight = "UNAVAILABLE"
         return {
-            "queue": {"queued": queued, "limit": queue_limit, "status": "BACKPRESSURE" if queued >= queue_limit else "NORMAL"},
-            "disk": {"free_bytes": free, "status": disk, "derived_work_allowed": disk == "HEALTHY"},
+            "queue": {"queued": queued, "limit": queue_limit, "status": "BACKPRESSURE" if queued >= queue_limit else "NORMAL", "per_project": per_project},
+            "policy": {"global": dict(global_row) if global_row else {"queue_limit": queue_limit, "running_limit": int(os.getenv("PRIME_PROJECT_RUNNING_LIMIT", "2")), "coalesce_window_ms": int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000"))}},
+            "disk": {"root": str(root.resolve()), "free_bytes": free, "status": disk, "derived_work_allowed": disk != "CRITICAL"},
+            "storage_growth": {"database_bytes": database_bytes, "durable_memory_records": memory_records, "hindsight_health": hindsight},
             "canonical_writes_prioritized": True,
             "protected_data_auto_purge": False,
         }
+
+    def retention_impact_plan(self, project_id: str) -> dict[str, Any]:
+        """Report policy and reference consequences without deleting protected history."""
+        inventory = self.retention_inventory(project_id)
+        classes = {
+            "normalized_events": {"table": "events", "protected": True, "reason": "Time Lens and durable workflow history"},
+            "audit_security_logs": {"table": "audit_events", "protected": True, "reason": "audit requirement"},
+            "repository_index_cache": {"table": "repository_files", "protected": False, "reason": "rebuildable from current repository"},
+            "brain_layout_cache": {"table": "brain_snapshots", "protected": False, "reason": "rebuildable derived layout"},
+            "model_run_traces": {"table": "ai_runs", "protected": True, "reason": "provider/source provenance"},
+            "notification_history": {"table": "notifications", "protected": True, "reason": "operator/audit history"},
+            "terminal_job_payloads": {"table": "jobs", "protected": True, "reason": "workflow/dead-letter recovery"},
+            "retained_source_ledger": {"table": "source_references", "protected": True, "reason": "citation and reconstruction coverage"},
+        }
+        with connect(self.settings) as db:
+            policies = {row["scope"]: dict(row) for row in db.execute("SELECT * FROM prime_core.capacity_policies WHERE scope LIKE 'RETENTION:%'").fetchall()}
+            for name, item in classes.items():
+                predicate = "project_id=%s"
+                if name == "terminal_job_payloads":
+                    predicate += " AND status IN ('SUCCEEDED','CANCELLED','DEAD_LETTER')"
+                item["count"] = int(db.execute(f"SELECT count(*) AS count FROM prime_core.{item['table']} WHERE {predicate}", (project_id,)).fetchone()["count"])
+                item["policy"] = policies.get(f"RETENTION:{name}")
+                item["automatic_action"] = "PRUNE_REBUILDABLE" if not item["protected"] else "REFUSE_WITH_IMPACT_DISCLOSURE"
+        return {"project_id": project_id, "inventory": inventory, "classes": classes, "protected_pruning_requires_explicit_loss_acceptance": True}
 
     def retention_plan(self, scope: str, *, retention_days: int = 30, max_items: int = 10) -> dict[str, Any]:
         if retention_days < 1 or max_items < 1:
@@ -140,10 +206,10 @@ class ReliabilityService:
         }
 
     def prune_derived(self, project_id: str, *, keep_brain: int = 1, keep_notion: int = 10, keep_time_lens: int = 10) -> dict[str, int]:
-        """Prune disposable projections only; canonical history is never auto-purged."""
+        """Prune only rebuildable projections; retained Notion and Time Lens history is pinned."""
         with transaction(self.settings) as db:
-            removed = {}
-            for table, timestamp_column, keep in (("brain_snapshots", "created_at", keep_brain), ("notion_projection_revisions", "observed_at", keep_notion), ("time_lens_checkpoints", "created_at", keep_time_lens)):
+            removed = {"notion_projection_revisions": 0, "time_lens_checkpoints": 0}
+            for table, timestamp_column, keep in (("brain_snapshots", "created_at", keep_brain),):
                 rows = db.execute(f"SELECT ctid FROM prime_core.{table} WHERE project_id=%s ORDER BY {timestamp_column} DESC OFFSET %s", (project_id, keep)).fetchall()
                 count = 0
                 for row in rows:

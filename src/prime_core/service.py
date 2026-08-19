@@ -7,6 +7,7 @@ import time
 import uuid
 import hashlib
 import os
+import shutil
 import subprocess
 import tarfile
 import secrets
@@ -40,6 +41,35 @@ def _id(prefix: str) -> str:
 class CoreService:
     def __init__(self, settings: Settings):
         self.settings = settings
+
+    @staticmethod
+    def _capacity_policy(db: Any, project_id: str | None = None) -> dict[str, int]:
+        """Resolve durable project policy over durable global policy over safe defaults."""
+        values = {
+            "queue_limit": int(os.getenv("PRIME_QUEUE_LIMIT", "1000")),
+            "running_limit": int(os.getenv("PRIME_PROJECT_RUNNING_LIMIT", "2")),
+            "coalesce_window_ms": int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000")),
+        }
+        scopes = ["GLOBAL"]
+        if project_id:
+            scopes.append(f"PROJECT:{project_id}")
+        rows = db.execute(
+            "SELECT scope,queue_limit,running_limit,coalesce_window_ms FROM prime_core.capacity_policies "
+            "WHERE scope=ANY(%s) ORDER BY CASE WHEN scope='GLOBAL' THEN 0 ELSE 1 END",
+            (scopes,),
+        ).fetchall()
+        for row in rows:
+            for key in values:
+                if row[key] is not None:
+                    values[key] = int(row[key])
+        return values
+
+    @staticmethod
+    def _derived_work_allowed() -> bool:
+        root = Path(os.getenv("PRIME_CAPACITY_ROOT", "."))
+        free = shutil.disk_usage(root).free
+        critical = int(os.getenv("PRIME_DISK_CRITICAL_BYTES", str(512 * 1024 * 1024)))
+        return free >= critical
 
     @staticmethod
     def _display_remote_url(remote_url: str) -> str:
@@ -363,11 +393,20 @@ class CoreService:
             existing = db.execute("SELECT * FROM prime_core.jobs WHERE idempotency_key=%s", (idempotency_key,)).fetchone()
             if existing:
                 return dict(existing)
-            queue_limit = int(os.getenv("PRIME_QUEUE_LIMIT", "1000"))
+            policy = self._capacity_policy(db, project_id)
+            global_policy = self._capacity_policy(db)
             queue_count = db.execute("SELECT count(*) AS count FROM prime_core.jobs WHERE status IN ('QUEUED','RUNNING')").fetchone()["count"]
+            project_queue_count = db.execute(
+                "SELECT count(*) AS count FROM prime_core.jobs WHERE project_id=%s AND status IN ('QUEUED','RUNNING')",
+                (project_id,),
+            ).fetchone()["count"] if project_id else 0
             derived_job = job_type.upper() in {"INDEX", "REINDEX", "BRAIN", "PARSER", "NOTION_PROJECTION", "MODEL_CACHE", "REPOSITORY_SCAN"}
-            if int(queue_count) >= queue_limit and derived_job:
+            if derived_job and not self._derived_work_allowed():
+                raise ValueError("derived work backpressure: disk capacity is critical")
+            if int(queue_count) >= global_policy["queue_limit"] and derived_job:
                 raise ValueError("derived work backpressure: queue capacity exceeded")
+            if project_id and int(project_queue_count) >= policy["queue_limit"] and derived_job:
+                raise ValueError("derived work backpressure: project queue capacity exceeded")
             row = db.execute(
                 "INSERT INTO prime_core.jobs(job_id, project_id, job_type, status, idempotency_key, available_at, payload, created_at, updated_at) "
                 "VALUES (%s,%s,%s,'QUEUED',%s,%s,%s,%s,%s) RETURNING *",
@@ -377,10 +416,8 @@ class CoreService:
             return dict(row)
 
     def create_coalesced_job(self, job_type: str, payload: dict[str, Any], project_id: str, source_key: str) -> dict[str, Any]:
-        """Coalesce bursty derived work into one durable, idempotent job."""
-        window_ms = int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000"))
-        bucket = int(time.time() * 1000 // max(window_ms, 1))
-        return self.create_job(job_type, payload, f"coalesced:{project_id}:{job_type}:{source_key}:{bucket}", project_id)
+        """Coalesce one immutable source identity into one durable job."""
+        return self.create_job(job_type, payload, f"coalesced:{project_id}:{job_type}:{source_key}", project_id)
 
     def create_project(self, name: str, description: str = "", image_url: str | None = None) -> dict[str, Any]:
         timestamp = now()
@@ -1834,17 +1871,34 @@ class CoreService:
 
     def claim_job(self) -> dict[str, Any] | None:
         with transaction(self.settings) as db:
-            row = db.execute(
-                "SELECT * FROM prime_core.jobs WHERE status='QUEUED' AND available_at <= now() "
-                "ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1"
-            ).fetchone()
-            if not row:
-                return None
-            updated = db.execute(
-                "UPDATE prime_core.jobs SET status='RUNNING', attempts=attempts+1, started_at=now(), updated_at=now() "
-                "WHERE job_id=%s RETURNING *", (row["job_id"],)
-            ).fetchone()
-            return dict(updated)
+            excluded: list[str] = []
+            while True:
+                row = db.execute(
+                    "SELECT j.* FROM prime_core.jobs j "
+                    "LEFT JOIN prime_core.capacity_policies p ON p.scope='PROJECT:' || j.project_id "
+                    "LEFT JOIN prime_core.capacity_policies g ON g.scope='GLOBAL' "
+                    "WHERE j.status='QUEUED' AND j.available_at <= now() AND NOT (j.job_id=ANY(%s)) "
+                    "AND (j.project_id IS NULL OR (SELECT count(*) FROM prime_core.jobs running WHERE running.project_id=j.project_id AND running.status='RUNNING') "
+                    "< COALESCE(p.running_limit,g.running_limit,%s)) "
+                    "ORDER BY j.created_at FOR UPDATE OF j SKIP LOCKED LIMIT 1",
+                    (excluded, int(os.getenv("PRIME_PROJECT_RUNNING_LIMIT", "2"))),
+                ).fetchone()
+                if not row:
+                    return None
+                if row["project_id"]:
+                    db.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", (f"job-claim:{row['project_id']}",))
+                    running = db.execute(
+                        "SELECT count(*) AS count FROM prime_core.jobs WHERE project_id=%s AND status='RUNNING'",
+                        (row["project_id"],),
+                    ).fetchone()["count"]
+                    if int(running) >= self._capacity_policy(db, row["project_id"])["running_limit"]:
+                        excluded.append(row["job_id"])
+                        continue
+                updated = db.execute(
+                    "UPDATE prime_core.jobs SET status='RUNNING', attempts=attempts+1, started_at=now(), updated_at=now() "
+                    "WHERE job_id=%s RETURNING *", (row["job_id"],)
+                ).fetchone()
+                return dict(updated)
 
     def complete_job(self, job_id: str, success: bool, error: str | None = None) -> None:
         with transaction(self.settings) as db:
@@ -1882,9 +1936,7 @@ class CoreService:
             return dict(row)
 
     def emit_coalesced_event(self, event_type: str, payload: dict[str, Any], project_id: str, source_key: str) -> dict[str, Any]:
-        window_ms = int(os.getenv("PRIME_EVENT_COALESCE_WINDOW_MS", "1000"))
-        bucket = int(time.time() * 1000 // max(window_ms, 1))
-        return self.emit_event(event_type, payload, project_id=project_id, dedupe_key=f"coalesced:{project_id}:{event_type}:{source_key}:{bucket}")
+        return self.emit_event(event_type, payload, project_id=project_id, dedupe_key=f"coalesced:{project_id}:{event_type}:{source_key}")
 
     @staticmethod
     def _audit(db: Any, actor_type: str, actor_id: str, action: str, project_id: str | None = None,

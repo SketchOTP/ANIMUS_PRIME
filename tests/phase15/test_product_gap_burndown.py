@@ -67,10 +67,42 @@ def test_status_counts_are_derived_and_declared_summary_is_checked(tmp_path: Pat
     audit_path, burndown_path = _copies(tmp_path)
     audit = yaml.safe_load(audit_path.read_text(encoding="utf-8"))
     burndown = yaml.safe_load(burndown_path.read_text(encoding="utf-8"))
+    promoted = next(item for item in audit["items"] if item["status"] == "PRODUCT_VERIFIED")
+    promoted["status"] = "BACKEND_ONLY"
+    audit["declared_status_counts"]["PRODUCT_VERIFIED"] -= 1
+    audit["declared_status_counts"]["BACKEND_ONLY"] += 1
+    burndown["items"].append(
+        {
+            "dod_id": promoted["dod_id"],
+            "current_status": "BACKEND_ONLY",
+            "acceptance_kind": promoted["acceptance_kind"],
+            "product_area": "test-fixture",
+            "owner_phase": 15,
+            "mapped_r_requirements": [],
+            "exact_missing_behavior": "temporary status-count fixture",
+            "work_class": "LOCAL_CODE",
+            "requires_code": "YES",
+            "requires_browser": "NO",
+            "requires_native_linux": "NO",
+            "requires_windows": "NO",
+            "requires_tailscale": "NO",
+            "requires_second_device": "NO",
+            "requires_hindsight": "NO",
+            "requires_external_at": "NO",
+            "requires_live_notion": "NO",
+            "requires_privilege": "NO",
+            "requires_packaging": "NO",
+            "requires_clean_install": "NO",
+            "next_action": "promote the temporary fixture",
+            "evidence_already_available": [],
+            "qualification_needed": "temporary fixture qualification",
+            "blocked_by": "NONE",
+            "depends_on": "NONE",
+        }
+    )
     starting_product_verified = sum(item["status"] == "PRODUCT_VERIFIED" for item in audit["items"])
     starting_backend_only = sum(item["status"] == "BACKEND_ONLY" for item in audit["items"])
     starting_complete = sum(item["status"] in {"USER_USABLE_VERIFIED", "PRODUCT_VERIFIED"} for item in audit["items"])
-    promoted = next(item for item in audit["items"] if item["status"] == "BACKEND_ONLY")
     old_status = promoted["status"]
     promoted["status"] = "PRODUCT_VERIFIED"
     audit["declared_status_counts"][old_status] -= 1
