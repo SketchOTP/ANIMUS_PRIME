@@ -3,17 +3,17 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T15:15:00-04:00
+- Last updated: 2026-08-19T19:00:26-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096G
-- Objective: Close the sole remaining R-045 capacity/retention/backpressure and representative-large-repository boundary, then reconcile final V1 gates only if the frozen clause passes.
+- Local directive ID: D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096H governance normalization
+- Objective: Normalize final Phase-15 traceability and enforce cross-view release consistency without changing the qualified product/runtime.
 - Current status: `COMPLETE`
-- Acceptance: All frozen V1 requirements directly verified or truthfully conditional by their normative wording; full release validation has no unexplained failures; R-056, DOD-081, Phase 15, and private V1 pass; the persistent private product remains operator-usable with no Funnel/public exposure.
-- Current phase: PHASE15_PRODUCTION_READINESS_CLOSURE_096
-- Expected or actual touched areas: PostgreSQL durable capacity controls, job admission/claims, index coalescing/stale protection, retention safety, disk-pressure admission, Diagnostics, isolated representative repository qualification, complete V1 ledgers, final evidence, persistent runtime, GitHub parity, and Notion SOT.
+- Acceptance: Requirements traceability reports PASS with R-001 through R-029 VERIFIED, zero unresolved V1 rows, and exact agreement with the 81/81 audit, empty burndown, verified R-045/R-056, DOD-081 PRODUCT_VERIFIED, Phase 15 COMPLETE, and private V1 qualification.
+- Current phase: PHASE15_COMPLETE
+- Expected or actual touched areas: requirements traceability, cross-view governance validator/tests, append-only 096H evidence and agent ledgers, GitHub parity, and Notion SOT/checkpoint readback only.
 - Immediate next action: Preserve the qualified private V1 runtime and await an explicit post-V1 directive. Do not start Phase 16, public deployment, or Continuation 097.
 
 ## Temporary task-relevant facts
@@ -23,7 +23,7 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Canonical runtime image is `animus-prime-core:continuation-096-6f7ef77` at qualified implementation `6f7ef776c6fadc82771a952e81313ff18eee7295`; persistent PostgreSQL/state/mounts are preserved. Core remains loopback-only on `127.0.0.1:8000` and reports the exact build. No public exposure, deployment, or Phase 16 occurred.
+- Canonical runtime image is `animus-prime-core:continuation-096g-d067a24` at qualified implementation `d067a247dbeea47eb8b061111db04e7cd95bebe2`; persistent PostgreSQL/state/mounts are preserved. No runtime rebuild, restart, public exposure, deployment, or Phase 16 occurred in 096H.
 - PRIME owns the private tailnet-only route `https://atlas-2.tail1a5964.ts.net/` to Core loopback. SKETCH gstack Chromium passed protected entry, Atlas-approved trusted-host sign-in, authenticated Windows-project use, and logout protection. No PRIME Funnel exists; all unrelated Serve routes and the pre-existing unrelated port-10000 Funnel remain untouched.
 - Genuine Windows service `AnimusPrimeNode` is Automatic/LocalSystem/Running on SKETCH. Node `node-095-sketch-windows` is ACTIVE/ONLINE at LAN `192.168.254.5:18001`, with final enrollment identity and allowed root `C:\PRIME-V1-Qualification\WindowsRepos`.
 - Real Windows project `project_d95b88f969bc44caa9cf39818d0ae9b5` binds `C:\PRIME-V1-Qualification\WindowsRepos\V1_QUALIFICATION_FIXTURE_096_WINDOWS_LAN` at Git `2ccf8a2b3addd63b472722936130765e0117193c`; Goal, authority, tree/files, remote indexing/search, LAN transport, and outside-root refusal pass.
@@ -36,7 +36,7 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 096G frozen matrix, focused 11-test database-backed suite, representative 6,001-file pressure qualification, complete 167-pass supported regression, persistent runtime/browser qualification, compile, governance, burndown, alignment, and secret/diff review
+- Command or check: Continuation 096H focused cross-view regression, traceability/alignment/burndown/governance/YAML/diff/secret checks, plus preserved Continuation 096G full regression and runtime qualification
 - Result: `PASSED`
 
 ## Risks

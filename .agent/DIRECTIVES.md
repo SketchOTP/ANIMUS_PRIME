@@ -1420,3 +1420,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-FROZEN-EVIDENCE-FINAL-RECONCILIATION-096F
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H
+
+- Issued: 2026-08-19T19:00:26-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096H governance normalization
+- Objective: Normalize the final Phase-15 traceability projection and add a cross-view release invariant so every governed view agrees with the already-passing 81/81 V1 qualification.
+- Scope: R-001 through R-029 terminal-status reconciliation; current release metadata; append-only governance evidence and `.agent` records; smallest governance-validator/test correction; exact GitHub and Notion readback.
+- Exclusions: no product/runtime behavior, persistent data, capacity controls, Windows/Linux Node, Tailscale/Funnel, provider, network, browser/capacity/lifecycle rerun, deployment, Phase 16, Continuation 097, or frozen-spec change.
+- Acceptance: Traceability reports PASS with zero unresolved V1 rows; every governed release view agrees on 81/81, R-045 VERIFIED, DOD-081 PRODUCT_VERIFIED, R-056 VERIFIED, Phase 15 COMPLETE, and V1 qualified for private production use; focused governance tests, validators, Git parity, and both Notion readbacks pass.
+- Risk class: NORMAL
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G
+- Status at issuance: ISSUED

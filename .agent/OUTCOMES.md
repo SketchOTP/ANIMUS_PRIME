@@ -2729,3 +2729,21 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: historical environment-backed skips remain explicit; public deployment and Phase 16 are not authorized. The prior stopped Core container is retained as rollback evidence and the representative fixture remains marked noncanonical on external storage.
 - Blockers: none under frozen V1.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H - COMPLETE
+
+- Outcome ID: O-PRIME-096H
+- Supersedes outcome: O-PRIME-096G
+- Closed: 2026-08-19T19:00:26-04:00
+- Acceptance: MET
+- Summary: Normalized the stale final traceability projection without changing product/runtime behavior. R-001 through R-029 are VERIFIED, R-030 remains FUTURE_ONLY_BY_SPEC, product alignment is PASS at 81/81, the burndown is empty, and Phase 15/private V1 status agrees across traceability, audit, matrix, ledger, evidence, and `.agent`. Added a focused cross-view validator and regression tests so a future PASS/FAIL mismatch, nonterminal V1 row, or 81-count disagreement fails release validation.
+- Changed areas: `docs/requirements-traceability.yaml`, governance-only `scripts/validate_product_alignment.py`, focused governance tests, append-only 096H evidence, and `.agent` records. No application code, runtime image, persistent data, Node, Tailscale/Funnel, provider, deployment, Phase 16, or Continuation 097 change.
+- Validation:
+  - focused cross-view validator regression - 4 passed
+  - requirements traceability/product alignment/burndown/governance - PASSED
+  - YAML/diff/secret/Git parity and Notion readbacks - PASSED at closeout
+  - preserved full supported regression basis - 167 passed / 41 skipped / 0 failed
+- DOD/R result: R-045 remains VERIFIED; DOD-081 remains PRODUCT_VERIFIED; R-056 remains VERIFIED; 81 complete / 0 open; Phase 15 COMPLETE; V1 QUALIFIED for private production use.
+- Remaining risks: none under frozen V1. Public deployment and Phase 16 remain unauthorized.
+- Blockers: none.
+- Follow-up directive: none

@@ -965,3 +965,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Direct isolated pressure qualification proves bounded global/project queues and running work, fair progress, source-key coalescing, stale-job refusal, canonical-write priority, protected retention, no automatic Hindsight deletion, truthful simulated disk CRITICAL behavior, representative 6,001-file index/search/incremental performance, drain/recovery, authenticated operator diagnostics, and persistent restart recovery. Full supported regression is 167 passed / 41 skipped / 0 failed.
 - Affected areas: bounded PostgreSQL capacity controls, existing index/job/retention/Diagnostics paths, persistent private Core image, R-045/R-056/DOD-081 governance, final Phase-15/V1 evidence, GitHub and Notion SOT. No Windows action, public exposure, Funnel change, deployment, Phase 16, frozen-spec modification, or Continuation 097.
 - Supersedes record: DEC-PRIME-PHASE15-096F
+
+## DEC-PRIME-PHASE15-096H
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096H
+- Status: ACTIVE
+- Decision or event: Accept the existing 096G product qualification and normalize the stale requirements-traceability projection to the same final 81/81 release truth, with a new fail-closed cross-view governance invariant.
+- Rationale: Independent review confirmed the product and qualification evidence pass, but the traceability file still reported FAIL and nonterminal R-001 through R-029 rows because the product-alignment validator did not read that view. The reconciliation preserves historical notes while making every current V1 row terminal and prevents recurrence.
+- Affected areas: requirements traceability, governance validator/tests, append-only 096H evidence and project records, GitHub, and Notion SOT/checkpoint. No application/runtime behavior, persistent state, networking, deployment, Phase 16, frozen spec, or Continuation 097.
+- Supersedes record: DEC-PRIME-PHASE15-096G

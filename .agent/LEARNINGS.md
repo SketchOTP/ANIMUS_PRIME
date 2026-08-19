@@ -1086,3 +1086,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Frozen PRIME-SPEC-V1.0.0 §19.6 capacity/backpressure/retention and representative-repository release qualification.
 - Supersedes learning: L-PRIME-FROZEN-GATE-SEPARATION-096F
+
+## L-PRIME-RELEASE-CROSS-VIEW-INVARIANT-096H
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-RELEASE-CROSS-VIEW-INVARIANT-096H
+- Fact or lesson: Validating the 81-item product-alignment audit in isolation is insufficient for release governance. A claimed PASS/Phase-15 COMPLETE release must also fail closed when requirements traceability says FAIL, any top-level V1 R-row is nonterminal or REOPENED, the burndown is nonempty, or R-045/R-056 disagree across the remediation matrix and qualification ledger.
+- Evidence location: `scripts/validate_product_alignment.py`; `tests/phase15/test_release_governance_consistency.py`; `docs/requirements-traceability.yaml`; `evidence/phase15/qualification-continuation-096h.md`.
+- Confidence: VERIFIED
+- Scope: Final frozen V1 governance consistency only; no product/runtime qualification was repeated or changed.
+- Supersedes learning: none
