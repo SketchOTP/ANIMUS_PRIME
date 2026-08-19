@@ -11,7 +11,7 @@ import subprocess
 import tarfile
 import secrets
 from datetime import datetime, timedelta, timezone
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
 
@@ -1064,8 +1064,10 @@ class CoreService:
         live_node = self.node_client_for_project(project_id)
         if live_node:
             _, client = live_node
-            root = PurePosixPath(row["canonical_path"])
-            relative = PurePosixPath(relative_path or ".")
+            canonical_path = row["canonical_path"]
+            node_path = PureWindowsPath if "\\" in canonical_path else PurePosixPath
+            root = node_path(canonical_path)
+            relative = node_path(relative_path or ".")
             if relative.is_absolute() or ".." in relative.parts:
                 raise PermissionError("agent-chain path is outside the bound repository")
             target = root / relative
@@ -1084,7 +1086,7 @@ class CoreService:
                 candidate = next((entry for entry in listed.get("entries", []) if entry.get("name") == "AGENTS.md" and entry.get("kind") == "file"), None)
                 if candidate:
                     result = client.read_file(candidate["path"])
-                    instructions.append({"path": PurePosixPath(candidate["path"]).relative_to(root).as_posix(), "scope": candidate_dir.relative_to(root).as_posix() or ".", "content_hash": result.get("content_hash", "UNKNOWN")})
+                    instructions.append({"path": node_path(candidate["path"]).relative_to(root).as_posix(), "scope": candidate_dir.relative_to(root).as_posix() or ".", "content_hash": result.get("content_hash", "UNKNOWN")})
             return {"project_id": project_id, "target": target.relative_to(root).as_posix(), "instructions": instructions, "precedence": "EXPOSED_FOR_CODER_REVIEW; PRIME_DOES_NOT_INVENT_EXTERNAL_AGENT_SEMANTICS", "authority_relationship": ".agent is project authority; AGENTS.md is coding-agent instruction input", "mcp_relationship": "MCP/project context remains bounded by the project grant and exported provenance", "source": "LIVE_NODE"}
         root = Path(row["canonical_path"]).resolve(strict=True)
         target = (root / relative_path).resolve(strict=False)
