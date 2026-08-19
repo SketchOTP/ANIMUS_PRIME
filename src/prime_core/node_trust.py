@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
@@ -115,7 +116,13 @@ def csr_fingerprint(csr_pem: str) -> str:
     return hashlib.sha256(csr.public_bytes(serialization.Encoding.DER)).hexdigest()
 
 
-def sign_node_certificate(settings: NodeTrustSettings, csr_pem: str, node_id: str, days: int = 30) -> tuple[str, dict[str, Any]]:
+def sign_node_certificate(
+    settings: NodeTrustSettings,
+    csr_pem: str,
+    node_id: str,
+    days: int = 30,
+    control_endpoint: str | None = None,
+) -> tuple[str, dict[str, Any]]:
     csr = x509.load_pem_x509_csr(csr_pem.encode("utf-8"))
     if not csr.is_signature_valid:
         raise ValueError("Node CSR signature is invalid")
@@ -123,6 +130,24 @@ def sign_node_certificate(settings: NodeTrustSettings, csr_pem: str, node_id: st
     ca_key = serialization.load_pem_private_key(settings.ca_private_key.read_bytes(), password=None)
     subject = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, node_id)])
     now = datetime.now(UTC)
+    subject_alt_names: list[x509.GeneralName] = [
+        x509.UniformResourceIdentifier(f"spiffe://animus-prime/node/{node_id}"),
+        x509.DNSName(node_id),
+        x509.IPAddress(ipaddress.ip_address("127.0.0.1")),
+    ]
+    if control_endpoint:
+        parsed = urlparse(control_endpoint)
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError("Node control endpoint must be an authenticated HTTPS host")
+        host = parsed.hostname
+        try:
+            endpoint_name: x509.GeneralName = x509.IPAddress(ipaddress.ip_address(host))
+        except ValueError:
+            if "*" in host or len(host) > 253:
+                raise ValueError("Node control endpoint hostname is invalid")
+            endpoint_name = x509.DNSName(host)
+        if endpoint_name not in subject_alt_names:
+            subject_alt_names.append(endpoint_name)
     certificate = (
         x509.CertificateBuilder()
         .subject_name(subject)
@@ -134,11 +159,7 @@ def sign_node_certificate(settings: NodeTrustSettings, csr_pem: str, node_id: st
         .add_extension(x509.BasicConstraints(ca=False, path_length=None), critical=True)
         .add_extension(x509.SubjectKeyIdentifier.from_public_key(csr.public_key()), critical=False)
         .add_extension(x509.AuthorityKeyIdentifier.from_issuer_public_key(ca_key.public_key()), critical=False)
-        .add_extension(x509.SubjectAlternativeName([
-            x509.UniformResourceIdentifier(f"spiffe://animus-prime/node/{node_id}"),
-            x509.DNSName(node_id),
-            x509.IPAddress(ipaddress.ip_address("127.0.0.1")),
-        ]), critical=False)
+        .add_extension(x509.SubjectAlternativeName(subject_alt_names), critical=False)
         .add_extension(x509.ExtendedKeyUsage([ExtendedKeyUsageOID.SERVER_AUTH, ExtendedKeyUsageOID.CLIENT_AUTH]), critical=False)
         .sign(ca_key, hashes.SHA256())
     )
@@ -148,4 +169,5 @@ def sign_node_certificate(settings: NodeTrustSettings, csr_pem: str, node_id: st
         "serial": str(certificate.serial_number),
         "issued_at": now.isoformat(),
         "expires_at": certificate.not_valid_after_utc.isoformat(),
+        "control_endpoint_host": urlparse(control_endpoint).hostname if control_endpoint else "127.0.0.1",
     }

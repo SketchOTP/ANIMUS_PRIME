@@ -960,7 +960,12 @@ class CoreService:
         if challenge["state"] != "PENDING_OPERATOR_APPROVAL":
             raise ValueError("enrollment is not pending operator approval")
         trust = self._node_trust_settings()
-        certificate_pem, certificate = sign_node_certificate(trust, challenge["csr_pem"], challenge["node_id"])
+        certificate_pem, certificate = sign_node_certificate(
+            trust,
+            challenge["csr_pem"],
+            challenge["node_id"],
+            control_endpoint=challenge["control_endpoint"],
+        )
         bearer = new_token()
         node = dict(challenge)
         client = self._node_client(node, credential=None)
