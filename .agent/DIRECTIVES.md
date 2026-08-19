@@ -1392,3 +1392,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-FROZEN-EVIDENCE-FINAL-RECONCILIATION-096F
+
+- Issued: 2026-08-19T12:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096 (frozen-evidence final reconciliation)
+- Objective: Reconcile DOD-053, DOD-074, DOD-079, DOD-081, R-056, Phase 15, and V1 directly against PRIME-SPEC-V1.0.0, removing the derived Windows-window response gate without rewriting historical evidence.
+- Scope: Evidence-only frozen-clause review; governed audit/burndown/traceability/matrix/ledger reconciliation; bounded current-runtime smoke; exact GitHub and Notion publication if supported.
+- Exclusions: no Windows service interruption, restart, Repair, reboot, configuration/certificate/Tailscale change, new Node/project/machine, product code, public exposure, Phase 16, or Continuation 097.
+- Acceptance: DOD-053 and DOD-079 reconcile to verified if their exact frozen clauses are satisfied; preserve DOD-074; promote DOD-081/R-056/Phase 15/V1 only if direct frozen review finds no other genuine unmet requirement; otherwise stop with the exact normative blocker.
+- Risk class: NORMAL
+- Relationship: supersedes
+- Related directive: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096P
+- Status at issuance: ISSUED

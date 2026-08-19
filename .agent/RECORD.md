@@ -945,3 +945,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The same browser session proved Core authentication, Linux project usability, Windows persisted state, exact pre-stop operation, and unchanged recovery. The frozen missing point nevertheless requires a direct request while Windows is offline. Core timestamps place every outage probe after service start, so no unavailable/no-fallback result exists to qualify.
 - Affected areas: append-only Continuation 096 evidence/governance only. No product code, installer, runtime image, Tailscale, repository, deployment, public exposure, Phase 16, or Continuation 097 change.
 - Supersedes record: DEC-PRIME-PHASE15-096O
+
+## DEC-PRIME-PHASE15-096F
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096F
+- Status: ACTIVE
+- Decision or event: Promote DOD-053 and DOD-079 against their exact frozen clauses, preserve DOD-074, and reduce the §26 queue to 80 complete / 1 open. Do not promote DOD-081, R-056, Phase 15, or V1 because R-045 remains a genuine frozen capacity qualification blocker.
+- Rationale: Continuation 096 directly proves the enrolled Windows LAN project and qualified Windows Node lifecycle/Repair/reconnect contract. The missed literal offline-window request belongs to no separate DOD-053/DOD-079 clause. However, PRIME-SPEC-V1.0.0 §19.6 and the mandatory release qualification explicitly retain capacity/backpressure/retention and large-repository/performance/capacity requirements, and existing R-045 evidence records those exact gaps as unqualified.
+- Affected areas: governed audit, burndown, traceability, Phase-15 matrix/ledger, Continuation 096 evidence, GitHub and Notion projection. No product/runtime/Windows/Tailscale/deployment mutation.
+- Supersedes record: DEC-PRIME-PHASE15-096P

@@ -212,3 +212,45 @@ Because the exact Windows Node-backed request did not execute while the service 
 - Windows repository remained clean at `2ccf8a2b3addd63b472722936130765e0117193c`.
 
 The one authorized repeat was not repeated again. No Repair, reboot, code change, installer rerun, Tailscale change, new project/machine, deployment, public exposure, Phase 16, or Continuation 097 occurred. DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain open at `78 complete / 3 open`.
+
+## Append-only 096F frozen-requirement reconciliation
+
+Disposition: **PARTIAL**. This section does not rewrite the failed 096O/096P observation history.
+
+### FROZEN_REQUIREMENT_RECONCILIATION
+
+1. DOD-053 exact frozen requirement is §26.53, `Projects can be added from any enrolled LAN machine.` Continuation 096 directly satisfies it with genuine host SKETCH, enrolled Node `node-095-sketch-windows`, LAN transport `192.168.254.49 -> 192.168.254.5:18001`, project `project_d95b88f969bc44caa9cf39818d0ae9b5`, approved Goal, valid Authority, repository tree/files, current indexing/search, isolation, and allowed-root enforcement.
+2. DOD-074 separately owns generic temporary Node-offline product behavior. Its canonical-Node outage qualification remains `USER_USABLE_VERIFIED`: persisted PRIME state remained usable, Node-required operations truthfully refused, no local fallback was invented, and recovery succeeded.
+3. DOD-079 exact frozen requirement is §26.79, `Linux and Windows repository nodes are supported and qualified.` Linux qualification remains valid. Windows directly proves native SCM installation, Automatic/LocalSystem configuration, secure enrollment, private listener, allowed-root enforcement, repository/index/search use, stop/start/restart, reconnect, same Node/certificate/project/repository/revision, and idempotent installer Repair.
+4. The frozen Phase-2 disconnect/reconnect requirement is satisfied by the actual Windows service disconnection/reconnection with unchanged identity and filesystem history.
+5. Literal Windows-window `NODE_UNAVAILABLE` capture was a derived acceptance detail and is not retained as a DOD-053 or DOD-079 blocker.
+6. Historical failed observation sections remain append-only and remain truthful missed-window evidence; neither is converted to PASS.
+
+This is a reconciliation of derived gates to frozen authority, not a SpecChange.
+
+### Promotions supported
+
+- DOD-053: `USER_USABLE_VERIFIED`.
+- DOD-074: preserved `USER_USABLE_VERIFIED`.
+- DOD-079: `USER_USABLE_VERIFIED`.
+- R-031 through R-036: `VERIFIED` after reconciliation of Linux, Windows, private-plane, lifecycle, Repair, and compatibility evidence.
+- R-044 qualification-status map corrected to `verified` to match its existing verified ledger record.
+
+### Genuine frozen blocker found
+
+`BLOCKED — FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE`
+
+- Exact frozen section: §19.6 Capacity, retention, and backpressure.
+- Exact mandatory release qualification: Phase 15 requires `Large-repository/performance/capacity qualification`, and V1 may be declared qualified only when every applicable requirement is VERIFIED with traceable evidence.
+- Existing governed evidence: Continuation 027 states parser concurrency telemetry, index backlog/stale-job protection, and retention-pressure preservation remain unqualified. R-045 remains `IMPLEMENTED / OPEN` in the matrix and qualification ledger.
+- Why existing evidence is insufficient: the 300-event load proves bounded queue/refusal/drain behavior but does not close the remaining parser-concurrency, index-backlog/stale-job, and retention-pressure clauses recorded by the authoritative qualification evidence.
+
+Therefore DOD-081 and R-056 remain open; Phase 15 remains `INCOMPLETE`; V1 remains `NOT YET QUALIFIED`. The governed §26 queue is `80 complete / 1 open`. No further Windows qualification action is justified.
+
+### Runtime smoke
+
+- Core live/ready: PASSED on `127.0.0.1:8000`; build `6f7ef776c6fadc82771a952e81313ff18eee7295`, image `animus-prime-core:continuation-096-6f7ef77`, spec `PRIME-SPEC-V1.0.0`.
+- Private route: PASSED; `https://atlas-2.tail1a5964.ts.net/` returns HTTP 200 and remains tailnet-only to Core loopback. No PRIME Funnel/public Core listener exists; unrelated routes remain unchanged.
+- Windows Node reachability: PASSED; `192.168.254.5:18001` accepts TCP connection. No Windows service action occurred.
+- Operator authentication: trusted-host challenge initiation and Atlas-local approval PASSED. Post-approval browser readback was BLOCKED by gstack home-directory `EDQUOT`; gstack state was redirected to the already-authorized external tooling root, but the launcher retained the quota failure. This tooling issue is not treated as a PRIME product failure and does not alter prior qualified browser evidence.
+- Full regression: NOT RUN because no product code changed; preserved basis is `167 passed / 35 skipped / 0 failed`.

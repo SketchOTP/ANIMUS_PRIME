@@ -2691,3 +2691,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: the product-side Windows offline refusal/no-fallback point remains the sole unobserved frozen lifecycle behavior. Any further Windows lifecycle action requires fresh explicit authorization.
 - Blockers: `OFFLINE_REQUEST_DISPATCH_MISSED_STOPPED_WINDOW`; all outage probes reached Core only after service start began.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-FROZEN-EVIDENCE-FINAL-RECONCILIATION-096F - PARTIAL
+
+- Outcome ID: O-PRIME-096F
+- Supersedes outcome: O-PRIME-096P
+- Closed: 2026-08-19T12:15:49-04:00
+- Acceptance: PARTIAL
+- Summary: Direct frozen-spec reconciliation removes the derived Windows-window `NODE_UNAVAILABLE` capture as a DOD-053/DOD-079 gate. DOD-053 and DOD-079 are USER_USABLE_VERIFIED; DOD-074 remains USER_USABLE_VERIFIED. Final release is not promoted because R-045 remains a genuine frozen requirement under §19.6 and the mandatory large-repository/performance/capacity qualification.
+- Changed areas: evidence/governance only. No product code, Windows lifecycle, installer, runtime image, database, Hindsight, Tailscale, public exposure, Phase 16, or Continuation 097 change.
+- Validation:
+  - frozen §26 audit and governed burndown at 80 complete / 1 open - PASSED
+  - R-031 through R-036 and R-044 cross-view reconciliation - PASSED
+  - DOD-081 / R-056 / Phase 15 / V1 release gate - BLOCKED
+  - full regression rerun after evidence-only changes - NOT RUN
+- Remaining risks: parser concurrency telemetry, index backlog/stale-job protection, retention-pressure qualification, and large-repository/performance/capacity qualification remain incomplete.
+- Blockers: `FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE` under PRIME-SPEC-V1.0.0 §19.6 and the mandatory Phase-15 release qualification.
+- Follow-up directive: none

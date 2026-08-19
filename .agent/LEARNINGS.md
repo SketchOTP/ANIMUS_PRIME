@@ -1066,3 +1066,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 096P observation timing only; qualified authentication, Linux control, Windows pre-stop operation, and unchanged recovery remain valid.
 - Supersedes learning: L-PRIME-OFFLINE-OBSERVATION-AUTH-096O
+
+## L-PRIME-FROZEN-GATE-SEPARATION-096F
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-FROZEN-GATE-SEPARATION-096F
+- Fact or lesson: DOD-053 owns enrolled-LAN-machine project addition, DOD-074 separately owns temporary Node-offline product behavior, and DOD-079 owns qualified Linux/Windows repository Nodes. A derived request-timing detail must not be copied across those clauses. Separately, §19.6 capacity/backpressure/retention and the mandatory large-repository/performance/capacity qualification are genuine frozen release requirements, so R-045 cannot be relabeled non-release while its governed evidence says those clauses remain unqualified.
+- Evidence location: `baseline/PRIME-SPEC-V1.0.0.notion.md`; `evidence/phase15/qualification-continuation-027.md`; `evidence/phase15/qualification-continuation-096.md`; governed audit, burndown, matrix, and ledger.
+- Confidence: VERIFIED
+- Scope: Continuation 096F frozen-authority reconciliation only.
+- Supersedes learning: L-PRIME-OFFLINE-OBSERVATION-DISPATCH-096P

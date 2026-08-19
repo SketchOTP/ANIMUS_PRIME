@@ -11,68 +11,18 @@ totals_by_work_class:
   LOCAL_BROWSER_QUALIFICATION: 0
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
-  EXTERNAL_ENVIRONMENT: 2
+  EXTERNAL_ENVIRONMENT: 0
   AGGREGATE_RELEASE_GATE: 1
 items:
-  - dod_id: DOD-053
-    current_status: "BACKEND_ONLY"
-    product_area: "LAN projects"
-    owner_phase: 12
-    mapped_r_requirements: ["R-036"]
-    exact_missing_behavior: "A genuine Windows second-machine project now passes enrollment, LAN binding, Goal/authority, repository reads, indexing, search, and isolation. The issued frozen lifecycle boundary still requires service offline/reconnect evidence, blocked when the Administrator/UAC prompt was cancelled."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "YES"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "YES"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "With operator-approved Administrator/UAC elevation, stop AnimusPrimeNode, observe truthful offline state, start/restart it, and prove the same Windows project reconnects without identity or state drift."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-055.md","evidence/phase15/qualification-continuation-082.md","evidence/phase15/qualification-continuation-087.md","evidence/phase15/qualification-continuation-096.md"]
-    qualification_needed: "One bounded Windows service offline/reconnect pass against the existing real project; no new machine/project required."
-    blocked_by: "WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
-    depends_on: "R-036"
-    acceptance_kind: "MIXED"
-  - dod_id: DOD-079
-    current_status: "BLOCKED_BY_ENVIRONMENT"
-    product_area: "native nodes"
-    owner_phase: 2
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "Linux remains qualified. Genuine Windows SCM install, Automatic/LocalSystem service, secure enrollment, final identity, listener, allowed roots, repository operations, indexing, and heartbeat pass. Frozen stop/start/restart/reconnect and installer Repair/idempotence remain unqualified after the Administrator/UAC prompt was cancelled; OS reboot is not required."
-    work_class: "EXTERNAL_ENVIRONMENT"
-    requires_code: "NO"
-    requires_browser: "YES"
-    requires_native_linux: "NO"
-    requires_windows: "YES"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "YES"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "With operator-approved Administrator/UAC elevation, execute the existing Windows service stop/start/restart and unchanged installer -Repair sequence; verify offline/reconnect and exact identity/state persistence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","packaging/node/install-node.sh","packaging/node/install-node.ps1","packaging/node/prime-node.service","evidence/phase15/qualification-continuation-089.md","evidence/phase15/qualification-continuation-090.md","evidence/phase15/qualification-continuation-096.md"]
-    qualification_needed: "One bounded privileged Windows lifecycle/Repair pass; no reboot or new host required."
-    blocked_by: "WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "EXTERNAL_DEPENDENCY"
   - dod_id: DOD-081
     current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
     product_area: "release"
     owner_phase: 15
     mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "DOD-013 private second-device access and DOD-047 frozen where-available usage/cost now pass. The aggregate gate remains blocked only by the Windows service lifecycle/Repair evidence shared by DOD-053 and DOD-079."
+    exact_missing_behavior: "DOD-053 and DOD-079 satisfy their exact frozen clauses after append-only reconciliation. The aggregate gate remains blocked by R-045: parser concurrency telemetry, index backlog/stale-job protection, retention-pressure qualification, and the frozen large-repository/performance/capacity release test remain incomplete."
     work_class: "AGGREGATE_RELEASE_GATE"
     requires_code: "NO"
-    requires_browser: "YES"
+    requires_browser: "NO"
     requires_native_linux: "NO"
     requires_windows: "NO"
     requires_tailscale: "NO"
@@ -81,12 +31,12 @@ items:
     requires_external_at: "NO"
     requires_live_notion: "NO"
     requires_privilege: "NO"
-    requires_packaging: "YES"
+    requires_packaging: "NO"
     requires_clean_install: "NO"
-    next_action: "Complete the one operator-approved Windows service lifecycle/Repair boundary for DOD-053 and DOD-079, then run the final integrated R-056/DOD-081 release reconciliation."
+    next_action: "Return to the Phase-13 owner boundary for R-045, qualify the exact frozen capacity/backpressure/retention and large-repository performance clauses, then rerun final R-056/DOD-081 reconciliation."
     evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-093.md","evidence/phase15/qualification-continuation-093-external-gates.md","evidence/phase15/qualification-continuation-096.md"]
-    qualification_needed: "Final integrated release reconciliation after the shared Windows lifecycle blocker closes."
-    blocked_by: "DOD-053; DOD-079 — WINDOWS_INTERACTIVE_ELEVATION_CANCELLED"
+    qualification_needed: "R-045 capacity/backpressure/retention and large-repository/performance qualification, followed by final integrated release reconciliation."
+    blocked_by: "R-045 — FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE"
     depends_on: "R-056; aggregate R-056 gate"
     acceptance_kind: "AGGREGATE_RELEASE_GATE"
 reconciliation:
