@@ -20,3 +20,7 @@ Mechanical work classes:
 - aggregate release gate: 1
 
 These are resource and release gates, not authorization for synthetic machines, projects, providers, cost data, public exposure, specification weakening, or Phase 16. `DOD-081` and `R-056` remain open. Phase 15 and V1 remain incomplete.
+
+## Continuation 094 reconciliation
+
+Continuation 094 inspected one genuine Windows 11 x64 host on Atlas's active LAN and the existing Atlas Tailscale state. The unchanged Windows installer stopped at Service Control Manager elevation (`OpenSCManager FAILED 5: Access is denied`) from the non-elevated Codex shell, and the existing Tailscale Serve map contained no PRIME UI route. Therefore DOD-013, DOD-053, and DOD-079 remain open with their original external prerequisites; no row is promoted. Full detail is in `evidence/phase15/qualification-continuation-094.md`.

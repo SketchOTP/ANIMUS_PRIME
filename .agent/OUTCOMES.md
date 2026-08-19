@@ -2568,3 +2568,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-013, DOD-047, DOD-053, DOD-079, aggregate DOD-081/R-056, Phase 15, and V1 remain open or gated.
 - Blockers: legitimate second/Tailscale device, approved authoritative-cost provider profile, legitimate second enrolled LAN machine, and supported Windows host.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-EXTERNAL-MACHINE-CONSOLIDATION-094 - PARTIAL
+
+- Outcome ID: O-PRIME-094
+- Supersedes outcome: O-PRIME-093
+- Closed: 2026-08-18T23:55:00-04:00
+- Acceptance: PARTIAL
+- Summary: A genuine Windows 11 x64 host on the same LAN as Atlas was identified and the exact qualified PRIME source was staged in an expendable root. The unchanged Windows installer was attempted and stopped at Service Control Manager registration with status 5 (`Access is denied`) because this Codex shell could not obtain an elevated UAC token. Atlas's existing Tailscale map was inspected and contains no PRIME UI Serve route; existing Funnel and unrelated Serve routes were preserved. No DOD/R promotion occurred.
+- Validation:
+  - Windows host/LAN/Tailscale identity discovery - PASSED
+  - exact qualified source acquisition at `65e553f084f5c5fba970ad7bf25c581ab15066ff` - PASSED
+  - pinned Node dependency environment preparation - PASSED
+  - unchanged Windows installer/service registration - BLOCKED (`OpenSCManager` access denied)
+  - PRIME-owned private Serve route discovery - BLOCKED (no PRIME route exists)
+  - Windows Node enrollment/reboot/project qualification - NOT RUN
+  - product regression - NOT RUN (no product-code change)
+- DOD/R result: DOD-013, DOD-053, and DOD-079 remain open; DOD-047 remains open; DOD-081/R-056 remain gated. Queue remains 76 complete / 5 open.
+- Changed areas: Continuation 094 evidence, current state, directive/outcome/learning/decision records. No PRIME product source, runtime image, canonical Node, database, Hindsight, Funnel, or public exposure changed.
+- Remaining risks: interactive elevated Windows session, explicit reboot/service approval, PRIME-owned private Serve route, provider-backed authoritative cost, and final aggregate release qualification.
+- Blockers: `PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE`; `PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE`.
+- Follow-up directive: none

@@ -1294,3 +1294,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-LIFECYCLE-SAGA-CORRECTION-092
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-EXTERNAL-MACHINE-CONSOLIDATION-094
+
+- Issued: 2026-08-18T23:40:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 094
+- Objective: Use one genuine operator-approved Windows machine to qualify the independent DOD-079 Windows Node lifecycle, DOD-053 second-LAN-machine project boundary, and DOD-013 private second-device Tailscale Serve boundary where each complete frozen contract is satisfied.
+- Scope: Read-only machine/network/service/Tailscale discovery; unchanged-first Windows Node installer; independent enrollment; expendable Windows-hosted repository/project; native service and reboot lifecycle; private Serve/browser qualification; outage/recovery; Funnel/public refusal; cross-gate isolation; full validation; governed evidence and exact GitHub/Notion parity.
+- Exclusions: no synthetic/emulated machine or target; no canonical project/Node mutation; no PRIME Funnel/public exposure; no unrelated Funnel change; no DOD-047 work beyond blocker preservation; no frozen-spec edit; no Phase 16, deployment, DOD-081/R-056 closure, or Continuation 095.
+- Acceptance: Promote DOD-079, DOD-053, and DOD-013 independently only on complete evidence from the genuine Windows/LAN/tailnet boundaries; otherwise preserve the exact blocker and stop the affected package without manufacturing qualification state.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-FINAL-LOCAL-CLOSURE-093
+- Status at issuance: ISSUED

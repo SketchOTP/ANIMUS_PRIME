@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-18T20:05:00-04:00
+- Last updated: 2026-08-18T23:55:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-FINAL-LOCAL-CLOSURE-093
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 093
-- Objective: Complete the genuine persistent Fork workflow and the remaining frozen V1 browser/polish qualification without synthetic targets or architectural expansion.
-- Current status: `COMPLETE`
-- Acceptance: MET for Continuation 093. The real Fork child has independent project/repository/revision, authority/Goal/baseline, MCP grant, Hindsight bank, Notion Project Record, Brain, activity, and restart-persistent state. The supported-browser polish matrix passed. DOD-016 and DOD-080 are USER_USABLE_VERIFIED; the queue is 76 complete / 5 open.
-- Current phase: PHASE15_FORK_POLISH_093
-- Expected or actual touched areas: Fork workflow, project/repository/Goal/baseline/MCP/Notion/Hindsight/Brain isolation, browser polish/refusal qualification, exact runtime image, governed evidence, and append-only records. Canonical parent state, public exposure, deployment, and Phase 16 were preserved.
-- Immediate next action: Acquire one of the four explicit external prerequisites (DOD-013, DOD-047, DOD-053, DOD-079) under a separately issued directive. Do not begin R-056/DOD-081 or Continuation 094 automatically.
+- Local directive ID: D-PRIME-PHASE15-EXTERNAL-MACHINE-CONSOLIDATION-094
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 094
+- Objective: Use one genuine Windows machine to qualify the independent DOD-079 Windows Node lifecycle, DOD-053 second-LAN-machine project boundary, and DOD-013 private second-device Tailscale Serve boundary.
+- Current status: `BLOCKED`
+- Acceptance: BLOCKED at the required Windows Service Control Manager elevation and PRIME-owned private Serve boundaries. No DOD/R row was promoted; the queue remains 76 complete / 5 open.
+- Current phase: PHASE15_EXTERNAL_MACHINE_CONSOLIDATION_094
+- Expected or actual touched areas: read-only Windows/LAN/Tailscale discovery, expendable Windows qualification root, exact qualified source clone, unchanged installer attempt, Continuation 094 evidence, and append-only governance records. Canonical PRIME state, existing services, Funnel, and public boundary were preserved.
+- Immediate next action: Resume 094 only from an interactive elevated Windows session with explicit host/reboot approval and a PRIME-owned private Serve route. Do not begin DOD-081/R-056 or Continuation 095.
 
 ## Temporary task-relevant facts
 
@@ -33,12 +33,12 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 093 focused Fork/browser qualification, persistent restart/replay/isolation matrix, persistent readiness, and full supported regression
-- Result: PASSED
+- Command or check: Continuation 094 host discovery, exact-source acquisition, unchanged Windows installer attempt, Atlas listener/Serve ownership inspection
+- Result: BLOCKED
 
 ## Risks
 
-- R-045/DOD-047 authoritative provider cost; DOD-053 second enrolled LAN machine; DOD-079 Windows native lifecycle; DOD-013 Tailscale/second device; DOD-081/R-056; Phase 15/V1.
+- R-045/DOD-047 authoritative provider cost; DOD-053 second enrolled LAN machine; DOD-079 Windows native lifecycle/elevation; DOD-013 PRIME-owned private Serve/second device; DOD-081/R-056; Phase 15/V1.
 
 ## Blockers
 
@@ -48,12 +48,14 @@
 - AI_MEMORY_ACTIVITY_QUERY_RETURNED_MEMORY_AND_SESSION_IDENTITY_NOT_PERSISTED: RESOLVED by Continuation 080 durable MCP activity projection and restart qualification.
 - PRIME_WARM_START_SELECTED_NOTION_SOURCE_UNAVAILABLE: RESOLVED for bounded Continuation 086 — explicit selected Notion fixture admitted through the real browser with source/revision/hash provenance; fixture remains non-authoritative.
 - PRIME_QUALIFICATION_VM_RUNTIME_UNAVAILABLE: RESOLVED for Linux qualification by the bounded Firecracker 1.16.1 guest; no QEMU/libvirt stack was installed.
-- PRIME_NATIVE_WINDOWS_QUALIFICATION_HOST_UNAVAILABLE: BLOCKED — DOD-079 requires an actual supported Windows host for native lifecycle qualification.
+- PRIME_NATIVE_WINDOWS_QUALIFICATION_HOST_UNAVAILABLE: RESOLVED as a host-discovery blocker — a genuine supported Windows host is identified; native qualification remains blocked by the separate elevation/service boundary.
+- PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE: BLOCKED — a genuine Windows host was identified, but the current Codex shell cannot cross the interactive UAC boundary; the unchanged installer failed at OpenSCManager with Access denied.
+- PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE: BLOCKED — the current Tailscale Serve map has no PRIME UI route; existing Funnel and other routes were preserved and not reused.
 - PRIME_EXTERNAL_RELEASE_PREREQUISITES: BLOCKED — DOD-013, DOD-047, DOD-053, and DOD-079 require legitimate external resources; local code/browser qualification is exhausted.
 
 ## Pending decisions
 
-- Runtime Notion credential and backend lifecycle remain qualified; DOD-016 and DOD-080 are promoted by 093. Keep DOD-081/R-056 last and preserve the four exact external-resource gates.
+- Runtime Notion credential and backend lifecycle remain qualified; DOD-016 and DOD-080 are promoted by 093. Keep DOD-081/R-056 last and preserve the four exact external-resource gates. Continuation 094's Windows candidate is not yet a qualified target because the required elevation and PRIME-owned Serve path are unavailable.
 - Keep the persistent topology preserved, provider/second-LAN/Windows/Tailscale gates truthful, DOD-081/R-056 last, and Phase 16/deployment out of scope. The independent restore, fresh Node-backed onboarding, repository-creation recovery, and Linux-native gates are now closed.
 
 ## Status vocabulary

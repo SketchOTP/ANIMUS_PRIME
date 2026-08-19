@@ -1002,6 +1002,16 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 093 Fork identity/isolation and persistent browser tooling only.
 - Supersedes learning: none
+
+## L-PRIME-EXTERNAL-MACHINE-ELEVATION-AND-SERVE-094
+
+- Date: 2026-08-18
+- Learning ID: L-PRIME-EXTERNAL-MACHINE-ELEVATION-AND-SERVE-094
+- Fact or lesson: A genuine Windows host and same-LAN relationship do not by themselves satisfy native Node or second-machine qualification. The unchanged Windows installer requires an elevated Service Control Manager token, and PRIME private remote qualification requires an actual PRIME-owned Tailscale Serve route; unrelated Funnel or other tailnet-only routes cannot be reused as PRIME evidence.
+- Evidence location: `evidence/phase15/qualification-continuation-094.md`; `packaging/node/install-node.ps1`; Atlas `tailscale serve status` and listener ownership inspection.
+- Confidence: VERIFIED
+- Scope: Continuation 094 external-machine discovery and stop boundary only.
+- Supersedes learning: none
 - 2026-08-18 — Continuation 087: An isolated restore harness can truthfully verify component fidelity, outage recovery, source-ledger rebuild, and refusal behavior without closing the complete browser restore/restart contract. A fixture reaching DELETION_PENDING proves protected initiation and step-up, not terminal deletion or cleanup. Reclassify a row to EXTERNAL_ENVIRONMENT when its missing behavior requires a real second machine or other durable operator resource; do not manufacture that target.
 - 2026-08-18 — Continuation 088: An isolated clean-install appliance is a valid qualification target only when its Node and project-bound Hindsight dependencies are real. A and B can prove setup/authentication, truthful degraded state, restore-input refusal, and lifecycle security without inventing a second Node. The current UI exposes DELETE to DELETION_PENDING but not the protected terminal PURGE action; API terminal evidence must therefore remain separate from complete browser qualification.
 - 2026-08-18 — Continuation 089: Atlas hardware virtualization is not the same as an available qualification machine. A legitimate VM run requires an installed approved guest runtime, bounded storage/memory, independent guest identity and filesystem, and a safe network path. With only `/dev/kvm`, no QEMU/libvirt/LXD/equivalent runtime, constrained root capacity, and no existing physical LAN bridge, do not install a large host stack or claim a second machine. Repository Node installer/service files exist, but live native qualification remains unverified until an approved independent target exists.

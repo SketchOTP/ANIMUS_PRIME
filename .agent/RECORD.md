@@ -885,3 +885,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The legitimate persistent child is distinct across every frozen Fork identity and integration boundary, survives restart, and is idempotent under exact replay. The supported real browser passed the remaining responsive, keyboard/focus, empty, confirmation/refusal, clean-console, and no-unnecessary-complexity acceptance matrix. Full supported regression passed with zero failures.
 - Affected areas: Fork workflow/Core routes and tests, child Goal compatibility, API input validation, exact persistent Core image, external gstack browser tooling, Continuation 093 evidence, governed queue, and append-only records. Parent canonical state, public exposure, deployment, Phase 16, and frozen specification were preserved.
 - Supersedes record: DEC-PRIME-PHASE15-092
+
+## DEC-PRIME-PHASE15-094
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-094
+- Status: ACTIVE
+- Decision or event: Stop Continuation 094 at the external Windows service-elevation and PRIME private-Serve boundaries; accept the bounded discovery as BLOCKED with no DOD/R promotion.
+- Rationale: The candidate is a genuine Windows 11 x64 machine on Atlas's active LAN and has a distinct Tailscale identity, but the unchanged installer could not register a Windows service without an elevated UAC token in this session. Atlas's current Tailscale Serve map has no PRIME UI route, while existing Funnel and unrelated Serve routes were preserved. Qualification must resume only after the exact operator prerequisites are available; no synthetic machine, route, or evidence is permitted.
+- Affected areas: Continuation 094 evidence and external-gate references. No PRIME product implementation, canonical Node, persistent database, Hindsight, Funnel, deployment, public exposure, Phase 16, or frozen specification changed.
+- Supersedes record: DEC-PRIME-PHASE15-093
