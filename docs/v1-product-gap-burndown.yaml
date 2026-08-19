@@ -12,33 +12,8 @@ totals_by_work_class:
   LOCAL_NATIVE_QUALIFICATION: 0
   EVIDENCE_RECONCILIATION: 0
   EXTERNAL_ENVIRONMENT: 0
-  AGGREGATE_RELEASE_GATE: 1
-items:
-  - dod_id: DOD-081
-    current_status: "IMPLEMENTED_NOT_PRODUCT_QUALIFIED"
-    product_area: "release"
-    owner_phase: 15
-    mapped_r_requirements: ["R-056"]
-    exact_missing_behavior: "DOD-053 and DOD-079 satisfy their exact frozen clauses after append-only reconciliation. The aggregate gate remains blocked by R-045: parser concurrency telemetry, index backlog/stale-job protection, retention-pressure qualification, and the frozen large-repository/performance/capacity release test remain incomplete."
-    work_class: "AGGREGATE_RELEASE_GATE"
-    requires_code: "NO"
-    requires_browser: "NO"
-    requires_native_linux: "NO"
-    requires_windows: "NO"
-    requires_tailscale: "NO"
-    requires_second_device: "NO"
-    requires_hindsight: "NO"
-    requires_external_at: "NO"
-    requires_live_notion: "NO"
-    requires_privilege: "NO"
-    requires_packaging: "NO"
-    requires_clean_install: "NO"
-    next_action: "Return to the Phase-13 owner boundary for R-045, qualify the exact frozen capacity/backpressure/retention and large-repository performance clauses, then rerun final R-056/DOD-081 reconciliation."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py","evidence/phase15/qualification-continuation-093.md","evidence/phase15/qualification-continuation-093-external-gates.md","evidence/phase15/qualification-continuation-096.md"]
-    qualification_needed: "R-045 capacity/backpressure/retention and large-repository/performance qualification, followed by final integrated release reconciliation."
-    blocked_by: "R-045 — FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE"
-    depends_on: "R-056; aggregate R-056 gate"
-    acceptance_kind: "AGGREGATE_RELEASE_GATE"
+  AGGREGATE_RELEASE_GATE: 0
+items: []
 reconciliation:
   complete_plus_items_must_equal: 81
   item_status_must_equal_authoritative_audit: true

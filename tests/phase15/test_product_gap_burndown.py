@@ -46,6 +46,42 @@ def test_duplicate_or_complete_burndown_row_fails(tmp_path: Path) -> None:
     audit_path, burndown_path = _copies(tmp_path)
     audit = yaml.safe_load(audit_path.read_text(encoding="utf-8"))
     burndown = yaml.safe_load(burndown_path.read_text(encoding="utf-8"))
+    if not burndown["items"]:
+        fixture = next(item for item in audit["items"] if item["status"] == "PRODUCT_VERIFIED")
+        fixture["status"] = "BACKEND_ONLY"
+        audit["declared_status_counts"]["PRODUCT_VERIFIED"] -= 1
+        audit["declared_status_counts"]["BACKEND_ONLY"] += 1
+        burndown["items"].append(
+            {
+                "dod_id": fixture["dod_id"],
+                "current_status": "BACKEND_ONLY",
+                "acceptance_kind": fixture["acceptance_kind"],
+                "product_area": "test-fixture",
+                "owner_phase": 15,
+                "mapped_r_requirements": [],
+                "exact_missing_behavior": "temporary duplicate-row fixture",
+                "work_class": "LOCAL_CODE",
+                "requires_code": "YES",
+                "requires_browser": "NO",
+                "requires_native_linux": "NO",
+                "requires_windows": "NO",
+                "requires_tailscale": "NO",
+                "requires_second_device": "NO",
+                "requires_hindsight": "NO",
+                "requires_external_at": "NO",
+                "requires_live_notion": "NO",
+                "requires_privilege": "NO",
+                "requires_packaging": "NO",
+                "requires_clean_install": "NO",
+                "next_action": "test",
+                "evidence_already_available": [],
+                "qualification_needed": "test",
+                "blocked_by": "NONE",
+                "depends_on": "NONE",
+            }
+        )
+        burndown["totals_by_work_class"]["LOCAL_CODE"] += 1
+        audit_path.write_text(yaml.safe_dump(audit, sort_keys=False), encoding="utf-8")
     burndown["items"].append(deepcopy(burndown["items"][0]))
     completed_id = next(item["dod_id"] for item in audit["items"] if item["status"] == "PRODUCT_VERIFIED")
     completed_row = deepcopy(burndown["items"][0])

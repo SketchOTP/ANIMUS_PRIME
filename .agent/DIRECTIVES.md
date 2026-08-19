@@ -1406,3 +1406,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: supersedes
 - Related directive: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096P
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G
+
+- Issued: 2026-08-19T12:30:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096G
+- Objective: Close the sole remaining frozen R-045 capacity, retention, backpressure, and representative-large-repository qualification boundary, then reconcile the final V1 release gates if and only if the complete frozen clause passes.
+- Scope: Frozen-clause classification before code; minimal existing-architecture capacity-policy, per-project concurrency, disk-pressure, retention-protection, diagnostics, index backlog/stale-job, large-repository, reconnect, and preserved usage/cost qualification; final governance/GitHub/Notion closeout.
+- Exclusions: no Windows action; no Tailscale/Funnel/public exposure change; no Phase 16; no Continuation 097; no real host disk exhaustion; no destructive protected-history pruning; no synthetic replacement architecture.
+- Acceptance: R-045 fully satisfies PRIME-SPEC-V1.0.0 §19.6 with representative evidence and green supported release validation; only then DOD-081, R-056, Phase 15, and private V1 may close at 81/81.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-FROZEN-EVIDENCE-FINAL-RECONCILIATION-096F
+- Status at issuance: ISSUED

@@ -1076,3 +1076,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 096F frozen-authority reconciliation only.
 - Supersedes learning: L-PRIME-OFFLINE-OBSERVATION-DISPATCH-096P
+
+## L-PRIME-CAPACITY-CLOSURE-096G
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-CAPACITY-CLOSURE-096G
+- Fact or lesson: PRIME's existing PostgreSQL durable-job architecture was sufficient for the frozen capacity boundary once admission and claims used durable global/project policies, project running limits, and source-key coalescing. Automatic pressure cleanup must be class-based: rebuildable Brain/cache projections may be pruned, while Time Lens/history/citations/checkpoints/Goal/Progress/corrections/SourceReferences and durable Hindsight memory remain protected. Deterministic disk-threshold simulation qualifies refusal/recovery without physically exhausting Atlas.
+- Evidence location: `evidence/phase15/r045-frozen-clause-matrix-096g.md`; `evidence/phase15/qualification-continuation-096g.md`; migration `0041_capacity_controls.sql`; `scripts/phase15_qualify_continuation_096g.py`.
+- Confidence: VERIFIED
+- Scope: Frozen PRIME-SPEC-V1.0.0 §19.6 capacity/backpressure/retention and representative-repository release qualification.
+- Supersedes learning: L-PRIME-FROZEN-GATE-SEPARATION-096F

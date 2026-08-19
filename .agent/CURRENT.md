@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T12:15:49-04:00
+- Last updated: 2026-08-19T15:15:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-FROZEN-EVIDENCE-FINAL-RECONCILIATION-096F
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096 (frozen-evidence final reconciliation)
-- Objective: Reconcile DOD-053, DOD-074, DOD-079, DOD-081, R-056, Phase 15, and V1 directly against PRIME-SPEC-V1.0.0 without another Windows lifecycle action.
-- Current status: `BLOCKED`
+- Local directive ID: D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096G
+- Objective: Close the sole remaining R-045 capacity/retention/backpressure and representative-large-repository boundary, then reconcile final V1 gates only if the frozen clause passes.
+- Current status: `COMPLETE`
 - Acceptance: All frozen V1 requirements directly verified or truthfully conditional by their normative wording; full release validation has no unexplained failures; R-056, DOD-081, Phase 15, and private V1 pass; the persistent private product remains operator-usable with no Funnel/public exposure.
 - Current phase: PHASE15_PRODUCTION_READINESS_CLOSURE_096
-- Expected or actual touched areas: Windows Node enrollment/service/LAN repository, PRIME-owned private Serve, usage/cost governance reconciliation, complete V1 ledgers, final qualification evidence, release validation, persistent runtime, GitHub parity, and Notion SOT.
-- Immediate next action: Return to the Architect with the exact frozen R-045 blocker: §19.6 capacity/backpressure/retention plus the mandatory large-repository/performance/capacity qualification remain incomplete. Do not perform another Windows lifecycle action or start Continuation 097.
+- Expected or actual touched areas: PostgreSQL durable capacity controls, job admission/claims, index coalescing/stale protection, retention safety, disk-pressure admission, Diagnostics, isolated representative repository qualification, complete V1 ledgers, final evidence, persistent runtime, GitHub parity, and Notion SOT.
+- Immediate next action: Preserve the qualified private V1 runtime and await an explicit post-V1 directive. Do not start Phase 16, public deployment, or Continuation 097.
 
 ## Temporary task-relevant facts
 
@@ -36,12 +36,12 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 096 focused Windows/remote-access suites, persistent runtime/browser/LAN qualification, complete supported regression, compile, governance, burndown, alignment, and secret/diff review
-- Result: `BLOCKED`
+- Command or check: Continuation 096G frozen matrix, focused 11-test database-backed suite, representative 6,001-file pressure qualification, complete 167-pass supported regression, persistent runtime/browser qualification, compile, governance, burndown, alignment, and secret/diff review
+- Result: `PASSED`
 
 ## Risks
 
-- DOD-053 and DOD-079 now satisfy their exact frozen clauses. DOD-081/R-056, Phase 15, and V1 remain gated by R-045 because its capacity/backpressure/retention clauses and the mandatory large-repository/performance/capacity qualification are frozen release requirements, not optional evidence polish.
+- No frozen V1 blocker remains. The governed audit is 81 complete / 0 open; DOD-081 and R-056 are verified; Phase 15 is complete; V1 is qualified for private production use only. Public deployment and Phase 16 remain unauthorized.
 
 ## Blockers
 
@@ -57,12 +57,12 @@
 - PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE: RESOLVED — PRIME-owned private HTTPS Serve is active and qualified from SKETCH with authentication and no PRIME Funnel/public listener.
 - DOD_047_AUTHORITATIVE_COST_HARD_GATE: RESOLVED AS DERIVED DRIFT — frozen monetary cost is conditional where available; truthful UNAVAILABLE plus usage attribution/limits/refusal/recovery pass.
 - WINDOWS_INTERACTIVE_ELEVATION_CANCELLED: RESOLVED / SUPERSEDED — subsequent authorized lifecycle and Repair passed; the missed literal Windows-window response remains historical evidence but is not a DOD-053 or DOD-079 frozen blocker.
-- FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE: ACTIVE — R-045 remains open for parser concurrency telemetry, index backlog/stale-job protection, retention-pressure qualification, and the §24A.18 large-repository/performance/capacity release test.
+- FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE: RESOLVED — Continuation 096G qualifies durable per-project concurrency, bounded admission/fairness, coalescing, stale-job refusal, protected retention, simulated disk pressure, representative repository capacity, diagnostics, restart and drain recovery.
 
 ## Pending decisions
 
-- Continuation 096 now promotes DOD-053 and DOD-079 and verifies R-031 through R-036 after direct frozen-clause reconciliation. Governed §26 queue is 80 complete / 1 open; DOD-074 remains USER_USABLE_VERIFIED. DOD-081/R-056 remain open only on R-045.
-- Preserve the running private Core, Windows Node/project, and private Serve route. No further Windows outage, Repair, reboot, third machine, public exposure, Funnel change, Phase 16, or Continuation 097 is authorized.
+- Continuation 096G closes R-045, DOD-081 and R-056. Governed §26 queue is 81 complete / 0 open; Phase 15 is complete and V1 is qualified against PRIME-SPEC-V1.0.0 for private production use.
+- Preserve the running private Core, Windows Node/project, private Serve route, external qualification fixture, and stopped rollback container. No public exposure, Funnel change, Phase 16, or Continuation 097 is authorized.
 
 - 095A correction: Continuation 090's Linux first-start mechanism is confirmed by preserved artifacts and the repository provisioning precedent: a fresh Node CSR was signed on the trusted Atlas side into a short-lived pre-enrollment server certificate, while the guest received only its own private key, that certificate, the Atlas CA public certificate, and the bootstrap-signing public key.
 - 095A correction: The Node then started with mandatory TLS/mTLS, used the Core-issued short-lived bootstrap credential over that channel, submitted CSR proof, and received the long-lived certificate and bearer credential only after operator approval.

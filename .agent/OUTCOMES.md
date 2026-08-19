@@ -2708,3 +2708,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: parser concurrency telemetry, index backlog/stale-job protection, retention-pressure qualification, and large-repository/performance/capacity qualification remain incomplete.
 - Blockers: `FROZEN_CAPACITY_QUALIFICATION_INCOMPLETE` under PRIME-SPEC-V1.0.0 §19.6 and the mandatory Phase-15 release qualification.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G - COMPLETE
+
+- Outcome ID: O-PRIME-096G
+- Supersedes outcome: O-PRIME-096F
+- Closed: 2026-08-19T15:15:00-04:00
+- Acceptance: MET
+- Summary: Closed the sole remaining frozen R-045 boundary with minimal PostgreSQL-backed global/project capacity policy, per-project running limits and fair claims, durable coalescing, stale-revision refusal, protected retention, simulated disk-pressure admission, operator Diagnostics, and representative 6,001-file external-storage qualification. The exact implementation was rebuilt into the persistent private Core and survived service-manager restart. R-045, DOD-081, and R-056 are verified; §26 is 81 complete / 0 open; Phase 15 is complete; V1 is qualified for private production use.
+- Changed areas: migration 0041, existing durable job/index/retention/reliability/Diagnostics paths, focused tests and qualification script, five governed YAML views, append-only Continuation 096/096G evidence and `.agent` records. No Windows, Tailscale/Funnel, public deployment, Phase 16, or Continuation 097 change.
+- Validation:
+  - frozen R-045 clause matrix - PASSED
+  - focused database-backed tests - 11 passed
+  - representative repository integrated pressure qualification - PASSED
+  - complete supported regression - 167 passed / 41 skipped / 0 failed
+  - persistent image provenance/restart/readiness - PASSED
+  - authenticated private browser Diagnostics and clean post-auth console - PASSED
+  - governance/burndown/YAML/diff/secret/parity - PASSED at closeout
+- DOD/R result: R-045 VERIFIED; DOD-081 PRODUCT_VERIFIED; R-056 VERIFIED; 81 complete / 0 open; Phase 15 COMPLETE; V1 QUALIFIED for private production use.
+- Remaining risks: historical environment-backed skips remain explicit; public deployment and Phase 16 are not authorized. The prior stopped Core container is retained as rollback evidence and the representative fixture remains marked noncanonical on external storage.
+- Blockers: none under frozen V1.
+- Follow-up directive: none

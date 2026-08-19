@@ -955,3 +955,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Continuation 096 directly proves the enrolled Windows LAN project and qualified Windows Node lifecycle/Repair/reconnect contract. The missed literal offline-window request belongs to no separate DOD-053/DOD-079 clause. However, PRIME-SPEC-V1.0.0 §19.6 and the mandatory release qualification explicitly retain capacity/backpressure/retention and large-repository/performance/capacity requirements, and existing R-045 evidence records those exact gaps as unqualified.
 - Affected areas: governed audit, burndown, traceability, Phase-15 matrix/ledger, Continuation 096 evidence, GitHub and Notion projection. No product/runtime/Windows/Tailscale/deployment mutation.
 - Supersedes record: DEC-PRIME-PHASE15-096P
+
+## DEC-PRIME-PHASE15-096G
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096G
+- Status: ACTIVE
+- Decision or event: Accept Continuation 096G as COMPLETE, verify R-045 and aggregate R-056/DOD-081, reconcile the frozen §26 audit to 81 complete / 0 open, close Phase 15, and qualify ANIMUS PRIME V1 for private production use against PRIME-SPEC-V1.0.0.
+- Rationale: Direct isolated pressure qualification proves bounded global/project queues and running work, fair progress, source-key coalescing, stale-job refusal, canonical-write priority, protected retention, no automatic Hindsight deletion, truthful simulated disk CRITICAL behavior, representative 6,001-file index/search/incremental performance, drain/recovery, authenticated operator diagnostics, and persistent restart recovery. Full supported regression is 167 passed / 41 skipped / 0 failed.
+- Affected areas: bounded PostgreSQL capacity controls, existing index/job/retention/Diagnostics paths, persistent private Core image, R-045/R-056/DOD-081 governance, final Phase-15/V1 evidence, GitHub and Notion SOT. No Windows action, public exposure, Funnel change, deployment, Phase 16, frozen-spec modification, or Continuation 097.
+- Supersedes record: DEC-PRIME-PHASE15-096F

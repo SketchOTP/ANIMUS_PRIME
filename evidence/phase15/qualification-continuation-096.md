@@ -255,3 +255,16 @@ Therefore DOD-081 and R-056 remain open; Phase 15 remains `INCOMPLETE`; V1 remai
 - Operator authentication: trusted-host challenge initiation and Atlas-local approval PASSED. Post-approval browser readback was BLOCKED by gstack home-directory `EDQUOT`; gstack state was redirected to the already-authorized external tooling root, but the launcher retained the quota failure. This tooling issue is not treated as a PRIME product failure and does not alter prior qualified browser evidence.
 - Full regression: NOT RUN because no product code changed; preserved basis is `167 passed / 35 skipped / 0 failed`.
 - Qualified evidence reconciliation commit: `af7ddb1e977e36bb4a4ae39d48b39881dbe4f7a3`.
+
+## Append-only 096G R-045 capacity closure
+
+Continuation 096G closes the genuine frozen blocker identified by 096F. The exact clause matrix, implementation, integrated pressure results, browser diagnostics, runtime provenance, and validation are recorded in `evidence/phase15/qualification-continuation-096g.md`.
+
+- Qualified implementation: `d067a247dbeea47eb8b061111db04e7cd95bebe2`.
+- R-045: `VERIFIED`.
+- DOD-081: `PRODUCT_VERIFIED`.
+- R-056: `VERIFIED`.
+- Frozen §26 count: `81 complete / 0 open`.
+- Phase 15: `COMPLETE`.
+- V1: `QUALIFIED` for private production use against `PRIME-SPEC-V1.0.0`.
+- Public deployment/Funnel/Phase 16/Continuation 097: not performed.
