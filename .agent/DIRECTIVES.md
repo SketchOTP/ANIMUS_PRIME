@@ -1434,3 +1434,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-PHASE15-R045-CAPACITY-CLOSURE-096G
 - Status at issuance: ISSUED
+
+## D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001
+
+- Issued: 2026-08-19T20:00:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME post-V1 UX design remediation brief
+- Objective: Locate the authoritative ANIMUS ONE implementation, audit the current PRIME UI against it, extract the reusable design system, and publish an implementation-ready post-V1 remediation plan.
+- Scope: Source and live-UI inspection; page-by-page drift audit; design-token, shell, navigation, component, content-density, responsive, accessibility, and state-preservation guidance; documentation-only publication; minimal append-only `.agent` and Notion SOT closeout.
+- Exclusions: no PRIME or ANIMUS ONE product code; no runtime, database, persistent state, network, deployment, Funnel/public exposure, Phase 16, Continuation 097, or frozen V1 governance change.
+- Acceptance: A canonical brief under `docs/post-v1/` identifies source provenance, inventories the complete PRIME operator surface, defines the transferable ANIMUS ONE design language, provides prioritized implementation waves and measurable future acceptance criteria, preserves the qualified V1 posture, publishes exact Git parity, and is recorded/read back in the main Notion SOT.
+- Risk class: NORMAL
+- Relationship: post-V1 successor initiative
+- Related directive: D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H
+- Status at issuance: ISSUED
