@@ -1096,3 +1096,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Final frozen V1 governance consistency only; no product/runtime qualification was repeated or changed.
 - Supersedes learning: none
+
+## L-PRIME-POSTV1-UX-STRUCTURAL-DRIFT-001
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-POSTV1-UX-STRUCTURAL-DRIFT-001
+- Fact or lesson: PRIME's post-V1 UX gap is structural rather than merely cosmetic. The qualified shell mounts most global, setup, project, integration, lifecycle, and diagnostic surfaces in one long document with nearly equal visual weight. The authoritative ANIMUS ONE source demonstrates the useful corrective pattern: compact project identity, contextual tabs, one active surface, concise status summaries, progressive disclosure, accessible icon actions, and restrained neon emphasis. Transferring that language must preserve PRIME's richer provenance, authority, degraded-state, security-negative, and destructive-action contracts.
+- Evidence location: `docs/post-v1/ANIMUS-PRIME-UX-DESIGN-REMEDIATION-BRIEF.md`; PRIME `apps/web/index.html` at `a4ef39e`; ANIMUS ONE source at `/home/sketch/Projects/animus_directive` baseline `550b303`.
+- Confidence: VERIFIED
+- Scope: post-V1 information architecture and visual-system convergence planning only.
+- Supersedes learning: none

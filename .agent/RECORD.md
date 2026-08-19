@@ -975,3 +975,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Independent review confirmed the product and qualification evidence pass, but the traceability file still reported FAIL and nonterminal R-001 through R-029 rows because the product-alignment validator did not read that view. The reconciliation preserves historical notes while making every current V1 row terminal and prevents recurrence.
 - Affected areas: requirements traceability, governance validator/tests, append-only 096H evidence and project records, GitHub, and Notion SOT/checkpoint. No application/runtime behavior, persistent state, networking, deployment, Phase 16, frozen spec, or Continuation 097.
 - Supersedes record: DEC-PRIME-PHASE15-096G
+
+## DEC-PRIME-POSTV1-UX-001
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-POSTV1-UX-001
+- Status: ACTIVE
+- Decision or event: Adopt ANIMUS ONE as the visual and interaction-language baseline for a future bounded PRIME UX convergence initiative, while preserving the qualified frozen V1 behavior and requiring separate implementation authority.
+- Rationale: Read-only source and live-browser evidence show that PRIME's current long-form, equal-weight shell is cognitively expensive, while ANIMUS ONE already provides a proven compact project-centric system. The safe transfer is information architecture, tokens, component hierarchy, navigation, progressive disclosure, and restrained neon identity—not a blind code copy or simplification of PRIME's security/provenance semantics.
+- Affected areas: canonical post-V1 UX design brief and future planning only. No application/runtime behavior, persistent state, networking, deployment, Phase 16, frozen spec, or Continuation 097.
+- Supersedes record: none; DEC-PRIME-PHASE15-096H remains authoritative for V1 closure.

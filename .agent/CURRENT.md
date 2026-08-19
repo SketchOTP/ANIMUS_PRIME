@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T19:00:26-04:00
+- Last updated: 2026-08-19T19:45:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096H governance normalization
-- Objective: Normalize final Phase-15 traceability and enforce cross-view release consistency without changing the qualified product/runtime.
+- Local directive ID: D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001
+- External directive ID: ANIMUS PRIME post-V1 UX design remediation brief
+- Objective: Audit PRIME against the authoritative ANIMUS ONE implementation and publish an implementation-ready, documentation-only UX convergence plan.
 - Current status: `COMPLETE`
-- Acceptance: Requirements traceability reports PASS with R-001 through R-029 VERIFIED, zero unresolved V1 rows, and exact agreement with the 81/81 audit, empty burndown, verified R-045/R-056, DOD-081 PRODUCT_VERIFIED, Phase 15 COMPLETE, and private V1 qualification.
-- Current phase: PHASE15_COMPLETE
-- Expected or actual touched areas: requirements traceability, cross-view governance validator/tests, append-only 096H evidence and agent ledgers, GitHub parity, and Notion SOT/checkpoint readback only.
-- Immediate next action: Preserve the qualified private V1 runtime and await an explicit post-V1 directive. Do not start Phase 16, public deployment, or Continuation 097.
+- Acceptance: Canonical post-V1 brief records exact PRIME/ANIMUS ONE provenance, complete surface drift, extracted tokens/patterns, target architecture, prioritized implementation waves, and measurable future acceptance criteria while preserving qualified V1 and making no product/runtime change.
+- Current phase: POST_V1_DESIGN_PLANNING
+- Expected or actual touched areas: `docs/post-v1/`, append-only `.agent` records, GitHub parity, and main Notion SOT readback only.
+- Immediate next action: Preserve the qualified private V1 runtime and await explicit authority for a bounded Wave A implementation. Do not infer Phase 16, public deployment, Continuation 097, or implementation authority from this brief.
 
 ## Temporary task-relevant facts
 
@@ -36,12 +36,12 @@
 
 ## Last validation after adoption
 
-- Command or check: Continuation 096H focused cross-view regression, traceability/alignment/burndown/governance/YAML/diff/secret checks, plus preserved Continuation 096G full regression and runtime qualification
+- Command or check: post-V1 brief structural/diff/secret/Git-parity checks, live PRIME read-only browser audit, and read-only ANIMUS ONE source/provenance inspection; preserved Continuation 096G/096H qualification basis
 - Result: `PASSED`
 
 ## Risks
 
-- No frozen V1 blocker remains. The governed audit is 81 complete / 0 open; DOD-081 and R-056 are verified; Phase 15 is complete; V1 is qualified for private production use only. Public deployment and Phase 16 remain unauthorized.
+- No frozen V1 blocker remains. The governed audit is 81 complete / 0 open; DOD-081 and R-056 are verified; Phase 15 is complete; V1 is qualified for private production use only. The current UI remains functionally qualified but has a documented post-V1 information-architecture and product-design gap. Public deployment, Phase 16, Continuation 097, and UX implementation remain unauthorized.
 
 ## Blockers
 
@@ -61,7 +61,7 @@
 
 ## Pending decisions
 
-- Continuation 096G closes R-045, DOD-081 and R-056. Governed §26 queue is 81 complete / 0 open; Phase 15 is complete and V1 is qualified against PRIME-SPEC-V1.0.0 for private production use.
+- The canonical UX remediation brief recommends a bounded shell/Home/Projects Wave A as the first future implementation slice. It is a plan only; implementation requires a new explicit directive. The governed §26 queue remains 81 complete / 0 open and frozen V1 remains qualified.
 - Preserve the running private Core, Windows Node/project, private Serve route, external qualification fixture, and stopped rollback container. No public exposure, Funnel change, Phase 16, or Continuation 097 is authorized.
 
 - 095A correction: Continuation 090's Linux first-start mechanism is confirmed by preserved artifacts and the repository provisioning precedent: a fresh Node CSR was signed on the trusted Atlas side into a short-lived pre-enrollment server certificate, while the guest received only its own private key, that certificate, the Atlas CA public certificate, and the bootstrap-signing public key.
