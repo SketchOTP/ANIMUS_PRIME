@@ -1046,3 +1046,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 096 Windows Node/LAN project, private Serve, derived-gate reconciliation, and exact release blocker.
 - Supersedes learning: none
+
+## L-PRIME-OFFLINE-OBSERVATION-AUTH-096O
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-OFFLINE-OBSERVATION-AUTH-096O
+- Fact or lesson: A Windows Node stop/start transcript is not evidence of PRIME's offline product behavior. The browser's protected session and trusted-host approval helper must be proven live immediately before the bounded stop; a 401 during the stopped interval clears project context and prevents a Node-backed request, so neither truthful `NODE_UNAVAILABLE` behavior nor no-fallback behavior may be inferred.
+- Evidence location: `evidence/phase15/qualification-continuation-096.md`; Core access logs at `2026-08-19T15:23:47Z` and `15:23:53Z`; Windows transcript `C:\PRIME-V1-Qualification\096R-offline-observation-output.txt`.
+- Confidence: VERIFIED
+- Scope: Continuation 096O observation failure only; it does not reopen the already-passed service lifecycle/Repair evidence.
+- Supersedes learning: none

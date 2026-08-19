@@ -925,3 +925,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: Qualified implementation `6f7ef776c6fadc82771a952e81313ff18eee7295` establishes the genuine Windows Node/project over LAN and the authenticated private PRIME URL while preserving unrelated routes. Full regression passes. The frozen service stop/start/restart/reconnect and installer Repair evidence cannot be claimed because the operator cancelled UAC; no bypass is permitted.
 - Affected areas: Windows SCM packaging/enrollment/path/index/Git behavior, persistent Core image and private origin, PRIME-owned Tailscale Serve, SKETCH browser/LAN evidence, DOD-013/DOD-047 and R-035/R-036 governance, and append-only records. No public exposure, PRIME Funnel, deployment, Phase 16, reboot requirement, or fabricated monetary cost.
 - Supersedes record: DEC-PRIME-PHASE15-095A
+
+## DEC-PRIME-PHASE15-096O
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096O
+- Status: ACTIVE
+- Decision or event: Preserve the final observation-only action as BLOCKED and make no DOD/R/Phase/V1 promotion because the only stopped interval produced unauthenticated Core requests rather than a live Node-required repository refusal.
+- Rationale: The Windows service mutation and unchanged recovery passed, but the frozen missing point was specifically operator-visible Core behavior while the Node was offline. Core returned 401, the UI cleared project context, and no Node-backed request executed. Repeating the service action was outside the one-action authorization.
+- Affected areas: append-only Continuation 096 evidence/governance only. No product code, installer, runtime image, Tailscale, repository, deployment, public exposure, Phase 16, or Continuation 097 change.
+- Supersedes record: DEC-PRIME-PHASE15-096

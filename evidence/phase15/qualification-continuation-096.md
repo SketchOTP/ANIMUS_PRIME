@@ -127,3 +127,41 @@ DOD-047 is `USER_USABLE_VERIFIED`. R-045 remains independently open for its pars
 Frozen clause requiring it: Phase 2/Phase 14 native Node and installer/service qualification requires Windows service startup/restart plus Node disconnect/reconnect and installer/service repair behavior. The supported SCM operations require an Administrator/UAC-approved Windows session. The cancelled prompt prevented those checks while leaving the service safely running.
 
 Minimal operator action: approve one bounded Administrator/UAC block that performs only `AnimusPrimeNode` stop/status/start/restart and the unchanged installer `-Repair` rerun, while Codex observes offline/reconnect, identity persistence, and LAN-project recovery. No reboot, public exposure, third machine, or spec change is required.
+
+## Append-only 096R lifecycle result
+
+The subsequently authorized elevated lifecycle/Repair boundary passed without product-code change. The genuine service moved through stop/start/restart, the unchanged installer Repair reported idempotent preservation, and the final service returned `Running` with the same Node ID, project, repository revision, certificate, and private listener. The mutable Node state-file hash changed with lifecycle/heartbeat state; the certificate file hash and certificate identity did not change.
+
+- Pre-action service PID: `44700`.
+- Start PID: `28984`.
+- Restart PID: `21728`.
+- Final post-Repair start PID: `26524`.
+- Certificate file SHA-256: `B9E635BB8DB6B1D4C99BE2A70040530961D2808CD40C95D7185D78ACBF050D38` before and after.
+- Certificate SHA-256 fingerprint: `664F880D0D29982F4969D3B745672741C97AC6763ABEF3F98CD20A1AAEE6CF9D`.
+- Repository revision: `2ccf8a2b3addd63b472722936130765e0117193c`, clean.
+- Remaining gap after that action: the product-side repository request was made after the Node had already returned, so it did not directly prove truthful behavior during the stopped interval.
+
+## Append-only 096O final observation-only action
+
+Acceptance: **BLOCKED**. No DOD/R promotion.
+
+The exact operator-authorized action ran once on genuine Windows host `SKETCH`:
+
+- `AnimusPrimeNode` stopped at `2026-08-19T11:23:24.9043352-04:00`.
+- Windows reported `Stopped / Automatic` during the fixed 30-second hold.
+- The script started the service after the hold and completed at `2026-08-19T11:24:05.9035862-04:00`.
+- Post-start service: `Running / Automatic / LocalSystem`, PID `36260`.
+- Post-start listener: only `192.168.254.5:18001`.
+- Post-start certificate file SHA-256 remained `B9E635BB8DB6B1D4C99BE2A70040530961D2808CD40C95D7185D78ACBF050D38`.
+- Post-start certificate SHA-256 fingerprint remained `664F880D0D29982F4969D3B745672741C97AC6763ABEF3F98CD20A1AAEE6CF9D`.
+- Repository remained clean at `2ccf8a2b3addd63b472722936130765e0117193c`.
+
+### First hard failure
+
+`BLOCKED — AUTHENTICATED_OFFLINE_OBSERVATION_NOT_CAPTURED`
+
+During the stopped interval, gstack Chromium reached the real private PRIME URL, but Core access logs show protected state requests at `2026-08-19T15:23:47.312986727Z` and `2026-08-19T15:23:53.794452958Z` returned `401 Unauthorized`. The UI therefore failed closed to authentication-required state, cleared the selected project, and did not issue a Node-backed repository tree/file request. No `NODE_UNAVAILABLE` response was captured and no Atlas-local fallback can be inferred from an unauthenticated request.
+
+After service recovery, the trusted-host sign-in challenge could not be approved because the established helper attempted `127.0.0.1:18000` and received connection refused; no listener was present on that port. Core itself remained healthy on `127.0.0.1:8000`. This post-window authentication-helper condition does not retroactively qualify offline behavior.
+
+The authorized stop/start action was not repeated. No Repair, code change, reboot, installer rerun, Tailscale change, new project/machine, deployment, public exposure, Phase 16, or Continuation 097 occurred. DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain at their prior governed states.

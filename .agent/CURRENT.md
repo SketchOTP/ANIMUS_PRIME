@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T09:50:57-04:00
+- Last updated: 2026-08-19T11:24:30-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-PRODUCTION-READINESS-CLOSURE-096
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096
-- Objective: Finish the usable private V1 by qualifying the genuine Windows Node and LAN repository through the existing Core, establishing PRIME-owned private Tailscale Serve access from SKETCH, reconciling derived gates to the frozen specification, and executing final R-056/DOD-081 release qualification.
+- Local directive ID: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096 (final observation-only action)
+- Objective: Capture truthful Core behavior while the genuine Windows Node is offline, without Repair, code change, reboot, installer rerun, Tailscale change, or another machine/project.
 - Current status: `BLOCKED`
 - Acceptance: All frozen V1 requirements directly verified or truthfully conditional by their normative wording; full release validation has no unexplained failures; R-056, DOD-081, Phase 15, and private V1 pass; the persistent private product remains operator-usable with no Funnel/public exposure.
 - Current phase: PHASE15_PRODUCTION_READINESS_CLOSURE_096
 - Expected or actual touched areas: Windows Node enrollment/service/LAN repository, PRIME-owned private Serve, usage/cost governance reconciliation, complete V1 ledgers, final qualification evidence, release validation, persistent runtime, GitHub parity, and Notion SOT.
-- Immediate next action: Obtain one operator-approved Administrator/UAC action for only AnimusPrimeNode stop/start/restart and the unchanged installer Repair; observe offline/reconnect and exact identity/project persistence, then perform final R-056/DOD-081 reconciliation.
+- Immediate next action: Obtain explicit Architect/operator authorization before any repeat lifecycle action because the one authorized stop/start action completed while the protected browser session returned 401 Unauthorized; do not infer the missing observation or start Continuation 097.
 
 ## Temporary task-relevant facts
 

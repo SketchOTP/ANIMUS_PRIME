@@ -2650,3 +2650,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: Until the privileged Windows lifecycle is observed, service recovery and installer idempotence are not release-qualified; the running Node and project state must be preserved.
 - Blockers: `WINDOWS_INTERACTIVE_ELEVATION_CANCELLED` blocks DOD-053, DOD-079, and aggregate DOD-081/R-056.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O - BLOCKED
+
+- Outcome ID: O-PRIME-096O
+- Supersedes outcome: O-PRIME-096
+- Closed: 2026-08-19T11:24:30-04:00
+- Acceptance: NOT MET
+- Summary: The one authorized observation-only Windows action stopped `AnimusPrimeNode` for 30 seconds and returned it unchanged to `Running`, but the real PRIME browser session returned `401 Unauthorized` during the stopped interval. The selected project was therefore cleared and no authenticated Node-required repository operation executed while the Node was offline. The missing frozen product-side observation was not inferred and the action was not repeated.
+- Validation:
+  - Windows service stop/30-second hold/start - PASSED
+  - post-start service/private listener/certificate/repository identity - PASSED
+  - authenticated Core Node-offline state - BLOCKED (`401 Unauthorized`)
+  - live Node-required repository refusal and no-fallback behavior during stop - NOT RUN
+  - DOD/R/Phase/V1 promotion - NOT APPLICABLE
+- DOD/R result: DOD-053 remains `BACKEND_ONLY`; DOD-079 remains `BLOCKED_BY_ENVIRONMENT`; DOD-081/R-056 remain open; queue remains `78 complete / 3 open`; Phase 15 remains incomplete and V1 not yet qualified.
+- Changed areas: append-only Continuation 096 evidence and governance only. No product code, runtime image, database, Hindsight, Tailscale, installer, repository, deployment, public exposure, Phase 16, or Continuation 097 change.
+- Remaining risks: DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain open until the product-side offline observation is directly captured. Repeating the lifecycle action without fresh authorization would exceed scope.
+- Blockers: `AUTHENTICATED_OFFLINE_OBSERVATION_NOT_CAPTURED`; protected state requests returned 401 during the one authorized stopped interval, and the post-window trusted-host helper endpoint at `127.0.0.1:18000` was unavailable.
+- Follow-up directive: none

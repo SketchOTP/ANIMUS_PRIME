@@ -1350,3 +1350,31 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: supersedes
 - Related directive: D-PRIME-PHASE15-NATIVE-NODE-BOOTSTRAP-095A
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-V1-FINAL-CLOSURE-096R
+
+- Issued: 2026-08-19T10:31:41-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096R
+- Objective: Complete the one remaining genuine Windows service lifecycle and unchanged installer Repair boundary, then perform final R-056, DOD-081, Phase-15, and frozen V1 reconciliation without starting Continuation 097.
+- Scope: Record non-secret Windows/Node/project identity; one operator-approved Administrator/UAC service stop/start/restart/Repair action; Atlas-side offline/refusal/persisted-state and reconnect observations; DOD-053/DOD-079 disposition; focused validation and final product smoke; exact governed GitHub/Notion publication if all frozen gates pass.
+- Exclusions: no product feature work; no frozen-spec change; no Windows reboot; no third machine; no provider/cost work; no unrelated Tailscale route change; no public exposure or PRIME Funnel; no Phase 16; no Continuation 097; no secret output or UAC bypass.
+- Acceptance: Windows offline/reconnect/restart/Repair preserves exact Node/project/repository identity and secure listener; DOD-053 and DOD-079 close; final governance/alignment reaches 81/81; DOD-081 and R-056 verify; Phase 15 completes; private V1 is qualified and left healthy.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-PRODUCTION-READINESS-CLOSURE-096
+- Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O
+
+- Issued: 2026-08-19T11:22:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096 (final observation-only action)
+- Objective: Capture the one missing frozen evidence point: authenticated Core behavior while the genuine Windows Node is stopped for 30 seconds, followed by unchanged reconnect.
+- Scope: One Administrator-approved `AnimusPrimeNode` stop, 30-second hold, and start; during the hold observe Node OFFLINE, persisted project/Goal/Authority, truthful refusal of a live Node-required repository operation, and no Atlas-local fallback; after start verify unchanged identity, certificate, project, repository, listener, heartbeat, and reads.
+- Exclusions: no Repair; no code change; no reboot; no installer rerun; no Tailscale change; no new project or machine; no premature DOD promotion; no Continuation 097.
+- Acceptance: Direct authenticated product-side offline observation and unchanged recovery both pass before DOD-053, DOD-079, DOD-081, R-056, Phase 15, or V1 can close.
+- Risk class: HIGH
+- Relationship: supersedes
+- Related directive: D-PRIME-PHASE15-V1-FINAL-CLOSURE-096R
+- Status at issuance: ISSUED
