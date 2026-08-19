@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 
 from prime_core.service import CoreService
+from apps.core.main import _remote_repository_path
 
 
 class _Result:
@@ -56,3 +57,16 @@ def test_live_windows_node_agent_chain_uses_windows_path_semantics(monkeypatch):
             "content_hash": "windows-agent-hash",
         }
     ]
+
+
+def test_remote_windows_repository_path_preserves_node_path_semantics():
+    binding = {
+        "canonical_path": r"C:\PRIME-V1-Qualification\WindowsRepos\project"
+    }
+
+    candidate, normalized = _remote_repository_path(binding, ".agent/PROJECT_GOAL.md")
+
+    assert candidate == (
+        r"C:\PRIME-V1-Qualification\WindowsRepos\project\.agent\PROJECT_GOAL.md"
+    )
+    assert normalized == ".agent/PROJECT_GOAL.md"

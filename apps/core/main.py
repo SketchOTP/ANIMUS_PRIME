@@ -23,7 +23,7 @@ from src.prime_core.authority import validate_authority, provision_authority
 from src.prime_core.indexer import RepositoryIndexer
 from src.prime_core.memory_service import MemoryService
 from src.prime_core.mcp_service import MCPService
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from src.prime_core.security import constant_time_equal
 from src.prime_core.service import CoreService
 from src.prime_core.node_client import NodeClientError
@@ -1430,11 +1430,12 @@ def _safe_repository_path(project_id: str, relative_path: str = "") -> tuple[Pat
 
 
 def _remote_repository_path(binding: dict[str, Any], relative_path: str = "") -> tuple[str, str]:
-    relative = PurePosixPath(relative_path or ".")
+    node_path = PureWindowsPath if "\\" in str(binding["canonical_path"]) else PurePosixPath
+    relative = node_path(relative_path or ".")
     if relative.is_absolute() or ".." in relative.parts:
         raise ValueError("repository path escapes the canonical repository root")
     normalized = "" if str(relative) == "." else relative.as_posix()
-    candidate = PurePosixPath(str(binding["canonical_path"])) / normalized
+    candidate = node_path(str(binding["canonical_path"])) / normalized
     return str(candidate), normalized
 
 
@@ -1639,8 +1640,9 @@ def repository_tree(project_id: str, request: Request, path: str = "", prime_ses
                 snapshot = client.repository_snapshot(binding["canonical_path"])
             except NodeClientError as exc:
                 return error("NODE_UNAVAILABLE", str(exc), request_id(request), status_code=503)
-            root = PurePosixPath(binding["canonical_path"])
-            entries = [{**entry, "path": PurePosixPath(entry.get("path", "")).relative_to(root).as_posix()} for entry in listed.get("entries", [])]
+            node_path = PureWindowsPath if "\\" in str(binding["canonical_path"]) else PurePosixPath
+            root = node_path(binding["canonical_path"])
+            entries = [{**entry, "path": node_path(entry.get("path", "")).relative_to(root).as_posix()} for entry in listed.get("entries", [])]
             return {"project_id": project_id, "path": normalized, "root": str(root), "entries": entries, "source_revision": snapshot.get("head", "UNKNOWN"), "source": "LIVE_NODE", "node_id": node["node_id"]}
         root, candidate = _safe_repository_path(project_id, path)
         if not candidate.is_dir():
