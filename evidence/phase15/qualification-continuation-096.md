@@ -25,6 +25,7 @@ Historical 094/095/095A evidence remains append-only and is not rewritten.
 - `13eb75b82071eb8b79a93565d3f0c8489c1dc28f` — remote indexing through the enrolled Windows Node.
 - `1b780b706bc140afef886ad0ecd33a2991e9d283` — Git retrieval from the Node snapshot rather than an invalid Atlas-local Windows path.
 - Final qualified implementation: `6f7ef776c6fadc82771a952e81313ff18eee7295` — installed Tailscale 1.102.2 scoped-disable syntax.
+- Qualification evidence/governance commit: `0128fcc086dcbdf9cb37b17a410099ec544ae2a6`.
 - Persistent image: `animus-prime-core:continuation-096-6f7ef77`; runtime build provenance reports the same implementation.
 
 ## Genuine Windows Node
