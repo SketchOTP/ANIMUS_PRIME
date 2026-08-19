@@ -19,7 +19,7 @@ items:
     product_area: "remote access"
     owner_phase: 12
     mapped_r_requirements: ["R-035"]
-    exact_missing_behavior: "The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused.. The missing operator behavior is a qualified path at 'Open remote access from PRIME.'; backend capability alone is not sufficient."
+    exact_missing_behavior: "The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused. Continuation 095 repairs the backend ownership boundary and preserves unrelated routes; the missing operator behavior is still a qualified path at 'Open remote access from PRIME.' with a real second device."
     work_class: "EXTERNAL_ENVIRONMENT"
     requires_code: "YES"
     requires_browser: "NO"
@@ -34,7 +34,7 @@ items:
     requires_packaging: "NO"
     requires_clean_install: "NO"
     next_action: "Run the bounded qualification for 'The frozen criterion requires: Private Tailscale Serve HTTPS is protected; Funnel/public PRIME listeners are refused.. The missing operator behavior is a qualified path at 'Open remote access from PRIME.'; backend capability alone is not sufficient.'; promote only if every clause passes and append direct evidence."
-    evidence_already_available: ["apps/web/index.html","apps/core/main.py"]
+    evidence_already_available: ["apps/web/index.html","apps/core/main.py","src/prime_core/remote_access_service.py","tests/phase12/test_remote_access.py","evidence/phase15/qualification-continuation-095.md"]
     qualification_needed: "Direct authenticated qualification of the exact missing behavior, with before/after state and source identity."
     blocked_by: "Private Tailscale qualification requires an approved second device."
     depends_on: "R-035"

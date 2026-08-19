@@ -895,3 +895,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The candidate is a genuine Windows 11 x64 machine on Atlas's active LAN and has a distinct Tailscale identity, but the unchanged installer could not register a Windows service without an elevated UAC token in this session. Atlas's current Tailscale Serve map has no PRIME UI route, while existing Funnel and unrelated Serve routes were preserved. Qualification must resume only after the exact operator prerequisites are available; no synthetic machine, route, or evidence is permitted.
 - Affected areas: Continuation 094 evidence and external-gate references. No PRIME product implementation, canonical Node, persistent database, Hindsight, Funnel, deployment, public exposure, Phase 16, or frozen specification changed.
 - Supersedes record: DEC-PRIME-PHASE15-093
+
+## DEC-PRIME-PHASE15-095
+
+- Date: 2026-08-18
+- Record or decision ID: DEC-PRIME-PHASE15-095
+- Status: ACTIVE
+- Decision or event: Accept Continuation 095 as PARTIAL: publish the bounded PRIME-owned private Serve ownership repair and persistent runtime provenance, while preserving DOD-013, DOD-053, and DOD-079 as open external gates.
+- Rationale: The installed Atlas Tailscale route map contains unrelated Serve/Funnel endpoints and no PRIME route. The previous adapter could misclassify unrelated Funnel and globally reset Serve. Focused tests and live status now prove safe separation/refusal and scoped clear behavior. The real Windows installer still stops at Service Control Manager access denied without operator-approved UAC elevation, so no external requirement can be promoted.
+- Affected areas: remote access adapter/tests, persistent Core image/restart, Continuation 095 evidence, external-gate reconciliation, and append-only governance records. No public exposure, unrelated route change, canonical project/Node mutation, deployment, Phase 16, or frozen-spec change.
+- Supersedes record: DEC-PRIME-PHASE15-094

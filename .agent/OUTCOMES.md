@@ -2589,3 +2589,24 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: interactive elevated Windows session, explicit reboot/service approval, PRIME-owned private Serve route, provider-backed authoritative cost, and final aggregate release qualification.
 - Blockers: `PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE`; `PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE`.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-PRIVILEGED-WINDOWS-PRIVATE-SERVE-095 - PARTIAL
+
+- Outcome ID: O-PRIME-095
+- Supersedes outcome: O-PRIME-094
+- Closed: 2026-08-18T22:05:00-04:00
+- Acceptance: PARTIAL
+- Summary: Repaired the PRIME-owned Tailscale Serve adapter so actual installed Serve/Funnel JSON is separated into PRIME-owned and unrelated routes, unrelated Atlas routes are preserved, unknown/conflicting ownership fails closed, PRIME Funnel is refused, and disable uses only scoped `tailscale serve clear 443` rather than global reset. Rebuilt and restarted the persistent Core from the exact implementation commit with readiness provenance. Genuine Windows service and second-device qualification remain blocked by interactive UAC elevation and the absence of a PRIME-owned route; no DOD/R row was promoted.
+- Validation:
+  - focused remote-access suite - PASSED (`13 passed`)
+  - functional regression subset - PASSED (`152 passed / 35 skipped`)
+  - full supported regression - BLOCKED at collection by missing host `psycopg` / image `PyYAML` dependencies; no package or substitute environment added
+  - compileall, diff check, persistent Core live/ready health - PASSED
+  - governance validator - PASSED (`ADOPTED`)
+  - governance self-test - FAILED at existing clean-template assertion; no project source failure inferred
+  - Windows installer/service, LAN project, private Serve/browser, outage/recovery - BLOCKED or NOT RUN at explicit external boundaries
+- DOD/R result: DOD-013, DOD-053, and DOD-079 remain open; DOD-047 remains open; DOD-081/R-056 remain gated. Queue remains 76 complete / 5 open.
+- Changed areas: PRIME remote access adapter/tests, persistent Core image/restart, Continuation 095 evidence, DOD-013/R-035/R-036 external-gate reconciliation, and append-only records.
+- Remaining risks: interactive elevated Windows session, approved host/reboot, PRIME-owned private Serve route and second device, provider cost, final aggregate release qualification.
+- Blockers: `PRIME_NATIVE_WINDOWS_SERVICE_ELEVATION_UNAVAILABLE`; `PRIME_PRIVATE_SERVE_ROUTE_UNAVAILABLE` remains for actual product/browser qualification.
+- Follow-up directive: none

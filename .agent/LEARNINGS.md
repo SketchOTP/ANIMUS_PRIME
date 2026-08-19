@@ -1016,3 +1016,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - 2026-08-18 — Continuation 088: An isolated clean-install appliance is a valid qualification target only when its Node and project-bound Hindsight dependencies are real. A and B can prove setup/authentication, truthful degraded state, restore-input refusal, and lifecycle security without inventing a second Node. The current UI exposes DELETE to DELETION_PENDING but not the protected terminal PURGE action; API terminal evidence must therefore remain separate from complete browser qualification.
 - 2026-08-18 — Continuation 089: Atlas hardware virtualization is not the same as an available qualification machine. A legitimate VM run requires an installed approved guest runtime, bounded storage/memory, independent guest identity and filesystem, and a safe network path. With only `/dev/kvm`, no QEMU/libvirt/LXD/equivalent runtime, constrained root capacity, and no existing physical LAN bridge, do not install a large host stack or claim a second machine. Repository Node installer/service files exist, but live native qualification remains unverified until an approved independent target exists.
 - 2026-08-18 — Continuation 090: A bounded official Firecracker binary inside a privileged qualification-only container can safely use Atlas KVM when the unprivileged operator lacks direct group access, without installing QEMU/libvirt or making Firecracker a PRIME dependency. Independent machine legitimacy requires the guest kernel, ext4 filesystem, machine-id, service manager, Node state/trust, and repository root, not merely a distinct process. Core repository, authority, Goal, tree/file, and Warm Start operations must dispatch through the enrolled Node for remote roots. Continuity backups must omit ephemeral authentication/install-local capability rows rather than redact required columns and retain invalid rows.
+
+## L-PRIME-PRIVATE-SERVE-OWNERSHIP-095
+
+- Date: 2026-08-18
+- Learning ID: L-PRIME-PRIVATE-SERVE-OWNERSHIP-095
+- Fact or lesson: Tailscale 1.102.2 reports Serve and Funnel state using route maps where unrelated routes can coexist with PRIME. PRIME must identify its endpoint by tailnet DNS/port and persisted target ownership, refuse unknown or conflicting ownership, refuse only PRIME Funnel exposure, and clear only the owned endpoint; a global Serve reset is unsafe.
+- Evidence location: `src/prime_core/remote_access_service.py`; `tests/phase12/test_remote_access.py`; `evidence/phase15/qualification-continuation-095.md`; Atlas `tailscale serve status --json`.
+- Confidence: VERIFIED
+- Scope: Continuation 095 bounded private Serve ownership repair only.
+- Supersedes learning: none
