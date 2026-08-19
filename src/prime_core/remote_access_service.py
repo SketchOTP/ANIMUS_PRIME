@@ -63,7 +63,7 @@ class TailscaleService:
             "serve", "--bg", f"--https={self.settings.serve_port}",
             f"http://127.0.0.1:{self.settings.web_port}",
         )
-        clear = ("serve", "clear", str(self.settings.serve_port))
+        clear = ("serve", f"--https={self.settings.serve_port}", "off")
         if command not in self._allowed and command not in {configure, clear}:
             raise ValueError("unsupported Tailscale operation")
         return self._runner(
@@ -258,7 +258,7 @@ class TailscaleService:
             return {"status": "DISABLED", "actual_state": current.get("actual_state"), "desired_state": "DISABLED", "error": None}
         if current.get("route_ownership") != "OWNED" or owned != current.get("serve_target"):
             return {"status": "DEGRADED", "actual_state": current.get("actual_state"), "error": "PRIME-owned Serve configuration is not identifiable; refusing unrelated endpoint clear"}
-        result = self._run(["serve", "clear", str(self.settings.serve_port)])
+        result = self._run(["serve", f"--https={self.settings.serve_port}", "off"])
         if result.returncode == 0:
             self._state.update({"desired": "DISABLED", "owned_target": None})
             self._save_state()

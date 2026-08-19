@@ -144,7 +144,7 @@ def test_disable_clears_only_owned_prime_endpoint(tmp_path: Path, monkeypatch):
         ("status", "--json"): (0, json.dumps({"Self": {"DNSName": "prime.tail"}}), ""),
         ("serve", "status", "--json"): (0, json.dumps(serve), ""),
         ("funnel", "status", "--json"): (0, json.dumps(serve), ""),
-        ("serve", "clear", "443"): (0, "cleared", ""),
+        ("serve", "--https=443", "off"): (0, "cleared", ""),
     }
     def runner(argv, **kwargs):
         calls.append(tuple(argv[1:]))
@@ -153,7 +153,7 @@ def test_disable_clears_only_owned_prime_endpoint(tmp_path: Path, monkeypatch):
     monkeypatch.setattr("shutil.which", lambda _: "/usr/bin/tailscale")
     result = TailscaleService(RemoteAccessSettings(state_path=tmp_path / "remote.json"), runner=runner).disable()
     assert result["status"] == "DISABLED"
-    assert ("serve", "clear", "443") in calls
+    assert ("serve", "--https=443", "off") in calls
     assert not any(call[:2] == ("serve", "reset") for call in calls)
 
 
