@@ -1056,3 +1056,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Continuation 096O observation failure only; it does not reopen the already-passed service lifecycle/Repair evidence.
 - Supersedes learning: none
+
+## L-PRIME-OFFLINE-OBSERVATION-DISPATCH-096P
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-OFFLINE-OBSERVATION-DISPATCH-096P
+- Fact or lesson: A pre-authenticated browser session and valid Linux control do not prove the Windows outage if the Node-backed request is dispatched after service start. For a bounded 30-second lifecycle test, request execution must be pre-armed or otherwise synchronized to the observed stopped state; post-start HTTP 200 proves recovery only and cannot substitute for an explicit offline refusal.
+- Evidence location: `evidence/phase15/qualification-continuation-096.md`; Windows transcript `C:\PRIME-V1-Qualification\096O-repeat-offline-observation-output.txt`; Core access logs from `2026-08-19T15:53:16Z` through `15:53:17Z`.
+- Confidence: VERIFIED
+- Scope: Continuation 096P observation timing only; qualified authentication, Linux control, Windows pre-stop operation, and unchanged recovery remain valid.
+- Supersedes learning: L-PRIME-OFFLINE-OBSERVATION-AUTH-096O

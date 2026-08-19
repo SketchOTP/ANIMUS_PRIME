@@ -165,3 +165,50 @@ During the stopped interval, gstack Chromium reached the real private PRIME URL,
 After service recovery, the trusted-host sign-in challenge could not be approved because the established helper attempted `127.0.0.1:18000` and received connection refused; no listener was present on that port. Core itself remained healthy on `127.0.0.1:8000`. This post-window authentication-helper condition does not retroactively qualify offline behavior.
 
 The authorized stop/start action was not repeated. No Repair, code change, reboot, installer rerun, Tailscale change, new project/machine, deployment, public exposure, Phase 16, or Continuation 097 occurred. DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain at their prior governed states.
+
+## Append-only 096P authenticated Linux-control repeat
+
+Acceptance: **BLOCKED**. No DOD/R promotion.
+
+The operator authorized one additional stop/start action with the already-qualified Linux project preserved as the authenticated browser context. All required pre-stop gates passed in the same gstack Chromium session:
+
+- Trusted-host authentication completed through the current Core loopback endpoint and `/v1/operator/state` returned HTTP 200.
+- Selected Linux control project: `project_d9a1a5b609394282b62fc12c0d04634d`, `Qualification Project`, `ACTIVE / ONLINE / CURRENT`.
+- Linux Goal revision 1 remained `APPROVED`; Authority remained `VALID`.
+- Linux repository tree returned HTTP 200 at `2026-08-19T15:50:27.974636057Z`.
+- Linux Node-backed `.gitignore` read returned HTTP 200 at `2026-08-19T15:50:38.090695914Z`, content SHA-256 `1f6deb300cfa4f3ce9f4224c8c21e53c05ca6337d5979790bd48ef98e7ea5681`.
+- Exact Windows pre-stop request `AGENTS.md` returned HTTP 200 at `2026-08-19T15:51:03.854175368Z` and again at `2026-08-19T15:51:17.965667941Z`, content SHA-256 `e812f2e9dddd686b1f573ca2e6e7552c75d4baaaceef5f5105220380dc538726`.
+- Windows pre-state: service `Running / Automatic / LocalSystem`, PID `36260`; listener only `192.168.254.5:18001`; clean repository revision `2ccf8a2b3addd63b472722936130765e0117193c`; certificate file SHA-256 `B9E635BB8DB6B1D4C99BE2A70040530961D2808CD40C95D7185D78ACBF050D38`; certificate fingerprint `664F880D0D29982F4969D3B745672741C97AC6763ABEF3F98CD20A1AAEE6CF9D`.
+
+### Authorized service action
+
+- Stop initiated: `2026-08-19T11:52:43.5763706-04:00`.
+- Windows reported `AnimusPrimeNode Stopped / Automatic` during the fixed hold.
+- Start began after 30 seconds: `2026-08-19T11:53:13.8857263-04:00`.
+- Final service report: `2026-08-19T11:53:24.5398980-04:00`.
+
+### First hard failure
+
+`BLOCKED — OFFLINE_REQUEST_DISPATCH_MISSED_STOPPED_WINDOW`
+
+The preserved browser session remained authenticated and selected on the Linux project, but the first outage probe reached Core at `2026-08-19T15:53:16.013688608Z`, 2.13 seconds after Windows service start began. The complete request sequence was therefore post-start:
+
+- operator state: HTTP 200 at `15:53:16.013688608Z`;
+- Linux snapshot: HTTP 200 at `15:53:16.171234764Z`;
+- Linux `.gitignore`: HTTP 200 at `15:53:16.497617266Z`;
+- Windows snapshot: HTTP 200 at `15:53:16.657843814Z` with the same project ID and approved Goal;
+- Windows Authority chain: HTTP 200 at `15:53:16.921888608Z`;
+- exact Windows `AGENTS.md` request: HTTP 200 at `15:53:17.478452129Z`.
+
+Because the exact Windows Node-backed request did not execute while the service was stopped, no `NODE_UNAVAILABLE` result and no no-fallback behavior were directly observed. The HTTP 200 after start is recovery evidence, not outage evidence.
+
+### Unchanged recovery
+
+- The same browser session remained authenticated with the qualified Linux project selected.
+- Core reported `node-095-sketch-windows` `ONLINE / ACTIVE` at the same `https://192.168.254.5:18001` endpoint and the same certificate fingerprint.
+- The exact Windows `AGENTS.md` request returned HTTP 200 again at `2026-08-19T15:54:05Z` with the same content hash.
+- Service returned `Running / Automatic / LocalSystem`, PID `39420`, listener only `192.168.254.5:18001`.
+- Certificate file hash and certificate fingerprint remained unchanged.
+- Windows repository remained clean at `2ccf8a2b3addd63b472722936130765e0117193c`.
+
+The one authorized repeat was not repeated again. No Repair, reboot, code change, installer rerun, Tailscale change, new project/machine, deployment, public exposure, Phase 16, or Continuation 097 occurred. DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain open at `78 complete / 3 open`.

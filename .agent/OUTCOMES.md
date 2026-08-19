@@ -2669,3 +2669,25 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 remain open until the product-side offline observation is directly captured. Repeating the lifecycle action without fresh authorization would exceed scope.
 - Blockers: `AUTHENTICATED_OFFLINE_OBSERVATION_NOT_CAPTURED`; protected state requests returned 401 during the one authorized stopped interval, and the post-window trusted-host helper endpoint at `127.0.0.1:18000` was unavailable.
 - Follow-up directive: none
+
+## D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096P - BLOCKED
+
+- Outcome ID: O-PRIME-096P
+- Supersedes outcome: O-PRIME-096O
+- Closed: 2026-08-19T11:54:30-04:00
+- Acceptance: NOT MET
+- Summary: The authorized repeat successfully established one authenticated qualified-Linux-project control session, passed Linux Goal/Authority/live repository reads, passed the exact Windows repository request before stop, and preserved unchanged Windows recovery. However, the first outage probe reached Core 2.13 seconds after Windows service start began, so no Windows Node-backed request executed during the stopped interval and the frozen offline refusal/no-fallback behavior remains unobserved.
+- Changed areas: append-only Continuation 096 evidence and governance only. No product code, runtime image, installer, repository, database, Hindsight, Tailscale, deployment, public exposure, Phase 16, or Continuation 097 change.
+- Validation:
+  - trusted-host browser authentication and qualified Linux project control - PASSED
+  - Linux Goal, Authority, and Node-backed repository read - PASSED
+  - exact Windows pre-stop repository read - PASSED
+  - Windows stop/30-second hold/start - PASSED
+  - Windows persisted Goal/Authority and exact repository read after start - PASSED
+  - exact Windows Node-backed refusal during stopped interval - NOT RUN (request dispatch occurred post-start)
+  - unchanged Node/certificate/project/repository/revision/listener recovery - PASSED
+  - DOD/R/Phase/V1 promotion - NOT APPLICABLE
+- DOD/R result: DOD-053 remains `BACKEND_ONLY`; DOD-079 remains `BLOCKED_BY_ENVIRONMENT`; DOD-081/R-056 remain open; queue remains `78 complete / 3 open`; Phase 15 remains incomplete and V1 not yet qualified.
+- Remaining risks: the product-side Windows offline refusal/no-fallback point remains the sole unobserved frozen lifecycle behavior. Any further Windows lifecycle action requires fresh explicit authorization.
+- Blockers: `OFFLINE_REQUEST_DISPATCH_MISSED_STOPPED_WINDOW`; all outage probes reached Core only after service start began.
+- Follow-up directive: none

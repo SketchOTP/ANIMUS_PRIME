@@ -1378,3 +1378,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: supersedes
 - Related directive: D-PRIME-PHASE15-V1-FINAL-CLOSURE-096R
 - Status at issuance: ISSUED
+
+## D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096P
+
+- Issued: 2026-08-19T11:52:00-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME - Phase 15 Continuation 096 (final offline observation repeat)
+- Objective: Use an already-qualified Linux project as the preserved authenticated browser context, then directly observe the same Windows Node-backed repository request pass before stop, refuse while the genuine Windows Node is stopped for 30 seconds, and recover unchanged after start.
+- Scope: Authenticate private PRIME; select and prove the qualified Linux project, Goal, Authority, and live repository read; capture a successful Windows project repository read; perform one Administrator-approved `AnimusPrimeNode` stop/30-second hold/start; during outage prove Linux usability, Windows persisted project/Goal/Authority availability, explicit Windows Node unavailability, and no fallback; after start prove unchanged Windows identity/certificate/project/repository/revision/listener and recovered read; reconcile final frozen gates only on complete acceptance.
+- Exclusions: no Repair; no reboot; no code change; no installer rerun; no Tailscale change; no new project or machine; no public exposure; no Phase 16; no Continuation 097.
+- Acceptance: Linux remains authenticated and usable during the outage; Windows persisted Goal/Authority remain available; the exact pre-stop Windows Node-backed request explicitly refuses as unavailable without fallback; the same request succeeds after unchanged recovery; then DOD-053, DOD-079, DOD-081, R-056, Phase 15, and V1 reconcile to complete.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O
+- Status at issuance: ISSUED

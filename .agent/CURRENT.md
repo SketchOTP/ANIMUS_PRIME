@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T11:24:30-04:00
+- Last updated: 2026-08-19T11:54:30-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096O
-- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096 (final observation-only action)
-- Objective: Capture truthful Core behavior while the genuine Windows Node is offline, without Repair, code change, reboot, installer rerun, Tailscale change, or another machine/project.
+- Local directive ID: D-PRIME-PHASE15-WINDOWS-OFFLINE-OBSERVATION-096P
+- External directive ID: ANIMUS PRIME - Phase 15 Continuation 096 (final offline observation repeat)
+- Objective: Preserve one authenticated qualified-Linux-project browser context while directly proving the genuine Windows Node-backed request refuses during one authorized 30-second service outage and recovers unchanged afterward.
 - Current status: `BLOCKED`
 - Acceptance: All frozen V1 requirements directly verified or truthfully conditional by their normative wording; full release validation has no unexplained failures; R-056, DOD-081, Phase 15, and private V1 pass; the persistent private product remains operator-usable with no Funnel/public exposure.
 - Current phase: PHASE15_PRODUCTION_READINESS_CLOSURE_096
 - Expected or actual touched areas: Windows Node enrollment/service/LAN repository, PRIME-owned private Serve, usage/cost governance reconciliation, complete V1 ledgers, final qualification evidence, release validation, persistent runtime, GitHub parity, and Notion SOT.
-- Immediate next action: Obtain explicit Architect/operator authorization before any repeat lifecycle action because the one authorized stop/start action completed while the protected browser session returned 401 Unauthorized; do not infer the missing observation or start Continuation 097.
+- Immediate next action: Obtain explicit Architect/operator disposition before any further Windows lifecycle action because the authorized repeat preserved authentication and recovery but all outage probes reached Core only after service start began; do not infer the missing offline refusal or start Continuation 097.
 
 ## Temporary task-relevant facts
 

@@ -935,3 +935,13 @@ Do not add live decisions or milestones to this template. Examples must remain o
 - Rationale: The Windows service mutation and unchanged recovery passed, but the frozen missing point was specifically operator-visible Core behavior while the Node was offline. Core returned 401, the UI cleared project context, and no Node-backed request executed. Repeating the service action was outside the one-action authorization.
 - Affected areas: append-only Continuation 096 evidence/governance only. No product code, installer, runtime image, Tailscale, repository, deployment, public exposure, Phase 16, or Continuation 097 change.
 - Supersedes record: DEC-PRIME-PHASE15-096
+
+## DEC-PRIME-PHASE15-096P
+
+- Date: 2026-08-19
+- Record or decision ID: DEC-PRIME-PHASE15-096P
+- Status: ACTIVE
+- Decision or event: Preserve the authenticated Linux-control repeat as BLOCKED and make no final promotion because the Windows Node-backed request was dispatched only after the 30-second stopped interval ended.
+- Rationale: The same browser session proved Core authentication, Linux project usability, Windows persisted state, exact pre-stop operation, and unchanged recovery. The frozen missing point nevertheless requires a direct request while Windows is offline. Core timestamps place every outage probe after service start, so no unavailable/no-fallback result exists to qualify.
+- Affected areas: append-only Continuation 096 evidence/governance only. No product code, installer, runtime image, Tailscale, repository, deployment, public exposure, Phase 16, or Continuation 097 change.
+- Supersedes record: DEC-PRIME-PHASE15-096O
