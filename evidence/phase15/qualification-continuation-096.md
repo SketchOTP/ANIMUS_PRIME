@@ -254,3 +254,4 @@ Therefore DOD-081 and R-056 remain open; Phase 15 remains `INCOMPLETE`; V1 remai
 - Windows Node reachability: PASSED; `192.168.254.5:18001` accepts TCP connection. No Windows service action occurred.
 - Operator authentication: trusted-host challenge initiation and Atlas-local approval PASSED. Post-approval browser readback was BLOCKED by gstack home-directory `EDQUOT`; gstack state was redirected to the already-authorized external tooling root, but the launcher retained the quota failure. This tooling issue is not treated as a PRIME product failure and does not alter prior qualified browser evidence.
 - Full regression: NOT RUN because no product code changed; preserved basis is `167 passed / 35 skipped / 0 failed`.
+- Qualified evidence reconciliation commit: `af7ddb1e977e36bb4a4ae39d48b39881dbe4f7a3`.

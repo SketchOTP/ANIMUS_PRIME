@@ -6,7 +6,7 @@ governed_start_commit: 275bfc69252ebe6506ca6c6d3c35c32da37ad1e2
 historical_phase15_result: FAIL
 qualification_ledger: docs/phase15-remediation-qualification-ledger.yaml
 latest_qualification_evidence: evidence/phase15/qualification-continuation-096.md
-latest_qualification_commit: 6f7ef776c6fadc82771a952e81313ff18eee7295
+latest_qualification_commit: af7ddb1e977e36bb4a4ae39d48b39881dbe4f7a3
 status_vocabulary: [UNASSIGNED, PLANNED, IMPLEMENTING, IMPLEMENTED, VERIFIED, BLOCKED, FUTURE_ONLY_BY_SPEC]
 release_rule: "Only VERIFIED rows with passing implementation and evidence may satisfy the V1 release gate."
 requirements:
