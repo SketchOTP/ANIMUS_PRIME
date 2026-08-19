@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 
 from prime_core.service import CoreService
+from prime_core.indexer import RepositoryIndexer
 from apps.core.main import _remote_repository_path
 
 
@@ -70,3 +71,33 @@ def test_remote_windows_repository_path_preserves_node_path_semantics():
         r"C:\PRIME-V1-Qualification\WindowsRepos\project\.agent\PROJECT_GOAL.md"
     )
     assert normalized == ".agent/PROJECT_GOAL.md"
+
+
+def test_remote_windows_index_walks_node_tree_without_local_path_resolution():
+    class Client:
+        def list_directory(self, path):
+            if path.endswith("project"):
+                return {
+                    "entries": [
+                        {"name": ".agent", "kind": "directory", "path": rf"{path}\.agent"},
+                        {"name": "AGENTS.md", "kind": "file", "path": rf"{path}\AGENTS.md"},
+                    ]
+                }
+            return {
+                "entries": [
+                    {"name": "PROJECT_GOAL.md", "kind": "file", "path": rf"{path}\PROJECT_GOAL.md"}
+                ]
+            }
+
+        def read_file(self, path):
+            return {"content": f"content from {path}"}
+
+    indexer = RepositoryIndexer(object())
+
+    files = list(
+        indexer._remote_files(
+            Client(), r"C:\PRIME-V1-Qualification\WindowsRepos\project"
+        )
+    )
+
+    assert [item[0] for item in files] == ["AGENTS.md", ".agent/PROJECT_GOAL.md"]

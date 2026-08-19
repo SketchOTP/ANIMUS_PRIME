@@ -5,7 +5,7 @@ import json
 import mimetypes
 import re
 from pathlib import Path
-from pathlib import PurePosixPath
+from pathlib import PurePosixPath, PureWindowsPath
 from typing import Any
 
 from .service import _id, now
@@ -32,11 +32,29 @@ class RepositoryIndexer:
             ).fetchone()
             if not binding:
                 raise KeyError("project has no repository binding")
-            root = Path(binding["canonical_path"]).resolve(strict=True)
-            if not (root / ".git").exists():
-                raise ValueError("bound path is not a working repository")
-            source_revision = self._revision(root)
-            branch = self._branch(root)
+            live_node = self.service.node_client_for_project(project_id)
+            if live_node:
+                _node, client = live_node
+                snapshot = client.repository_snapshot(binding["canonical_path"])
+                source_revision = snapshot.get("head")
+                if not source_revision:
+                    raise ValueError("remote repository has no committed revision")
+                if snapshot.get("status"):
+                    raise ValueError("remote repository must be clean before canonical indexing")
+                branch = snapshot.get("branch") or "UNKNOWN"
+                root = binding["canonical_path"]
+                files = self._remote_files(client, root)
+            else:
+                root = Path(binding["canonical_path"]).resolve(strict=True)
+                if not (root / ".git").exists():
+                    raise ValueError("bound path is not a working repository")
+                source_revision = self._revision(root)
+                branch = self._branch(root)
+                files = (
+                    (path.relative_to(root).as_posix(), path.read_bytes(), path.name)
+                    for path in sorted(root.rglob("*"))
+                    if ".git" not in path.relative_to(root).parts and path.is_file()
+                )
             observed = now()
             previous_revision = db.execute("SELECT canonical_revision FROM prime_core.project_bindings WHERE project_id=%s", (project_id,)).fetchone()["canonical_revision"]
             db.execute(
@@ -45,14 +63,10 @@ class RepositoryIndexer:
                 (project_id, binding["repository_id"]),
             )
             count = 0
-            for path in sorted(root.rglob("*")):
-                if ".git" in path.relative_to(root).parts or not path.is_file():
-                    continue
+            for relative, data, name in files:
                 if count >= self.max_files:
                     raise ValueError("repository exceeds index file limit")
-                relative = path.relative_to(root).as_posix()
-                data = path.read_bytes()
-                kind = mimetypes.guess_type(path.name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
+                kind = mimetypes.guess_type(name)[0] or ("binary" if b"\x00" in data[:8192] else "text")
                 db.execute(
                     "INSERT INTO prime_core.repository_files(repository_file_id,project_id,repository_id,relative_path,content_hash,size_bytes,file_kind,content_text,source_revision,observation_basis,canonical_revision,worktree_branch,worktree_path,freshness_state,observed_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'COMMITTED_CANONICAL',%s,%s,%s,'CURRENT',%s) ON CONFLICT (repository_id,relative_path,source_revision) DO UPDATE SET content_hash=EXCLUDED.content_hash,size_bytes=EXCLUDED.size_bytes,file_kind=EXCLUDED.file_kind,content_text=EXCLUDED.content_text,observation_basis='COMMITTED_CANONICAL',canonical_revision=EXCLUDED.canonical_revision,worktree_branch=EXCLUDED.worktree_branch,worktree_path=EXCLUDED.worktree_path,freshness_state='CURRENT',observed_at=EXCLUDED.observed_at",
                     (_id("file"), project_id, binding["repository_id"], relative, hashlib.sha256(data).hexdigest(), len(data), kind, self._search_text(data, kind), source_revision, source_revision, branch, str(root), observed),
@@ -77,9 +91,39 @@ class RepositoryIndexer:
                 (observed, project_id),
             )
             result = {"project_id": project_id, "source_revision": source_revision, "files_indexed": count, "freshness_state": "CURRENT"}
-        from .authority_memory_admission import AuthorityMemoryAdmission
-        result["memory_admission"] = AuthorityMemoryAdmission(self.service.settings, self.service).admit(project_id, root, source_revision)
+        if live_node:
+            result["memory_admission"] = {
+                "status": "NOT_RUN",
+                "reason": "REMOTE_NODE_AUTHORITY_ADMITTED_SEPARATELY",
+                "records": [],
+            }
+        else:
+            from .authority_memory_admission import AuthorityMemoryAdmission
+            result["memory_admission"] = AuthorityMemoryAdmission(self.service.settings, self.service).admit(project_id, root, source_revision)
         return result
+
+    def _remote_files(self, client: Any, canonical_path: str):
+        node_path = PureWindowsPath if "\\" in canonical_path else PurePosixPath
+        root = node_path(canonical_path)
+        pending = [root]
+        seen = 0
+        while pending:
+            directory = pending.pop()
+            listed = client.list_directory(str(directory))
+            entries = listed.get("entries", [])
+            if len(entries) >= 200:
+                raise ValueError("remote repository directory exceeds bounded Node listing limit")
+            for entry in entries:
+                candidate = node_path(entry["path"])
+                relative = candidate.relative_to(root).as_posix()
+                if entry.get("kind") == "directory":
+                    pending.append(candidate)
+                    continue
+                seen += 1
+                if seen > self.max_files:
+                    raise ValueError("repository exceeds index file limit")
+                result = client.read_file(str(candidate))
+                yield relative, result.get("content", "").encode("utf-8"), candidate.name
 
     def observe_incremental(self, project_id: str, changed_paths: list[str], source_revision: str) -> dict[str, Any]:
         """Apply a bounded repository change event without a full recursive rescan."""
