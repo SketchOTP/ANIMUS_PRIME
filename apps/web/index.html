@@ -24,23 +24,157 @@
     @media (max-width: 900px) { .app { display: block; } aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); } .nav-group { display: inline-block; vertical-align: top; min-width: 11rem; margin: .5rem .7rem .5rem 0; } .nav-group h2 { margin-top: 0; } section, article, .half { grid-column: 1 / -1; } }
     @media (max-width: 560px) { .nav-group { display: block; min-width: 0; margin: .5rem 0; } main { padding: 1rem .75rem; } .topbar { align-items: flex-start; } .actions, .actions button, .actions a { width: 100%; } .actions button, .actions a { justify-content: flex-start; } section { padding: .85rem; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
+    /* Post-V1 Wave A: ANIMUS ONE-derived foundation and route-safe shell. */
+    :root {
+      --canvas: #050505; --surface: #0d0d0f; --surface-raised: #111116; --surface-soft: #15151c;
+      --line: #1f1f28; --line-strong: #343442; --text: #e8e8ef; --text-muted: #8b8b9a;
+      --cyan: #00f5ff; --pink: #ff2a6d; --green: #39ff14; --yellow: #faff00; --purple: #bf00ff;
+      --radius: 10px; --rail: 13.5rem; --content: 92rem; --shadow-accent: 0 0 12px rgba(0,245,255,.12);
+      font-family: "Segoe UI Variable", "Segoe UI", sans-serif; background: var(--canvas); color: var(--text);
+    }
+    html { background: var(--canvas); } body { background: radial-gradient(circle at 80% -10%, rgba(0,245,255,.055), transparent 34rem), var(--canvas); color: var(--text); }
+    button, a.button { min-height: 44px; border-color: var(--line-strong); border-radius: 8px; background: var(--surface-raised); }
+    button:hover, a.button:hover { border-color: rgba(0,245,255,.55); background: #17171f; box-shadow: var(--shadow-accent); }
+    input, select, textarea { min-height: 44px; background: #09090c; border-color: var(--line-strong); border-radius: 8px; }
+    .app { grid-template-columns: var(--rail) minmax(0, 1fr); background: transparent; }
+    .global-rail { z-index: 20; padding: 1.25rem .9rem; background: rgba(8,8,11,.97); border-right-color: var(--line); }
+    .brand { display: flex; align-items: center; gap: .72rem; min-height: 48px; margin: 0 0 1.75rem; padding: .35rem .45rem; }
+    .brand-mark { display: grid; place-items: center; width: 2.15rem; height: 2.15rem; color: var(--cyan); border: 1px solid rgba(0,245,255,.45); border-radius: 8px; box-shadow: var(--shadow-accent); }
+    .brand-copy strong { font-size: .95rem; letter-spacing: .14em; } .brand-copy .small { display: block; font-size: .7rem; }
+    .eyebrow { color: var(--cyan); font-size: .7rem; font-weight: 700; letter-spacing: .14em; }
+    .muted { color: var(--text-muted); }
+    .global-nav { display: grid; gap: .32rem; margin: 0; }
+    .global-nav h2 { margin: 0 0 .45rem; padding: 0 .65rem; color: #626272; }
+    .global-nav a { display: flex; align-items: center; gap: .72rem; min-height: 44px; padding: .58rem .65rem; color: #b6b6c4; border: 1px solid transparent; border-radius: 8px; }
+    .global-nav a:hover { color: var(--text); background: #111116; }
+    .global-nav a[aria-current="page"] { color: var(--cyan); background: rgba(0,245,255,.075); border-color: rgba(0,245,255,.2); box-shadow: inset 2px 0 var(--cyan); }
+    .nav-icon { width: 1.1rem; height: 1.1rem; flex: 0 0 auto; }
+    .rail-foot { position: absolute; inset: auto .9rem 1rem; color: #666674; }
+    main { max-width: var(--content); padding: 1.15rem clamp(1rem, 3vw, 2.6rem) 3rem; }
+    .topbar { min-height: 4.2rem; margin: 0 0 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+    .topbar h1 { font-size: clamp(1.35rem, 2.5vw, 1.8rem); letter-spacing: -.025em; }
+    .topbar-title { display: flex; align-items: center; gap: .7rem; }
+    .nav-toggle { display: none; width: 44px; padding: 0; }
+    .icon-button { width: 44px; padding: 0; }
+    .icon-button svg, .nav-toggle svg { width: 1.1rem; height: 1.1rem; }
+    .selected-project { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .8rem 1.5rem; margin: 0 0 1rem; padding: .9rem 1rem 0; background: rgba(13,13,15,.92); border: 1px solid var(--line); border-radius: var(--radius); }
+    .project-identity { display: flex; align-items: center; gap: .8rem; min-width: 0; padding-bottom: .75rem; }
+    .project-glyph { display: grid; place-items: center; width: 2.55rem; height: 2.55rem; flex: 0 0 auto; color: var(--cyan); font-weight: 800; letter-spacing: .04em; background: #09090c; border: 1px solid rgba(0,245,255,.32); border-radius: 8px; }
+    .project-identity-copy { min-width: 0; } .project-identity-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .project-statuses { display: flex; align-items: center; justify-content: flex-end; gap: .4rem; flex-wrap: wrap; padding-bottom: .75rem; }
+    .project-tabs, .project-subnav, .system-subnav { grid-column: 1 / -1; display: flex; gap: .2rem; overflow-x: auto; scrollbar-width: thin; }
+    .project-tabs { border-top: 1px solid var(--line); }
+    .project-tabs a, .project-subnav a, .system-subnav a { min-height: 44px; display: inline-flex; align-items: center; flex: 0 0 auto; padding: .62rem .72rem; color: var(--text-muted); text-decoration: none; border-bottom: 2px solid transparent; }
+    .project-tabs a:hover, .project-subnav a:hover, .system-subnav a:hover { color: var(--text); }
+    .project-tabs a[aria-current="page"], .project-subnav a[aria-current="page"], .system-subnav a[aria-current="page"] { color: var(--cyan); border-bottom-color: var(--cyan); }
+    .project-subnav, .system-subnav { padding: .18rem 0 .35rem; border-top: 1px solid #17171f; }
+    .project-subnav [data-nav-group][hidden], .system-subnav[hidden] { display: none; }
+    .workspace { display: block; }
+    .workspace > section { display: none; grid-column: 1 / -1; margin: 0; }
+    .workspace > section.route-active { display: block; }
+    #project-workspace.route-active { display: block; }
+    #project-workspace > .eyebrow, #project-workspace > h2, #project-workspace > #overview-state { display: none; }
+    #project-workspace.overview-active > .eyebrow, #project-workspace.overview-active > h2, #project-workspace.overview-active > #overview-state { display: block; }
+    #project-workspace > .surface-grid > article { display: none; }
+    #project-workspace > .surface-grid > article.route-active { display: block; grid-column: 1 / -1; min-height: 0; }
+    section, article { background: var(--surface-raised); border-color: var(--line); border-radius: var(--radius); box-shadow: none; }
+    section.route-active { animation: surface-in .18s ease-out; }
+    @keyframes surface-in { from { opacity: .5; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .state { border: 1px solid var(--line); border-left: 2px solid #555568; padding: .72rem .8rem; background: #0b0b0f; border-radius: 8px; }
+    .state.healthy { border-left-color: var(--green); } .state.warning, .state.stale, .state.needs-attention { border-left-color: var(--yellow); } .state.error, .state.offline, .state.degraded { border-left-color: var(--pink); } .state.loading { border-left-color: var(--cyan); }
+    .status-badge { min-height: 26px; padding: .15rem .52rem; font-size: .7rem; background: #09090c; }
+    .home-hero { padding: 1.2rem; background: linear-gradient(120deg, rgba(0,245,255,.045), transparent 36%), var(--surface); }
+    .home-heading, .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .home-heading h2, .section-heading h2 { margin: .15rem 0 0; font-size: clamp(1.35rem, 3vw, 2rem); }
+    .health-strip { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; padding: .62rem .72rem; background: #09090c; border: 1px solid var(--line); border-radius: 8px; }
+    .health-strip > strong { margin-right: auto; }
+    .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .metric { background: #09090c; border-color: var(--line); border-radius: 8px; }
+    .metric strong { font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+    .home-layout { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(17rem,.8fr); gap: .8rem; margin-top: .8rem; }
+    .home-panel { padding: .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .home-panel h3 { margin-bottom: .75rem; }
+    .home-panel.span-two { grid-column: 1 / -1; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: .75rem; }
+    .project-card { display: grid; grid-template-columns: auto minmax(0,1fr); gap: .72rem; min-height: 10.5rem; padding: .9rem; background: #0b0b0f; border: 1px solid var(--line); border-radius: var(--radius); }
+    .project-card:hover { border-color: rgba(0,245,255,.35); box-shadow: var(--shadow-accent); }
+    .project-card .project-glyph { width: 2.3rem; height: 2.3rem; }
+    .project-card-body { min-width: 0; } .project-card h3 { margin: 0; font-size: 1rem; }
+    .project-summary { min-height: 2.6em; margin: .35rem 0 .65rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--text-muted); font-size: .82rem; }
+    .project-card-meta, .project-card-actions { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
+    .project-card-actions { margin-top: .75rem; }
+    .project-card-actions .primary { color: #001012; background: var(--cyan); border-color: var(--cyan); font-weight: 750; }
+    .project-card-actions details { margin-left: auto; position: relative; }
+    .project-card-actions summary { display: grid; place-items: center; width: 44px; height: 44px; cursor: pointer; border: 1px solid var(--line-strong); border-radius: 8px; list-style: none; }
+    .project-card-actions summary::-webkit-details-marker { display: none; }
+    .project-card-menu { position: absolute; z-index: 15; right: 0; top: calc(100% + .3rem); min-width: 12rem; padding: .35rem; background: var(--surface-raised); border: 1px solid var(--line-strong); border-radius: 8px; box-shadow: 0 16px 36px #000a; }
+    .project-card-menu button { width: 100%; justify-content: flex-start; }
+    .create-project-disclosure { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: .8rem; }
+    .create-project-disclosure > summary { min-height: 44px; display: inline-flex; align-items: center; color: var(--cyan); cursor: pointer; }
+    .empty-quiet { padding: 1.2rem; text-align: left; background: #09090c; border: 1px dashed var(--line-strong); border-radius: 8px; }
+    body[data-entry-mode="auth"] .global-rail, body[data-entry-mode="auth"] .selected-project { display: none; }
+    body[data-entry-mode="auth"] .app { grid-template-columns: 1fr; }
+    body[data-entry-mode="auth"] main { max-width: 56rem; }
+    body[data-entry-mode="auth"] #setup { display: block; }
+    .drawer-scrim { display: none; }
+    @media (max-width: 980px) {
+      .app { display: block; }
+      .global-rail { position: fixed; inset: 0 auto 0 0; width: min(19rem, 86vw); height: 100dvh; transform: translateX(-105%); transition: transform .18s ease-out; border-bottom: 0; }
+      body.nav-open .global-rail { transform: translateX(0); }
+      .nav-toggle { display: inline-grid; place-items: center; }
+      .drawer-scrim { position: fixed; z-index: 15; inset: 0; background: #000b; border: 0; border-radius: 0; }
+      body.nav-open .drawer-scrim { display: block; }
+      .rail-foot { position: static; margin-top: 2rem; }
+      .selected-project { grid-template-columns: 1fr; }
+      .project-statuses { justify-content: flex-start; }
+      .home-layout { grid-template-columns: 1fr; }
+      .home-panel.span-two { grid-column: auto; }
+      section, article, .half { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      main { padding: .75rem .65rem 2rem; }
+      .topbar { flex-wrap: nowrap; align-items: center; }
+      .topbar-title { min-width: 0; } .topbar-title > div { min-width: 0; }
+      .topbar h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .topbar .actions { width: auto; flex-wrap: nowrap; }
+      .topbar .actions button { width: 44px; justify-content: center; }
+      .topbar .button-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+      .selected-project { padding: .75rem .75rem 0; }
+      .project-statuses { display: none; }
+      .metric-grid { grid-template-columns: repeat(3, 1fr); }
+      .metric { padding: .55rem; } .metric strong { font-size: 1.2rem; }
+      .home-hero, section { padding: .8rem; }
+      .home-heading, .section-heading { align-items: flex-start; flex-direction: column; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 0; }
+    }
+    @media (max-width: 340px) { .project-tabs a, .project-subnav a, .system-subnav a { padding-inline: .58rem; } .metric span { font-size: .7rem; } }
+    @media (prefers-reduced-motion: reduce) { section.route-active { animation: none; } .global-rail { transition: none; } }
   </style>
 </head>
 <body>
 <div class="app">
-  <aside aria-label="PRIME navigation">
-    <a class="brand" href="#home"><span class="eyebrow">ANIMUS</span><strong>PRIME</strong><span class="muted small">Project continuity console</span></a>
-    <nav class="nav-group" aria-label="Global"><h2>Global</h2><a href="#home">Home</a><a href="#projects">Projects</a><a href="#attention">Needs Attention</a><a href="#recently-active">Recently Active</a><a href="#system-health">System Health</a><a href="#global-settings">Settings</a></nav>
-    <nav class="nav-group" aria-label="Project"><h2>Project</h2><a href="#overview">Overview</a><a href="#ask">Ask PRIME</a><a href="#search">Search</a><a href="#goal">Goal</a><a href="#progress">Progress</a><a href="#repository">Repository</a><a href="#authority">Authority</a><a href="#memory">Memory</a><a href="#warm-start">Warm Start</a><a href="#brain">Project Brain</a><a href="#time-lens">Time Lens</a><a href="#knowledge">Knowledge</a><a href="#evidence">Evidence</a><a href="#activity">Activity</a><a href="#ai-connections">AI Connections</a><a href="#project-settings">Settings</a></nav>
-    <p class="muted small">Keyboard: use Tab to move, Enter to activate. Status words are always shown with text.</p>
+  <aside id="global-rail" class="global-rail" aria-label="PRIME navigation">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6.3v8.6L12 22l7.5-7.1V6.3L12 2Z"/><path d="m8.2 14.7 3.8-8 3.8 8M9.7 12h4.6"/></svg></span><span class="brand-copy"><span class="eyebrow">ANIMUS</span><strong>PRIME</strong><span class="muted small">Continuity workspace</span></span></a>
+    <nav class="nav-group global-nav" aria-label="Global"><h2>Workspace</h2>
+      <a href="#home"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m3 11 9-8 9 8v9H3z"/><path d="M9 20v-6h6v6"/></svg>Home</a>
+      <a href="#projects"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="6" rx="1"/><rect x="14" y="15" width="7" height="6" rx="1"/></svg>Projects</a>
+      <a href="#attention"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3v.1"/></svg>Attention</a>
+      <a href="#recently-active"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Activity</a>
+      <a href="#system-health"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h3l2-5 4 10 2-5h5"/><circle cx="12" cy="12" r="10"/></svg>System</a>
+    </nav>
+    <p class="rail-foot muted small">Private operator surface<br>Status is always shown in text.</p>
   </aside>
+  <button type="button" id="drawer-scrim" class="drawer-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main>
-    <div class="topbar"><div><p class="eyebrow">Operator workspace</p><h1>Keep every project understandable.</h1><p id="global-status" class="muted" aria-live="polite">Loading Core state…</p></div><div class="actions"><button type="button" id="refresh-state">Refresh state</button><button type="button" id="logout" class="hidden">Sign out</button></div></div>
+    <div class="topbar"><div class="topbar-title"><button type="button" id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-controls="global-rail" aria-expanded="false"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div><p class="eyebrow" id="surface-eyebrow">Operator workspace</p><h1 id="surface-title">Home</h1><p id="global-status" class="muted small" aria-live="polite">Loading Core state…</p></div></div><div class="actions"><button type="button" id="refresh-state" class="icon-button" aria-label="Refresh state" title="Refresh state"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-2 5"/></svg><span class="button-label">Refresh</span></button><button type="button" id="logout" class="icon-button hidden" aria-label="Sign out" title="Sign out"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 5H5v14h5M14 8l4 4-4 4m4-4H9"/></svg><span class="button-label">Sign out</span></button></div></div>
+    <section id="selected-project" class="selected-project hidden" aria-label="Selected project"><div class="project-identity"><span id="selected-project-glyph" class="project-glyph" aria-hidden="true">AP</span><div class="project-identity-copy"><span class="eyebrow">Selected project</span><strong id="selected-project-name">No project selected</strong><span id="selected-project-detail" class="muted small">Choose a project to open its workspace.</span></div></div><div id="selected-project-statuses" class="project-statuses"></div><nav class="project-tabs" aria-label="Project workspace"><a href="#overview" data-project-group="overview">Overview</a><a href="#ask" data-project-group="ask">Ask</a><a href="#progress" data-project-group="work">Work</a><a href="#search" data-project-group="knowledge">Knowledge</a><a href="#activity" data-project-group="history">History</a><a href="#project-settings" data-project-group="manage">Manage</a></nav><nav id="project-subnav" class="project-subnav" aria-label="Project section"><span data-nav-group="overview"><a href="#overview">Overview</a></span><span data-nav-group="ask"><a href="#ask">Ask PRIME</a></span><span data-nav-group="work"><a href="#goal">Goal</a><a href="#progress">Progress</a><a href="#repository">Repository</a><a href="#authority">Authority</a></span><span data-nav-group="knowledge"><a href="#search">Search</a><a href="#memory">Memory</a><a href="#knowledge">Sources</a><a href="#evidence">Evidence</a><a href="#brain">Brain</a><a href="#time-lens">Time Lens</a></span><span data-nav-group="history"><a href="#activity">Activity</a><a href="#warm-start">Warm Start</a></span><span data-nav-group="manage"><a href="#ai-connections">AI Connections</a><a href="#fork">Fork</a><a href="#project-settings">Project Settings</a></span></nav></section>
+    <nav id="system-subnav" class="system-subnav" aria-label="System section" hidden><a href="#system-health">Health</a><a href="#nodes">Nodes</a><a href="#node-enrollment">Enrollment</a><a href="#notion">Notion</a><a href="#backup">Backup</a><a href="#usage">Usage</a><a href="#global-settings">Settings</a></nav>
     <div id="auth-banner" class="state warning" role="status"><strong>Authentication required</strong><p class="muted">Sign in or complete first-run setup to load protected project state. No stale payload is presented as current.</p></div>
 
-    <div class="grid">
-      <section id="home" class="wide"><p class="eyebrow">Home</p><h2>Since You Were Here</h2><div id="home-state" class="state loading"><strong>LOADING</strong><p>Checking the Core and project registry.</p></div><div class="metric-grid" aria-label="Home metrics"><div class="metric"><span class="muted">Projects</span><strong id="project-count">—</strong></div><div class="metric"><span class="muted">Attention</span><strong id="attention-count">—</strong></div><div class="metric"><span class="muted">Nodes</span><strong id="node-count">—</strong></div></div><div id="since-recap" class="stack" aria-live="polite"><p class="muted">Select a project to inspect normalized activity since the last checkpoint.</p></div></section>
-      <section id="projects"><h2>Projects</h2><div id="projects-state" class="state"><strong>EMPTY</strong><p class="muted">No authenticated project list is loaded.</p></div><div id="project-list" class="stack"></div><form id="project-form" class="hidden"><label>Project name<input name="name" required maxlength="200"></label><label>Description<textarea name="description" maxlength="4000"></textarea></label><button type="submit">Create project</button></form></section>
+    <div class="grid workspace" id="workspace">
+      <section id="home" class="wide home-hero"><div class="home-heading"><div><p class="eyebrow">Home</p><h2>Project continuity, at a glance.</h2></div><a class="button" href="#projects">View all projects</a></div><div id="home-health-strip" class="health-strip" aria-live="polite"><strong>Checking system health…</strong><span class="status-badge warning">LOADING</span></div><div class="metric-grid" aria-label="Home metrics"><div class="metric"><span class="muted">Projects</span><strong id="project-count">—</strong></div><div class="metric"><span class="muted">Attention</span><strong id="attention-count">—</strong></div><div class="metric"><span class="muted">Nodes online</span><strong id="node-count">—</strong></div></div><div class="home-layout"><article class="home-panel"><h3>Needs attention</h3><div id="home-attention-preview" class="stack"><p class="muted small">Loading actionable conditions…</p></div></article><article class="home-panel"><h3>Resume work</h3><div id="home-resume" class="stack"><p class="muted small">Select a project to establish continuity context.</p></div></article><article class="home-panel span-two"><h3>Recent projects</h3><div id="home-recent-projects" class="projects-grid"></div></article><article class="home-panel span-two"><h3>Recent activity</h3><div id="since-recap" class="stack" aria-live="polite"><p class="muted small">Select a project to inspect meaningful activity since its checkpoint.</p></div></article></div><div id="home-state" class="sr-only" data-sr-status aria-live="polite">LOADING</div></section>
+      <section id="projects" class="wide"><div class="section-heading"><div><p class="eyebrow">Projects</p><h2>Your continuity workspaces</h2><p class="muted small">Open the current state. Manage identity and lifecycle only when needed.</p></div></div><div id="projects-state" class="state"><strong>EMPTY</strong><p class="muted">No authenticated project list is loaded.</p></div><div id="project-list" class="projects-grid"></div><details class="create-project-disclosure"><summary>Create a project</summary><form id="project-form" class="hidden"><label>Project name<input name="name" required maxlength="200"></label><label>Description<textarea name="description" maxlength="4000"></textarea></label><button type="submit">Create project</button></form></details></section>
       <section id="node-enrollment" class="wide"><h2>Node enrollment</h2><p class="muted">Pending Node identity proofs require explicit operator approval. Secrets and private keys are never rendered.</p><div id="node-enrollment-state" class="state"><strong>EMPTY</strong><p class="muted">No pending Node enrollment requires review.</p></div><div id="node-enrollment-list" class="stack"></div></section>
       <section id="attention"><h2>Needs Attention</h2><div id="attention-state" class="state needs-attention"><strong>NEEDS_ATTENTION</strong><p class="muted">Select a project to inspect actionable conditions.</p></div><div id="attention-list" class="stack"></div></section><section id="notifications"><h2>Notifications</h2><div id="notifications-state" class="state"><strong>UNKNOWN</strong><p class="muted">Material conditions are loaded after authentication.</p></div><div id="notifications-list" class="stack"></div></section>
       <section id="recently-active"><h2>Recently Active</h2><div id="recently-active-list" class="stack"><p class="muted">Select a project to load meaningful activity.</p></div></section>
@@ -92,13 +226,105 @@
   function readPersistedProjectId() { try { return localStorage.getItem('prime_active_project_id'); } catch (_) { return null; } }
   function persistProjectId(projectId) { try { localStorage.setItem('prime_active_project_id', projectId); } catch (_) { /* Browser storage is optional; session state remains authoritative. */ } }
   function clearPersistedProjectId() { try { localStorage.removeItem('prime_active_project_id'); } catch (_) { /* Browser storage is optional. */ } }
-  async function openProject(projectId) { persistProjectId(projectId); return loadProject(projectId); }
-  const state = { authenticated: false, activeProjectId: readPersistedProjectId(), onboardingProjectId: null, timeLensAsOf: null, nodes: [], forkPreflight: null, csrf: () => document.cookie.split('; ').find(v => v.startsWith('prime_csrf='))?.split('=')[1] || '' };
+  async function openProject(projectId, route='overview') { persistProjectId(projectId); return loadProject(projectId, route); }
+  const state = { authenticated: false, activeProjectId: readPersistedProjectId(), activeSnapshot: null, projects: [], pendingRoute: null, onboardingProjectId: null, timeLensAsOf: null, nodes: [], forkPreflight: null, csrf: () => document.cookie.split('; ').find(v => v.startsWith('prime_csrf='))?.split('=')[1] || '' };
   function text(selector, value) { const node = $(selector); if (node) node.textContent = value; }
-  function stateBox(selector, status, message) { const node = $(selector); if (!node) return; node.className = `state ${String(status).toLowerCase().replaceAll('_','-')}`; const strong=document.createElement('strong'); strong.textContent=String(status); const paragraph=document.createElement('p'); paragraph.className='muted'; paragraph.textContent=String(message); node.replaceChildren(strong, paragraph); }
+  function stateBox(selector, status, message) { const node = $(selector); if (!node) return; if (node.hasAttribute('data-sr-status')) { node.textContent = `${status}: ${message}`; return; } node.className = `state ${String(status).toLowerCase().replaceAll('_','-')}`; const strong=document.createElement('strong'); strong.textContent=String(status); const paragraph=document.createElement('p'); paragraph.className='muted'; paragraph.textContent=String(message); node.replaceChildren(strong, paragraph); }
   function replaceText(selector, value) { const node = $(selector); if (!node) return; node.replaceChildren(Object.assign(document.createElement('p'), {className:'muted small', textContent: value})); }
   function appendRow(parent, label, value) { const row = document.createElement('p'); row.className = 'small'; const strong = document.createElement('strong'); strong.textContent = `${label}: `; row.append(strong, document.createTextNode(value == null || value === '' ? 'UNKNOWN' : String(value))); parent.append(row); }
   function renderRows(selector, rows) { const node = $(selector); if (!node) return; node.replaceChildren(); if (!rows.length) { appendRow(node, 'State', 'No data available'); return; } rows.forEach(row => { const item = document.createElement('article'); item.className = 'state'; Object.entries(row).forEach(([label,value]) => appendRow(item, label.replaceAll('_',' '), value)); node.append(item); }); }
+  const PROJECT_GROUPS = {
+    overview: ['overview', 'integrity'], ask: ['ask'], work: ['goal', 'progress', 'repository', 'authority'],
+    knowledge: ['search', 'memory', 'knowledge', 'evidence', 'brain', 'time-lens'], history: ['activity', 'warm-start'],
+    manage: ['ai-connections', 'fork', 'project-settings']
+  };
+  const PROJECT_ROUTES = new Set(Object.values(PROJECT_GROUPS).flat());
+  const SYSTEM_ROUTES = new Set(['system-health', 'nodes', 'node-enrollment', 'notion', 'hindsight', 'remote', 'backup', 'usage', 'global-settings', 'setup']);
+  const GLOBAL_ROUTES = new Set(['home', 'projects', 'attention', 'notifications', 'recently-active']);
+  const ROUTE_ALIASES = {
+    'timelens':'time-lens', 'lifecycle':'project-settings',
+    'operator-security':'global-settings', 'notion-settings':'global-settings', 'ai-provider':'global-settings',
+    'hindsight-settings':'global-settings', 'authority-template':'global-settings', 'remote-settings':'global-settings',
+    'backup-settings':'global-settings', 'notifications-settings':'global-settings', 'upgrades':'global-settings', 'diagnostics':'global-settings'
+  };
+  const ROUTE_TITLES = {'home':'Home', 'projects':'Projects', 'attention':'Needs Attention', 'notifications':'Notifications', 'recently-active':'Activity', 'system-health':'System Health', 'node-enrollment':'Node Enrollment', 'global-settings':'System Settings', 'ai-connections':'AI Connections', 'project-settings':'Project Settings', 'time-lens':'Time Lens', 'warm-start':'Warm Start'};
+  function currentRoute() { return ROUTE_ALIASES[location.hash.slice(1)] || location.hash.slice(1) || 'home'; }
+  function projectGroupFor(route) { return Object.entries(PROJECT_GROUPS).find(([, routes]) => routes.includes(route))?.[0] || null; }
+  function setAriaCurrent(selector, predicate) { document.querySelectorAll(selector).forEach(link => { if (predicate(link)) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); }); }
+  function closeNavigation(restoreFocus=false) { document.body.classList.remove('nav-open'); const toggle=$('#nav-toggle'); toggle?.setAttribute('aria-expanded','false'); toggle?.setAttribute('aria-label','Open navigation'); if (restoreFocus) toggle?.focus(); }
+  function focusActiveSurface() { const target = document.querySelector('.route-active h2, .route-active h3'); if (!target) return; target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }
+  function activateRoute(requestedRoute, focus=false) {
+    let route = ROUTE_ALIASES[requestedRoute] || requestedRoute || 'home';
+    const valid = GLOBAL_ROUTES.has(route) || SYSTEM_ROUTES.has(route) || PROJECT_ROUTES.has(route);
+    if (!valid) { route='home'; history.replaceState(null,'','#home'); text('#global-status','Unknown destination. Home is shown safely.'); }
+    if (PROJECT_ROUTES.has(route) && !state.activeProjectId) { state.pendingRoute=route; route='projects'; text('#global-status','Select a project before opening its workspace.'); }
+    document.querySelectorAll('#workspace > section, #project-workspace > .surface-grid > article').forEach(node => node.classList.remove('route-active'));
+    $('#project-workspace')?.classList.remove('overview-active');
+    if (PROJECT_ROUTES.has(route)) {
+      $('#project-workspace')?.classList.add('route-active');
+      if (route === 'overview') { $('#project-workspace')?.classList.add('overview-active'); $('#integrity')?.classList.add('route-active'); }
+      else document.getElementById(route)?.classList.add('route-active');
+    }
+    else document.getElementById(route)?.classList.add('route-active');
+    const group = projectGroupFor(route);
+    document.querySelectorAll('#project-subnav [data-nav-group]').forEach(node => { node.hidden = node.dataset.navGroup !== group; });
+    const system = SYSTEM_ROUTES.has(route) && route !== 'setup'; $('#system-subnav').hidden = !system;
+    setAriaCurrent('.global-nav a', link => { const target=link.getAttribute('href')?.slice(1); return target === route || (SYSTEM_ROUTES.has(route) && target === 'system-health'); });
+    setAriaCurrent('.project-tabs a', link => link.dataset.projectGroup === group);
+    setAriaCurrent('#project-subnav a, #system-subnav a', link => link.getAttribute('href') === `#${route}`);
+    text('#surface-eyebrow', PROJECT_ROUTES.has(route) ? 'Project workspace' : SYSTEM_ROUTES.has(route) ? 'System' : 'Operator workspace');
+    text('#surface-title', ROUTE_TITLES[route] || route.split('-').map(word => word[0].toUpperCase()+word.slice(1)).join(' '));
+    closeNavigation(false); if (focus) requestAnimationFrame(focusActiveSurface);
+  }
+  function navigateTo(route, focus=false) { if (currentRoute() === route) activateRoute(route, focus); else location.hash=route; }
+  function consolidateLegacyProjectControls() {
+    const grid=$('#project-workspace > .surface-grid'); if (!grid) return;
+    const waveArticles=[...document.querySelectorAll('#wave3-controls > .surface-grid > article')];
+    [['brain',waveArticles[0]],['activity',waveArticles[1]],['fork',waveArticles[2]]].forEach(([targetId, source]) => { const target=document.getElementById(targetId); if (!target || !source) return; const host=document.createElement('div'); host.className='legacy-controls stack'; while (source.firstChild) host.append(source.firstChild); target.append(host); source.remove(); });
+    const legacyAI=document.querySelector('#workspace > #ai-connections'); if (legacyAI) { const replacement=document.createElement('article'); replacement.id='ai-connections'; replacement.className='stack'; while (legacyAI.firstChild) replacement.append(legacyAI.firstChild); legacyAI.remove(); grid.append(replacement); }
+    const legacyWarmStart=document.querySelector('#workspace > #warm-start'); if (legacyWarmStart) { const replacement=document.createElement('article'); replacement.id='warm-start'; replacement.className='stack'; while (legacyWarmStart.firstChild) replacement.append(legacyWarmStart.firstChild); legacyWarmStart.remove(); grid.append(replacement); }
+  }
+  function initials(value) { return String(value || 'PR').split(/\s+/).filter(Boolean).slice(0,2).map(word=>word[0]).join('').toUpperCase(); }
+  function statusTone(status) { const value=String(status || 'UNKNOWN').toUpperCase(); if (['HEALTHY','ACTIVE','ONLINE','CURRENT','APPROVED','ENROLLED'].includes(value)) return 'ok'; if (['DEGRADED','OFFLINE','ERROR','BLOCKED','CONFLICT','REVIEW_REQUIRED','STALE'].includes(value)) return 'danger'; return 'warning'; }
+  function makeBadge(status) { const badge=document.createElement('span'); badge.className=`status-badge ${statusTone(status)}`; badge.textContent=String(status || 'UNKNOWN').replaceAll('_',' '); return badge; }
+  function projectNeedsAttention(project) { return ['DEGRADED','OFFLINE','STALE','BLOCKED','CONFLICT','REVIEW_REQUIRED'].some(value => Object.values(project || {}).some(item => String(item).toUpperCase() === value)); }
+  function projectTimestamp(project) { return project.updated_at || project.last_activity_at || project.created_at || null; }
+  function formatWhen(value) { if (!value) return 'No activity recorded'; const date=new Date(value); return Number.isNaN(date.valueOf()) ? String(value) : date.toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
+  function makeProjectCard(project, compact=false) {
+    const card=document.createElement('article'); card.className='project-card'; card.dataset.projectId=project.project_id;
+    const glyph=document.createElement('span'); glyph.className='project-glyph'; glyph.setAttribute('aria-hidden','true'); glyph.textContent=initials(project.name);
+    const body=document.createElement('div'); body.className='project-card-body'; const title=document.createElement('h3'); title.textContent=project.name || project.project_id;
+    const summary=document.createElement('p'); summary.className='project-summary'; summary.textContent=project.description || 'Repository-backed project continuity workspace.';
+    const meta=document.createElement('div'); meta.className='project-card-meta'; meta.append(makeBadge(project.work_condition || project.connectivity_state || project.lifecycle_state), makeBadge(project.freshness_state || 'UNKNOWN'));
+    const when=document.createElement('p'); when.className='muted small'; when.textContent=`Updated ${formatWhen(projectTimestamp(project))}`;
+    const actions=document.createElement('div'); actions.className='project-card-actions'; const open=document.createElement('button'); open.type='button'; open.className='primary'; open.textContent=state.activeProjectId === project.project_id ? 'Resume' : 'Open'; open.addEventListener('click',()=>openProject(project.project_id,'overview'));
+    actions.append(open); if (!compact) { const menu=document.createElement('details'); const summaryButton=document.createElement('summary'); summaryButton.setAttribute('aria-label',`More actions for ${project.name || project.project_id}`); summaryButton.title='More project actions'; summaryButton.textContent='•••'; const menuBody=document.createElement('div'); menuBody.className='project-card-menu'; const manage=document.createElement('button'); manage.type='button'; manage.textContent='Project settings'; manage.addEventListener('click',()=>openProject(project.project_id,'project-settings')); menuBody.append(manage); menu.append(summaryButton,menuBody); actions.append(menu); }
+    body.append(title,summary,meta,when,actions); card.append(glyph,body); return card;
+  }
+  function renderProjectCollections(projects) {
+    const list=$('#project-list'); if (list) { list.replaceChildren(); projects.forEach(project=>list.append(makeProjectCard(project))); }
+    const recent=$('#home-recent-projects'); if (recent) { recent.replaceChildren(); [...projects].sort((a,b)=>String(projectTimestamp(b)||'').localeCompare(String(projectTimestamp(a)||''))).slice(0,3).forEach(project=>recent.append(makeProjectCard(project,true))); if (!projects.length) replaceText('#home-recent-projects','No projects yet. Create one from Projects when you have a real repository target.'); }
+  }
+  function renderHome(data, projects, nodes) {
+    const attention=projects.filter(projectNeedsAttention); const online=nodes.filter(node=>['ACTIVE','ONLINE','HEALTHY'].includes(String(node.status || node.connectivity_state).toUpperCase())).length;
+    text('#project-count',projects.length); text('#attention-count',attention.length); text('#node-count',`${online}/${nodes.length}`);
+    const strip=$('#home-health-strip'); if (strip) { strip.replaceChildren(); const label=document.createElement('strong'); const healthy=data.startup?.database === 'CONNECTED'; label.textContent=healthy ? 'Core and persistent database are available.' : 'Core loaded with a degraded dependency.'; strip.append(label,makeBadge(healthy ? 'HEALTHY' : 'DEGRADED'),makeBadge(data.remote_access?.status || 'REMOTE UNKNOWN')); }
+    const attentionHost=$('#home-attention-preview'); if (attentionHost) { attentionHost.replaceChildren(); if (!attention.length) { const quiet=document.createElement('div'); quiet.className='empty-quiet'; quiet.textContent='No project-level attention signals.'; attentionHost.append(quiet); } else attention.slice(0,3).forEach(project=>{ const row=document.createElement('button'); row.type='button'; row.className='brain-node-button'; row.textContent=`${project.name}: ${project.work_condition || project.connectivity_state || project.freshness_state}`; row.addEventListener('click',()=>openProject(project.project_id,'overview')); attentionHost.append(row); }); }
+    renderProjectCollections(projects);
+  }
+  function renderSelectedProject(snapshot) {
+    const project=snapshot?.project || {}; const header=$('#selected-project'); if (!project.project_id || !header) return;
+    header.classList.remove('hidden'); text('#selected-project-glyph',initials(project.name)); text('#selected-project-name',project.name || project.project_id); text('#selected-project-detail',`${project.project_id} · ${snapshot.binding?.canonical_path || 'Repository unbound'}`);
+    const statuses=$('#selected-project-statuses'); if (statuses) statuses.replaceChildren(makeBadge(project.work_condition || project.lifecycle_state),makeBadge(project.connectivity_state),makeBadge(project.freshness_state));
+    renderProjectCollections(state.projects);
+    const resume=$('#home-resume'); if (resume) { resume.replaceChildren(); const title=document.createElement('strong'); title.textContent=project.name || project.project_id; const detail=document.createElement('p'); detail.className='muted small'; const progress=snapshot.progress; detail.textContent=progress?.assessment_id ? `${progress.progress_percent ?? 'Unknown'}% progress · ${progress.freshness_state || 'UNKNOWN'} · Goal revision ${snapshot.goal?.revision_number || 'UNKNOWN'}` : `Goal ${snapshot.goal?.status || 'UNKNOWN'} · ${project.work_condition || 'UNKNOWN'}`; const button=document.createElement('button'); button.type='button'; button.textContent='Resume project'; button.addEventListener('click',()=>navigateTo('overview',true)); resume.append(title,detail,button); }
+  }
+  consolidateLegacyProjectControls();
+  $('#nav-toggle')?.addEventListener('click',()=>{ const open=document.body.classList.toggle('nav-open'); $('#nav-toggle').setAttribute('aria-expanded',String(open)); $('#nav-toggle').setAttribute('aria-label',open?'Close navigation':'Open navigation'); });
+  $('#drawer-scrim')?.addEventListener('click',()=>closeNavigation(true));
+  document.querySelectorAll('.global-nav a, .project-tabs a, .project-subnav a, .system-subnav a').forEach(link=>link.addEventListener('click',()=>closeNavigation(false)));
+  document.addEventListener('keydown',event=>{ if (event.key === 'Escape' && document.body.classList.contains('nav-open')) closeNavigation(true); });
+  window.addEventListener('hashchange',()=>activateRoute(currentRoute(),true));
   function ensureProgressControls() { const panel = $('#progress'); if (!panel || $('#progress-refresh')) return; panel.insertAdjacentHTML('beforeend', '<div class="actions"><button type="button" id="progress-refresh" hidden>Refresh assessment</button></div><form id="progress-challenge-form" hidden><label>Challenge category<select name="category"><option value="MISSED_EVIDENCE">Missed evidence</option><option value="INCORRECT_INTERPRETATION">Incorrect interpretation</option><option value="STALE_SOURCE">Stale source</option><option value="WRONG_STATUS">Wrong status</option><option value="BAD_GOAL_MODEL">Bad GoalModel/decomposition</option></select></label><label>Reason<textarea name="reason" required maxlength="4000"></textarea></label><button type="submit">Challenge assessment</button></form><p id="progress-action-result" class="muted small" aria-live="polite"></p><div id="progress-goal-items" class="stack"></div><div id="progress-corrections" class="stack"></div>'); $('#progress-refresh').addEventListener('click', refreshProgress); $('#progress-challenge-form').addEventListener('submit', challengeProgress); }
   async function refreshProgress() { if (!state.activeProjectId) return; try { const result = await api(`/v1/projects/${encodeURIComponent(state.activeProjectId)}/progress/refresh`, {method:'POST'}); text('#progress-action-result', `Assessment ${result.assessment_id} is CURRENT at ${result.repository_revision || 'UNKNOWN'}.`); await loadProject(state.activeProjectId); } catch (error) { text('#progress-action-result', `Refresh stopped safely: ${error.message}`); } }
   async function challengeProgress(event) { event.preventDefault(); if (!state.activeProjectId || !state.activeSnapshot?.progress?.assessment_id) return; try { const values = Object.fromEntries(new FormData(event.target)); const result = await api(`/v1/projects/${encodeURIComponent(state.activeProjectId)}/progress/challenge`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({assessment_id:state.activeSnapshot.progress.assessment_id, category:values.category, reason:values.reason})}); text('#progress-action-result', `Challenge ${result.correction_id} recorded. Reassessment is available; the historical assessment was not changed.`); event.target.reset(); await loadProject(state.activeProjectId); } catch (error) { text('#progress-action-result', `Challenge stopped safely: ${error.message}`); } }
@@ -133,6 +359,7 @@
     renderRows('#recently-active-list', (snapshot.events || []).slice(0, 5).map(event => ({event: event.event_type, observed_at: event.observed_at, sequence: event.project_sequence})));
     renderProjectMetadata(project); void loadUsage(project.project_id);
     const attention = snapshot.attention || []; stateBox('#attention-state', attention.length ? 'NEEDS_ATTENTION' : 'HEALTHY', attention.length ? `${attention.length} actionable condition(s) require review.` : 'No unresolved conditions were returned for this project.'); renderRows('#attention-list', attention);
+    renderSelectedProject(snapshot);
   }
   function renderSince(data) { const node = $('#since-recap'); if (!node) return; node.replaceChildren(); const events = data.events || []; const title = document.createElement('p'); title.className='small'; title.textContent = events.length ? `${events.length} meaningful event(s); current checkpoint ${data.advanced_to ?? 'UNKNOWN'}.` : 'No meaningful events since the last explicit checkpoint.'; node.append(title); if (events.length) renderRowsInto(node, events.slice(0, 12).map(event => ({event:event.event_type, sequence:event.project_sequence, observed_at:event.observed_at, source_revision:event.source_revision || 'NONE'}))); const button=document.createElement('button'); button.type='button'; button.textContent='Mark recap reviewed'; button.addEventListener('click', async()=>{ try { await api(`/v1/projects/${encodeURIComponent(state.activeProjectId)}/since-you-were-here/advance`, {method:'POST'}); await loadProject(state.activeProjectId); } catch(error) { title.textContent=`Checkpoint unavailable: ${error.message}`; } }); node.append(button); }
   async function loadAgentChain(projectId, authority) { try { const chain=await api(`/v1/projects/${encodeURIComponent(projectId)}/agent-chain`); const authorityRow=authority ? {source_path: authority.source_path, validation: authority.validation_status, contract: authority.contract_version, source_hash: authority.source_hash, observed_at: authority.observed_at} : {}; const instructions=(chain.instructions || []).map(item => `${item.path} · ${item.scope} · ${item.content_hash}`).join(' | ') || 'NONE'; renderRows('#authority-view', [authorityRow, {agent_chain_target: chain.target || 'UNKNOWN', instructions, precedence: chain.precedence || 'UNKNOWN', authority_relationship: chain.authority_relationship || 'UNKNOWN', mcp_relationship: chain.mcp_relationship || 'UNKNOWN'}]); } catch(error) { renderRows('#authority-view', [{authority: authority?.validation_status || 'UNKNOWN', agent_chain: `UNAVAILABLE: ${error.message}`}]); } }
@@ -195,7 +422,7 @@
     state.forkPreflight = null; const forkSubmit=$('#fork-submit-wave3'); if (forkSubmit) forkSubmit.disabled=true; stateBox('#fork-preflight-result-wave3','NO_PREFLIGHT','Review the exact revision, destination, remotes, child Goal, Progress baseline, and Notion target before creation.');
     text('#fork-result-wave3', '');
   }
-  async function loadProject(projectId) { resetProjectScopedViews(); try { const snapshot=await api(`/v1/projects/${encodeURIComponent(projectId)}/snapshot`); renderSnapshot(snapshot); const since=await api(`/v1/projects/${encodeURIComponent(projectId)}/since-you-were-here`); renderSince(since); await loadContext(projectId); location.hash='overview'; } catch(error) { stateBox('#overview-state','ERROR',error.message); } }
+  async function loadProject(projectId, routeAfterLoad=null) { resetProjectScopedViews(); try { const snapshot=await api(`/v1/projects/${encodeURIComponent(projectId)}/snapshot`); renderSnapshot(snapshot); const since=await api(`/v1/projects/${encodeURIComponent(projectId)}/since-you-were-here`); renderSince(since); await loadContext(projectId); if (routeAfterLoad) navigateTo(routeAfterLoad); else activateRoute(currentRoute()); } catch(error) { stateBox('#overview-state','ERROR',error.message); } }
   function renderAsk(result) { text('#ask-result', result.historical ? `HISTORICAL ${result.as_of || 'selected boundary'}: ${result.answer || result.status || 'UNKNOWN'}` : (result.answer || result.status || 'UNKNOWN')); renderRows('#ask-citations', (result.citations || []).map(citation => ({source_class: citation.source_class, source_id: citation.source_id || citation.source_reference_id || 'UNKNOWN', source_revision: citation.source_revision || 'UNKNOWN', content_hash: citation.content_hash || 'UNKNOWN', epistemic: result.epistemic || 'UNKNOWN'}))); }
   function renderSearch(result) { text('#search-result', `${(result.results || []).length} project-scoped result(s).`); const rows=[]; Object.entries(result.groups || {}).forEach(([group,items])=>{ (items || []).slice(0,8).forEach(item=>rows.push({source_group:group, source_id:item.source_id || item.relative_path || item.event_id || item.memory_id || 'UNKNOWN', revision:item.source_revision || item.repository_revision || 'UNKNOWN', freshness:item.freshness_state || 'UNKNOWN'})); }); renderRows('#search-groups',rows); }
   async function api(path, options = {}) { const headers = { ...(options.headers || {}) }; if (['POST','PUT','PATCH','DELETE'].includes(options.method)) headers['X-PRIME-CSRF'] = state.csrf(); const response = await fetch(path, { cache: 'no-store', credentials: 'same-origin', ...options, headers }); const data = await response.json().catch(() => ({})); if (!response.ok) throw new Error(data.message || data.error_code || `HTTP ${response.status}`); return data; }
@@ -204,15 +431,18 @@
   function showOnboarding(project) { state.onboardingProjectId = project.project_id; const form = $('#onboarding-form'); if (form) { form.classList.remove('hidden'); form.elements.name.value = project.name || ''; form.elements.description.value = project.description || ''; } }
   function renderNodeEnrollments(nodes) { const pending = (nodes || []).filter(node => node.approval_state === 'PENDING_OPERATOR_APPROVAL'); const stateNode = $('#node-enrollment-state'); const list = $('#node-enrollment-list'); if (!stateNode || !list) return; list.replaceChildren(); stateBox('#node-enrollment-state', pending.length ? 'REVIEW_REQUIRED' : 'EMPTY', pending.length ? `${pending.length} Node enrollment request${pending.length === 1 ? '' : 's'} require explicit approval.` : 'No pending Node enrollment requires review.'); pending.forEach(node => { const item = document.createElement('article'); item.className = 'state'; appendRow(item, 'node_id', node.node_id); appendRow(item, 'name', node.name); appendRow(item, 'platform', node.platform); appendRow(item, 'allowed_roots', JSON.stringify(node.allowed_roots || [])); appendRow(item, 'capabilities', JSON.stringify(node.capabilities || {})); appendRow(item, 'certificate_fingerprint', node.certificate_fingerprint || 'PENDING'); const actions = document.createElement('div'); actions.className = 'actions'; const approve = document.createElement('button'); approve.type = 'button'; approve.textContent = 'Approve Node'; approve.addEventListener('click', async () => { try { const result = await api(`/v1/nodes/enrollment/${encodeURIComponent(node.challenge_id)}/approve`, {method:'POST'}); text('#global-status', `Node ${result.node_id} approved. Restart the persistent Node service to activate its certificate.`); await refresh(); } catch (error) { text('#global-status', `Node approval stopped safely: ${error.message}`); } }); const reject = document.createElement('button'); reject.type = 'button'; reject.textContent = 'Reject Node'; reject.addEventListener('click', async () => { try { await api(`/v1/nodes/enrollment/${encodeURIComponent(node.challenge_id)}/reject`, {method:'POST'}); await refresh(); } catch (error) { text('#global-status', `Node rejection stopped safely: ${error.message}`); } }); actions.append(approve, reject); item.append(actions); list.append(item); }); }
   function render(data) {
-    state.authenticated = true; state.nodes = data.nodes || []; $('#auth-banner')?.classList.add('hidden'); $('#logout')?.classList.remove('hidden'); $('#project-form')?.classList.remove('hidden');
-    const projects = data.projects || [], nodes = data.nodes || []; text('#project-count', projects.length); text('#node-count', nodes.length); text('#attention-count', projects.filter(p => ['DEGRADED','OFFLINE','STALE','BLOCKED','CONFLICT','REVIEW_REQUIRED'].some(value => Object.values(p).includes(value))).length); text('#global-status', 'Authenticated Core state loaded.'); renderNodeEnrollments(nodes);
-    if (!projects.length) stateBox('#projects-state', 'EMPTY', 'Create a project to begin its protected onboarding workflow.'); else { stateBox('#projects-state', 'HEALTHY', `${projects.length} project record${projects.length === 1 ? '' : 's'} loaded.`); const list = $('#project-list'); list.replaceChildren(); projects.forEach(project => { const card = document.createElement('article'); const title = document.createElement('h3'); title.textContent = project.name; const detail = document.createElement('p'); detail.className = 'muted small'; detail.textContent = `${project.lifecycle_state || 'UNKNOWN'} · ${project.connectivity_state || 'UNKNOWN'} · ${project.freshness_state || 'UNKNOWN'}`; const select = document.createElement('button'); select.type = 'button'; select.textContent = 'Open project'; select.addEventListener('click', () => openProject(project.project_id)); card.append(title, detail, select); list.append(card); }); }
-    const persistedProject = state.activeProjectId && projects.find(project => project.project_id === state.activeProjectId); if (persistedProject) void openProject(persistedProject.project_id); else if (state.activeProjectId) { state.activeProjectId = null; clearPersistedProjectId(); }
+    state.authenticated = true; document.body.dataset.entryMode='product'; state.nodes = data.nodes || []; $('#auth-banner')?.classList.add('hidden'); $('#logout')?.classList.remove('hidden'); $('#project-form')?.classList.remove('hidden');
+    const projects = data.projects || [], nodes = data.nodes || []; state.projects=projects; text('#global-status', 'Authenticated Core state loaded.'); renderNodeEnrollments(nodes); renderHome(data, projects, nodes);
+    if (!projects.length) stateBox('#projects-state', 'EMPTY', 'Create a project when a real repository target is ready.'); else stateBox('#projects-state', 'HEALTHY', `${projects.length} project record${projects.length === 1 ? '' : 's'} loaded.`);
+    const persistedProject = state.activeProjectId && projects.find(project => project.project_id === state.activeProjectId);
+    if (persistedProject) { const route=state.pendingRoute || currentRoute(); state.pendingRoute=null; void loadProject(persistedProject.project_id, PROJECT_ROUTES.has(route) ? route : null); }
+    else if (state.activeProjectId) { state.activeProjectId = null; clearPersistedProjectId(); $('#selected-project')?.classList.add('hidden'); }
+    if (currentRoute() === 'setup') navigateTo(state.pendingRoute || 'home'); else activateRoute(currentRoute());
     stateBox('#home-state', 'HEALTHY', 'Project registry and operator surfaces are available.'); void loadNotifications(); stateBox('#health-state', data.startup?.database === 'CONNECTED' ? 'HEALTHY' : 'DEGRADED', `Core: ${data.startup?.database || 'UNKNOWN'}; schema: ${data.startup?.migrations || 'UNKNOWN'}; build: ${data.build?.build_commit || 'UNKNOWN'}; image: ${data.build?.image_identity || 'UNKNOWN'}.`); stateBox('#nodes-state', nodes.length ? 'HEALTHY' : 'EMPTY', nodes.length ? `${nodes.length} node record${nodes.length === 1 ? '' : 's'} loaded.` : 'No nodes are enrolled.');
     const notion = data.notion || {}; stateBox('#notion-state', notion.source_present ? (notion.capabilities?.page_read ? 'HEALTHY' : 'CONNECTED') : 'REAUTH_REQUIRED', notion.source_present ? 'Imported existing local authorization is available to the runtime.' : 'The existing local authorization is not available in this process.'); text('#notion-read', notion.capabilities?.page_read ? 'Available' : 'Not tested'); text('#notion-write', notion.capabilities?.managed_write === 'CAPABILITY_PRESENT' ? 'Available' : 'Permission test required');
     stateBox('#remote-state', data.remote_access?.status || 'UNKNOWN', 'Private Tailscale Serve only; public Funnel exposure is refused.'); stateBox('#backup-state', data.reliability?.backup_status || 'UNKNOWN', data.reliability?.backup_detail || 'Reliability status is shown without presenting missing data as healthy.'); renderRows('#backup-detail', [{latest_verified: data.reliability?.latest_verified_backup || 'NONE', records: data.reliability?.counts?.backup_records || 0, encryption: data.reliability?.backup_encryption || 'UNKNOWN', restore: 'PREFLIGHT AVAILABLE; DESTRUCTIVE RESTORE REQUIRES RECENT STEP-UP'}]); const capacity=data.reliability?.capacity || {}; const growth=capacity.storage_growth || {}; renderRows('#diagnostics-detail', [{queue_status:capacity.queue?.status || 'UNKNOWN', queued:capacity.queue?.queued ?? 'UNKNOWN', queue_limit:capacity.queue?.limit ?? 'UNKNOWN', disk_status:capacity.disk?.status || 'UNKNOWN', disk_free_bytes:capacity.disk?.free_bytes ?? 'UNKNOWN', database_bytes:growth.database_bytes ?? 'UNKNOWN', durable_memory_records:growth.durable_memory_records ?? 'UNKNOWN', hindsight_health:growth.hindsight_health || 'UNKNOWN', protected_auto_purge:capacity.protected_data_auto_purge === false ? 'DISABLED' : 'UNKNOWN'}]);
   }
-  async function refresh() { try { render(await api('/v1/operator/state')); await loadSetup(); } catch (error) { state.authenticated = false; $('#auth-banner')?.classList.remove('hidden'); text('#global-status', 'Core state unavailable or authentication required.'); stateBox('#home-state', 'DEGRADED', error.message); } }
+  async function refresh() { try { render(await api('/v1/operator/state')); await loadSetup(); } catch (error) { const route=currentRoute(); if (route !== 'setup') state.pendingRoute=route; state.authenticated = false; document.body.dataset.entryMode='auth'; $('#selected-project')?.classList.add('hidden'); $('#auth-banner')?.classList.remove('hidden'); text('#global-status', 'Core state unavailable or authentication required.'); stateBox('#home-state', 'DEGRADED', error.message); activateRoute('setup'); } }
   $('#refresh-state')?.addEventListener('click', refresh);
   $('#project-metadata-form')?.addEventListener('submit', updateProjectMetadata); $('#backup-form')?.addEventListener('submit', createBackup); $('#backup-preflight')?.addEventListener('click', preflightBackup); $('#usage-limit-form')?.addEventListener('submit', saveUsageLimit); $('#upgrade-status')?.addEventListener('click', loadUpgradeStatus); $('#upgrade-preflight-form')?.addEventListener('submit', (event) => runUpgradePreflight(event, 'NONE')); $('#upgrade-simulate-interruption')?.addEventListener('click', () => runUpgradePreflight(null, 'INTERRUPTED'));
   $('#login-form')?.addEventListener('submit', async (event) => { event.preventDefault(); try { const password = new FormData(event.target).get('password'); await api('/v1/auth/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({password}) }); text('#setup-message', 'Signed in. Loading protected state…'); await refresh(); } catch (error) { text('#setup-message', `Sign in failed: ${error.message}`); } });
@@ -266,6 +496,7 @@
   $('#logout')?.addEventListener('click', async () => { try { await api('/v1/auth/logout', {method:'POST'}); state.activeProjectId = null; clearPersistedProjectId(); location.reload(); } catch (error) { text('#global-status', `Sign out failed: ${error.message}`); } });
   const dialog = $('#confirm-dialog'); document.querySelectorAll('.danger-action:not([data-workflow-action])').forEach(button => button.addEventListener('click', () => dialog.showModal())); $('#cancel-confirm')?.addEventListener('click', () => dialog.close()); $('#accept-confirm')?.addEventListener('click', () => { dialog.close(); text('#global-status', 'Protected action requires its specific lifecycle workflow.'); });
   fetch('/health/live', {cache:'no-store'}).then(response => { if (!response.ok) throw new Error(); return response.json(); }).then(() => { if (!state.authenticated) text('#global-status', 'Core live; authentication required for protected state.'); }).catch(() => { text('#global-status', 'Core live check degraded.'); stateBox('#home-state', 'OFFLINE', 'Core live health is unavailable; retry when the service recovers.'); });
+  activateRoute(currentRoute());
   refresh();
   const recoveryHost = document.querySelector('#setup .half.stack');
   if (recoveryHost && !document.querySelector('#local-identity-sign-in')) { recoveryHost.insertAdjacentHTML('afterbegin', '<div id="local-identity-sign-in" class="state"><h3>Trusted PRIME host</h3><p class="muted small">Start a short-lived browser challenge, then approve its code on the trusted Atlas host. The host secret never enters the browser.</p><button type="button" id="local-identity-sign-in-button">Sign in with trusted PRIME host</button><p id="local-identity-sign-in-message" class="muted small" aria-live="polite"></p></div>'); }

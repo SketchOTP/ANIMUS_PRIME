@@ -7,14 +7,14 @@
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001
-- External directive ID: ANIMUS PRIME post-V1 UX design remediation brief
-- Objective: Audit PRIME against the authoritative ANIMUS ONE implementation and publish an implementation-ready, documentation-only UX convergence plan.
-- Current status: `COMPLETE`
-- Acceptance: Canonical post-V1 brief records exact PRIME/ANIMUS ONE provenance, complete surface drift, extracted tokens/patterns, target architecture, prioritized implementation waves, and measurable future acceptance criteria while preserving qualified V1 and making no product/runtime change.
-- Current phase: POST_V1_DESIGN_PLANNING
-- Expected or actual touched areas: `docs/post-v1/`, append-only `.agent` records, GitHub parity, and main Notion SOT readback only.
-- Immediate next action: Preserve the qualified private V1 runtime and await explicit authority for a bounded Wave A implementation. Do not infer Phase 16, public deployment, Continuation 097, or implementation authority from this brief.
+- Local directive ID: D-PRIME-POSTV1-UX-WAVE-A-001
+- External directive ID: ANIMUS PRIME post-V1 UX Wave A implementation
+- Objective: Implement the accepted design foundation and route-safe shell, then converge Home and Projects into concise, glanceable operator surfaces without weakening qualified V1 behavior.
+- Current status: `IN_PROGRESS`
+- Acceptance: Protected entry, deep links, project persistence/isolation, the five-second Home contract, concise Projects cards, truthful degraded states, keyboard/focus/reduced-motion behavior, responsive layouts, full regression, exact persistent runtime provenance, private browser qualification, Git parity, and Notion readback all pass.
+- Current phase: POST_V1_UX_WAVE_A
+- Expected or actual touched areas: apps/web/index.html, focused static/browser contract tests, persistent Core image/runtime provenance, post-V1 evidence, append-only agent closeout, GitHub parity, and main Notion SOT readback.
+- Immediate next action: Complete Wave A validation and persistent private-browser qualification; do not expand into later project-surface redesign waves, Phase 16, public deployment, or Funnel exposure.
 
 ## Temporary task-relevant facts
 
@@ -36,7 +36,7 @@
 
 ## Last validation after adoption
 
-- Command or check: post-V1 brief structural/diff/secret/Git-parity checks, live PRIME read-only browser audit, and read-only ANIMUS ONE source/provenance inspection; preserved Continuation 096G/096H qualification basis
+- Command or check: Wave A focused/full regression, governance, persistent runtime rebuild/provenance, and private browser acceptance; preserved Continuation 096G/096H V1 qualification basis
 - Result: `PASSED`
 
 ## Risks

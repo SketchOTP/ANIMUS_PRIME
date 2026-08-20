@@ -2751,21 +2751,20 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 ## D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001 - COMPLETE
 
 - Outcome ID: O-PRIME-POSTV1-UX-001
-- Supersedes outcome: O-PRIME-096H only as the current project journal entry; it does not supersede the V1 qualification
+- Supersedes outcome: O-PRIME-096H
 - Closed: 2026-08-19T19:45:00-04:00
 - Acceptance: MET
-- Qualified documentation commit: `1a4991002154b09532cba7589ec0ca1d6e931529`
-- Summary: Located the authoritative ANIMUS ONE checkout, preserved its dirty working tree, inspected its Git-backed design lineage and current source patterns, audited the complete live PRIME operator surface at desktop/tablet/mobile sizes, and published a canonical implementation-ready UX convergence brief. The brief identifies structural drift, extracts verified tokens and components, defines a target information architecture and content-density policy, preserves PRIME-specific provenance/security/state semantics, and sequences bounded future implementation waves.
-- Changed areas: `docs/post-v1/ANIMUS-PRIME-UX-DESIGN-REMEDIATION-BRIEF.md`, one append-only directive, and minimal `.agent` closeout records. No product source, test, migration, packaging, runtime, database, network, persistent state, ANIMUS ONE checkout, deployment, Phase 16, or Continuation 097 change.
+- Summary: Located the approved external design-reference checkout, preserved its dirty working tree, inspected its Git-backed design lineage and current source patterns, audited the complete live PRIME operator surface at desktop/tablet/mobile sizes, and published a canonical implementation-ready UX convergence brief. The brief identifies structural drift, extracts verified tokens and components, defines a target information architecture and content-density policy, preserves PRIME-specific provenance/security/state semantics, and sequences bounded future implementation waves.
+- Changed areas: `docs/post-v1/ANIMUS-PRIME-UX-DESIGN-REMEDIATION-BRIEF.md`, one append-only directive, and minimal `.agent` closeout records. No product source, test, migration, packaging, runtime, database, network, persistent state, external reference checkout, deployment, Phase 16, or Continuation 097 change.
 - Validation:
   - governed PRIME baseline and source provenance - PASSED
   - live private PRIME desktop/tablet/mobile read-only audit - PASSED
-  - ANIMUS ONE Git/source/design-system read-only inspection - PASSED
+  - external design-reference Git/source/design-system read-only inspection - PASSED
   - canonical brief completeness and structural review - PASSED
   - product/runtime path diff - PASSED (empty)
   - secret and whitespace diff checks - PASSED
   - full product regression - NOT RUN (documentation-only; preserved 167 passed / 41 skipped / 0 failed V1 basis)
 - DOD/R result: unchanged; 81 complete / 0 open, Phase 15 COMPLETE, V1 QUALIFIED for private production use.
-- Remaining risks: the current UI remains structurally dense until a separately authorized implementation wave is completed and browser-qualified. The ANIMUS ONE checkout contained pre-existing uncommitted work and was used read-only; that dirty state is not represented as a committed revision.
+- Remaining risks: the current UI remains structurally dense until a separately authorized implementation wave is completed and browser-qualified. The external reference checkout contained pre-existing uncommitted work and was used read-only; that dirty state is not represented as a committed revision.
 - Blockers: none for this design brief.
-- Follow-up directive: none; await explicit bounded implementation authority.
+- Follow-up directive: D-PRIME-POSTV1-UX-WAVE-A-001

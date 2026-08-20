@@ -1445,6 +1445,20 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Exclusions: no PRIME or ANIMUS ONE product code; no runtime, database, persistent state, network, deployment, Funnel/public exposure, Phase 16, Continuation 097, or frozen V1 governance change.
 - Acceptance: A canonical brief under `docs/post-v1/` identifies source provenance, inventories the complete PRIME operator surface, defines the transferable ANIMUS ONE design language, provides prioritized implementation waves and measurable future acceptance criteria, preserves the qualified V1 posture, publishes exact Git parity, and is recorded/read back in the main Notion SOT.
 - Risk class: NORMAL
-- Relationship: post-V1 successor initiative
+- Relationship: resumes
 - Related directive: D-PRIME-PHASE15-TRACEABILITY-NORMALIZATION-096H
+- Status at issuance: ISSUED
+
+## D-PRIME-POSTV1-UX-WAVE-A-001
+
+- Issued: 2026-08-19T19:56:33-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME post-V1 UX Wave A implementation
+- Objective: Implement the accepted ANIMUS ONE-derived PRIME design foundation and route-safe application shell, then converge Home and Projects into concise, glanceable operator surfaces.
+- Scope: Shared design tokens and primitives; compact global navigation; persistent selected-project identity; contextual project navigation; one active primary surface; state-driven authentication/setup entry; five-second Home; concise Projects cards; desktop/tablet/mobile and keyboard accessibility; exact persistent Atlas runtime rebuild and private-browser qualification; focused/full regression; governed GitHub and Notion closeout.
+- Exclusions: no Wave C/D/E project-surface redesign; no backend/API, database, Node, Hindsight, Notion integration, Tailscale/Funnel/public-exposure, frozen-spec, Phase 16, or unrelated architecture change except the smallest defect repair directly required to preserve existing qualified behavior under the new shell.
+- Acceptance: Protected entry, login/logout, refresh, invalid/deep-link compatibility, project selection/persistence/isolation, Home five-second contract, Projects identity/status/action contract, truthful degraded/stale/offline states, keyboard/focus/reduced-motion, 320px/tablet/desktop layouts, full supported regression, exact runtime-build provenance, Git parity, and Notion SOT readback all pass without weakening any of the 81 frozen V1 capabilities.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001
 - Status at issuance: ISSUED
