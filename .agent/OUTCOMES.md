@@ -2768,3 +2768,22 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: the current UI remains structurally dense until a separately authorized implementation wave is completed and browser-qualified. The external reference checkout contained pre-existing uncommitted work and was used read-only; that dirty state is not represented as a committed revision.
 - Blockers: none for this design brief.
 - Follow-up directive: D-PRIME-POSTV1-UX-WAVE-A-001
+
+## D-PRIME-POSTV1-UX-WAVE-A-001 - COMPLETE
+
+- Outcome ID: O-PRIME-POSTV1-UX-WAVE-A-001
+- Supersedes outcome: O-PRIME-POSTV1-UX-001
+- Closed: 2026-08-19T20:45:00-04:00
+- Acceptance: MET
+- Summary: Implemented and privately qualified the accepted Wave A design foundation, route-safe compact shell, Home, and Projects surfaces against the actual PRIME runtime. The result adopts the approved dark-neon design language, one-active-surface information architecture, contextual project navigation, concise project cards, scale controls, and responsive/accessibility behavior while preserving all frozen V1 API, security, state, isolation, degraded-state, and operator contracts.
+- Changed areas: `apps/web/index.html`, `tests/phase15/test_post_v1_wave_a.py`, `evidence/post-v1/qualification-wave-a-001.md`, persistent PRIME-owned Core image/runtime provenance, and append-only `.agent` closeout. No backend/API, database, migration, Node, Hindsight, Notion integration, Tailscale/Funnel, public deployment, Phase 16, Continuation 097, or later-wave project-surface redesign change.
+- Validation:
+  - focused Wave A and preserved shell/security regression - 9 passed
+  - complete supported regression - 175 passed / 41 skipped / 0 failed
+  - compile/static, governance, product alignment, burndown, diff, and secret checks - PASSED
+  - persistent Core image provenance, readiness, restart and session recovery - PASSED
+  - protected entry, trusted-host login/logout, Home, Projects scale/filter, project selection, deep/invalid routes, responsive 320-pixel layout, mobile drawer/Escape, keyboard focus, and private-browser visual review - PASSED
+- DOD/R result: unchanged and preserved; 81 complete / 0 open, Phase 15 COMPLETE, V1 QUALIFIED for private production use.
+- Remaining risks: later project surfaces retain their qualified functional presentation until separately authorized convergence waves. Public deployment and Phase 16 remain unauthorized.
+- Blockers: none for Wave A.
+- Follow-up directive: none

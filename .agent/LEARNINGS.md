@@ -1106,3 +1106,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: post-V1 information architecture and visual-system convergence planning only.
 - Supersedes learning: none
+
+## L-PRIME-POSTV1-UX-WAVE-A-001
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-POSTV1-UX-WAVE-A-001
+- Fact or lesson: PRIME's existing single-document web application can support a compact one-active-surface product shell without a second frontend or backend rewrite. The safe seam is route-controlled presentation over the existing authenticated API/state contract. Large project registries also require a bounded initial render, filtering, and progressive expansion; visual card redesign alone is insufficient at hundreds of projects.
+- Evidence location: `apps/web/index.html`; `tests/phase15/test_post_v1_wave_a.py`; `evidence/post-v1/qualification-wave-a-001.md`.
+- Confidence: VERIFIED
+- Scope: Post-V1 Wave A design foundation, shell, Home, and Projects only.
+- Supersedes learning: L-PRIME-POSTV1-UX-STRUCTURAL-DRIFT-001
