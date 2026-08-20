@@ -73,6 +73,8 @@ def test_wave_a_preserves_product_boundaries_and_accessibility() -> None:
         assert endpoint in html
 
     assert "min-height: 44px" in html
+    assert ".icon-button .button-label { position: absolute" in html
+    assert ".projects-grid > .project-card { grid-column: auto; }" in html
     assert "@media (prefers-reduced-motion: reduce)" in html
     assert "@media (max-width: 340px)" in html
     assert 'aria-label="Open navigation"' in html
