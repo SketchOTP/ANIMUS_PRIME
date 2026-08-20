@@ -3,18 +3,18 @@
 ## Lifecycle
 
 - Status: `ADOPTED`
-- Last updated: 2026-08-19T20:45:00-04:00
+- Last updated: 2026-08-19T21:50:00-04:00
 
 ## Active state after adoption
 
-- Local directive ID: D-PRIME-POSTV1-UX-WAVE-A-001
-- External directive ID: ANIMUS PRIME post-V1 UX Wave A implementation
-- Objective: Implement the accepted design foundation and route-safe shell, then converge Home and Projects into concise, glanceable operator surfaces without weakening qualified V1 behavior.
-- Current status: `COMPLETE`
-- Acceptance: Protected entry, deep links, project persistence/isolation, the five-second Home contract, concise Projects cards, truthful degraded states, keyboard/focus/reduced-motion behavior, responsive layouts, full regression, exact persistent runtime provenance, private browser qualification, Git parity, and Notion readback all pass.
-- Current phase: POST_V1_UX_WAVE_A
-- Expected or actual touched areas: apps/web/index.html, focused static/browser contract tests, persistent Core image/runtime provenance, post-V1 evidence, append-only agent closeout, GitHub parity, and main Notion SOT readback.
-- Immediate next action: Await explicit post-Wave-A authority. Do not expand into later project-surface redesign waves, Phase 16, public deployment, or Funnel exposure.
+- Local directive ID: D-PRIME-POSTV1-AUTH-ENTRY-UX-FIX-001
+- External directive ID: ANIMUS PRIME post-Wave-A authentication-entry UX correction
+- Objective: Distinguish uninitialized, initialized-unauthenticated, and authenticated PRIME entry states so an initialized private instance behaves like a locked product instead of presenting reinstall/setup controls.
+- Current status: `BLOCKED`
+- Acceptance: The initialized-entry defect, trusted-host flow, recovery disclosure, logout, refresh, restart/session recovery, responsive/keyboard behavior, full regression, runtime provenance, and 81/81 governance pass. Live password sign-in remains blocked because the approved mode-0600 operator password reference is stale and was not rotated.
+- Current phase: POST_V1_AUTH_ENTRY_UX_FIX
+- Expected or actual touched areas: minimal boolean auth-state endpoint, state-driven web entry, focused tests, persistent Core image/runtime provenance, post-V1 evidence, append-only agent closeout, GitHub parity, and main Notion SOT readback.
+- Immediate next action: Publish this truthful partial closeout and await Architect/operator disposition on supplying the current password or explicitly authorizing recovery-based password/reference rotation. Do not start Wave B, Phase 16, Continuation 097, public deployment, or Funnel exposure.
 
 ## Temporary task-relevant facts
 
@@ -23,7 +23,7 @@
 - Persistent PostgreSQL, Hindsight, PRIME Core/UI, and canonical Node remain preserved. Hindsight remains healthy on 127.0.0.1:8888; the existing Hindsight image and PRIME bank were reused.
 - Existing PRIME bank prime-project_d9a1a5b609394282b62fc12c0d04634d contains exactly one legitimate Mental Model, prime-operating-model, with substantive generated content and stored provenance.
 - Exact 072 Reflect query remains the accepted source basis from Continuation 073: four native observation/recall calls and substantive provenance-bearing output. Continuation 074 created the model through the supported Hindsight operation.
-- Canonical runtime image is `animus-prime-core:postv1-wave-a-df5b914` at qualified Wave A implementation `df5b914e194349ad67ef6c9f61229f1912512c76`; persistent PostgreSQL/state/mounts are preserved and readiness reports the exact image/build identity. No public exposure, deployment, Funnel change, or Phase 16 occurred.
+- Canonical runtime image is `animus-prime-core:postv1-auth-entry-bf47569` at implementation `bf475690ca7b86d08721c262ba538260e3742da3`; persistent PostgreSQL/state/mounts and the accepted Wave A product remain preserved, and readiness reports the exact image/build identity. No public exposure, deployment, Funnel change, Phase 16, Continuation 097, or Wave B occurred.
 - PRIME owns the private tailnet-only route `https://atlas-2.tail1a5964.ts.net/` to Core loopback. SKETCH gstack Chromium passed protected entry, Atlas-approved trusted-host sign-in, authenticated Windows-project use, and logout protection. No PRIME Funnel exists; all unrelated Serve routes and the pre-existing unrelated port-10000 Funnel remain untouched.
 - Genuine Windows service `AnimusPrimeNode` is Automatic/LocalSystem/Running on SKETCH. Node `node-095-sketch-windows` is ACTIVE/ONLINE at LAN `192.168.254.5:18001`, with final enrollment identity and allowed root `C:\PRIME-V1-Qualification\WindowsRepos`.
 - Real Windows project `project_d95b88f969bc44caa9cf39818d0ae9b5` binds `C:\PRIME-V1-Qualification\WindowsRepos\V1_QUALIFICATION_FIXTURE_096_WINDOWS_LAN` at Git `2ccf8a2b3addd63b472722936130765e0117193c`; Goal, authority, tree/files, remote indexing/search, LAN transport, and outside-root refusal pass.
@@ -36,12 +36,12 @@
 
 ## Last validation after adoption
 
-- Command or check: Wave A focused/full regression, governance, persistent runtime rebuild/provenance, and private browser acceptance; preserved Continuation 096G/096H V1 qualification basis
-- Result: `PASSED`
+- Command or check: Auth-entry focused/full regression, governance, persistent runtime rebuild/provenance, and private browser acceptance; preserved Continuation 096G/096H V1 qualification basis
+- Result: `BLOCKED`
 
 ## Risks
 
-- No frozen V1 blocker remains. The governed audit is 81 complete / 0 open; DOD-081 and R-056 are verified; Phase 15 is complete; V1 is qualified for private production use only. Wave A closes the bounded shell/Home/Projects gap; later project-surface redesign waves remain unauthorized. Public deployment, Phase 16, and Continuation 097 remain unauthorized.
+- No frozen V1 blocker remains. The governed audit is 81 complete / 0 open; DOD-081 and R-056 are verified; Phase 15 is complete; V1 is qualified for private production use only. The post-V1 auth-entry correction is running, but its existing password-reference mismatch prevents a complete directive acceptance claim. Later project-surface redesign waves remain unauthorized. Public deployment, Phase 16, and Continuation 097 remain unauthorized.
 
 ## Blockers
 
@@ -61,7 +61,7 @@
 
 ## Pending decisions
 
-- Wave A is complete and privately qualified at implementation `df5b914e194349ad67ef6c9f61229f1912512c76`. The governed §26 queue remains 81 complete / 0 open and frozen V1 remains qualified. Any later UX wave requires a new explicit directive.
+- The auth-entry correction is running at implementation `bf475690ca7b86d08721c262ba538260e3742da3`; the initialized-entry UX is qualified, while live password success awaits an approved current credential or explicit recovery-rotation authority. The governed §26 queue remains 81 complete / 0 open and frozen V1 remains qualified. Any later UX wave requires a new explicit directive.
 - Preserve the running private Core, Windows Node/project, private Serve route, external qualification fixture, and stopped rollback container. No public exposure, Funnel change, Phase 16, or Continuation 097 is authorized.
 
 - 095A correction: Continuation 090's Linux first-start mechanism is confirmed by preserved artifacts and the repository provisioning precedent: a fresh Node CSR was signed on the trusted Atlas side into a short-lived pre-enrollment server certificate, while the guest received only its own private key, that certificate, the Atlas CA public certificate, and the bootstrap-signing public key.

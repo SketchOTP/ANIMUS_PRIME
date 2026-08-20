@@ -2787,3 +2787,23 @@ Allowed adopted-project outcome states: `COMPLETE`, `PARTIAL`, `BLOCKED`, `FAILE
 - Remaining risks: later project surfaces retain their qualified functional presentation until separately authorized convergence waves. Public deployment and Phase 16 remain unauthorized.
 - Blockers: none for Wave A.
 - Follow-up directive: none
+
+## D-PRIME-POSTV1-AUTH-ENTRY-UX-FIX-001 - PARTIAL
+
+- Outcome ID: O-PRIME-POSTV1-AUTH-ENTRY-UX-FIX-001
+- Supersedes outcome: O-PRIME-POSTV1-UX-WAVE-A-001
+- Closed: 2026-08-19T21:50:00-04:00
+- Acceptance: PARTIAL
+- Summary: Corrected the initialized-versus-uninitialized protected-entry defect with one non-sensitive boolean bootstrap-state read and a distinct compact sign-in surface. Trusted-host login, collapsed recovery, logout, refresh, Core restart/session recovery, desktop/mobile, keyboard, full regression, exact runtime provenance, and 81/81 governance pass. Live password sign-in remains unqualified because the existing approved mode-0600 operator password reference no longer matches the current operator hash; no credential or session state was rotated.
+- Changed areas: `apps/core/main.py`, `src/prime_core/service.py`, `apps/web/index.html`, focused post-V1 tests, persistent PRIME-owned Core image/runtime provenance, post-V1 evidence, and append-only `.agent` closeout. No schema, project, Node, Hindsight, Notion, Tailscale/Funnel, deployment, Phase 16, Continuation 097, or Wave B change.
+- Validation:
+  - focused auth/Wave A/security regression - 21 passed
+  - complete supported regression - 188 passed / 41 skipped / 0 failed
+  - compile, governance, alignment, traceability, empty burndown, diff, and secret checks - PASSED
+  - persistent Core image provenance, readiness, restart and session recovery - PASSED
+  - initialized fresh entry, trusted-host login, logout, recovery disclosure, desktop/mobile, keyboard, and no-protected-payload browser qualification - PASSED
+  - live password login - BLOCKED by stale approved secure reference
+- DOD/R result: unchanged and preserved; 81 complete / 0 open, Phase 15 COMPLETE, V1 QUALIFIED for private production use.
+- Remaining risks: the password method cannot be independently operator-qualified until the current password is provided ephemerally or recovery-based rotation is explicitly authorized. The attached storage filesystem was read-only during this run, so final test artifacts used the healthy Atlas user cache.
+- Blockers: `PRIME_OPERATOR_PASSWORD_REFERENCE_STALE` for the remaining browser-password acceptance item only.
+- Follow-up directive: none

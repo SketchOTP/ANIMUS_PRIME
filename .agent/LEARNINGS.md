@@ -1116,3 +1116,13 @@ Do not add live entries to this template. Exclude temporary narration, raw logs,
 - Confidence: VERIFIED
 - Scope: Post-V1 Wave A design foundation, shell, Home, and Projects only.
 - Supersedes learning: L-PRIME-POSTV1-UX-STRUCTURAL-DRIFT-001
+
+## L-PRIME-POSTV1-AUTH-ENTRY-STATE-001
+
+- Date: 2026-08-19
+- Learning ID: L-PRIME-POSTV1-AUTH-ENTRY-STATE-001
+- Fact or lesson: A protected endpoint's 401 proves only that the browser lacks a valid session; it cannot safely determine whether PRIME is uninitialized. The narrow safe seam is a public boolean operator-row existence read, followed by explicit entry branches. Initialization controls must remain disabled unless the server positively reports an uninitialized state, and an unknown state must fail closed to sign-in/error without bootstrap.
+- Evidence location: `apps/core/main.py`; `src/prime_core/service.py`; `apps/web/index.html`; `tests/post_v1/test_auth_entry_ux_fix_001.py`; `evidence/post-v1/qualification-auth-entry-ux-fix-001.md`.
+- Confidence: VERIFIED
+- Scope: post-V1 protected-entry state routing only; no authentication weakening or broader auth redesign.
+- Supersedes learning: none
