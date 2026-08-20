@@ -44,6 +44,8 @@ def test_wave_a_shell_and_home_contract() -> None:
         'id="home-attention-preview"',
         'id="home-resume"',
         'id="home-recent-projects"',
+        'id="project-filter"',
+        'id="project-show-more"',
     ):
         assert identity in html
 
@@ -75,6 +77,8 @@ def test_wave_a_preserves_product_boundaries_and_accessibility() -> None:
     assert "min-height: 44px" in html
     assert ".icon-button .button-label { position: absolute" in html
     assert ".projects-grid > .project-card { grid-column: auto; }" in html
+    assert "projectDisplayLimit: 24" in html
+    assert "filtered.slice(0,state.projectDisplayLimit)" in html
     assert "@media (prefers-reduced-motion: reduce)" in html
     assert "@media (max-width: 340px)" in html
     assert 'aria-label="Open navigation"' in html
