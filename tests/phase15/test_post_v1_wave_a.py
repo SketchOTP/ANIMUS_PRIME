@@ -86,7 +86,7 @@ def test_wave_a_preserves_product_boundaries_and_accessibility() -> None:
     assert 'aria-label="Sign out"' in html
     assert "summary.textContent=project.description" in html
     assert "project.name || project.project_id" in html
-    assert "body.dataset.entryMode='auth'" in html
+    assert "document.body.dataset.entryMode = initialized ? 'auth'" in html
     assert "body.dataset.entryMode='product'" in html
 
 

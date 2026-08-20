@@ -1462,3 +1462,17 @@ Exclusions: No disposable environments, no Phase 16, no deploy, no destructive d
 - Relationship: resumes
 - Related directive: D-PRIME-POSTV1-UX-REMEDIATION-BRIEF-001
 - Status at issuance: ISSUED
+
+## D-PRIME-POSTV1-AUTH-ENTRY-UX-FIX-001
+
+- Issued: 2026-08-19T20:58:52-04:00
+- Issuer: User
+- External directive: ANIMUS PRIME post-Wave-A authentication-entry UX correction
+- Objective: Correct the protected-entry state so an initialized but unauthenticated private PRIME instance presents a concise sign-in surface instead of the complete first-run setup experience.
+- Scope: Determine the authoritative initialization-state mechanism; implement the smallest state-driven UI correction and only the minimal non-sensitive backend state if genuinely required; make trusted-host sign-in primary, password sign-in secondary, and recovery deliberately collapsed; preserve clean-install setup, authenticated routing, session recovery, security boundaries, responsive behavior, persistent Atlas runtime provenance, focused/full regression, GitHub publication, and Notion SOT readback.
+- Exclusions: no authentication weakening; no broad unauthenticated diagnostics; no project/API/database/Node/Hindsight/Notion/Tailscale/Funnel behavior change unless the smallest safe initialization-state read is proven necessary; no Wave B; no Phase 16; no Continuation 097; no public deployment.
+- Acceptance: Initialized unauthenticated PRIME renders only the compact sign-in surface with no initialization/setup actions; uninitialized PRIME preserves the complete first-run workflow; authenticated sessions enter PRIME directly; trusted-host, password, recovery disclosure, logout, refresh, restart recovery, desktop/mobile, security, regression, 81/81 governance, exact runtime provenance, Git parity, and Notion readback pass.
+- Risk class: HIGH
+- Relationship: resumes
+- Related directive: D-PRIME-POSTV1-UX-WAVE-A-001
+- Status at issuance: ISSUED

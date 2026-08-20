@@ -104,6 +104,11 @@ class CoreService:
                 return resolved
         raise FileNotFoundError("authority-template/v1/AGENTS.md")
 
+    def initialized(self) -> bool:
+        """Return only whether the single operator bootstrap has completed."""
+        with connect(self.settings) as db:
+            return db.execute("SELECT 1 FROM prime_core.operators LIMIT 1").fetchone() is not None
+
     def bootstrap(self, password: str) -> str:
         if len(password) < 12:
             raise ValueError("password must contain at least 12 characters")

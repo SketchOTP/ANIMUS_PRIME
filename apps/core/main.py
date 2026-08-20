@@ -517,6 +517,12 @@ def ready(request: Request):
     return {"status": "ready", **build_info(startup_state.get("migrations"))}
 
 
+@app.get("/v1/auth/state")
+def auth_state():
+    """Expose only the non-sensitive operator-bootstrap state to protected entry."""
+    return {"initialized": service.initialized()}
+
+
 @app.post("/v1/auth/bootstrap")
 def bootstrap(body: Credentials, request: Request):
     try:
